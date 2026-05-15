@@ -14,3 +14,5 @@ define('BASE_URL',   rtrim($_cfg['app']['base_url']  ?? '', '/'));
 define('APP_NAME',   $_cfg['app']['app_name']         ?? 'LizzardMembers');
 define('AVATAR_DIR', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'avatars' . DIRECTORY_SEPARATOR);
 define('AVATAR_URL', BASE_URL . '/assets/uploads/avatars/');
+define('FLAG_DIR',   dirname(__DIR__) . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'flags' . DIRECTORY_SEPARATOR);
+define('FLAG_URL',   BASE_URL . '/assets/uploads/flags/');

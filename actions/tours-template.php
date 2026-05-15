@@ -16,13 +16,14 @@ fputs($out, "\xEF\xBB\xBF");
 fputcsv($out, [
     'Kód',
     'Elnevezés',
-    'Ország',
+    'Útvonal',
+    'Országkód',
     'Tájegység',
     'Dátum (ÉÉÉÉ-HH-NN)',
     'Napok',
     'Szállás (sator/turistahaz/apartman/hotel)',
     'Túramód (gyalogos/kerekparos/vizi/si/barlangi/munka)',
-    'Altípus',
+    'Altípus (gyalogos: normal/tajekozodasi | kerekparos: mout/terep | vizi: folyasirany/allovi/szemben | barlangi: kiepitett/kiepitetlen)',
     'Km',
     'Magashegyi km',
     'Szintemelkedés (m)',
@@ -33,13 +34,13 @@ fputcsv($out, [
     'Hajóátemelések',
     'Vendég résztvevők',
     'Lizzardier pont',
-    'MTSZ pont',
 ], ';');
 
 fputcsv($out, [
     '',               // Kód — üresen hagyva: automatikusan generált
     'Mátra körüljáró',
-    'Magyarország',
+    'Gyöngyös – Mátraháza – Parádfürdő',
+    'HU',
     'Mátra',
     '2025-04-20',
     '2',
@@ -56,13 +57,13 @@ fputcsv($out, [
     '0',
     '1',
     '5',
-    '0',
 ], ';');
 
 fputcsv($out, [
     '5K',             // Kód — manuálisan megadva
     '',
-    'Ausztria',
+    '',
+    'AT',
     'Alpok',
     '2025-07-10',
     '5',
@@ -79,7 +80,6 @@ fputcsv($out, [
     '0',
     '0',
     '12',
-    '0',
 ], ';');
 
 fclose($out);

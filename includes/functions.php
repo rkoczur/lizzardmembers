@@ -306,6 +306,25 @@ function getTourTypeLabel(string $type): string
     };
 }
 
+function getCountries(PDO $pdo, bool $activeOnly = true): array
+{
+    $sql = "SELECT * FROM countries" . ($activeOnly ? " WHERE active = 1" : "") . " ORDER BY sort_order ASC, name_hu ASC";
+    return $pdo->query($sql)->fetchAll();
+}
+
+function getCountryByCode(PDO $pdo, string $code): ?array
+{
+    $stmt = $pdo->prepare("SELECT * FROM countries WHERE code = ? LIMIT 1");
+    $stmt->execute([strtoupper($code)]);
+    return $stmt->fetch() ?: null;
+}
+
+function getFlagUrl(?string $filename): string
+{
+    if (!$filename) return '';
+    return FLAG_URL . $filename;
+}
+
 function logAudit(PDO $pdo, string $action, string $entityType, int $entityId, string $entityLabel, ?array $changes = null): void
 {
     static $schemaEnsured = false;

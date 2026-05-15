@@ -186,15 +186,21 @@ function initMemberPicker() {
   });
 }
 
-/* ===== Tour list search + mine filter ===== */
+/* ===== Tour list search + mine filter + admin column filters ===== */
 let _tourMineOnly = false;
+const _tourFilters = {};
 
 function filterTourRows() {
   const q = (document.getElementById('tour-search')?.value || '').toLowerCase();
   document.querySelectorAll('#tour-table tbody tr').forEach(row => {
-    if (!row.dataset.mine) return;
+    if (!row.dataset.mine && !row.dataset.type) return;
     let show = !q || row.textContent.toLowerCase().includes(q);
     if (show && _tourMineOnly && row.dataset.mine !== '1') show = false;
+    if (show) {
+      for (const [key, val] of Object.entries(_tourFilters)) {
+        if (val && row.dataset[key] !== val) { show = false; break; }
+      }
+    }
     row.style.display = show ? '' : 'none';
   });
 }
@@ -213,6 +219,48 @@ function initTourMineFilter() {
     btn.classList.toggle('btn-primary', _tourMineOnly);
     btn.classList.toggle('btn-ghost', !_tourMineOnly);
     filterTourRows();
+  });
+}
+
+function initTourAdminFilters() {
+  if (!document.querySelector('#tour-table .col-filter-btn')) return;
+
+  function closeAll() {
+    document.querySelectorAll('.col-filter-menu.open').forEach(m => m.classList.remove('open'));
+  }
+
+  document.addEventListener('click', closeAll);
+  window.addEventListener('scroll', closeAll, true);
+
+  document.querySelectorAll('#tour-table .col-filter-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const menu = btn.nextElementSibling;
+      const isOpen = menu.classList.contains('open');
+      closeAll();
+      if (!isOpen) {
+        const rect = btn.getBoundingClientRect();
+        menu.style.top  = (rect.bottom + 4) + 'px';
+        menu.style.left = (rect.left + rect.width / 2) + 'px';
+        menu.classList.add('open');
+      }
+    });
+  });
+
+  document.querySelectorAll('#tour-table .col-filter-menu li button').forEach(item => {
+    item.addEventListener('click', e => {
+      e.stopPropagation();
+      const menu = item.closest('.col-filter-menu');
+      const btn  = menu.previousElementSibling;
+      const filter = btn.dataset.filter;
+      const value  = item.dataset.value;
+      _tourFilters[filter] = value;
+      menu.querySelectorAll('li').forEach(li => li.classList.remove('selected'));
+      item.closest('li').classList.add('selected');
+      btn.classList.toggle('active', !!value);
+      closeAll();
+      filterTourRows();
+    });
   });
 }
 
@@ -254,6 +302,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initModals();
   initTourSearch();
   initTourMineFilter();
+  initTourAdminFilters();
   initMemberPicker();
   initMobileMenu();
 });

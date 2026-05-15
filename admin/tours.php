@@ -10,12 +10,34 @@ requireAdmin();
 $pdo = getDb();
 ensureToursSchema($pdo);
 
+$validSorts = ['date_desc', 'date_asc', 'km_desc', 'km_asc', 'code'];
+$sortBy     = in_array($_GET['sort'] ?? '', $validSorts, true) ? $_GET['sort'] : 'date_desc';
+
+$orderBy = match($sortBy) {
+    'date_asc'  => 't.tour_date ASC,  t.created_at ASC',
+    'km_desc'   => '(COALESCE(t.total_km,0)+COALESCE(t.alpine_km,0)) DESC, t.tour_date DESC',
+    'km_asc'    => '(COALESCE(t.total_km,0)+COALESCE(t.alpine_km,0)) ASC,  t.tour_date DESC',
+    'code'      => 'CAST(t.tour_code AS UNSIGNED) ASC, t.tour_code ASC',
+    default     => 't.tour_date DESC, t.created_at DESC',
+};
+
 $tours = $pdo->query("
-    SELECT t.*, COUNT(tm.user_id) AS member_count
+    SELECT t.*, COUNT(tm.user_id) AS member_count,
+           c.name_hu AS country_name, c.flag_filename AS country_flag
     FROM tours t
     LEFT JOIN tour_members tm ON tm.tour_id = t.id
+    LEFT JOIN countries c ON c.code = t.country
     GROUP BY t.id
-    ORDER BY t.tour_date DESC, t.created_at DESC
+    ORDER BY $orderBy
+")->fetchAll();
+
+// Csak a ténylegesen szereplő országok a szűrőmenühöz
+$tourCountries = $pdo->query("
+    SELECT DISTINCT t.country, c.name_hu
+    FROM tours t
+    LEFT JOIN countries c ON c.code = t.country
+    WHERE t.country IS NOT NULL AND t.country != ''
+    ORDER BY COALESCE(c.name_hu, t.country) ASC
 ")->fetchAll();
 
 $flash_success = getFlash('success');
@@ -42,6 +64,14 @@ include __DIR__ . '/../includes/admin-header.php';
       </svg>
       <input type="text" id="tour-search" placeholder="Túrák keresése…">
     </div>
+    <select id="tour-sort-select" onchange="location.href='?sort='+this.value"
+            style="height:32px;padding:0 8px;border:1px solid var(--border);border-radius:6px;background:var(--bg);font-size:13px;color:inherit;cursor:pointer;">
+      <option value="date_desc" <?= $sortBy === 'date_desc' ? 'selected' : '' ?>>Dátum (újabb elől)</option>
+      <option value="date_asc"  <?= $sortBy === 'date_asc'  ? 'selected' : '' ?>>Dátum (régebbi elől)</option>
+      <option value="km_desc"   <?= $sortBy === 'km_desc'   ? 'selected' : '' ?>>Km (több elől)</option>
+      <option value="km_asc"    <?= $sortBy === 'km_asc'    ? 'selected' : '' ?>>Km (kevesebb elől)</option>
+      <option value="code"      <?= $sortBy === 'code'      ? 'selected' : '' ?>>Sorszám szerint</option>
+    </select>
     <a href="<?= BASE_URL ?>/actions/tours-export.php" class="btn btn-ghost btn-sm">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
@@ -81,8 +111,8 @@ include __DIR__ . '/../includes/admin-header.php';
       <thead>
         <tr>
           <th>Kód</th>
-          <th>Elnevezés / Ország</th>
-          <th>Túramód</th>
+          <th>Elnevezés / Ország<span class="col-filter-wrap"><button class="col-filter-btn" data-filter="country" title="Szűrés ország szerint">▾</button><ul class="col-filter-menu"><li class="selected"><button data-value="">Mind</button></li><?php foreach ($tourCountries as $tc): ?><li><button data-value="<?= e($tc['country']) ?>"><?= e($tc['country_name'] ?? $tc['country']) ?></button></li><?php endforeach; ?></ul></span></th>
+          <th>Túramód<span class="col-filter-wrap"><button class="col-filter-btn" data-filter="type" title="Szűrés túramód szerint">▾</button><ul class="col-filter-menu"><li class="selected"><button data-value="">Mind</button></li><li><button data-value="gyalogos">Gyalogos</button></li><li><button data-value="kerekparos">Kerékpáros</button></li><li><button data-value="vizi">Vízitúra</button></li><li><button data-value="si">Síelés</button></li><li><button data-value="barlangi">Barlangi</button></li><li><button data-value="munka">Munkatúra</button></li></ul></span></th>
           <th>Dátum</th>
           <th>Napok</th>
           <th>Km</th>
@@ -95,12 +125,16 @@ include __DIR__ . '/../includes/admin-header.php';
       </thead>
       <tbody>
         <?php foreach ($tours as $t): ?>
-        <tr>
+        <tr data-type="<?= e($t['tour_type'] ?? 'gyalogos') ?>" data-country="<?= e($t['country'] ?? '') ?>">
           <td><code style="font-size:.85em;white-space:nowrap;"><?= e($t['tour_code'] ?? '—') ?></code></td>
           <td>
-            <div class="td-name"><?= $t['name'] ? e($t['name']) : e($t['country']) ?></div>
+            <div class="td-name"><?= $t['name'] ? e($t['name']) : e($t['country_name'] ?? $t['country']) ?></div>
             <div class="td-sub">
-              <?= e($t['country']) ?><?= $t['region'] ? ' – ' . e($t['region']) : '' ?>
+              <?php if (!empty($t['country_flag'])): ?>
+                <img src="<?= e(getFlagUrl($t['country_flag'])) ?>"
+                     style="width:18px;height:13px;object-fit:cover;vertical-align:middle;border:1px solid var(--border);border-radius:1px;margin-right:3px;" alt="">
+              <?php endif; ?>
+              <?= e($t['country_name'] ?? $t['country']) ?><?= $t['region'] ? ' – ' . e($t['region']) : '' ?>
             </div>
           </td>
           <td><?= e(getTourTypeLabel($t['tour_type'] ?? 'gyalogos')) ?></td>
@@ -108,7 +142,7 @@ include __DIR__ . '/../includes/admin-header.php';
           <td><?= (int)$t['days'] ?> nap</td>
           <td>
             <?php
-            $totalKmAll = ($t['total_km'] ?? null) !== null ? (float)$t['total_km'] : 0;
+            $totalKmAll  = ($t['total_km']  ?? null) !== null ? (float)$t['total_km']  : 0;
             $alpineKmAll = ($t['alpine_km'] ?? null) !== null ? (float)$t['alpine_km'] : 0;
             $fullKm = $totalKmAll + $alpineKmAll;
             if ($fullKm > 0):

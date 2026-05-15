@@ -55,16 +55,24 @@ $existingCodes = $pdo->query("SELECT tour_code FROM tours WHERE tour_code IS NOT
 $usedCodes = array_fill_keys($existingCodes, true);
 
 $validTourTypes   = ['gyalogos', 'kerekparos', 'vizi', 'si', 'barlangi', 'munka'];
+$validSubTypes    = [
+    'gyalogos'   => ['normal', 'tajekozodasi'],
+    'kerekparos' => ['mout', 'terep'],
+    'vizi'       => ['folyasirany', 'allovi', 'szemben'],
+    'barlangi'   => ['kiepitett', 'kiepitetlen'],
+    'si'         => [],
+    'munka'      => [],
+];
 $validAccom       = ['sator', 'turistahaz', 'apartman', 'hotel'];
 $validMultiDay    = ['csillag', 'vandor'];
 
 $insertStmt = $pdo->prepare("INSERT INTO tours
-    (tour_code, name, country, region, tour_date, days, accommodation,
+    (tour_code, name, route, country, region, tour_date, days, accommodation,
      tour_type, sub_type, is_alpine,
      total_km, alpine_km, total_elevation, alpine_elevation,
      tour_hours, multi_day_type, camping_nights_fixed, camping_nights_mobile,
      boat_portages, guest_count, points, mtsz_points)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 $imported = 0;
 $errors   = [];
@@ -76,10 +84,10 @@ while (($row = fgetcsv($handle, 0, ';')) !== false) {
     $row = array_map('trim', $row);
 
     [
-        $tourCode, $name, $country, $region, $tourDate, $days, $accommodation,
+        $tourCode, $name, $route, $country, $region, $tourDate, $days, $accommodation,
         $tourType, $subType, $totalKm, $alpineKm, $totalElev, $alpineElev,
         $tourHours, $multiDayType, $campFixed, $portages,
-        $guestCount, $points, $mtszPoints,
+        $guestCount, $points,
     ] = $row;
 
     // Skip blank rows
@@ -88,7 +96,12 @@ while (($row = fgetcsv($handle, 0, ';')) !== false) {
     }
 
     if ($country === '') {
-        $errors[] = ['row' => $rowNum, 'msg' => ($tourCode ?: ($name ?: $rowNum . '. sor')) . ': hiányzó ország (kötelező mező).'];
+        $errors[] = ['row' => $rowNum, 'msg' => ($tourCode ?: ($name ?: $rowNum . '. sor')) . ': hiányzó országkód (kötelező mező, pl. HU, AT, SK).'];
+        continue;
+    }
+    $country = strtoupper($country);
+    if (!getCountryByCode($pdo, $country)) {
+        $errors[] = ['row' => $rowNum, 'msg' => ($tourCode ?: ($name ?: $rowNum . '. sor')) . ': "' . $country . '" ismeretlen országkód — ellenőrizd a Beállítások › Országok listát.'];
         continue;
     }
 
@@ -112,6 +125,15 @@ while (($row = fgetcsv($handle, 0, ';')) !== false) {
 
     // Sanitise and coerce
     $tourType       = in_array($tourType, $validTourTypes, true) ? $tourType : 'gyalogos';
+    $allowed        = $validSubTypes[$tourType] ?? [];
+    if ($subType === '' || $subType === null) {
+        $subType = $allowed[0] ?? null;
+    } elseif ($allowed && !in_array($subType, $allowed, true)) {
+        $errors[] = ['row' => $rowNum, 'msg' => ($tourCode ?: ($name ?: $rowNum . '. sor')) . ': érvénytelen altípus "' . $subType . '" (' . $tourType . '). Elfogadott értékek: ' . implode(', ', $allowed) . '.'];
+        continue;
+    } elseif (!$allowed) {
+        $subType = null;
+    }
     $accommodation  = in_array($accommodation, $validAccom, true) ? $accommodation : null;
     $multiDayType   = in_array($multiDayType, $validMultiDay, true) ? $multiDayType : null;
     $days           = max(1, (int)$days ?: 1);
@@ -124,11 +146,11 @@ while (($row = fgetcsv($handle, 0, ';')) !== false) {
     $portages       = max(0, (int)$portages);
     $guestCount     = max(0, (int)$guestCount);
     $points         = max(0, (int)$points);
-    $mtszPoints     = max(0, (int)$mtszPoints);
     $isAlpine       = ($alpineKm !== null && $alpineKm > 0) ? 1 : 0;
     $tourDate       = $tourDate !== '' ? $tourDate : null;
     $subType        = $subType  !== '' ? $subType  : null;
     $name           = $name     !== '' ? $name     : null;
+    $route          = $route    !== '' ? $route    : null;
     $region         = $region   !== '' ? $region   : null;
 
     $mtszPoints = calculateTourPoints([
@@ -148,7 +170,7 @@ while (($row = fgetcsv($handle, 0, ';')) !== false) {
     ]);
 
     $insertStmt->execute([
-        $tourCode, $name, $country, $region, $tourDate, $days, $accommodation,
+        $tourCode, $name, $route, $country, $region, $tourDate, $days, $accommodation,
         $tourType, $subType, $isAlpine,
         $totalKm, $alpineKm, $totalElev, $alpineElev,
         $tourHours, $multiDayType, $campFixed, 0,

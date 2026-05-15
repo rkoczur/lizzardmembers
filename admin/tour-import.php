@@ -64,7 +64,9 @@ include __DIR__ . '/../includes/admin-header.php';
   <div class="card-body">
     <p style="color:var(--text-muted);margin-bottom:20px;font-size:14px;">
       Tölts fel egy CSV fájlt a sablon alapján. A fejlécsor kötelező. Az elválasztó karakter <strong>pontosvessző (;)</strong>.
-      Kötelező mező: <strong>Ország</strong>. A <strong>Kód</strong> mező üresen hagyható — ilyenkor automatikusan generálódik.
+      Kötelező mező: <strong>Országkód</strong> (pl. <code>HU</code>, <code>AT</code>, <code>SK</code>) — az érvényes kódokat a
+      <a href="<?= BASE_URL ?>/admin/settings.php">Beállítások › Országok</a> oldalon kezelheted.
+      A <strong>Kód</strong> mező üresen hagyható — ilyenkor automatikusan generálódik.
     </p>
     <form method="post" action="<?= BASE_URL ?>/actions/tour-import.php" enctype="multipart/form-data">
       <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">

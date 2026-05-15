@@ -54,4 +54,45 @@ function ensureToursSchema(PDO $pdo): void
     ] as $sql) {
         try { $pdo->exec($sql); } catch (PDOException) {}
     }
+
+    // Országok tábla
+    $pdo->exec("CREATE TABLE IF NOT EXISTS `countries` (
+        `id`            INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        `code`          VARCHAR(10) NOT NULL,
+        `name_hu`       VARCHAR(100) NOT NULL,
+        `flag_filename` VARCHAR(200) DEFAULT NULL,
+        `sort_order`    SMALLINT NOT NULL DEFAULT 0,
+        `active`        TINYINT(1) NOT NULL DEFAULT 1,
+        `created_at`    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE KEY `uq_code` (`code`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+
+    // Zászló mappa létrehozása
+    if (defined('FLAG_DIR') && !is_dir(FLAG_DIR)) {
+        @mkdir(FLAG_DIR, 0755, true);
+    }
+
+    // Alap országok feltöltése üres táblánál
+    if ((int)$pdo->query("SELECT COUNT(*) FROM countries")->fetchColumn() === 0) {
+        $ins = $pdo->prepare("INSERT IGNORE INTO countries (code, name_hu) VALUES (?, ?)");
+        foreach ([
+            ['AL','Albánia'],       ['AD','Andorra'],           ['AT','Ausztria'],
+            ['BA','Bosznia-Hercegovina'], ['BE','Belgium'],      ['BG','Bulgária'],
+            ['BY','Fehéroroszország'], ['CH','Svájc'],           ['CZ','Csehország'],
+            ['DE','Németország'],   ['DK','Dánia'],             ['EE','Észtország'],
+            ['ES','Spanyolország'], ['FI','Finnország'],        ['FR','Franciaország'],
+            ['GB','Egyesült Királyság'], ['GR','Görögország'],  ['HR','Horvátország'],
+            ['HU','Magyarország'],  ['IE','Írország'],          ['IS','Izland'],
+            ['IT','Olaszország'],   ['LI','Liechtenstein'],     ['LT','Litvánia'],
+            ['LU','Luxemburg'],     ['LV','Lettország'],        ['MC','Monaco'],
+            ['MD','Moldova'],       ['ME','Montenegró'],        ['MK','Észak-Makedónia'],
+            ['MT','Málta'],         ['NL','Hollandia'],         ['NO','Norvégia'],
+            ['PL','Lengyelország'], ['PT','Portugália'],        ['RO','Románia'],
+            ['RS','Szerbia'],       ['SE','Svédország'],        ['SI','Szlovénia'],
+            ['SK','Szlovákia'],     ['SM','San Marino'],        ['TR','Törökország'],
+            ['UA','Ukrajna'],       ['XK','Koszovó'],
+        ] as [$code, $name]) {
+            $ins->execute([$code, $name]);
+        }
+    }
 }

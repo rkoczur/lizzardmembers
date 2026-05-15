@@ -25,6 +25,7 @@ if (!$tour) {
 }
 
 $allMembers = $pdo->query("SELECT id, firstname, lastname, email, role FROM users ORDER BY lastname, firstname")->fetchAll();
+$countries  = getCountries($pdo);
 
 $assignedStmt = $pdo->prepare("SELECT u.id, u.firstname, u.lastname, u.email, u.role FROM tour_members tm JOIN users u ON u.id = tm.user_id WHERE tm.tour_id = ? ORDER BY u.lastname, u.firstname");
 $assignedStmt->execute([$id]);
@@ -81,7 +82,20 @@ include __DIR__ . '/../includes/admin-header.php';
         </div>
         <div class="form-group">
           <label>Ország <span style="color:var(--danger)">*</span></label>
-          <input type="text" name="country" value="<?= e($tour['country']) ?>" required>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <select name="country" id="country_select" required style="flex:1;">
+              <option value="">— Válasszon országot —</option>
+              <?php foreach ($countries as $c): ?>
+              <option value="<?= e($c['code']) ?>"
+                      data-flag="<?= $c['flag_filename'] ? e(getFlagUrl($c['flag_filename'])) : '' ?>"
+                      <?= $tour['country'] === $c['code'] ? 'selected' : '' ?>>
+                <?= e($c['name_hu']) ?> (<?= e($c['code']) ?>)
+              </option>
+              <?php endforeach; ?>
+            </select>
+            <img id="country_flag_preview" src="" alt=""
+                 style="width:36px;height:24px;object-fit:cover;border:1px solid var(--border);border-radius:3px;display:none;flex-shrink:0;">
+          </div>
         </div>
         <div class="form-group">
           <label>Tájegység</label>
@@ -397,6 +411,21 @@ $jsInitAccom    = json_encode($tour['accommodation'] ?? '');
   })();
   updateTypeUI();
   updateAccomUI();
+
+  // Zászló előnézet
+  (function() {
+    var sel = document.getElementById('country_select');
+    var img = document.getElementById('country_flag_preview');
+    if (!sel || !img) return;
+    function updateFlag() {
+      var opt = sel.options[sel.selectedIndex];
+      var flag = opt ? opt.getAttribute('data-flag') : '';
+      if (flag) { img.src = flag; img.style.display = ''; }
+      else { img.src = ''; img.style.display = 'none'; }
+    }
+    sel.addEventListener('change', updateFlag);
+    updateFlag();
+  })();
 })();
 </script>
 
