@@ -1,0 +1,13 @@
+Options -Indexes
+
+# Protect config file
+<Files "config.ini">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+# Prevent direct access to includes
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^includes/ - [F,L]
+</IfModule>
