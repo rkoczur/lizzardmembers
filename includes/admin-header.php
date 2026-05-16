@@ -6,6 +6,7 @@
   <title><?= e($pageTitle ?? 'Admin') ?> — <?= APP_NAME ?></title>
   <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/style.css">
 </head>
+<?php require_once __DIR__ . '/version.php'; ?>
 <body>
 <div class="app-wrapper">
 
@@ -99,6 +100,8 @@
       </a>
     </nav>
 
+    
+
     <div class="sidebar-user">
       <img class="user-avatar-sm"
            src="<?= getAvatarUrl($_SESSION['user_avatar'] ?? null) ?>"
@@ -108,6 +111,7 @@
         <div class="user-role">Rendszergazda</div>
       </div>
     </div>
+    <div class="sidebar-version">Verzió: <?= APP_VERSION ?> - Copyright © Koczur Richárd</div>
   </aside>
 
   <div class="sidebar-overlay" id="sidebar-overlay"></div>
