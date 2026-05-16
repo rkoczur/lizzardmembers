@@ -9,7 +9,66 @@ requireAdmin();
 verifyCsrf();
 
 $redirectBack = BASE_URL . '/admin/member-import.php';
+$step = trim($_POST['step'] ?? 'validate');
 
+// ── CONFIRM: read validated rows from session and insert ──────────────────────
+if ($step === 'confirm') {
+    $preview = $_SESSION['member_import_preview'] ?? null;
+    if (!$preview || empty($preview['rows'])) {
+        flash('error', 'Nincs érvényes előnézeti adat. Töltsd fel újra a fájlt.');
+        header('Location: ' . $redirectBack);
+        exit;
+    }
+
+    $pdo        = getDb();
+    $checkStmt  = $pdo->prepare("SELECT id FROM users WHERE username = ? OR email = ?");
+    $insertStmt = $pdo->prepare("INSERT INTO users
+        (username, email, password, role, firstname, lastname, dateofbirth,
+         zipcode, city, address, phone, tshirt_size,
+         emergency_name, emergency_relation, emergency_phone,
+         member_since, last_payment)
+        VALUES (?, ?, ?, 'user', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+    $imported = 0;
+    $errors   = [];
+
+    foreach ($preview['rows'] as $r) {
+        $checkStmt->execute([$r['username'], $r['email']]);
+        if ($checkStmt->rowCount() > 0) {
+            $errors[] = ['row' => $r['_row'], 'msg' => "{$r['lastname']} {$r['firstname']}: a felhasználónév vagy e-mail időközben foglalttá vált."];
+            continue;
+        }
+
+        $insertStmt->execute([
+            $r['username'], $r['email'], $r['password_hash'],
+            $r['firstname'], $r['lastname'], $r['dateofbirth'],
+            $r['zipcode'], $r['city'], $r['address'], $r['phone'],
+            $r['tshirt_size'], $r['emergency_name'], $r['emergency_relation'],
+            $r['emergency_phone'], $r['member_since'], $r['last_payment'],
+        ]);
+
+        $newId = (int)$pdo->lastInsertId();
+        logAudit($pdo, 'create', 'member', $newId, $r['lastname'] . ' ' . $r['firstname'], [
+            ['k' => 'Forrás', 'v' => 'CSV import'],
+            ['k' => 'Felhasználónév', 'v' => $r['username']],
+            ['k' => 'E-mail', 'v' => $r['email']],
+        ]);
+        $imported++;
+    }
+
+    unset($_SESSION['member_import_preview']);
+
+    $_SESSION['import_results'] = ['imported' => $imported, 'errors' => $errors];
+    if ($imported > 0) {
+        flash('success', $imported . ' tag sikeresen importálva' . (!empty($errors) ? ', ' . count($errors) . ' sor kihagyva' : '') . '.');
+    } else {
+        flash('error', 'Egyetlen tag sem lett importálva.' . (!empty($errors) ? ' ' . count($errors) . ' sor hibás.' : ''));
+    }
+    header('Location: ' . $redirectBack);
+    exit;
+}
+
+// ── VALIDATE: parse and validate CSV, no DB inserts ───────────────────────────
 if (empty($_FILES['csv_file']['tmp_name']) || $_FILES['csv_file']['error'] !== UPLOAD_ERR_OK) {
     flash('error', 'Nem sikerült a fájl feltöltése.');
     header('Location: ' . $redirectBack);
@@ -19,7 +78,7 @@ if (empty($_FILES['csv_file']['tmp_name']) || $_FILES['csv_file']['error'] !== U
 $mime = mime_content_type($_FILES['csv_file']['tmp_name']);
 $allowedMimes = ['text/plain', 'text/csv', 'application/csv', 'application/vnd.ms-excel'];
 if (!in_array($mime, $allowedMimes, true) && !str_ends_with($_FILES['csv_file']['name'], '.csv')) {
-    flash('error', 'Csak CSV fájl tölthet fel.');
+    flash('error', 'Csak CSV fájl tölthető fel.');
     header('Location: ' . $redirectBack);
     exit;
 }
@@ -31,15 +90,12 @@ if (!$handle) {
     exit;
 }
 
-// Strip UTF-8 BOM if present
 $bom = fread($handle, 3);
 if ($bom !== "\xEF\xBB\xBF") {
     rewind($handle);
 }
 
-$pdo = getDb();
-
-// Read and discard header row
+$pdo    = getDb();
 $header = fgetcsv($handle, 0, ';');
 if (!$header) {
     fclose($handle);
@@ -48,26 +104,19 @@ if (!$header) {
     exit;
 }
 
-$imported = 0;
-$errors   = [];
-$rowNum   = 1; // header was row 1
-
 $validSizes     = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
 $validRelations = ['szülő', 'gyermek', 'testvér', 'egyéb'];
+$checkStmt      = $pdo->prepare("SELECT id FROM users WHERE username = ? OR email = ?");
 
-$insertStmt = $pdo->prepare("INSERT INTO users
-    (username, email, password, role, firstname, lastname, dateofbirth,
-     zipcode, city, address, phone, tshirt_size,
-     emergency_name, emergency_relation, emergency_phone,
-     member_since, last_payment)
-    VALUES (?, ?, ?, 'user', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-
-$checkStmt = $pdo->prepare("SELECT id FROM users WHERE username = ? OR email = ?");
+$validRows     = [];
+$errors        = [];
+$rowNum        = 1;
+$totalDataRows = 0;
+$seenUsernames = [];
+$seenEmails    = [];
 
 while (($row = fgetcsv($handle, 0, ';')) !== false) {
     $rowNum++;
-
-    // Pad short rows with empty strings
     $row = array_pad($row, 16, '');
 
     [$lastname, $firstname, $username, $email, $password,
@@ -75,12 +124,11 @@ while (($row = fgetcsv($handle, 0, ';')) !== false) {
      $zipcode, $city, $address, $tshirtSize,
      $emergencyName, $emergencyRelation, $emergencyPhone] = array_map('trim', $row);
 
-    // Skip entirely blank rows
     if ($lastname === '' && $firstname === '' && $username === '' && $email === '') {
         continue;
     }
+    $totalDataRows++;
 
-    // Required field validation
     if (!$lastname || !$firstname) {
         $errors[] = ['row' => $rowNum, 'msg' => 'Hiányzó vezetéknév vagy keresztnév.'];
         continue;
@@ -98,58 +146,50 @@ while (($row = fgetcsv($handle, 0, ';')) !== false) {
         continue;
     }
 
-    // Duplicate check
+    $usernameLc = strtolower($username);
+    $emailLc    = strtolower($email);
+    if (isset($seenUsernames[$usernameLc]) || isset($seenEmails[$emailLc])) {
+        $errors[] = ['row' => $rowNum, 'msg' => "$lastname $firstname: a felhasználónév vagy e-mail a fájlon belül ismétlődik ($username / $email)."];
+        continue;
+    }
+
     $checkStmt->execute([$username, $email]);
     if ($checkStmt->rowCount() > 0) {
         $errors[] = ['row' => $rowNum, 'msg' => "$lastname $firstname: a felhasználónév vagy e-mail már foglalt ($username / $email)."];
         continue;
     }
 
-    // Optional field sanitisation
-    $tshirtSize       = in_array(strtoupper($tshirtSize), $validSizes, true) ? strtoupper($tshirtSize) : null;
-    $emergencyRelation = in_array($emergencyRelation, $validRelations, true) ? $emergencyRelation : null;
-    $dateofbirth      = $dateofbirth  ? $dateofbirth  : null;
-    $memberSince      = $memberSince  ? $memberSince  : null;
-    $lastPayment      = $lastPayment  ? $lastPayment  : null;
+    $seenUsernames[$usernameLc] = true;
+    $seenEmails[$emailLc]       = true;
 
-    $insertStmt->execute([
-        $username,
-        $email,
-        password_hash($password, PASSWORD_DEFAULT),
-        $firstname,
-        $lastname,
-        $dateofbirth,
-        $zipcode  ?: null,
-        $city     ?: null,
-        $address  ?: null,
-        $phone    ?: null,
-        $tshirtSize,
-        $emergencyName  ?: null,
-        $emergencyRelation,
-        $emergencyPhone ?: null,
-        $memberSince,
-        $lastPayment,
-    ]);
-
-    $newId = (int)$pdo->lastInsertId();
-    logAudit($pdo, 'create', 'member', $newId, $lastname . ' ' . $firstname, [
-        ['k' => 'Forrás', 'v' => 'CSV import'],
-        ['k' => 'Felhasználónév', 'v' => $username],
-        ['k' => 'E-mail', 'v' => $email],
-    ]);
-
-    $imported++;
+    $validRows[] = [
+        '_row'               => $rowNum,
+        'lastname'           => $lastname,
+        'firstname'          => $firstname,
+        'username'           => $username,
+        'email'              => $email,
+        'password_hash'      => password_hash($password, PASSWORD_DEFAULT),
+        'phone'              => $phone ?: null,
+        'dateofbirth'        => $dateofbirth ?: null,
+        'member_since'       => $memberSince ?: null,
+        'last_payment'       => $lastPayment ?: null,
+        'zipcode'            => $zipcode ?: null,
+        'city'               => $city ?: null,
+        'address'            => $address ?: null,
+        'tshirt_size'        => in_array(strtoupper($tshirtSize), $validSizes, true) ? strtoupper($tshirtSize) : null,
+        'emergency_name'     => $emergencyName ?: null,
+        'emergency_relation' => in_array($emergencyRelation, $validRelations, true) ? $emergencyRelation : null,
+        'emergency_phone'    => $emergencyPhone ?: null,
+    ];
 }
 
 fclose($handle);
 
-$_SESSION['import_results'] = ['imported' => $imported, 'errors' => $errors];
-
-if ($imported > 0) {
-    flash('success', $imported . ' tag sikeresen importálva' . (!empty($errors) ? ', ' . count($errors) . ' sor kihagyva' : '') . '.');
-} else {
-    flash('error', 'Egyetlen tag sem lett importálva.' . (!empty($errors) ? ' ' . count($errors) . ' sor hibás.' : ''));
-}
+$_SESSION['member_import_preview'] = [
+    'rows'            => $validRows,
+    'errors'          => $errors,
+    'total_data_rows' => $totalDataRows,
+];
 
 header('Location: ' . $redirectBack);
 exit;

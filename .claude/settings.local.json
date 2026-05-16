@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir \"c:\\\\xampp\\\\htdocs\\\\lizzardmembers\\\\admin\" /s /b)",
+      "Bash(findstr /i import)"
+    ]
+  }
+}

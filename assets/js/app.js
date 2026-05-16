@@ -294,6 +294,19 @@ function initMobileMenu() {
   });
 }
 
+/* ===== Responsive tables: auto data-label a thead szövegéből ===== */
+function initResponsiveTables() {
+  document.querySelectorAll('.table-wrap table').forEach(table => {
+    const headers = Array.from(table.querySelectorAll('thead th'))
+                         .map(th => th.textContent.trim());
+    table.querySelectorAll('tbody tr').forEach(row => {
+      Array.from(row.querySelectorAll('td')).forEach((td, i) => {
+        td.setAttribute('data-label', headers[i] ?? '');
+      });
+    });
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   initMemberSearch();
   initMemberFilters();
@@ -305,4 +318,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initTourAdminFilters();
   initMemberPicker();
   initMobileMenu();
+  initResponsiveTables();
 });

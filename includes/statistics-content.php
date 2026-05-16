@@ -208,7 +208,7 @@ if ($view === 'club') {
 </div>
 
 <!-- ── Csempék ────────────────────────────────────────────────────────────── -->
-<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;">
+<div class="rg-4">
 
   <div class="card" style="padding:20px 24px;">
     <div style="display:flex;align-items:center;gap:12px;">
@@ -297,7 +297,7 @@ if ($view === 'club') {
 <?php else: ?>
 
 <!-- ── 1. sor ────────────────────────────────────────────────────────────── -->
-<div style="display:grid;grid-template-columns:3fr 2fr;gap:16px;margin-bottom:16px;">
+<div class="rg-3-2">
 
   <div class="card">
     <div class="card-header"><h2>Évenkénti aktivitás</h2></div>
@@ -330,7 +330,7 @@ if ($view === 'club') {
 </div>
 
 <!-- ── 2. sor ────────────────────────────────────────────────────────────── -->
-<div style="display:grid;grid-template-columns:3fr 2fr;gap:16px;margin-bottom:16px;">
+<div class="rg-3-2">
 
   <div class="card">
     <div class="card-header"><h2>Túrák száma országonként</h2></div>
@@ -364,7 +364,7 @@ if ($view === 'club') {
 
 <!-- ── 3. sor (csak egyesület nézetben) ──────────────────────────────────── -->
 <?php if ($view === 'club'): ?>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+<div class="rg-2">
 
   <div class="card">
     <div class="card-header"><h2>Havi aktivitás</h2></div>

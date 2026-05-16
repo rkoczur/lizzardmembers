@@ -96,9 +96,9 @@ include __DIR__ . '/../includes/admin-header.php';
       <div class="stat-value" style="font-size:19px;margin-top:6px;"><?= getLevelLabel($adminLevel) ?></div>
     </div>
     <?php if ($adminLvlImg): ?>
-      <div style="position:relative;width:120px;flex-shrink:0;">
+      <div style="position:relative;width:35%;max-width:120px;flex-shrink:0;">
         <img src="<?= BASE_URL ?>/assets/img/<?= e($adminLvlImg) ?>"
-             style="position:absolute;top:8px;right:8px;bottom:8px;left:0;object-fit:contain;margin:auto;"
+             style="position:absolute;top:8px;right:12px;bottom:8px;left:0;object-fit:contain;margin:auto;"
              alt="<?= e(getLevelLabel($adminLevel)) ?>">
       </div>
     <?php endif; ?>

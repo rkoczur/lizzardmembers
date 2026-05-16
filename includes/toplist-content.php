@@ -93,7 +93,7 @@ krsort($byYearTop); // újabb évek elöl
 
 ?>
 
-<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:start;">
+<div class="rg-3">
 
   <!-- All-time -->
   <div class="card">

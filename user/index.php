@@ -63,9 +63,9 @@ include __DIR__ . '/../includes/user-header.php';
       <div class="stat-value" style="font-size:19px;margin-top:6px;"><?= getLevelLabel($currentLevel) ?></div>
     </div>
     <?php if ($lvlImg): ?>
-      <div style="position:relative;width:120px;flex-shrink:0;">
+      <div style="position:relative;width:35%;max-width:120px;flex-shrink:0;">
         <img src="<?= BASE_URL ?>/assets/img/<?= e($lvlImg) ?>"
-             style="position:absolute;top:8px;right:8px;bottom:8px;left:0;object-fit:contain;margin:auto;"
+             style="position:absolute;top:8px;right:12px;bottom:8px;left:0;object-fit:contain;margin:auto;"
              alt="<?= e(getLevelLabel($currentLevel)) ?>">
       </div>
     <?php endif; ?>

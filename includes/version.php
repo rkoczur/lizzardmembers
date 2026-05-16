@@ -1,3 +1,3 @@
 <?php
 // Major: teljesen új funkció | Minor: fő funkció módosítás vagy alfunkció hozzáadás | Patch: minden egyéb
-define('APP_VERSION', '2.2.2');
+define('APP_VERSION', '2.4.0');
