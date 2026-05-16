@@ -12,8 +12,13 @@
   <!-- Sidebar -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-logo">
-      <div class="app-name"><?= APP_NAME ?></div>
-      <div class="app-tagline">Tagok portálja</div>
+      <div class="logo-wrap">
+        <img src="<?= BASE_URL ?>/assets/img/lizzard_logo.png" alt="logo" class="sidebar-logo-img">
+        <div>
+          <div class="app-name"><?= APP_NAME ?></div>
+          <div class="app-tagline">Tagok portálja</div>
+        </div>
+      </div>
     </div>
 
     <nav class="sidebar-nav">
@@ -37,6 +42,12 @@
           <path d="M3 12l9-9 9 9"/><path d="M9 21V12h6v9"/><path d="M3 12v9h18v-9"/>
         </svg>
         Túrák
+      </a>
+      <a href="<?= BASE_URL ?>/user/statistics.php" class="<?= ($activePage ?? '') === 'statistics' ? 'active' : '' ?>">
+        <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+        </svg>
+        Statisztikák
       </a>
       <div class="nav-section-label" style="margin-top:8px;">Fiók</div>
       <a href="<?= BASE_URL ?>/user/profile.php" class="<?= ($activePage ?? '') === 'profile' ? 'active' : '' ?>">

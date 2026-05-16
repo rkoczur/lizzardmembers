@@ -12,8 +12,13 @@
   <!-- Sidebar -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-logo">
-      <div class="app-name"><?= APP_NAME ?></div>
-      <div class="app-tagline">Admin felület</div>
+      <div class="logo-wrap">
+        <img src="<?= BASE_URL ?>/assets/img/lizzard_logo.png" alt="logo" class="sidebar-logo-img">
+        <div>
+          <div class="app-name"><?= APP_NAME ?></div>
+          <div class="app-tagline">Admin felület</div>
+        </div>
+      </div>
     </div>
 
     <nav class="sidebar-nav">
@@ -47,6 +52,12 @@
           <polyline points="12 3 15 8 21 8 16.5 12.5 18.5 18.5 12 15 5.5 18.5 7.5 12.5 3 8 9 8 12 3"/>
         </svg>
         Toplista
+      </a>
+      <a href="<?= BASE_URL ?>/admin/statistics.php" class="<?= ($activePage ?? '') === 'statistics' ? 'active' : '' ?>">
+        <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+        </svg>
+        Statisztikák
       </a>
       <a href="<?= BASE_URL ?>/admin/security.php" class="<?= ($activePage ?? '') === 'security' ? 'active' : '' ?>">
         <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">

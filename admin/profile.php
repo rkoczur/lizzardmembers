@@ -56,7 +56,7 @@ include __DIR__ . '/../includes/admin-header.php';
       <?= getLevelLabel($user['level']) ?> — Szint <?= $user['level'] ?>
     </span>
     <div class="divider"></div>
-    <small class="text-muted">Tag azóta: <?= formatDate($user['member_since']) ?></small>
+    <small class="text-muted">Tagság kezdete: <?= formatDate($user['member_since']) ?></small>
     <small class="text-muted" style="font-size:11px;margin-top:6px;background:var(--primary-light);color:var(--primary-dark);padding:3px 10px;border-radius:99px;font-weight:600;">Rendszergazda</small>
   </div>
 
