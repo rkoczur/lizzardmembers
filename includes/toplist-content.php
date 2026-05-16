@@ -122,7 +122,7 @@ krsort($byYearTop); // újabb évek elöl
               <td style="color:var(--text-muted);font-size:13px;"><?= $i + 1 ?></td>
               <td>
                 <?php $lvlImg = getLevelImageFilename($lvl); if ($lvlImg): ?>
-                <img src="<?= BASE_URL ?>/assets/img/<?= $lvlImg ?>" alt="<?= getLevelLabel($lvl) ?>">
+                <img src="<?= BASE_URL ?>/assets/img/<?= $lvlImg ?>" alt="<?= getLevelLabel($lvl) ?>" style="height:70px">
                 <?php endif; ?>
               </td>
               <td>

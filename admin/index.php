@@ -88,10 +88,20 @@ include __DIR__ . '/../includes/admin-header.php';
     <div class="stat-label">Pontjaim</div>
     <div class="stat-value" style="color:var(--primary)"><?= number_format($adminPoints) ?></div>
   </div>
-  <div class="stat-card">
-    <div class="stat-icon">🏅</div>
-    <div class="stat-label">Fokozatom</div>
-    <div class="stat-value" style="font-size:15px;"><?= getLevelLabel($adminLevel) ?></div>
+  <?php $adminLvlImg = getLevelImageFilename($adminLevel); ?>
+  <div class="stat-card" style="display:flex;align-items:stretch;padding:0;overflow:hidden;">
+    <div style="flex:1;min-width:0;padding:20px;">
+      <div class="stat-icon">🏅</div>
+      <div class="stat-label">Fokozatom</div>
+      <div class="stat-value" style="font-size:19px;margin-top:6px;"><?= getLevelLabel($adminLevel) ?></div>
+    </div>
+    <?php if ($adminLvlImg): ?>
+      <div style="position:relative;width:120px;flex-shrink:0;">
+        <img src="<?= BASE_URL ?>/assets/img/<?= e($adminLvlImg) ?>"
+             style="position:absolute;top:8px;right:8px;bottom:8px;left:0;object-fit:contain;margin:auto;"
+             alt="<?= e(getLevelLabel($adminLevel)) ?>">
+      </div>
+    <?php endif; ?>
   </div>
   <div class="stat-card">
     <div class="stat-icon">📅</div>

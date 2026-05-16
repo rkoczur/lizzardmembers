@@ -99,10 +99,12 @@ include __DIR__ . '/../includes/user-header.php';
           <td><strong><?= number_format((int)$t['points']) ?></strong></td>
           <td><?= number_format((int)($t['mtsz_points'] ?? 0)) ?></td>
           <td style="white-space:nowrap;">
-            <?php if ($isMine): ?>
-              <span class="badge badge-active" style="margin-right:6px;">Részt vettem</span>
-            <?php endif; ?>
-            <a href="<?= BASE_URL ?>/user/tour-detail.php?id=<?= $t['id'] ?>" class="btn btn-ghost btn-sm">Megtekintés</a>
+            <div style="display:flex;align-items:center;justify-content:flex-end;gap:6px;">
+              <?php if ($isMine): ?>
+                <span class="badge badge-active">Részt vettem</span>
+              <?php endif; ?>
+              <a href="<?= BASE_URL ?>/user/tour-detail.php?id=<?= $t['id'] ?>" class="btn btn-ghost btn-sm">Megtekintés</a>
+            </div>
           </td>
         </tr>
         <?php endforeach; ?>

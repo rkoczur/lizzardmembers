@@ -45,7 +45,7 @@ include __DIR__ . '/../includes/user-header.php';
 ?>
 
 <div style="margin-bottom:24px;">
-  <h1 style="font-size:22px;font-weight:700;">Üdvözöljük újra, <?= e($user['firstname'] ?? 'Tag') ?>!</h1>
+  <h1 style="font-size:22px;font-weight:700;">Üdv újra itt, <?= e($user['firstname'] ?? 'Tag') ?>!</h1>
   <p class="text-muted" style="margin-top:4px;">Íme a tagság áttekintése.</p>
 </div>
 
@@ -55,10 +55,20 @@ include __DIR__ . '/../includes/user-header.php';
     <div class="stat-label">Pontok</div>
     <div class="stat-value" style="color:var(--primary)"><?= number_format($currentPoints) ?></div>
   </div>
-  <div class="stat-card">
-    <div class="stat-icon">🏅</div>
-    <div class="stat-label">Fokozat</div>
-    <div class="stat-value" style="font-size:15px;"><?= getLevelLabel($currentLevel) ?></div>
+  <?php $lvlImg = getLevelImageFilename($currentLevel); ?>
+  <div class="stat-card" style="display:flex;align-items:stretch;padding:0;overflow:hidden;">
+    <div style="flex:1;min-width:0;padding:20px;">
+      <div class="stat-icon">🏅</div>
+      <div class="stat-label">Fokozat</div>
+      <div class="stat-value" style="font-size:19px;margin-top:6px;"><?= getLevelLabel($currentLevel) ?></div>
+    </div>
+    <?php if ($lvlImg): ?>
+      <div style="position:relative;width:120px;flex-shrink:0;">
+        <img src="<?= BASE_URL ?>/assets/img/<?= e($lvlImg) ?>"
+             style="position:absolute;top:8px;right:8px;bottom:8px;left:0;object-fit:contain;margin:auto;"
+             alt="<?= e(getLevelLabel($currentLevel)) ?>">
+      </div>
+    <?php endif; ?>
   </div>
   <div class="stat-card">
     <div class="stat-icon">📅</div>
