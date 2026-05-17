@@ -67,7 +67,7 @@ include __DIR__ . '/../includes/admin-header.php';
       <input type="text" id="tour-search" placeholder="Túrák keresése…">
     </div>
     <select id="tour-sort-select" onchange="location.href='?sort='+this.value"
-            style="height:32px;padding:0 8px;border:1px solid var(--border);border-radius:6px;background:var(--bg);font-size:13px;color:inherit;cursor:pointer;">
+            style="height:32px;padding:0 8px;border:1px solid var(--border);border-radius:6px;background:var(--bg);font-size:13px;color:inherit;cursor:pointer;width: 200px;">
       <option value="date_desc" <?= $sortBy === 'date_desc' ? 'selected' : '' ?>>Dátum (újabb elől)</option>
       <option value="date_asc"  <?= $sortBy === 'date_asc'  ? 'selected' : '' ?>>Dátum (régebbi elől)</option>
       <option value="km_desc"   <?= $sortBy === 'km_desc'   ? 'selected' : '' ?>>Km (több elől)</option>
