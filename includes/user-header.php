@@ -76,7 +76,7 @@
            alt="avatar">
       <div class="user-info">
         <div class="user-name"><?= e($_SESSION['user_name'] ?? 'Tag') ?></div>
-        <div class="user-role">Tag</div>
+        <div class="user-role"><?= isAdmin() ? 'Rendszergazda' : (isVezeto() ? 'Vezető' : 'Tag') ?></div>
       </div>
     </div>
     <div class="sidebar-version">Verzió: <?= APP_VERSION ?> - Copyright © Koczur Richárd</div>
@@ -93,6 +93,16 @@
         </svg>
       </button>
       <span class="page-title"><?= e($pageTitle ?? '') ?></span>
+      <?php if (isAdminOrVezeto()): ?>
+      <div class="topbar-actions">
+        <a href="<?= BASE_URL ?>/admin/index.php" class="btn btn-sm" style="display:flex;align-items:center;gap:5px;background:var(--primary,#2563eb);color:#fff;border-color:var(--primary,#2563eb);" title="Visszaváltás az admin felületre">
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+          <?= isAdmin() ? 'Admin nézet' : 'Vezető nézet' ?>
+        </a>
+      </div>
+      <?php endif; ?>
     </div>
     <div class="page-body">
       <div id="alert-container"></div>

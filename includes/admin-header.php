@@ -134,10 +134,12 @@
       </button>
       <span class="page-title"><?= e($pageTitle ?? '') ?></span>
       <div class="topbar-actions">
-        <a href="<?= BASE_URL ?>/admin/profile.php" style="display:flex;align-items:center;gap:7px;color:inherit;text-decoration:none;font-size:13px;font-weight:500;">
-          <img src="<?= getAvatarUrl($_SESSION['user_avatar'] ?? null) ?>"
-               style="width:28px;height:28px;border-radius:50%;object-fit:cover;border:1px solid var(--border);" alt="">
-          <?= e($_SESSION['user_name'] ?? '') ?>
+        <a href="<?= BASE_URL ?>/user/index.php" class="btn btn-secondary btn-sm" title="Tagok portáljának megtekintése" style="display:flex;align-items:center;gap:5px;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+          Tagnézet
         </a>
       </div>
     </div>
