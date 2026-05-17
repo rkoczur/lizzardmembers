@@ -7,7 +7,7 @@ require_once __DIR__ . '/includes/functions.php';
 
 // Redirect if already logged in
 if (isLoggedIn()) {
-    header('Location: ' . BASE_URL . (isAdmin() ? '/admin/index.php' : '/user/index.php'));
+    header('Location: ' . BASE_URL . (isAdminOrVezeto() ? '/admin/index.php' : '/user/index.php'));
     exit;
 }
 
@@ -90,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         ->execute([$user['id']]);
                     setUserSession($user);
                     $_SESSION['user_avatar'] = $user['profile_picture'];
-                    header('Location: ' . BASE_URL . ($user['role'] === 'admin' ? '/admin/index.php' : '/user/index.php'));
+                    header('Location: ' . BASE_URL . (in_array($user['role'], ['admin', 'vezeto'], true) ? '/admin/index.php' : '/user/index.php'));
                     exit;
                 }
             }

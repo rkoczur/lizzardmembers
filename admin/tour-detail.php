@@ -5,7 +5,8 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/tours-schema.php';
-requireAdmin();
+requireAdminOrVezeto();
+$ro = isVezeto();
 
 $pdo = getDb();
 ensureToursSchema($pdo);
@@ -51,17 +52,22 @@ include __DIR__ . '/../includes/admin-header.php';
     <a href="<?= BASE_URL ?>/admin/tours.php" class="btn btn-secondary btn-sm">← Vissza</a>
     <h1><?= $tour['name'] ? e($tour['name']) : e($tour['country'] . ($tour['region'] ? ' – ' . $tour['region'] : '')) ?></h1>
   </div>
+  <?php if (!$ro): ?>
   <form method="post" action="<?= BASE_URL ?>/actions/tour-delete.php"
         onsubmit="return confirmDelete('Biztosan törli ezt a túrát? A művelet nem vonható vissza.')">
     <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
     <input type="hidden" name="id" value="<?= $tour['id'] ?>">
     <button type="submit" class="btn btn-danger btn-sm">Túra törlése</button>
   </form>
+  <?php endif; ?>
 </div>
 
 <div class="card" style="max-width:760px;">
   <div class="card-header">
     <h2>Túra adatai</h2>
+    <?php if ($ro): ?>
+      <span class="badge badge-vezeto" style="font-size:11px;">Csak megtekintés</span>
+    <?php endif; ?>
   </div>
   <div class="card-body">
     <form method="post" action="<?= BASE_URL ?>/actions/tour-update.php" id="tour-form">
@@ -78,12 +84,12 @@ include __DIR__ . '/../includes/admin-header.php';
         <div class="form-group"></div>
         <div class="form-group full">
           <label>Elnevezés</label>
-          <input type="text" name="name" value="<?= e($tour['name'] ?? '') ?>" placeholder="pl. Mátra körüljáró túra">
+          <input type="text" name="name" value="<?= e($tour['name'] ?? '') ?>" placeholder="pl. Mátra körüljáró túra" <?= $ro ? 'readonly' : '' ?>>
         </div>
         <div class="form-group">
           <label>Ország <span style="color:var(--danger)">*</span></label>
           <div style="display:flex;align-items:center;gap:8px;">
-            <select name="country" id="country_select" required style="flex:1;">
+            <select name="country" id="country_select" <?= $ro ? 'disabled' : 'required' ?> style="flex:1;">
               <option value="">— Válasszon országot —</option>
               <?php foreach ($countries as $c): ?>
               <option value="<?= e($c['code']) ?>"
@@ -99,19 +105,19 @@ include __DIR__ . '/../includes/admin-header.php';
         </div>
         <div class="form-group">
           <label>Tájegység</label>
-          <input type="text" name="region" value="<?= e($tour['region'] ?? '') ?>">
+          <input type="text" name="region" value="<?= e($tour['region'] ?? '') ?>" <?= $ro ? 'readonly' : '' ?>>
         </div>
         <div class="form-group">
           <label>Dátum</label>
-          <input type="date" name="tour_date" id="tour_date" value="<?= e($tour['tour_date'] ?? '') ?>">
+          <input type="date" name="tour_date" id="tour_date" value="<?= e($tour['tour_date'] ?? '') ?>" <?= $ro ? 'readonly' : '' ?>>
         </div>
         <div class="form-group">
           <label>Napok száma <span style="color:var(--danger)">*</span></label>
-          <input type="number" name="days" id="days" value="<?= (int)$tour['days'] ?>" min="1" required>
+          <input type="number" name="days" id="days" value="<?= (int)$tour['days'] ?>" min="1" <?= $ro ? 'readonly' : 'required' ?>>
         </div>
         <div class="form-group">
           <label>Szállás típusa</label>
-          <select name="accommodation" id="accommodation">
+          <select name="accommodation" id="accommodation" <?= $ro ? 'disabled' : '' ?>>
             <option value="">— Nem megadott —</option>
             <option value="sator"      <?= ($tour['accommodation'] ?? '') === 'sator'      ? 'selected' : '' ?>>Sátor</option>
             <option value="turistahaz" <?= ($tour['accommodation'] ?? '') === 'turistahaz' ? 'selected' : '' ?>>Túristaház</option>
@@ -121,11 +127,11 @@ include __DIR__ . '/../includes/admin-header.php';
         </div>
         <div class="form-group">
           <label>Vendég résztvevők</label>
-          <input type="number" name="guest_count" min="0" value="<?= (int)($tour['guest_count'] ?? 0) ?>" placeholder="0">
+          <input type="number" name="guest_count" min="0" value="<?= (int)($tour['guest_count'] ?? 0) ?>" placeholder="0" <?= $ro ? 'readonly' : '' ?>>
         </div>
         <div class="form-group full">
           <label>Túra útvonala</label>
-          <textarea name="route" rows="4" placeholder="pl. Eger – Felsőtárkány – Bükk-fennsík – Miskolc"><?= e($tour['route'] ?? '') ?></textarea>
+          <textarea name="route" rows="4" placeholder="pl. Eger – Felsőtárkány – Bükk-fennsík – Miskolc" <?= $ro ? 'readonly' : '' ?>><?= e($tour['route'] ?? '') ?></textarea>
         </div>
       </div>
 
@@ -133,7 +139,7 @@ include __DIR__ . '/../includes/admin-header.php';
       <div class="form-grid">
         <div class="form-group">
           <label>Túramód <span style="color:var(--danger)">*</span></label>
-          <select name="tour_type" id="tour_type" required>
+          <select name="tour_type" id="tour_type" <?= $ro ? 'disabled' : 'required' ?>>
             <option value="gyalogos"   <?= ($tour['tour_type'] ?? 'gyalogos') === 'gyalogos'   ? 'selected' : '' ?>>Gyalogos</option>
             <option value="kerekparos" <?= ($tour['tour_type'] ?? '') === 'kerekparos' ? 'selected' : '' ?>>Kerékpáros</option>
             <option value="vizi"       <?= ($tour['tour_type'] ?? '') === 'vizi'       ? 'selected' : '' ?>>Vízitúra</option>
@@ -144,7 +150,7 @@ include __DIR__ . '/../includes/admin-header.php';
         </div>
         <div class="form-group" id="sub_type_group">
           <label>Altípus <span style="color:var(--danger)">*</span></label>
-          <select name="sub_type" id="sub_type"><!-- JS tölti fel --></select>
+          <select name="sub_type" id="sub_type" <?= $ro ? 'disabled' : '' ?>><!-- JS tölti fel --></select>
         </div>
       </div>
 
@@ -152,32 +158,32 @@ include __DIR__ . '/../includes/admin-header.php';
       <div class="form-grid">
         <div class="form-group" id="normal_km_group">
           <label id="normal_km_label">Nem magashegyi km</label>
-          <input type="number" name="total_km" id="total_km" step="0.1" min="0"
+          <input type="number" name="total_km" id="total_km" step="0.1" min="0" <?= $ro ? 'readonly' : '' ?>
                  value="<?= $tour['total_km'] !== null ? number_format((float)$tour['total_km'], 1, '.', '') : '' ?>">
         </div>
         <div class="form-group" id="normal_elev_group">
           <label>Nem magashegyi szintemelkedés (m)</label>
-          <input type="number" name="total_elevation" id="total_elevation" min="0"
+          <input type="number" name="total_elevation" id="total_elevation" min="0" <?= $ro ? 'readonly' : '' ?>
                  value="<?= $tour['total_elevation'] !== null ? (int)$tour['total_elevation'] : '' ?>">
         </div>
         <div class="form-group" id="alpine_km_group">
           <label>Magashegyi km (≥1500 m tszf.)</label>
-          <input type="number" name="alpine_km" id="alpine_km" step="0.1" min="0"
+          <input type="number" name="alpine_km" id="alpine_km" step="0.1" min="0" <?= $ro ? 'readonly' : '' ?>
                  value="<?= $tour['alpine_km'] !== null ? number_format((float)$tour['alpine_km'], 1, '.', '') : '' ?>">
         </div>
         <div class="form-group" id="alpine_elev_group">
           <label>Magashegyi szintemelkedés (m)</label>
-          <input type="number" name="alpine_elevation" id="alpine_elevation" min="0"
+          <input type="number" name="alpine_elevation" id="alpine_elevation" min="0" <?= $ro ? 'readonly' : '' ?>
                  value="<?= $tour['alpine_elevation'] !== null ? (int)$tour['alpine_elevation'] : '' ?>">
         </div>
         <div class="form-group" id="vizi_km_group">
           <label>Megtett km</label>
-          <input type="number" name="total_km" id="vizi_total_km" step="0.1" min="0"
+          <input type="number" name="vizi_km" id="vizi_total_km" step="0.1" min="0" <?= $ro ? 'readonly' : '' ?>
                  value="<?= $tour['total_km'] !== null ? number_format((float)$tour['total_km'], 1, '.', '') : '' ?>">
         </div>
         <div class="form-group" id="hours_group">
           <label id="hours_label">Túraidő (óra)</label>
-          <input type="number" name="tour_hours" id="tour_hours" step="0.25" min="0"
+          <input type="number" name="tour_hours" id="tour_hours" step="0.25" min="0" <?= $ro ? 'readonly' : '' ?>
                  value="<?= $tour['tour_hours'] !== null ? number_format((float)$tour['tour_hours'], 2, '.', '') : '' ?>">
         </div>
       </div>
@@ -186,7 +192,7 @@ include __DIR__ . '/../includes/admin-header.php';
       <div class="form-grid">
         <div class="form-group">
           <label>Többnapos típusa</label>
-          <select name="multi_day_type" id="multi_day_type">
+          <select name="multi_day_type" id="multi_day_type" <?= $ro ? 'disabled' : '' ?>>
             <option value="">— Nem többnapos / Nem megadott —</option>
             <option value="csillag" <?= ($tour['multi_day_type'] ?? '') === 'csillag' ? 'selected' : '' ?>>Csillagtúra (+1 pt/éj)</option>
             <option value="vandor"  <?= ($tour['multi_day_type'] ?? '') === 'vandor'  ? 'selected' : '' ?>>Vándortúra (+3 pt/éj)</option>
@@ -194,11 +200,11 @@ include __DIR__ . '/../includes/admin-header.php';
         </div>
         <div class="form-group" id="portages_group">
           <label>Hajóátemelések száma (+3 pt/alkalom)</label>
-          <input type="number" name="boat_portages" id="boat_portages" min="0" value="<?= (int)($tour['boat_portages'] ?? 0) ?>">
+          <input type="number" name="boat_portages" id="boat_portages" min="0" value="<?= (int)($tour['boat_portages'] ?? 0) ?>" <?= $ro ? 'readonly' : '' ?>>
         </div>
         <div class="form-group">
           <label>Eltöltött éjszakák</label>
-          <input type="number" name="camping_nights_fixed" id="camping_nights_fixed" min="0" value="<?= (int)($tour['camping_nights_fixed'] ?? 0) ?>">
+          <input type="number" name="camping_nights_fixed" id="camping_nights_fixed" min="0" value="<?= (int)($tour['camping_nights_fixed'] ?? 0) ?>" <?= $ro ? 'readonly' : '' ?>>
           <small style="color:var(--text-muted);">Csillagtúra: +1 pt/éj · Vándortúra: +3 pt/éj</small>
         </div>
       </div>
@@ -216,13 +222,14 @@ include __DIR__ . '/../includes/admin-header.php';
       <div class="form-grid">
         <div class="form-group">
           <label>Lizzardier pont <span style="color:var(--danger)">*</span></label>
-          <input type="number" name="points" value="<?= (int)$tour['points'] ?>" min="0" required>
+          <input type="number" name="points" value="<?= (int)$tour['points'] ?>" min="0" <?= $ro ? 'readonly' : 'required' ?>>
           <small style="color:var(--text-muted,#888);">A klub belső rangsorához használt pont (kézzel adható meg).</small>
         </div>
       </div>
 
       <div class="form-section-title">Hozzárendelt tagok</div>
       <div class="member-picker">
+        <?php if (!$ro): ?>
         <div class="member-picker-controls">
           <select id="member-picker-select">
             <option value="">— Válasszon tagot —</option>
@@ -232,12 +239,15 @@ include __DIR__ . '/../includes/admin-header.php';
           </select>
           <button type="button" id="member-picker-add" class="btn btn-secondary btn-sm">Hozzáad</button>
         </div>
+        <?php endif; ?>
         <div id="member-picker-list" class="member-picker-list">
           <?php foreach ($assignedMembers as $m): ?>
           <div class="member-picker-item" data-member-id="<?= $m['id'] ?>">
             <span><?= e($m['lastname'] . ' ' . $m['firstname']) ?><?= $m['role'] === 'admin' ? ' [Admin]' : '' ?> — <?= e($m['email']) ?></span>
             <input type="hidden" name="member_ids[]" value="<?= $m['id'] ?>">
+            <?php if (!$ro): ?>
             <button type="button" class="btn btn-danger btn-sm">Eltávolít</button>
+            <?php endif; ?>
           </div>
           <?php endforeach; ?>
         </div>
@@ -245,10 +255,16 @@ include __DIR__ . '/../includes/admin-header.php';
            <?= !empty($assignedMembers) ? 'style="display:none"' : '' ?>>Még nincs hozzárendelt tag.</p>
       </div>
 
+      <?php if (!$ro): ?>
       <div class="flex gap-2" style="margin-top:24px;">
         <button type="submit" class="btn btn-primary">Változások mentése</button>
         <a href="<?= BASE_URL ?>/admin/tours.php" class="btn btn-secondary">Mégse</a>
       </div>
+      <?php else: ?>
+      <div style="margin-top:24px;">
+        <a href="<?= BASE_URL ?>/admin/tours.php" class="btn btn-secondary">← Vissza a listához</a>
+      </div>
+      <?php endif; ?>
     </form>
   </div>
 </div>

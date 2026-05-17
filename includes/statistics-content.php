@@ -151,6 +151,8 @@ if ($view === 'club') {
         $jsCNew[]      = (int)$r['new'];
         $jsCCumul[]    = (int)$r['cumulative'];
     }
+    $jsTotalCountries = !empty($jsCCumul) ? $jsCCumul[count($jsCCumul) - 1] : 0;
+    $jsCYMax          = !empty($jsCCumul) ? max(array_merge($jsCDistinct, $jsCCumul)) + 1 : 10;
 }
 
 $jsCtryNames = $jsCtryCnt = [];
@@ -313,6 +315,9 @@ if ($view === 'club') {
   <div class="card">
     <div class="card-header">
       <h2><?= $view === 'club' ? 'Meglátogatott országok' : 'Túramód megoszlás' ?></h2>
+      <?php if ($view === 'club' && !empty($jsCCumul)): ?>
+        <span class="badge badge-active" style="font-size:11px;"><?= $jsTotalCountries ?> ország valaha összesen</span>
+      <?php endif; ?>
     </div>
     <div class="card-body" style="padding-bottom:16px;">
       <?php if ($view === 'club' && empty($countriesPerYear)): ?>
@@ -457,7 +462,7 @@ new Chart(document.getElementById('chartCountriesYear'), {
                }}}
     },
     scales: { x: { grid: { display: false } },
-              y: { beginAtZero: true, ticks: { precision: 0 }, grid: { color: GRID_COLOR } } }
+              y: { beginAtZero: true, max: <?= $jsCYMax ?>, ticks: { precision: 0 }, grid: { color: GRID_COLOR } } }
   }
 });
 <?php endif; ?>

@@ -5,7 +5,7 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/tours-schema.php';
-requireAdmin();
+requireAdminOrVezeto();
 
 $pdo = getDb();
 ensureToursSchema($pdo);
@@ -87,6 +87,7 @@ include __DIR__ . '/../includes/admin-header.php';
       </svg>
       Sablon (CSV)
     </a>
+    <?php if (isAdmin()): ?>
     <a href="<?= BASE_URL ?>/admin/tour-import.php" class="btn btn-ghost btn-sm">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
@@ -102,6 +103,7 @@ include __DIR__ . '/../includes/admin-header.php';
       </svg>
       Túra hozzáadása
     </a>
+    <?php endif; ?>
   </div>
 </div>
 
@@ -157,7 +159,7 @@ include __DIR__ . '/../includes/admin-header.php';
           <td><strong><?= number_format((int)$t['points']) ?></strong></td>
           <td><?= number_format((int)($t['mtsz_points'] ?? 0)) ?></td>
           <td>
-            <a href="<?= BASE_URL ?>/admin/tour-detail.php?id=<?= $t['id'] ?>" class="btn btn-ghost btn-sm">Módosítás</a>
+            <a href="<?= BASE_URL ?>/admin/tour-detail.php?id=<?= $t['id'] ?>" class="btn btn-ghost btn-sm"><?= isAdmin() ? 'Módosítás' : 'Megtekintés' ?></a>
           </td>
         </tr>
         <?php endforeach; ?>

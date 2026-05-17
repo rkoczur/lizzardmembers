@@ -4,7 +4,7 @@ require_once __DIR__ . '/../includes/config.php';
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
-requireAdmin();
+requireAdminOrVezeto();
 
 $pdo = getDb();
 require_once __DIR__ . '/../includes/user-schema.php';
@@ -50,6 +50,7 @@ include __DIR__ . '/../includes/admin-header.php';
       </svg>
       Sablon (CSV)
     </a>
+    <?php if (isAdmin()): ?>
     <a href="<?= BASE_URL ?>/admin/member-import.php" class="btn btn-ghost btn-sm">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
@@ -65,6 +66,7 @@ include __DIR__ . '/../includes/admin-header.php';
       </svg>
       Tag hozzáadása
     </a>
+    <?php endif; ?>
   </div>
 </div>
 
@@ -74,7 +76,7 @@ include __DIR__ . '/../includes/admin-header.php';
       <thead>
         <tr>
           <th>Tag</th>
-          <th>Szerepkör<span class="col-filter-wrap"><button class="col-filter-btn" data-filter="role" title="Szűrés">▾</button><ul class="col-filter-menu"><li class="selected"><button data-value="">Mind</button></li><li><button data-value="admin">Admin</button></li><li><button data-value="user">Tag</button></li></ul></span></th>
+          <th>Szerepkör<span class="col-filter-wrap"><button class="col-filter-btn" data-filter="role" title="Szűrés">▾</button><ul class="col-filter-menu"><li class="selected"><button data-value="">Mind</button></li><li><button data-value="admin">Admin</button></li><li><button data-value="vezeto">Vezető</button></li><li><button data-value="user">Tag</button></li></ul></span></th>
           <th>Város</th>
           <th>Tagság kezdete</th>
           <th>Utolsó fizetés</th>
@@ -98,7 +100,7 @@ include __DIR__ . '/../includes/admin-header.php';
             </div>
           </td>
           <td>
-            <span class="badge <?= $m['role'] === 'admin' ? 'badge-admin' : 'badge-user' ?>"><?= $m['role'] === 'admin' ? 'Admin' : 'Tag' ?></span>
+            <span class="badge <?= $m['role'] === 'admin' ? 'badge-admin' : ($m['role'] === 'vezeto' ? 'badge-vezeto' : 'badge-user') ?>"><?= $m['role'] === 'admin' ? 'Admin' : ($m['role'] === 'vezeto' ? 'Vezető' : 'Tag') ?></span>
             <?php if (!empty($m['locked_at'])): ?>
               <span class="badge badge-inactive" style="margin-left:4px;" title="Zárolva: <?= e((new DateTime($m['locked_at']))->format('Y.m.d H:i')) ?>">🔒 Zárolt</span>
             <?php endif; ?>
@@ -111,7 +113,7 @@ include __DIR__ . '/../includes/admin-header.php';
           <td><span class="badge <?= getMemberStatusClass($ms) ?>"><?= getMemberStatusLabel($ms) ?></span></td>
           <td style="white-space:nowrap;">
             <a href="<?= BASE_URL ?>/admin/member-detail.php?id=<?= $m['id'] ?>" class="btn btn-ghost btn-sm">Megtekintés</a>
-            <?php if ($m['id'] !== getCurrentUserId()): ?>
+            <?php if (isAdmin() && $m['id'] !== getCurrentUserId()): ?>
             <form method="post" action="<?= BASE_URL ?>/actions/member-delete.php" style="display:inline;"
                   onsubmit="return confirmDelete('Biztosan törli <?= e(addslashes($m['lastname'] . ' ' . $m['firstname'])) ?> tagot? A művelet nem vonható vissza.')">
               <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">

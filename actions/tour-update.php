@@ -33,15 +33,15 @@ $tourDate      = $_POST['tour_date']          ?? '';
 $days          = max(1, (int)($_POST['days']  ?? 1));
 $accommodation = in_array($_POST['accommodation'] ?? '', ['sator','turistahaz','apartman','hotel'])
                    ? $_POST['accommodation'] : '';
-$totalKm       = $_POST['total_km']           ?? '';
-$totalElev     = $_POST['total_elevation']    ?? '';
-$alpineKm      = $_POST['alpine_km']          ?? '';
-$alpineElev    = $_POST['alpine_elevation']   ?? '';
 $memberIds     = array_filter(array_map('intval', $_POST['member_ids'] ?? []));
 $guestCount    = max(0, (int)($_POST['guest_count'] ?? 0));
 
 $tourType     = in_array($_POST['tour_type'] ?? '', ['gyalogos','kerekparos','vizi','si','barlangi','munka'])
                   ? $_POST['tour_type'] : 'gyalogos';
+$totalKm       = $tourType === 'vizi' ? ($_POST['vizi_km'] ?? '') : ($_POST['total_km'] ?? '');
+$totalElev     = $_POST['total_elevation']    ?? '';
+$alpineKm      = $_POST['alpine_km']          ?? '';
+$alpineElev    = $_POST['alpine_elevation']   ?? '';
 $subType      = trim($_POST['sub_type'] ?? '') ?: null;
 $multiDayType = in_array($_POST['multi_day_type'] ?? '', ['csillag','vandor'])
                   ? $_POST['multi_day_type'] : null;

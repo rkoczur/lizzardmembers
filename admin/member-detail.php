@@ -5,7 +5,8 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/user-schema.php';
-requireAdmin();
+requireAdminOrVezeto();
+$ro = isVezeto();
 
 $pdo = getDb();
 ensureUserSchema($pdo);
@@ -54,13 +55,15 @@ include __DIR__ . '/../includes/admin-header.php';
     <span class="badge <?= getMemberStatusClass($ms) ?>"><?= getMemberStatusLabel($ms) ?></span>
     <?php if (!empty($member['locked_at'])): ?>
       <span class="badge badge-inactive">🔒 Fiók zárolva</span>
+      <?php if (!$ro): ?>
       <form method="post" action="<?= BASE_URL ?>/actions/member-unlock.php" style="display:inline;">
         <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
         <input type="hidden" name="id" value="<?= $member['id'] ?>">
         <button type="submit" class="btn btn-primary btn-sm">Fiók feloldása</button>
       </form>
+      <?php endif; ?>
     <?php endif; ?>
-    <?php if (!$isSelf): ?>
+    <?php if (!$ro && !$isSelf): ?>
     <form method="post" action="<?= BASE_URL ?>/actions/member-delete.php" style="display:inline;"
           onsubmit="return confirmDelete('Biztosan törli <?= e(addslashes($member['lastname'] . ' ' . $member['firstname'])) ?> tagot? A művelet nem vonható vissza.')">
       <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
@@ -78,12 +81,14 @@ include __DIR__ . '/../includes/admin-header.php';
       <img id="avatar-preview"
            src="<?= getAvatarUrl($member['profile_picture']) ?>"
            alt="Profilkép">
+      <?php if (!$ro): ?>
       <div class="avatar-overlay" id="avatar-upload-overlay" title="Fotó módosítása">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
           <circle cx="12" cy="13" r="4"/>
         </svg>
       </div>
+      <?php endif; ?>
     </div>
     <div class="member-name"><?= e($member['lastname'] . ' ' . $member['firstname']) ?></div>
     <div class="member-username">@<?= e($member['username']) ?></div>
@@ -115,37 +120,42 @@ include __DIR__ . '/../includes/admin-header.php';
   <div class="card">
     <div class="card-header">
       <h2>Tag adatai</h2>
+      <?php if ($ro): ?>
+        <span class="badge badge-vezeto" style="font-size:11px;">Csak megtekintés</span>
+      <?php endif; ?>
     </div>
     <div class="card-body">
       <form method="post" action="<?= BASE_URL ?>/actions/member-update.php" enctype="multipart/form-data">
         <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
         <input type="hidden" name="id" value="<?= $member['id'] ?>">
+        <?php if (!$ro): ?>
         <input type="file" id="avatar-file-input" name="avatar" accept="image/*" style="display:none;">
+        <?php endif; ?>
 
         <div class="form-grid">
           <div class="form-group">
             <label>Vezetéknév</label>
-            <input type="text" name="lastname" value="<?= e($member['lastname'] ?? '') ?>" required>
+            <input type="text" name="lastname" value="<?= e($member['lastname'] ?? '') ?>" <?= $ro ? 'readonly' : 'required' ?>>
           </div>
           <div class="form-group">
             <label>Keresztnév</label>
-            <input type="text" name="firstname" value="<?= e($member['firstname'] ?? '') ?>" required>
+            <input type="text" name="firstname" value="<?= e($member['firstname'] ?? '') ?>" <?= $ro ? 'readonly' : 'required' ?>>
           </div>
           <div class="form-group">
             <label>Felhasználónév</label>
-            <input type="text" name="username" value="<?= e($member['username']) ?>" required>
+            <input type="text" name="username" value="<?= e($member['username']) ?>" <?= $ro ? 'readonly' : 'required' ?>>
           </div>
           <div class="form-group">
             <label>E-mail</label>
-            <input type="email" name="email" value="<?= e($member['email']) ?>" required>
+            <input type="email" name="email" value="<?= e($member['email']) ?>" <?= $ro ? 'readonly' : 'required' ?>>
           </div>
           <div class="form-group">
             <label>Születési dátum</label>
-            <input type="date" name="dateofbirth" value="<?= e($member['dateofbirth'] ?? '') ?>">
+            <input type="date" name="dateofbirth" value="<?= e($member['dateofbirth'] ?? '') ?>" <?= $ro ? 'readonly' : '' ?>>
           </div>
           <div class="form-group">
             <label>Pólóméret</label>
-            <select name="tshirt_size">
+            <select name="tshirt_size" <?= $ro ? 'disabled' : '' ?>>
               <option value="">— Válasszon —</option>
               <?php foreach (['XS','S','M','L','XL','XXL','XXXL'] as $sz): ?>
                 <option value="<?= $sz ?>" <?= ($member['tshirt_size'] ?? '') === $sz ? 'selected' : '' ?>><?= $sz ?></option>
@@ -154,19 +164,19 @@ include __DIR__ . '/../includes/admin-header.php';
           </div>
           <div class="form-group">
             <label>Irányítószám</label>
-            <input type="text" name="zipcode" value="<?= e($member['zipcode'] ?? '') ?>">
+            <input type="text" name="zipcode" value="<?= e($member['zipcode'] ?? '') ?>" <?= $ro ? 'readonly' : '' ?>>
           </div>
           <div class="form-group">
             <label>Város</label>
-            <input type="text" name="city" value="<?= e($member['city'] ?? '') ?>">
+            <input type="text" name="city" value="<?= e($member['city'] ?? '') ?>" <?= $ro ? 'readonly' : '' ?>>
           </div>
           <div class="form-group full">
             <label>Cím</label>
-            <input type="text" name="address" value="<?= e($member['address'] ?? '') ?>">
+            <input type="text" name="address" value="<?= e($member['address'] ?? '') ?>" <?= $ro ? 'readonly' : '' ?>>
           </div>
           <div class="form-group">
             <label>Telefonszám</label>
-            <input type="tel" name="phone" value="<?= e($member['phone'] ?? '') ?>">
+            <input type="tel" name="phone" value="<?= e($member['phone'] ?? '') ?>" <?= $ro ? 'readonly' : '' ?>>
           </div>
         </div>
 
@@ -174,11 +184,11 @@ include __DIR__ . '/../includes/admin-header.php';
         <div class="form-grid">
           <div class="form-group">
             <label>Név</label>
-            <input type="text" name="emergency_name" value="<?= e($member['emergency_name'] ?? '') ?>">
+            <input type="text" name="emergency_name" value="<?= e($member['emergency_name'] ?? '') ?>" <?= $ro ? 'readonly' : '' ?>>
           </div>
           <div class="form-group">
             <label>Kapcsolat</label>
-            <select name="emergency_relation">
+            <select name="emergency_relation" <?= $ro ? 'disabled' : '' ?>>
               <option value="">— Válasszon —</option>
               <?php foreach (['szülő','gyermek','testvér','egyéb'] as $rel): ?>
                 <option value="<?= $rel ?>" <?= ($member['emergency_relation'] ?? '') === $rel ? 'selected' : '' ?>><?= $rel ?></option>
@@ -187,7 +197,7 @@ include __DIR__ . '/../includes/admin-header.php';
           </div>
           <div class="form-group">
             <label>Telefonszám</label>
-            <input type="tel" name="emergency_phone" value="<?= e($member['emergency_phone'] ?? '') ?>">
+            <input type="tel" name="emergency_phone" value="<?= e($member['emergency_phone'] ?? '') ?>" <?= $ro ? 'readonly' : '' ?>>
           </div>
         </div>
 
@@ -195,11 +205,11 @@ include __DIR__ . '/../includes/admin-header.php';
         <div class="form-grid">
           <div class="form-group">
             <label>Tagság kezdete</label>
-            <input type="date" name="member_since" value="<?= e($member['member_since'] ?? '') ?>">
+            <input type="date" name="member_since" value="<?= e($member['member_since'] ?? '') ?>" <?= $ro ? 'readonly' : '' ?>>
           </div>
           <div class="form-group">
             <label>Utolsó fizetés</label>
-            <input type="date" name="last_payment" value="<?= e($member['last_payment'] ?? '') ?>">
+            <input type="date" name="last_payment" value="<?= e($member['last_payment'] ?? '') ?>" <?= $ro ? 'readonly' : '' ?>>
           </div>
           <div class="form-group">
             <label>Szerepkör</label>
@@ -207,15 +217,19 @@ include __DIR__ . '/../includes/admin-header.php';
               <input type="text" value="Admin (saját fiók)" readonly>
               <input type="hidden" name="role" value="admin">
               <span class="form-hint">Saját szerepkörödet nem módosíthatod.</span>
+            <?php elseif ($ro): ?>
+              <input type="text" value="<?= $member['role'] === 'admin' ? 'Admin' : ($member['role'] === 'vezeto' ? 'Vezető' : 'Tag') ?>" readonly>
             <?php else: ?>
               <select name="role">
-                <option value="user"  <?= $member['role'] === 'user'  ? 'selected' : '' ?>>Tag</option>
-                <option value="admin" <?= $member['role'] === 'admin' ? 'selected' : '' ?>>Admin</option>
+                <option value="user"   <?= $member['role'] === 'user'   ? 'selected' : '' ?>>Tag</option>
+                <option value="vezeto" <?= $member['role'] === 'vezeto' ? 'selected' : '' ?>>Vezető</option>
+                <option value="admin"  <?= $member['role'] === 'admin'  ? 'selected' : '' ?>>Admin</option>
               </select>
             <?php endif; ?>
           </div>
         </div>
 
+        <?php if (!$ro): ?>
         <div class="pass-section">
           <h3>Jelszó visszaállítása (hagyja üresen a jelenlegi megtartásához)</h3>
           <div class="form-grid">
@@ -234,6 +248,11 @@ include __DIR__ . '/../includes/admin-header.php';
           <button type="submit" class="btn btn-primary">Változások mentése</button>
           <a href="<?= BASE_URL ?>/admin/members.php" class="btn btn-secondary">Mégse</a>
         </div>
+        <?php else: ?>
+        <div style="margin-top:20px;">
+          <a href="<?= BASE_URL ?>/admin/members.php" class="btn btn-secondary">← Vissza a listához</a>
+        </div>
+        <?php endif; ?>
       </form>
     </div>
   </div>

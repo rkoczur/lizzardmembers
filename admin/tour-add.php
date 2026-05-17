@@ -5,7 +5,12 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/tours-schema.php';
-requireAdmin();
+requireAdminOrVezeto();
+if (isVezeto()) {
+    flash('error', 'Nincs jogosultságod ehhez a művelethez.');
+    header('Location: ' . BASE_URL . '/admin/tours.php');
+    exit;
+}
 
 $pdo = getDb();
 ensureToursSchema($pdo);
@@ -134,7 +139,7 @@ include __DIR__ . '/../includes/admin-header.php';
         <!-- Vízitúra: csak km -->
         <div class="form-group" id="vizi_km_group">
           <label>Megtett km</label>
-          <input type="number" name="total_km" id="vizi_total_km" step="0.1" min="0" value="<?= e($old['total_km'] ?? '') ?>" placeholder="0.0">
+          <input type="number" name="vizi_km" id="vizi_total_km" step="0.1" min="0" value="<?= e($old['total_km'] ?? '') ?>" placeholder="0.0">
         </div>
         <!-- Időalapú: si, barlangi, munka -->
         <div class="form-group" id="hours_group">

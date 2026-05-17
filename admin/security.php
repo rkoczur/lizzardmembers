@@ -6,7 +6,7 @@ require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/user-schema.php';
 require_once __DIR__ . '/../includes/ip-block-schema.php';
-requireAdmin();
+requireAdminOrVezeto();
 
 $pdo = getDb();
 ensureUserSchema($pdo);
@@ -89,11 +89,13 @@ include __DIR__ . '/../includes/admin-header.php';
             <td><span class="badge badge-inactive"><?= (int)$u['login_attempts'] ?> / 3</span></td>
             <td style="white-space:nowrap;font-size:13px;"><?= e((new DateTime($u['locked_at']))->format('Y.m.d H:i:s')) ?></td>
             <td style="display:flex;gap:6px;">
+              <?php if (isAdmin()): ?>
               <form method="post" action="<?= BASE_URL ?>/actions/member-unlock.php">
                 <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
                 <input type="hidden" name="id" value="<?= $u['id'] ?>">
                 <button type="submit" class="btn btn-primary btn-sm">Feloldás</button>
               </form>
+              <?php endif; ?>
               <a href="<?= BASE_URL ?>/admin/member-detail.php?id=<?= $u['id'] ?>" class="btn btn-ghost btn-sm">Megtekintés</a>
             </td>
           </tr>
@@ -137,11 +139,13 @@ include __DIR__ . '/../includes/admin-header.php';
             <td><span class="badge badge-inactive"><?= (int)$row['attempts'] ?> / 3</span></td>
             <td style="white-space:nowrap;font-size:13px;"><?= e((new DateTime($row['last_attempt']))->format('Y.m.d H:i:s')) ?></td>
             <td>
+              <?php if (isAdmin()): ?>
               <form method="post" action="<?= BASE_URL ?>/actions/ip-unblock.php">
                 <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
                 <input type="hidden" name="ip" value="<?= e($row['ip']) ?>">
                 <button type="submit" class="btn btn-primary btn-sm">Feloldás</button>
               </form>
+              <?php endif; ?>
             </td>
           </tr>
           <?php endforeach; ?>

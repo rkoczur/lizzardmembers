@@ -4,7 +4,7 @@ require_once __DIR__ . '/../includes/config.php';
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
-requireAdmin();
+requireAdminOrVezeto();
 
 $pdo = getDb();
 recalcUserStats($pdo);
@@ -215,7 +215,7 @@ include __DIR__ . '/../includes/admin-header.php';
               </div>
             </div>
           </td>
-          <td><span class="badge <?= $m['role'] === 'admin' ? 'badge-admin' : 'badge-user' ?>"><?= $m['role'] === 'admin' ? 'Admin' : 'Tag' ?></span></td>
+          <td><span class="badge <?= $m['role'] === 'admin' ? 'badge-admin' : ($m['role'] === 'vezeto' ? 'badge-vezeto' : 'badge-user') ?>"><?= $m['role'] === 'admin' ? 'Admin' : ($m['role'] === 'vezeto' ? 'Vezető' : 'Tag') ?></span></td>
           <td><?= formatDate($m['member_since']) ?></td>
           <td><span class="level-badge <?= getLevelClass($m['level']) ?>"><?= getLevelLabel($m['level']) ?></span></td>
           <td><strong><?= number_format($m['points']) ?></strong></td>

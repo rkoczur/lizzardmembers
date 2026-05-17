@@ -108,7 +108,7 @@
            alt="avatar">
       <div class="user-info">
         <div class="user-name"><?= e($_SESSION['user_name'] ?? 'Admin') ?></div>
-        <div class="user-role">Rendszergazda</div>
+        <div class="user-role"><?= isAdmin() ? 'Rendszergazda' : 'Vezető' ?></div>
       </div>
     </div>
     <div class="sidebar-version">Verzió: <?= APP_VERSION ?> - Copyright © Koczur Richárd</div>

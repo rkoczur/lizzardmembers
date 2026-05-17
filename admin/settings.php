@@ -5,7 +5,7 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/tours-schema.php';
-requireAdmin();
+requireAdminOrVezeto();
 
 $pdo = getDb();
 ensureToursSchema($pdo);
@@ -34,12 +34,14 @@ include __DIR__ . '/../includes/admin-header.php';
 <div class="card">
   <div class="card-header" style="display:flex;align-items:center;justify-content:space-between;">
     <h2>Országok</h2>
+    <?php if (isAdmin()): ?>
     <a href="<?= BASE_URL ?>/admin/country-add.php" class="btn btn-primary btn-sm">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" width="14" height="14">
         <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
       </svg>
       Új ország
     </a>
+    <?php endif; ?>
   </div>
   <div class="card-body" style="padding-bottom:0;">
     <p style="color:var(--text-muted);font-size:13px;margin-bottom:16px;">
@@ -81,7 +83,7 @@ include __DIR__ . '/../includes/admin-header.php';
             <?php endif; ?>
           </td>
           <td>
-            <a href="<?= BASE_URL ?>/admin/country-detail.php?id=<?= $c['id'] ?>" class="btn btn-ghost btn-sm">Szerkesztés</a>
+            <a href="<?= BASE_URL ?>/admin/country-detail.php?id=<?= $c['id'] ?>" class="btn btn-ghost btn-sm"><?= isAdmin() ? 'Szerkesztés' : 'Megtekintés' ?></a>
           </td>
         </tr>
         <?php endforeach; ?>
