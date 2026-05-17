@@ -13,9 +13,11 @@ ensureToursSchema($pdo);
 $userId = getCurrentUserId();
 
 $tours = $pdo->query("
-    SELECT t.*, COUNT(tm.user_id) AS member_count
+    SELECT t.*, COUNT(tm.user_id) AS member_count,
+           c.name_hu AS country_name, c.flag_filename AS country_flag
     FROM tours t
     LEFT JOIN tour_members tm ON tm.tour_id = t.id
+    LEFT JOIN countries c ON c.code = t.country
     GROUP BY t.id
     ORDER BY t.tour_date DESC, t.created_at DESC
 ")->fetchAll();
@@ -55,7 +57,8 @@ include __DIR__ . '/../includes/user-header.php';
       <thead>
         <tr>
           <th>Kód</th>
-          <th>Elnevezés / Ország</th>
+          <th>Elnevezés</th>
+          <th>Ország</th>
           <th>Túramód</th>
           <th>Dátum</th>
           <th>Napok</th>
@@ -73,11 +76,13 @@ include __DIR__ . '/../includes/user-header.php';
         ?>
         <tr data-mine="<?= $isMine ? '1' : '0' ?>">
           <td><code style="font-size:.85em;white-space:nowrap;"><?= e($t['tour_code'] ?? '—') ?></code></td>
+          <td class="td-name"><?= $t['name'] ? e($t['name']) : e($t['country_name'] ?? $t['country']) ?></td>
           <td>
-            <div class="td-name"><?= $t['name'] ? e($t['name']) : e($t['country']) ?></div>
-            <div class="td-sub">
-              <?= e($t['country']) ?><?= $t['region'] ? ' – ' . e($t['region']) : '' ?>
-            </div>
+            <?php if (!empty($t['country_flag'])): ?>
+              <img src="<?= e(getFlagUrl($t['country_flag'])) ?>"
+                   style="width:18px;height:13px;object-fit:cover;vertical-align:middle;border:1px solid var(--border);border-radius:1px;margin-right:3px;" alt="">
+            <?php endif; ?>
+            <?= e($t['country_name'] ?? $t['country']) ?><?= $t['region'] ? ' – ' . e($t['region']) : '' ?>
           </td>
           <td><?= e(getTourTypeLabel($t['tour_type'] ?? 'gyalogos')) ?></td>
           <td><?= $t['tour_date'] ? formatDate($t['tour_date']) : '—' ?></td>
@@ -98,7 +103,7 @@ include __DIR__ . '/../includes/user-header.php';
           <td><?= (int)$t['member_count'] ?> tag<?= ($t['guest_count'] ?? 0) > 0 ? ', ' . (int)$t['guest_count'] . ' vendég' : '' ?></td>
           <td><strong><?= number_format((int)$t['points']) ?></strong></td>
           <td><?= number_format((int)($t['mtsz_points'] ?? 0)) ?></td>
-          <td style="white-space:nowrap;">
+          <td class="td-actions" style="white-space:nowrap;">
             <div style="display:flex;align-items:center;justify-content:flex-end;gap:6px;">
               <?php if ($isMine): ?>
                 <span class="badge badge-active">Részt vettem</span>
@@ -109,7 +114,7 @@ include __DIR__ . '/../includes/user-header.php';
         </tr>
         <?php endforeach; ?>
         <?php if (empty($tours)): ?>
-        <tr><td colspan="11">
+        <tr><td colspan="12">
           <div class="empty-state">
             <div class="empty-icon">🗺️</div>
             <p>Még nem rögzítettek túrát.</p>

@@ -15,12 +15,12 @@ $allTime = $pdo->query("
 
 // 2. Current year toplist
 $stmtYear = $pdo->prepare("
-    SELECT u.firstname, u.lastname, u.role, SUM(t.points) AS total_points
+    SELECT u.firstname, u.lastname, u.role, u.level, SUM(t.points) AS total_points
     FROM tour_members tm
     JOIN tours t ON t.id = tm.tour_id AND YEAR(t.tour_date) = :yr
     JOIN users u ON u.id = tm.user_id
     WHERE u.role != 'admin'
-    GROUP BY u.id, u.firstname, u.lastname, u.role
+    GROUP BY u.id, u.firstname, u.lastname, u.role, u.level
     ORDER BY total_points DESC
     LIMIT 20
 ");
@@ -30,7 +30,7 @@ $currentYearList = $stmtYear->fetchAll();
 // 3. Év túratársa — korrigált pontszámmal
 // Szabály: idei pont + HA NEM ő volt az előző éves bajnok → előző évi pontjainak 20%-a
 $allYearRows = $pdo->query("
-    SELECT YEAR(t.tour_date) AS yr, u.id, u.firstname, u.lastname, u.role,
+    SELECT YEAR(t.tour_date) AS yr, u.id, u.firstname, u.lastname, u.role, u.level,
            SUM(t.points) AS pts
     FROM tour_members tm
     JOIN tours t ON t.id = tm.tour_id
@@ -83,6 +83,7 @@ foreach ($pointsByYear as $yr => $users) {
         'firstname'    => $w['data']['firstname'],
         'lastname'     => $w['data']['lastname'],
         'role'         => $w['data']['role'],
+        'level'        => (int)($w['data']['level'] ?? 1),
         'total_points' => $w['score'],
         'raw_points'   => $w['raw'],
         'bonus'        => $w['bonus'],
@@ -95,10 +96,16 @@ krsort($byYearTop); // újabb évek elöl
 
 ?>
 
+<div class="toplist-mobile-tabs">
+  <button class="tl-tab active" data-target="toplist-alltime">Örökös</button>
+  <button class="tl-tab" data-target="toplist-year"><?= date('Y') ?></button>
+  <button class="tl-tab" data-target="toplist-yearwinner">Év túratársa</button>
+</div>
+
 <div class="rg-3">
 
   <!-- All-time -->
-  <div class="card">
+  <div class="card" id="toplist-alltime">
     <div class="card-header">
       <h2>Örökös toplista</h2>
       <span class="badge badge-active" style="font-size:11px;">Összes pont</span>
@@ -122,7 +129,7 @@ krsort($byYearTop); // újabb évek elöl
             <?php $lvl = (int)$row['level']; ?>
             <tr>
               <td style="color:var(--text-muted);font-size:13px;"><?= $i + 1 ?></td>
-              <td>
+              <td class="td-rank-img">
                 <?php $lvlImg = getLevelImageFilename($lvl); if ($lvlImg): ?>
                 <img src="<?= BASE_URL ?>/assets/img/<?= $lvlImg ?>" alt="<?= getLevelLabel($lvl) ?>" style="height:70px">
                 <?php endif; ?>
@@ -144,7 +151,7 @@ krsort($byYearTop); // újabb évek elöl
   </div>
 
   <!-- Current year -->
-  <div class="card">
+  <div class="card" id="toplist-year">
     <div class="card-header">
       <h2><?= date('Y') ?>. évi toplista</h2>
       <span class="badge badge-active" style="font-size:11px;">Idei pont</span>
@@ -154,17 +161,24 @@ krsort($byYearTop); // újabb évek elöl
         <thead>
           <tr>
             <th style="width:32px;">#</th>
+            <th></th>
             <th>Név</th>
             <th style="text-align:right;">Pontok</th>
           </tr>
         </thead>
         <tbody>
           <?php if (empty($currentYearList)): ?>
-            <tr><td colspan="3" class="empty-state"><p>Még nincs idei túra.</p></td></tr>
+            <tr><td colspan="4" class="empty-state"><p>Még nincs idei túra.</p></td></tr>
           <?php else: ?>
             <?php foreach ($currentYearList as $i => $row): ?>
+            <?php $lvl = (int)($row['level'] ?? 1); ?>
             <tr>
               <td style="color:var(--text-muted);font-size:13px;"><?= $i + 1 ?></td>
+              <td class="td-rank-img">
+                <?php $lvlImg = getLevelImageFilename($lvl); if ($lvlImg): ?>
+                <img src="<?= BASE_URL ?>/assets/img/<?= $lvlImg ?>" alt="<?= getLevelLabel($lvl) ?>" style="height:70px">
+                <?php endif; ?>
+              </td>
               <td>
                 <?= e($row['lastname'] . ' ' . $row['firstname']) ?>
                 <?php if (($row['role'] ?? '') === 'admin'): ?>
@@ -181,7 +195,7 @@ krsort($byYearTop); // újabb évek elöl
   </div>
 
   <!-- Top scorer per year -->
-  <div class="card">
+  <div class="card" id="toplist-yearwinner">
     <div class="card-header">
       <h2>Év túratársa</h2>
       <span class="badge badge-active" style="font-size:11px;">Korrigált pont</span>
@@ -191,17 +205,24 @@ krsort($byYearTop); // újabb évek elöl
         <thead>
           <tr>
             <th style="width:48px;">Év</th>
+            <th></th>
             <th>Név</th>
             <th style="text-align:right;">Pontok</th>
           </tr>
         </thead>
         <tbody>
           <?php if (empty($byYearTop)): ?>
-            <tr><td colspan="3" class="empty-state"><p>Még nincs adat.</p></td></tr>
+            <tr><td colspan="4" class="empty-state"><p>Még nincs adat.</p></td></tr>
           <?php else: ?>
             <?php foreach ($byYearTop as $yr => $row): ?>
+            <?php $lvl = (int)($row['level'] ?? 1); ?>
             <tr>
               <td><strong><?= (int)$yr ?></strong></td>
+              <td class="td-rank-img">
+                <?php $lvlImg = getLevelImageFilename($lvl); if ($lvlImg): ?>
+                <img src="<?= BASE_URL ?>/assets/img/<?= $lvlImg ?>" alt="<?= getLevelLabel($lvl) ?>" style="height:70px">
+                <?php endif; ?>
+              </td>
               <td>
                 <?= e($row['lastname'] . ' ' . $row['firstname']) ?>
                 <?php if (($row['role'] ?? '') === 'admin'): ?>
@@ -225,3 +246,43 @@ krsort($byYearTop); // újabb évek elöl
   </div>
 
 </div>
+
+<script>
+(function () {
+  var BREAKPOINT = 768;
+  var tabs  = document.querySelectorAll('.tl-tab');
+  var cards = document.querySelectorAll('.rg-3 .card[id^="toplist-"]');
+
+  function isMobile() { return window.innerWidth <= BREAKPOINT; }
+
+  function showPanel(targetId) {
+    cards.forEach(function (c) { c.classList.add('tl-hidden'); });
+    var el = document.getElementById(targetId);
+    if (el) el.classList.remove('tl-hidden');
+  }
+
+  function resetPanels() {
+    cards.forEach(function (c) { c.classList.remove('tl-hidden'); });
+  }
+
+  function initTabs() {
+    if (isMobile()) {
+      var active = document.querySelector('.tl-tab.active');
+      showPanel(active ? active.dataset.target : 'toplist-alltime');
+    } else {
+      resetPanels();
+    }
+  }
+
+  tabs.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      tabs.forEach(function (b) { b.classList.remove('active'); });
+      this.classList.add('active');
+      if (isMobile()) showPanel(this.dataset.target);
+    });
+  });
+
+  window.addEventListener('resize', initTabs);
+  initTabs();
+})();
+</script>
