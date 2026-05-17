@@ -10,7 +10,7 @@ requireAdminOrVezeto();
 $pdo = getDb();
 ensureToursSchema($pdo);
 
-$validSorts = ['date_desc', 'date_asc', 'km_desc', 'km_asc', 'code'];
+$validSorts = ['date_desc', 'date_asc', 'km_desc', 'km_asc', 'code', 'pts_desc', 'pts_asc'];
 $sortBy     = in_array($_GET['sort'] ?? '', $validSorts, true) ? $_GET['sort'] : 'date_desc';
 
 $orderBy = match($sortBy) {
@@ -18,6 +18,8 @@ $orderBy = match($sortBy) {
     'km_desc'   => '(COALESCE(t.total_km,0)+COALESCE(t.alpine_km,0)) DESC, t.tour_date DESC',
     'km_asc'    => '(COALESCE(t.total_km,0)+COALESCE(t.alpine_km,0)) ASC,  t.tour_date DESC',
     'code'      => 'CAST(t.tour_code AS UNSIGNED) ASC, t.tour_code ASC',
+    'pts_desc'  => 't.points DESC, t.tour_date DESC',
+    'pts_asc'   => 't.points ASC,  t.tour_date DESC',
     default     => 't.tour_date DESC, t.created_at DESC',
 };
 
@@ -71,6 +73,8 @@ include __DIR__ . '/../includes/admin-header.php';
       <option value="km_desc"   <?= $sortBy === 'km_desc'   ? 'selected' : '' ?>>Km (több elől)</option>
       <option value="km_asc"    <?= $sortBy === 'km_asc'    ? 'selected' : '' ?>>Km (kevesebb elől)</option>
       <option value="code"      <?= $sortBy === 'code'      ? 'selected' : '' ?>>Sorszám szerint</option>
+      <option value="pts_desc"  <?= $sortBy === 'pts_desc'  ? 'selected' : '' ?>>Lizzardier pont (több elől)</option>
+      <option value="pts_asc"   <?= $sortBy === 'pts_asc'   ? 'selected' : '' ?>>Lizzardier pont (kevesebb elől)</option>
     </select>
     <a href="<?= BASE_URL ?>/actions/tours-export.php" class="btn btn-ghost btn-sm">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
