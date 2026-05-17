@@ -16,3 +16,5 @@ define('AVATAR_DIR', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'assets' . DIRECTO
 define('AVATAR_URL', BASE_URL . '/assets/uploads/avatars/');
 define('FLAG_DIR',   dirname(__DIR__) . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'flags' . DIRECTORY_SEPARATOR);
 define('FLAG_URL',   BASE_URL . '/assets/uploads/flags/');
+define('GPX_DIR',    dirname(__DIR__) . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'gpx' . DIRECTORY_SEPARATOR);
+define('GPX_URL',    BASE_URL . '/assets/uploads/gpx/');

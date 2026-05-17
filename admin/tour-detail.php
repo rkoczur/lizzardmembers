@@ -70,7 +70,7 @@ include __DIR__ . '/../includes/admin-header.php';
     <?php endif; ?>
   </div>
   <div class="card-body">
-    <form method="post" action="<?= BASE_URL ?>/actions/tour-update.php" id="tour-form">
+    <form method="post" action="<?= BASE_URL ?>/actions/tour-update.php" id="tour-form" enctype="multipart/form-data">
       <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
       <input type="hidden" name="id" value="<?= $tour['id'] ?>">
 
@@ -226,6 +226,26 @@ include __DIR__ . '/../includes/admin-header.php';
           <small style="color:var(--text-muted,#888);">A klub belső rangsorához használt pont (kézzel adható meg).</small>
         </div>
       </div>
+
+      <?php if (!$ro): ?>
+      <div class="form-section-title">GPX térkép</div>
+      <div class="form-grid">
+        <div class="form-group full">
+          <label>GPX fájl</label>
+          <?php if (!empty($tour['gpx_file'])): ?>
+          <div style="margin-bottom:8px;padding:10px 14px;background:var(--bg-subtle,#f5f5f5);border:1px solid var(--border);border-radius:6px;display:flex;align-items:center;gap:10px;">
+            <span style="color:var(--success,#16a34a);font-size:16px;">✓</span>
+            <span style="font-size:13px;font-family:monospace;"><?= e($tour['gpx_file']) ?></span>
+            <label style="margin-left:auto;display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px;">
+              <input type="checkbox" name="delete_gpx" value="1"> GPX fájl törlése
+            </label>
+          </div>
+          <?php endif; ?>
+          <input type="file" name="gpx_file" accept=".gpx">
+          <small style="color:var(--text-muted);">Csak .gpx formátum, max. 5 MB.<?= !empty($tour['gpx_file']) ? ' Új fájl feltöltése felülírja a régit.' : '' ?></small>
+        </div>
+      </div>
+      <?php endif; ?>
 
       <div class="form-section-title">Hozzárendelt tagok</div>
       <div class="member-picker">
@@ -444,5 +464,35 @@ $jsInitAccom    = json_encode($tour['accommodation'] ?? '');
   })();
 })();
 </script>
+
+<?php if (!empty($tour['gpx_file'])): ?>
+<div class="card" style="max-width:760px;margin-top:20px;">
+  <div class="card-header"><h2>GPX térkép</h2></div>
+  <div id="tour-map" style="height:480px;border-radius:0 0 var(--radius,8px) var(--radius,8px);overflow:hidden;"></div>
+</div>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.7.0/gpx.min.js"></script>
+<script>
+(function () {
+  var map = L.map('tour-map');
+  L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+    maxZoom: 17,
+    attribution: 'Adatok: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> közreműködők, <a href="http://viewfinderpanoramas.org">SRTM</a> | Térkép: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+  }).addTo(map);
+
+  new L.GPX(<?= json_encode(GPX_URL . $tour['gpx_file']) ?>, {
+    async: true,
+    polyline_options: { color: '#e03030', weight: 3, opacity: 0.85 },
+    marker_options: { startIconUrl: null, endIconUrl: null, shadowUrl: null }
+  }).on('loaded', function (e) {
+    map.fitBounds(e.target.getBounds(), { padding: [20, 20] });
+  }).on('error', function () {
+    document.getElementById('tour-map').innerHTML =
+      '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--text-muted,#888);">Nem sikerült betölteni a GPX fájlt.</div>';
+  }).addTo(map);
+})();
+</script>
+<?php endif; ?>
 
 <?php include __DIR__ . '/../includes/admin-footer.php'; ?>

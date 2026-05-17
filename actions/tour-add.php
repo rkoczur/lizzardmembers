@@ -116,6 +116,44 @@ $stmt->execute([
 
 $newId = (int)$pdo->lastInsertId();
 
+// GPX fájl feldolgozása
+$gpxFile = null;
+if (isset($_FILES['gpx_file']) && $_FILES['gpx_file']['error'] === UPLOAD_ERR_OK) {
+    $gpxTmp  = $_FILES['gpx_file']['tmp_name'];
+    $gpxOrig = $_FILES['gpx_file']['name'];
+    $gpxExt  = strtolower(pathinfo($gpxOrig, PATHINFO_EXTENSION));
+    $gpxSize = $_FILES['gpx_file']['size'];
+
+    if ($gpxExt !== 'gpx') {
+        flash('error', 'Csak .gpx kiterjesztésű fájl tölthető fel.');
+        header('Location: ' . BASE_URL . '/admin/tour-detail.php?id=' . $newId);
+        exit;
+    }
+    if ($gpxSize > 5 * 1024 * 1024) {
+        flash('error', 'A GPX fájl mérete nem haladhatja meg az 5 MB-ot.');
+        header('Location: ' . BASE_URL . '/admin/tour-detail.php?id=' . $newId);
+        exit;
+    }
+    $finfo = new finfo(FILEINFO_MIME_TYPE);
+    $mime  = $finfo->file($gpxTmp);
+    $allowedMimes = ['text/xml', 'application/xml', 'application/gpx+xml', 'text/plain', 'application/octet-stream'];
+    if (!in_array($mime, $allowedMimes, true)) {
+        flash('error', 'Érvénytelen GPX fájl formátum.');
+        header('Location: ' . BASE_URL . '/admin/tour-detail.php?id=' . $newId);
+        exit;
+    }
+    if (!is_dir(GPX_DIR)) {
+        mkdir(GPX_DIR, 0755, true);
+    }
+    $gpxFile = 'gpx_' . $newId . '_' . time() . '.gpx';
+    if (!move_uploaded_file($gpxTmp, GPX_DIR . $gpxFile)) {
+        flash('error', 'A GPX fájl feltöltése sikertelen.');
+        header('Location: ' . BASE_URL . '/admin/tour-detail.php?id=' . $newId);
+        exit;
+    }
+    $pdo->prepare("UPDATE tours SET gpx_file = ? WHERE id = ?")->execute([$gpxFile, $newId]);
+}
+
 if ($memberIds) {
     $ins = $pdo->prepare("INSERT IGNORE INTO tour_members (tour_id, user_id) VALUES (?, ?)");
     foreach ($memberIds as $uid) {

@@ -51,6 +51,8 @@ function ensureToursSchema(PDO $pdo): void
         "ALTER TABLE `tours` ADD COLUMN `guest_count` SMALLINT UNSIGNED NOT NULL DEFAULT 0 AFTER `participant_count`",
         // Túra útvonala (hosszú szabad szöveges mező)
         "ALTER TABLE `tours` ADD COLUMN `route` TEXT DEFAULT NULL AFTER `name`",
+        // GPX fájl neve (feltöltött track)
+        "ALTER TABLE `tours` ADD COLUMN `gpx_file` VARCHAR(255) DEFAULT NULL",
     ] as $sql) {
         try { $pdo->exec($sql); } catch (PDOException) {}
     }
@@ -70,6 +72,11 @@ function ensureToursSchema(PDO $pdo): void
     // Zászló mappa létrehozása
     if (defined('FLAG_DIR') && !is_dir(FLAG_DIR)) {
         @mkdir(FLAG_DIR, 0755, true);
+    }
+
+    // GPX mappa létrehozása
+    if (defined('GPX_DIR') && !is_dir(GPX_DIR)) {
+        @mkdir(GPX_DIR, 0755, true);
     }
 
     // Alap országok feltöltése üres táblánál

@@ -40,7 +40,7 @@ include __DIR__ . '/../includes/admin-header.php';
 
 <div class="card" style="max-width:760px;">
   <div class="card-body">
-    <form method="post" action="<?= BASE_URL ?>/actions/tour-add.php" id="tour-form">
+    <form method="post" action="<?= BASE_URL ?>/actions/tour-add.php" id="tour-form" enctype="multipart/form-data">
       <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
 
       <div class="form-section-title">Általános adatok</div>
@@ -175,6 +175,15 @@ include __DIR__ . '/../includes/admin-header.php';
           <div style="font-size:.75rem;color:var(--text-muted,#888);text-transform:uppercase;letter-spacing:.05em;">Számított MTSZ pontszám (tájékoztató)</div>
           <div id="points-display" style="font-size:1.5rem;font-weight:700;color:var(--primary,#2563eb);">0 pont</div>
           <div id="points-note" style="font-size:.75rem;color:var(--text-muted,#888);margin-top:2px;"></div>
+        </div>
+      </div>
+
+      <div class="form-section-title">GPX térkép</div>
+      <div class="form-grid">
+        <div class="form-group full">
+          <label>GPX fájl (opcionális)</label>
+          <input type="file" name="gpx_file" accept=".gpx">
+          <small style="color:var(--text-muted);">Csak .gpx formátum, max. 5 MB. A térkép a túra mentése után jelenik meg.</small>
         </div>
       </div>
 

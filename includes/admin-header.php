@@ -66,6 +66,14 @@
         </svg>
         Biztonság
       </a>
+      <a href="<?= BASE_URL ?>/admin/login-log.php" class="<?= ($activePage ?? '') === 'login-log' ? 'active' : '' ?>">
+        <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+          <polyline points="10 17 15 12 10 7"/>
+          <line x1="15" y1="12" x2="3" y2="12"/>
+        </svg>
+        Belépési napló
+      </a>
       <a href="<?= BASE_URL ?>/admin/audit-log.php" class="<?= ($activePage ?? '') === 'audit' ? 'active' : '' ?>">
         <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/>
