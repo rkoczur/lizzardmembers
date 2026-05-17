@@ -75,7 +75,7 @@ include __DIR__ . '/../includes/admin-header.php';
 
 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;min-height:36px;">
   <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;user-select:none;">
-    <input type="checkbox" id="select-all"> <span>Összes kijelölése</span>
+    <input type="checkbox" id="select-all"> <span style="white-space:nowrap;">Összes kijelölése</span>
   </label>
   <button type="submit" class="btn btn-primary btn-sm" id="bulk-email-btn" disabled style="display:flex;align-items:center;gap:5px;">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="14" height="14">
@@ -92,13 +92,13 @@ include __DIR__ . '/../includes/admin-header.php';
         <tr>
           <th style="width:36px;"></th>
           <th>Tag</th>
-          <th>Szerepkör<span class="col-filter-wrap"><button class="col-filter-btn" data-filter="role" title="Szűrés">▾</button><ul class="col-filter-menu"><li class="selected"><button data-value="">Mind</button></li><li><button data-value="admin">Admin</button></li><li><button data-value="vezeto">Vezető</button></li><li><button data-value="user">Tag</button></li></ul></span></th>
+          <th>Szerepkör<span class="col-filter-wrap"><button type="button" class="col-filter-btn" data-filter="role" title="Szűrés">▾</button><ul class="col-filter-menu"><li class="selected"><button type="button" data-value="">Mind</button></li><li><button type="button" data-value="admin">Admin</button></li><li><button type="button" data-value="vezeto">Vezető</button></li><li><button type="button" data-value="user">Tag</button></li></ul></span></th>
           <th>Város</th>
           <th>Tagság kezdete</th>
           <th>Utolsó fizetés</th>
-          <th>Szint<span class="col-filter-wrap"><button class="col-filter-btn" data-filter="level" title="Szűrés">▾</button><ul class="col-filter-menu"><li class="selected"><button data-value="">Mind</button></li><li><button data-value="1">Újonc</button></li><li><button data-value="2">Közlegény</button></li><li><button data-value="3">Tizedes</button></li><li><button data-value="4">Őrmester</button></li><li><button data-value="5">Hadnagy</button></li><li><button data-value="6">Százados</button></li><li><button data-value="7">Őrnagy</button></li><li><button data-value="8">Alezredes</button></li><li><button data-value="9">Ezredes</button></li></ul></span></th>
+          <th>Szint<span class="col-filter-wrap"><button type="button" class="col-filter-btn" data-filter="level" title="Szűrés">▾</button><ul class="col-filter-menu"><li class="selected"><button type="button" data-value="">Mind</button></li><li><button type="button" data-value="1">Újonc</button></li><li><button type="button" data-value="2">Közlegény</button></li><li><button type="button" data-value="3">Tizedes</button></li><li><button type="button" data-value="4">Őrmester</button></li><li><button type="button" data-value="5">Hadnagy</button></li><li><button type="button" data-value="6">Százados</button></li><li><button type="button" data-value="7">Őrnagy</button></li><li><button type="button" data-value="8">Alezredes</button></li><li><button type="button" data-value="9">Ezredes</button></li></ul></span></th>
           <th>Pontok</th>
-          <th>Tagság státusza<span class="col-filter-wrap"><button class="col-filter-btn" data-filter="status" title="Szűrés">▾</button><ul class="col-filter-menu"><li class="selected"><button data-value="">Mind</button></li><li><button data-value="active">Aktív</button></li><li><button data-value="overdue">Tagdíj elmaradás</button></li><li><button data-value="inactive">Inaktív</button></li></ul></span></th>
+          <th>Tagság státusza<span class="col-filter-wrap"><button type="button" class="col-filter-btn" data-filter="status" title="Szűrés">▾</button><ul class="col-filter-menu"><li class="selected"><button type="button" data-value="">Mind</button></li><li><button type="button" data-value="active">Aktív</button></li><li><button type="button" data-value="overdue">Tagdíj elmaradás</button></li><li><button type="button" data-value="inactive">Inaktív</button></li></ul></span></th>
           <th></th>
         </tr>
       </thead>

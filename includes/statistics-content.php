@@ -245,8 +245,8 @@ if ($view === 'club') {
   <div class="card" style="padding:20px 24px;">
     <div style="display:flex;align-items:center;gap:12px;">
       <div style="width:44px;height:44px;border-radius:10px;background:rgba(249,115,22,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-        <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="#f97316" stroke-width="2">
-          <path d="M8 3 L12 1 L16 3 L21 12 L12 22 L3 12 Z"/>
+        <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="#f97316" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+          <polyline points="1 20 8 8 13 14 17 7 23 20 1 20"/>
         </svg>
       </div>
       <div>

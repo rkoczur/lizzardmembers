@@ -66,22 +66,14 @@
         </svg>
         Biztonság
       </a>
-      <a href="<?= BASE_URL ?>/admin/login-log.php" class="<?= ($activePage ?? '') === 'login-log' ? 'active' : '' ?>">
-        <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
-          <polyline points="10 17 15 12 10 7"/>
-          <line x1="15" y1="12" x2="3" y2="12"/>
-        </svg>
-        Belépési napló
-      </a>
-      <a href="<?= BASE_URL ?>/admin/audit-log.php" class="<?= ($activePage ?? '') === 'audit' ? 'active' : '' ?>">
+      <a href="<?= BASE_URL ?>/admin/logs.php" class="<?= ($activePage ?? '') === 'logs' ? 'active' : '' ?>">
         <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/>
           <rect x="9" y="3" width="6" height="4" rx="1"/>
           <line x1="9" y1="12" x2="15" y2="12"/>
           <line x1="9" y1="16" x2="13" y2="16"/>
         </svg>
-        Audit napló
+        Naplók
       </a>
       <a href="<?= BASE_URL ?>/admin/settings.php" class="<?= ($activePage ?? '') === 'settings' ? 'active' : '' ?>">
         <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
