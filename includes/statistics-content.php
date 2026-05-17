@@ -15,7 +15,18 @@ if ($view === 'club') {
         FROM tours
     ")->fetch();
 
-    $activeMembers = (int)$pdo->query("SELECT COUNT(*) FROM users WHERE active = 1")->fetchColumn();
+    $activeMembers = (int)$pdo->query("
+        SELECT COUNT(*) FROM users
+        WHERE active = 1
+          AND (
+            role IN ('admin','vezeto')
+            OR (
+                last_payment IS NOT NULL
+                AND last_payment != '0000-00-00'
+                AND YEAR(last_payment) >= YEAR(CURDATE()) - 1
+            )
+          )
+    ")->fetchColumn();
 
     $byYear = $pdo->query("
         SELECT YEAR(tour_date) AS yr,

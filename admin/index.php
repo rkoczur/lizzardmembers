@@ -9,10 +9,25 @@ requireAdminOrVezeto();
 $pdo = getDb();
 recalcUserStats($pdo);
 
-$totalMembers   = (int)$pdo->query("SELECT COUNT(*) FROM users WHERE role='user'")->fetchColumn();
-$activeMembers  = (int)$pdo->query("SELECT COUNT(*) FROM users WHERE role='user' AND YEAR(last_payment) = YEAR(CURDATE())")->fetchColumn();
-$inactiveMembers = (int)$pdo->query("SELECT COUNT(*) FROM users WHERE role='user' AND (last_payment IS NULL OR last_payment = '0000-00-00' OR YEAR(last_payment) < YEAR(CURDATE()) - 1)")->fetchColumn();
-$overdueMembers = (int)$pdo->query("SELECT COUNT(*) FROM users WHERE role='user' AND YEAR(last_payment) = YEAR(CURDATE()) - 1")->fetchColumn();
+$totalMembers    = (int)$pdo->query("SELECT COUNT(*) FROM users WHERE active = 1")->fetchColumn();
+$activeMembers   = (int)$pdo->query("
+    SELECT COUNT(*) FROM users
+    WHERE active = 1
+      AND (
+        role IN ('admin','vezeto')
+        OR YEAR(last_payment) = YEAR(CURDATE())
+      )
+")->fetchColumn();
+$overdueMembers  = (int)$pdo->query("
+    SELECT COUNT(*) FROM users
+    WHERE active = 1 AND role = 'user'
+      AND YEAR(last_payment) = YEAR(CURDATE()) - 1
+")->fetchColumn();
+$inactiveMembers = (int)$pdo->query("
+    SELECT COUNT(*) FROM users
+    WHERE active = 1 AND role = 'user'
+      AND (last_payment IS NULL OR last_payment = '0000-00-00' OR YEAR(last_payment) < YEAR(CURDATE()) - 1)
+")->fetchColumn();
 
 $recentMembers = $pdo->query("SELECT id, firstname, lastname, email, member_since, last_payment, level, points, profile_picture, role FROM users ORDER BY created_at DESC LIMIT 8")->fetchAll();
 
@@ -96,9 +111,8 @@ include __DIR__ . '/../includes/admin-header.php';
       <div class="stat-value" style="font-size:19px;margin-top:6px;"><?= getLevelLabel($adminLevel) ?></div>
     </div>
     <?php if ($adminLvlImg): ?>
-      <div style="position:relative;width:35%;max-width:120px;flex-shrink:0;">
+      <div class="stat-level-img-wrap">
         <img src="<?= BASE_URL ?>/assets/img/<?= e($adminLvlImg) ?>"
-             style="position:absolute;top:8px;right:12px;bottom:8px;left:0;object-fit:contain;margin:auto;"
              alt="<?= e(getLevelLabel($adminLevel)) ?>">
       </div>
     <?php endif; ?>

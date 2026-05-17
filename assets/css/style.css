@@ -217,6 +217,8 @@ ul { list-style: none; }
 .stat-card .stat-label { font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: .05em; }
 .stat-card .stat-value { font-size: 28px; font-weight: 700; margin-top: 6px; color: var(--text); }
 .stat-card .stat-icon { font-size: 22px; margin-bottom: 8px; }
+.stat-level-img-wrap { position: relative; width: 35%; max-width: 120px; flex-shrink: 0; }
+.stat-level-img-wrap img { position: absolute; top: 8px; right: 12px; bottom: 8px; left: 0; object-fit: contain; margin: auto; width: auto; height: auto; }
 
 /* ===== Buttons ===== */
 .btn {
@@ -362,6 +364,9 @@ tbody tr:hover { background: #faf5ec; }
 }
 .col-filter-menu li button:hover { background: var(--card); }
 .col-filter-menu li.selected button { font-weight: 600; color: var(--primary); }
+
+/* ===== Tour search wrap ===== */
+.tour-search-wrap { display: flex; align-items: center; gap: 8px; }
 
 /* ===== Search bar ===== */
 .search-bar {
@@ -622,6 +627,8 @@ tbody tr:hover { background: #faf5ec; }
   /* Stats grid: auto-stack, font size intentionally unchanged */
   .stats-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
   .stat-card { padding: 14px; }
+  .stat-level-img-wrap { position: static; width: auto; max-width: none; display: flex; align-items: center; padding: 8px 20px 8px 4px; }
+  .stat-level-img-wrap img { position: static; top: auto; right: auto; bottom: auto; left: auto; margin: 0; width: auto; height: 56px; }
 
   .profile-layout { grid-template-columns: 1fr; }
   .form-grid { grid-template-columns: 1fr; }
@@ -629,6 +636,9 @@ tbody tr:hover { background: #faf5ec; }
   .form-group.full { grid-column: span 1; }
 
   .page-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .tour-search-wrap { display: flex; flex-direction: column; gap: 8px; width: 100%; }
+  .tour-search-wrap .search-bar,
+  .tour-search-wrap .btn { width: 100%; box-sizing: border-box; justify-content: center; }
 
   /* Responsive grid helpers: diagram-sorok egymás alá */
   .rg-3, .rg-3-2, .rg-2 { grid-template-columns: 1fr; }
