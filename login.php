@@ -152,6 +152,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </div>
       <button type="submit" class="btn btn-primary" style="width:100%;margin-top:8px;">Bejelentkezés</button>
     </form>
+    <p style="text-align:center;margin-top:16px;font-size:13px;">
+      <a href="<?= BASE_URL ?>/password-reset.php">Elfelejtette jelszavát?</a>
+    </p>
   </div>
 </div>
 <script src="<?= BASE_URL ?>/assets/js/app.js"></script>

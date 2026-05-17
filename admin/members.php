@@ -70,11 +70,27 @@ include __DIR__ . '/../includes/admin-header.php';
   </div>
 </div>
 
+<form method="post" action="<?= BASE_URL ?>/admin/email-compose.php" id="bulk-email-form">
+<input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
+
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;min-height:36px;">
+  <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;user-select:none;">
+    <input type="checkbox" id="select-all"> <span>Összes kijelölése</span>
+  </label>
+  <button type="submit" class="btn btn-primary btn-sm" id="bulk-email-btn" disabled style="display:flex;align-items:center;gap:5px;">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="14" height="14">
+      <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+    </svg>
+    <span id="bulk-email-label">E-mail küldés kijelölteknek</span>
+  </button>
+</div>
+
 <div class="card">
   <div class="table-wrap">
     <table id="member-table">
       <thead>
         <tr>
+          <th style="width:36px;"></th>
           <th>Tag</th>
           <th>Szerepkör<span class="col-filter-wrap"><button class="col-filter-btn" data-filter="role" title="Szűrés">▾</button><ul class="col-filter-menu"><li class="selected"><button data-value="">Mind</button></li><li><button data-value="admin">Admin</button></li><li><button data-value="vezeto">Vezető</button></li><li><button data-value="user">Tag</button></li></ul></span></th>
           <th>Város</th>
@@ -90,6 +106,9 @@ include __DIR__ . '/../includes/admin-header.php';
         <?php foreach ($members as $m): ?>
         <?php $ms = getMemberStatus($m['last_payment']); ?>
         <tr data-role="<?= e($m['role']) ?>" data-level="<?= (int)$m['level'] ?>" data-status="<?= e($ms) ?>">
+          <td style="text-align:center;">
+            <input type="checkbox" class="member-cb" name="member_ids[]" value="<?= $m['id'] ?>">
+          </td>
           <td>
             <div class="td-avatar">
               <img src="<?= getAvatarUrl($m['profile_picture']) ?>" alt="">
@@ -125,7 +144,7 @@ include __DIR__ . '/../includes/admin-header.php';
         </tr>
         <?php endforeach; ?>
         <?php if (empty($members)): ?>
-        <tr><td colspan="9">
+        <tr><td colspan="10">
           <div class="empty-state">
             <div class="empty-icon">👥</div>
             <p>Nem találhatók tagok. A tagok a felhasználók regisztrációjakor jönnek létre.</p>
@@ -136,5 +155,39 @@ include __DIR__ . '/../includes/admin-header.php';
     </table>
   </div>
 </div>
+</form>
+
+<script>
+(function () {
+  var selectAll = document.getElementById('select-all');
+  var btn       = document.getElementById('bulk-email-btn');
+  var label     = document.getElementById('bulk-email-label');
+
+  function updateBtn() {
+    var checked = document.querySelectorAll('.member-cb:checked');
+    var n       = checked.length;
+    btn.disabled = n === 0;
+    label.textContent = n > 0
+      ? 'E-mail küldés (' + n + ' főnek)'
+      : 'E-mail küldés kijelölteknek';
+    selectAll.indeterminate = n > 0 && n < document.querySelectorAll('.member-cb').length;
+    selectAll.checked = n > 0 && n === document.querySelectorAll('.member-cb').length;
+  }
+
+  document.querySelectorAll('.member-cb').forEach(function (cb) {
+    cb.addEventListener('change', updateBtn);
+  });
+
+  selectAll.addEventListener('change', function () {
+    document.querySelectorAll('.member-cb').forEach(function (cb) {
+      // Only check visible rows
+      var row = cb.closest('tr');
+      if (!row || row.style.display === 'none') return;
+      cb.checked = selectAll.checked;
+    });
+    updateBtn();
+  });
+})();
+</script>
 
 <?php include __DIR__ . '/../includes/admin-footer.php'; ?>

@@ -5,10 +5,13 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/tours-schema.php';
+require_once __DIR__ . '/../includes/app-settings-schema.php';
 requireAdminOrVezeto();
 
 $pdo = getDb();
 ensureToursSchema($pdo);
+ensureAppSettingsSchema($pdo);
+$smtp = getSmtpConfig($pdo);
 
 $countries = getCountries($pdo, false);
 
@@ -31,70 +34,135 @@ include __DIR__ . '/../includes/admin-header.php';
   <h1>Beállítások</h1>
 </div>
 
-<div class="card">
-  <div class="card-header" style="display:flex;align-items:center;justify-content:space-between;">
-    <h2>Országok</h2>
-    <?php if (isAdmin()): ?>
-    <a href="<?= BASE_URL ?>/admin/country-add.php" class="btn btn-primary btn-sm">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" width="14" height="14">
-        <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
-      </svg>
-      Új ország
-    </a>
-    <?php endif; ?>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start;">
+
+  <!-- Országok -->
+  <div class="card">
+    <div class="card-header" style="display:flex;align-items:center;justify-content:space-between;">
+      <h2>Országok</h2>
+      <?php if (isAdmin()): ?>
+      <a href="<?= BASE_URL ?>/admin/country-add.php" class="btn btn-primary btn-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" width="14" height="14">
+          <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+        </svg>
+        Új ország
+      </a>
+      <?php endif; ?>
+    </div>
+    <div class="card-body" style="padding-bottom:0;">
+      <p style="color:var(--text-muted);font-size:13px;margin-bottom:16px;">
+        Az itt megadott országkódokat kell használni a túrák CSV-importjában (<strong>Országkód</strong> oszlop, pl. <code>HU</code>, <code>AT</code>).
+        Az inaktív országok nem jelennek meg a túra-szerkesztő legördülőjében.
+      </p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:48px;">Zászló</th>
+            <th style="width:70px;">Kód</th>
+            <th>Magyar elnevezés</th>
+            <th style="width:90px;">Sorrend</th>
+            <th style="width:80px;">Aktív</th>
+            <th style="width:110px;"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($countries as $c): ?>
+          <tr <?= $c['active'] ? '' : 'style="opacity:.5;"' ?>>
+            <td>
+              <?php if ($c['flag_filename']): ?>
+                <img src="<?= e(getFlagUrl($c['flag_filename'])) ?>"
+                     style="width:32px;height:22px;object-fit:cover;border:1px solid var(--border);border-radius:2px;" alt="">
+              <?php else: ?>
+                <span style="display:inline-block;width:32px;height:22px;background:var(--bg-subtle);border:1px solid var(--border);border-radius:2px;"></span>
+              <?php endif; ?>
+            </td>
+            <td><code style="font-size:.9em;"><?= e($c['code']) ?></code></td>
+            <td><?= e($c['name_hu']) ?></td>
+            <td style="color:var(--text-muted);font-size:.9em;"><?= (int)$c['sort_order'] ?></td>
+            <td>
+              <?php if ($c['active']): ?>
+                <span class="badge badge-active">Aktív</span>
+              <?php else: ?>
+                <span class="badge badge-inactive">Inaktív</span>
+              <?php endif; ?>
+            </td>
+            <td>
+              <a href="<?= BASE_URL ?>/admin/country-detail.php?id=<?= $c['id'] ?>" class="btn btn-ghost btn-sm"><?= isAdmin() ? 'Szerkesztés' : 'Megtekintés' ?></a>
+            </td>
+          </tr>
+          <?php endforeach; ?>
+          <?php if (empty($countries)): ?>
+          <tr><td colspan="6">
+            <div class="empty-state"><p>Még nincs egyetlen ország sem rögzítve.</p></div>
+          </td></tr>
+          <?php endif; ?>
+        </tbody>
+      </table>
+    </div>
   </div>
-  <div class="card-body" style="padding-bottom:0;">
-    <p style="color:var(--text-muted);font-size:13px;margin-bottom:16px;">
-      Az itt megadott országkódokat kell használni a túrák CSV-importjában (<strong>Országkód</strong> oszlop, pl. <code>HU</code>, <code>AT</code>).
-      Az inaktív országok nem jelennek meg a túra-szerkesztő legördülőjében.
-    </p>
+
+  <!-- SMTP beállítások -->
+  <?php if (isAdmin()): ?>
+  <div class="card">
+    <div class="card-header"><h2>SMTP beállítások</h2></div>
+    <div class="card-body">
+      <form method="post" action="<?= BASE_URL ?>/actions/settings-smtp-save.php">
+        <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>SMTP szerver</label>
+            <input type="text" name="smtp_host" value="<?= e($smtp['host']) ?>" placeholder="pl. smtp.gmail.com">
+          </div>
+          <div class="form-group">
+            <label>Port</label>
+            <input type="number" name="smtp_port" value="<?= (int)$smtp['port'] ?: 587 ?>" min="1" max="65535" placeholder="587">
+          </div>
+          <div class="form-group">
+            <label>Titkosítás</label>
+            <select name="smtp_encryption">
+              <option value="tls" <?= $smtp['encryption'] === 'tls' ? 'selected' : '' ?>>STARTTLS (port 587)</option>
+              <option value="ssl" <?= $smtp['encryption'] === 'ssl' ? 'selected' : '' ?>>SSL/TLS (port 465)</option>
+              <option value=""   <?= $smtp['encryption'] === ''    ? 'selected' : '' ?>>Nincs titkosítás (port 25)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>SMTP felhasználónév</label>
+            <input type="text" name="smtp_user" value="<?= e($smtp['user']) ?>" placeholder="felhasznalo@domain.hu" autocomplete="off">
+          </div>
+          <div class="form-group">
+            <label>SMTP jelszó</label>
+            <input type="password" name="smtp_pass" placeholder="<?= $smtp['pass'] !== '' ? '••••••••' : 'Jelszó megadása' ?>" autocomplete="new-password">
+            <small style="color:var(--text-muted);">Üresen hagyva a meglévő jelszó megmarad.</small>
+          </div>
+          <div class="form-group">
+            <label>Feladó e-mail cím</label>
+            <input type="email" name="smtp_from_email" value="<?= e($smtp['from_email']) ?>" placeholder="noreply@domain.hu">
+            <small style="color:var(--text-muted);">Üresen hagyva az SMTP felhasználónevet használja.</small>
+          </div>
+          <div class="form-group">
+            <label>Feladó megjelenített neve</label>
+            <input type="text" name="smtp_from_name" value="<?= e($smtp['from_name']) ?>" placeholder="<?= e(APP_NAME) ?>">
+          </div>
+        </div>
+        <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+          <button type="submit" class="btn btn-primary">SMTP beállítások mentése</button>
+        </div>
+      </form>
+      <form method="post" action="<?= BASE_URL ?>/actions/settings-smtp-test.php" style="margin-top:10px;">
+        <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
+        <button type="submit" class="btn btn-secondary btn-sm" style="display:flex;align-items:center;gap:5px;">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="14" height="14">
+            <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+          </svg>
+          Teszt e-mail küldése saját címre
+        </button>
+      </form>
+    </div>
   </div>
-  <div class="table-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th style="width:48px;">Zászló</th>
-          <th style="width:70px;">Kód</th>
-          <th>Magyar elnevezés</th>
-          <th style="width:90px;">Sorrend</th>
-          <th style="width:80px;">Aktív</th>
-          <th style="width:110px;"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <?php foreach ($countries as $c): ?>
-        <tr <?= $c['active'] ? '' : 'style="opacity:.5;"' ?>>
-          <td>
-            <?php if ($c['flag_filename']): ?>
-              <img src="<?= e(getFlagUrl($c['flag_filename'])) ?>"
-                   style="width:32px;height:22px;object-fit:cover;border:1px solid var(--border);border-radius:2px;" alt="">
-            <?php else: ?>
-              <span style="display:inline-block;width:32px;height:22px;background:var(--bg-subtle);border:1px solid var(--border);border-radius:2px;"></span>
-            <?php endif; ?>
-          </td>
-          <td><code style="font-size:.9em;"><?= e($c['code']) ?></code></td>
-          <td><?= e($c['name_hu']) ?></td>
-          <td style="color:var(--text-muted);font-size:.9em;"><?= (int)$c['sort_order'] ?></td>
-          <td>
-            <?php if ($c['active']): ?>
-              <span class="badge badge-active">Aktív</span>
-            <?php else: ?>
-              <span class="badge badge-inactive">Inaktív</span>
-            <?php endif; ?>
-          </td>
-          <td>
-            <a href="<?= BASE_URL ?>/admin/country-detail.php?id=<?= $c['id'] ?>" class="btn btn-ghost btn-sm"><?= isAdmin() ? 'Szerkesztés' : 'Megtekintés' ?></a>
-          </td>
-        </tr>
-        <?php endforeach; ?>
-        <?php if (empty($countries)): ?>
-        <tr><td colspan="6">
-          <div class="empty-state"><p>Még nincs egyetlen ország sem rögzítve.</p></div>
-        </td></tr>
-        <?php endif; ?>
-      </tbody>
-    </table>
-  </div>
+  <?php endif; ?>
+
 </div>
 
 <?php include __DIR__ . '/../includes/admin-footer.php'; ?>
