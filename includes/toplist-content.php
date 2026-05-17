@@ -7,9 +7,10 @@ $allTime = $pdo->query("
     FROM users u
     LEFT JOIN tour_members tm ON tm.user_id = u.id
     LEFT JOIN tours t ON t.id = tm.tour_id
+    WHERE u.role != 'admin'
     GROUP BY u.id, u.firstname, u.lastname, u.level, u.role
+    HAVING total_points >= 3
     ORDER BY total_points DESC
-    LIMIT 20
 ")->fetchAll();
 
 // 2. Current year toplist
@@ -18,6 +19,7 @@ $stmtYear = $pdo->prepare("
     FROM tour_members tm
     JOIN tours t ON t.id = tm.tour_id AND YEAR(t.tour_date) = :yr
     JOIN users u ON u.id = tm.user_id
+    WHERE u.role != 'admin'
     GROUP BY u.id, u.firstname, u.lastname, u.role
     ORDER BY total_points DESC
     LIMIT 20
@@ -33,7 +35,7 @@ $allYearRows = $pdo->query("
     FROM tour_members tm
     JOIN tours t ON t.id = tm.tour_id
     JOIN users u ON u.id = tm.user_id
-    WHERE t.tour_date IS NOT NULL
+    WHERE t.tour_date IS NOT NULL AND u.role != 'admin'
     GROUP BY YEAR(t.tour_date), u.id, u.firstname, u.lastname, u.role
     ORDER BY yr ASC
 ")->fetchAll();
