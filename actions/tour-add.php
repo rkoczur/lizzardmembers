@@ -161,7 +161,100 @@ if ($memberIds) {
     }
 }
 
+// Capture stats before recalc so we can detect level-ups for notifications
+$statsOld = [];
+if ($memberIds) {
+    $ph = rtrim(str_repeat('?,', count($memberIds)), ',');
+    $sOld = $pdo->prepare("SELECT id, level, points FROM users WHERE id IN ($ph)");
+    $sOld->execute(array_values($memberIds));
+    foreach ($sOld->fetchAll() as $r) { $statsOld[$r['id']] = $r; }
+}
+
 recalcUserStats($pdo);
+
+// Send tour notifications to newly added members
+if (($memberIds) && ($_POST['send_tour_notification'] ?? '') === '1') {
+    try {
+        require_once __DIR__ . '/../includes/app-settings-schema.php';
+        require_once __DIR__ . '/../includes/mailer.php';
+        require_once __DIR__ . '/../includes/tour-notification-email.php';
+
+        ensureAppSettingsSchema($pdo);
+        $smtp = getSmtpConfig($pdo);
+
+        if ($smtp['host'] !== '') {
+            $ph      = rtrim(str_repeat('?,', count($memberIds)), ',');
+            $sNew    = $pdo->prepare("SELECT id, firstname, lastname, email, level, points FROM users WHERE id IN ($ph)");
+            $sNew->execute(array_values($memberIds));
+            $statsNew = [];
+            foreach ($sNew->fetchAll() as $r) { $statsNew[$r['id']] = $r; }
+
+            $countryStmt = $pdo->prepare("SELECT name_hu FROM countries WHERE code = ? LIMIT 1");
+            $countryStmt->execute([$country]);
+            $countryName = $countryStmt->fetchColumn() ?: $country;
+
+            $proto      = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+            $absBaseUrl = $proto . '://' . $_SERVER['HTTP_HOST'] . BASE_URL;
+            $tourUrl    = $absBaseUrl . '/user/tour-detail.php?id=' . $newId;
+
+            // Build km and elev display strings
+            $kmText = '—';
+            if (in_array($tourType, ['gyalogos', 'kerekparos'], true)) {
+                $sumKm = ((float)($totalKm ?: 0)) + ((float)($alpineKm !== '' ? $alpineKm : 0));
+                if ($sumKm > 0) $kmText = number_format($sumKm, 1, ',', ' ') . ' km';
+            } elseif ($tourType === 'vizi') {
+                if ((float)($totalKm ?: 0) > 0) $kmText = number_format((float)$totalKm, 1, ',', ' ') . ' km';
+            } elseif ($tourHours !== '') {
+                $kmText = number_format((float)$tourHours, 1, ',', ' ') . ' óra';
+            }
+
+            $elevText = '—';
+            if (in_array($tourType, ['gyalogos', 'kerekparos'], true)) {
+                $sumElev = ((int)($totalElev ?: 0)) + ((int)($alpineElev !== '' ? $alpineElev : 0));
+                if ($sumElev > 0) $elevText = number_format($sumElev, 0, ',', ' ') . ' m';
+            }
+
+            $formattedDate = $tourDate ? (new DateTime($tourDate))->format('Y.m.d') : '—';
+            $tourDisplay   = $name ?: ($countryName . ($region ? ' – ' . $region : ''));
+            $mailer        = new SmtpMailer($smtp);
+            $errCount      = 0;
+
+            foreach ($memberIds as $uid) {
+                if (!isset($statsNew[$uid])) continue;
+                $m = $statsNew[$uid];
+                try {
+                    $html = buildTourNotificationEmailHtml(
+                        $m['firstname'],
+                        $tourDisplay,
+                        $countryName,
+                        $formattedDate,
+                        getTourTypeLabel($tourType),
+                        $kmText,
+                        $elevText,
+                        $lizzardPoints,
+                        $mtszPoints,
+                        $tourCode,
+                        (int)$m['level'],
+                        (int)($statsOld[$uid]['level'] ?? 1),
+                        $tourUrl,
+                        $absBaseUrl,
+                        APP_NAME
+                    );
+                    $mailer->send($m['email'], $m['lastname'] . ' ' . $m['firstname'], 'Új túrához adtak hozzá: ' . ($name ?: $countryName), $html);
+                } catch (Throwable $ex) {
+                    error_log('Tour notification email uid=' . $uid . ': ' . $ex->getMessage());
+                    $errCount++;
+                }
+            }
+            if ($errCount > 0) {
+                flash('error', $errCount . ' értesítő e-mail küldése sikertelen volt.');
+            }
+        }
+    } catch (Throwable $ex) {
+        error_log('Tour notification setup error: ' . $ex->getMessage());
+        flash('error', 'Az értesítők küldése sikertelen: ' . $ex->getMessage());
+    }
+}
 
 $tourLabel    = $name ? $name . ' — ' . $country : $country;
 $auditChanges = [['k' => 'Ország', 'v' => $country], ['k' => 'Túramód', 'v' => $tourType]];

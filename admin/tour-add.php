@@ -224,8 +224,10 @@ include __DIR__ . '/../includes/admin-header.php';
            <?= !empty($preIds) ? 'style="display:none"' : '' ?>>Még nincs hozzárendelt tag.</p>
       </div>
 
+      <input type="hidden" name="send_tour_notification" id="send_tour_notification" value="">
+
       <div class="flex gap-2" style="margin-top:24px;">
-        <button type="submit" class="btn btn-primary">Túra hozzáadása</button>
+        <button type="button" id="btn-submit-tour" class="btn btn-primary">Túra hozzáadása</button>
         <a href="<?= BASE_URL ?>/admin/tours.php" class="btn btn-secondary">Mégse</a>
       </div>
     </form>
@@ -418,6 +420,202 @@ $jsInitAccom     = json_encode($old['accommodation'] ?? '');
   })();
   updateTypeUI();
   updateAccomUI();
+})();
+</script>
+
+<!-- Tour notification preview modal -->
+<div class="modal-backdrop" id="tour-notification-modal">
+  <div class="modal" style="max-width:660px;">
+    <div class="modal-header">
+      <h2>E-mail értesítő előnézete</h2>
+      <button class="modal-close" type="button" data-modal-close aria-label="Bezárás">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+    <div class="modal-body" style="padding:0;">
+      <div id="tour-notification-recipients-wrap" style="padding:12px 20px;background:var(--card);border-bottom:1px solid var(--border);font-size:13px;">
+        <strong>Értesítést kapnak:</strong>
+        <ul id="tour-notification-recipients" style="margin:6px 0 0 0;padding-left:20px;line-height:1.8;"></ul>
+      </div>
+      <div id="tour-email-preview-body" style="max-height:440px;overflow-y:auto;"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" type="button" data-modal-close>Mégse</button>
+      <button class="btn btn-secondary" type="button" id="btn-tour-no-email">Hozzáadás értesítő nélkül</button>
+      <button class="btn btn-primary" type="button" id="btn-tour-send-email">Értesítők küldése és hozzáadás</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var TOUR_TYPE_LABELS = {
+    gyalogos: 'Gyalogos', kerekparos: 'Kerékpáros', vizi: 'Vízitúra',
+    si: 'Síelés', barlangi: 'Barlangi', munka: 'Munkatúra'
+  };
+
+  function esc(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function buildTourNotificationPreview(firstname, tourName, countryName, tourDate, typeLabel, kmText, elevText, lizzardPts, mtszPts, tourCode) {
+    return '<div style="background:#f0ebe0;padding:20px;">'
+      + '<div style="background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 3px 16px rgba(0,0,0,.1);">'
+        + '<div style="background:#1a3d39;padding:24px 32px;text-align:center;">'
+          + '<div style="font-size:22px;font-weight:800;color:#F4E7CF;letter-spacing:.05em;">LIZZARD</div>'
+          + '<div style="font-size:11px;color:#8fb5b2;margin-top:4px;letter-spacing:.14em;text-transform:uppercase;">Természetjáró Egyesület</div>'
+        + '</div>'
+        + '<div style="padding:28px 32px 20px;">'
+          + '<p style="font-size:15px;color:#333;margin:0 0 8px 0;">Kedves <strong>' + esc(firstname) + '</strong>!</p>'
+          + '<p style="font-size:13px;color:#555;line-height:1.7;margin:0 0 16px;">Új túrához adtak hozzá a Lizzard rendszerében!</p>'
+          + '<div style="background:#f5efe4;border:1px solid #ddd5c5;border-radius:7px;padding:16px 20px;margin:0 0 14px;">'
+            + '<div style="font-size:13px;font-weight:700;color:#1a3d39;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid #ddd5c5;">' + esc(tourName) + '</div>'
+            + '<table style="font-size:12px;width:100%;border-collapse:collapse;">'
+              + '<tr><td style="color:#7a7269;padding:0 12px 6px 0;white-space:nowrap;">Ország</td><td style="color:#333;font-weight:600;padding-bottom:6px;">' + esc(countryName) + '</td></tr>'
+              + '<tr><td style="color:#7a7269;padding:0 12px 6px 0;white-space:nowrap;">Dátum</td><td style="color:#333;font-weight:600;padding-bottom:6px;">' + esc(tourDate) + '</td></tr>'
+              + '<tr><td style="color:#7a7269;padding:0 12px 6px 0;white-space:nowrap;">Típus</td><td style="color:#333;font-weight:600;padding-bottom:6px;">' + esc(typeLabel) + '</td></tr>'
+              + '<tr><td style="color:#7a7269;padding:0 12px 6px 0;white-space:nowrap;">Távolság</td><td style="color:#333;font-weight:600;padding-bottom:6px;">' + esc(kmText) + '</td></tr>'
+              + '<tr><td style="color:#7a7269;padding:0 12px 6px 0;white-space:nowrap;">Szintemelkedés</td><td style="color:#333;font-weight:600;padding-bottom:6px;">' + esc(elevText) + '</td></tr>'
+              + '<tr><td style="color:#7a7269;padding:0 12px 0 0;white-space:nowrap;">Azonosító</td><td style="color:#333;font-family:monospace;font-weight:700;">' + esc(tourCode) + '</td></tr>'
+            + '</table>'
+          + '</div>'
+          + '<table style="width:100%;border-collapse:collapse;margin:0 0 14px;"><tr>'
+            + (lizzardPts > 0
+                ? '<td style="width:50%;padding-right:5px;vertical-align:top;">'
+                    + '<div style="background:#eaf3f2;border:1px solid #b8d8d5;border-radius:7px;padding:13px 16px;text-align:center;">'
+                      + '<div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:#5a8a87;margin-bottom:8px;">Lizzardier pont</div>'
+                      + '<div style="font-size:26px;font-weight:800;color:#29776F;line-height:1;">' + lizzardPts + '</div>'
+                      + '<div style="font-size:11px;font-weight:600;color:#29776F;margin-top:3px;">pont</div>'
+                    + '</div>'
+                  + '</td>'
+                    + '<td style="width:50%;padding-left:5px;vertical-align:top;">'
+                : '<td style="padding:0 70px;vertical-align:top;">'
+              )
+            + '<div style="background:#fef3e2;border:1px solid #fcd99a;border-radius:7px;padding:13px 16px;text-align:center;">'
+              + '<div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:#d97706;margin-bottom:8px;">MTSZ pont</div>'
+              + '<div style="font-size:26px;font-weight:800;color:#d97706;line-height:1;">' + mtszPts + '</div>'
+              + '<div style="font-size:11px;font-weight:600;color:#d97706;margin-top:3px;">pont</div>'
+            + '</div>'
+            + '</td>'
+          + '</tr></table>'
+          + '<div style="font-size:11px;color:#8a7a69;font-style:italic;margin:0 0 14px;padding:8px 12px;background:#fefcf5;border-radius:5px;border-left:3px solid #f0d060;">'
+            + '&#127894; Szintlépés esetén a tag erről is értesítést kap.'
+          + '</div>'
+          + '<div style="text-align:center;">'
+            + '<span style="display:inline-block;background:#29776F;color:#fff;font-size:12px;font-weight:700;padding:10px 24px;border-radius:7px;">Túra megtekintése a rendszerben</span>'
+          + '</div>'
+        + '</div>'
+        + '<div style="background:#f5efe4;border-top:1px solid #ddd5c5;padding:14px 32px;text-align:center;">'
+          + '<p style="font-size:11px;color:#7a7269;margin:0;">Üdvözlettel,<br><strong style="color:#1a3d39;">Lizzard Outdoor Vezetősége</strong></p>'
+        + '</div>'
+      + '</div>'
+    + '</div>';
+  }
+
+  function getKmText(tourType) {
+    if (tourType === 'vizi') {
+      var km = parseFloat(document.getElementById('vizi_total_km') ? document.getElementById('vizi_total_km').value : 0) || 0;
+      return km > 0 ? km.toFixed(1).replace('.', ',') + ' km' : '—';
+    } else if (tourType === 'si' || tourType === 'barlangi' || tourType === 'munka') {
+      var h = parseFloat(document.getElementById('tour_hours') ? document.getElementById('tour_hours').value : 0) || 0;
+      return h > 0 ? h.toFixed(1).replace('.', ',') + ' óra' : '—';
+    } else {
+      var t = parseFloat(document.getElementById('total_km') ? document.getElementById('total_km').value : 0) || 0;
+      var al = parseFloat(document.getElementById('alpine_km') ? document.getElementById('alpine_km').value : 0) || 0;
+      var sum = t + al;
+      return sum > 0 ? sum.toFixed(1).replace('.', ',') + ' km' : '—';
+    }
+  }
+
+  function getElevText(tourType) {
+    if (['si','barlangi','munka','vizi'].indexOf(tourType) !== -1) return '—';
+    var e1 = parseInt(document.getElementById('total_elevation') ? document.getElementById('total_elevation').value : 0) || 0;
+    var e2 = parseInt(document.getElementById('alpine_elevation') ? document.getElementById('alpine_elevation').value : 0) || 0;
+    var s = e1 + e2;
+    return s > 0 ? s.toLocaleString('hu-HU') + ' m' : '—';
+  }
+
+  var form       = document.getElementById('tour-form');
+  var submitBtn  = document.getElementById('btn-submit-tour');
+  var modal      = document.getElementById('tour-notification-modal');
+  var flagInput  = document.getElementById('send_tour_notification');
+  var recList    = document.getElementById('tour-notification-recipients');
+  var prevBody   = document.getElementById('tour-email-preview-body');
+
+  submitBtn.addEventListener('click', function () {
+    if (!form.checkValidity()) { form.reportValidity(); return; }
+
+    var items = document.querySelectorAll('#member-picker-list .member-picker-item');
+    if (items.length === 0) {
+      flagInput.value = '0';
+      form.submit();
+      return;
+    }
+
+    // Collect recipients
+    var recipients = [];
+    items.forEach(function (item) {
+      var span = item.querySelector('span');
+      var raw  = span ? span.textContent : '';
+      var name = raw.split(' — ')[0].trim();
+      recipients.push(name);
+    });
+
+    // Get first member's firstname for preview greeting
+    var firstFullName = recipients[0] || 'Tag';
+    var nameParts = firstFullName.split(' ');
+    var firstname = nameParts.length > 1 ? nameParts[nameParts.length - 1] : nameParts[0];
+
+    // Collect tour data for preview
+    var tourName = (form.querySelector('[name="name"]').value || '').trim();
+    var countryEl = document.getElementById('country_select');
+    var countryText = countryEl ? (countryEl.options[countryEl.selectedIndex] ? countryEl.options[countryEl.selectedIndex].text : '') : '';
+    var countryName = countryText.replace(/\s*\([A-Z]+\)\s*$/, '').trim() || '—';
+    if (!tourName) tourName = countryName;
+
+    var rawDate = (form.querySelector('[name="tour_date"]').value || '').trim();
+    var tourDate = rawDate ? rawDate.split('-').reverse().join('.') : '—';
+
+    var tourTypeEl = form.querySelector('[name="tour_type"]');
+    var tourType = tourTypeEl ? tourTypeEl.value : 'gyalogos';
+    var typeLabel = TOUR_TYPE_LABELS[tourType] || tourType;
+
+    var kmText   = getKmText(tourType);
+    var elevText = getElevText(tourType);
+
+    var lizzardPts = parseInt(form.querySelector('[name="points"]') ? form.querySelector('[name="points"]').value : 0) || 0;
+    var ptsDom = document.getElementById('points-display');
+    var mtszPts = ptsDom ? (parseInt(ptsDom.textContent) || 0) : 0;
+
+    // Build recipient list in modal
+    recList.innerHTML = '';
+    recipients.forEach(function (name) {
+      var li = document.createElement('li');
+      li.textContent = name;
+      recList.appendChild(li);
+    });
+
+    prevBody.innerHTML = buildTourNotificationPreview(
+      firstname, tourName, countryName, tourDate, typeLabel,
+      kmText, elevText, lizzardPts, mtszPts, '—'
+    );
+
+    modal.classList.add('open');
+  });
+
+  document.getElementById('btn-tour-send-email').addEventListener('click', function () {
+    flagInput.value = '1';
+    modal.classList.remove('open');
+    form.submit();
+  });
+
+  document.getElementById('btn-tour-no-email').addEventListener('click', function () {
+    flagInput.value = '0';
+    modal.classList.remove('open');
+    form.submit();
+  });
 })();
 </script>
 
