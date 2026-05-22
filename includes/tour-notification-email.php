@@ -111,8 +111,8 @@ HTML;
     <!-- Header -->
     <tr>
       <td style="background:#1a3d39;padding:32px 40px;text-align:center;">
-        <div style="font-size:26px;font-weight:800;color:#F4E7CF;letter-spacing:.05em;">LIZZARD</div>
-        <div style="font-size:11px;color:#8fb5b2;margin-top:6px;letter-spacing:.15em;text-transform:uppercase;">Természetjáró Egyesület</div>
+        <div style="font-size:26px;font-weight:800;color:#F4E7CF;letter-spacing:.05em;">Lizzard Outdoor</div>
+        <div style="font-size:11px;color:#8fb5b2;margin-top:6px;letter-spacing:.15em;text-transform:uppercase;">Leguán Osztag Természetjáró Egyesület</div>
       </td>
     </tr>
 
@@ -121,7 +121,7 @@ HTML;
       <td style="padding:36px 40px 28px;">
         <p style="font-size:16px;color:#333333;margin:0 0 8px 0;">Kedves <strong>{$f}</strong>!</p>
         <p style="font-size:14px;color:#555555;line-height:1.75;margin:0 0 24px 0;">
-          Új túrához adtak hozzá a <strong>{$a}</strong> nyilvántartásában.
+          Új túrához adtak hozzá a <strong>Lizzard Outdoor</strong> nyilvántartásában.
         </p>
 
         <!-- Tour info box -->
@@ -176,8 +176,10 @@ HTML;
         </table>
 
         <p style="font-size:12px;color:#7a7269;line-height:1.75;margin:0;">
-          Az összes pontszámod, szinted és a részletes számítási módszert a Lizzard tagsági rendszerében tekintheted meg.
+          Az összes pontszámod, szinted és a részletes számítási módszert a Lizzard tagsági rendszerében tekintheted meg. 
+          <strong><span style="color:#29776F;">Ha nem szeretnél ilyen értesítőket kapni, akkor lépj be a rendszerbe és a Saját Profilom menüpont alatt tudod módosítani milyen e-maileket küldhetünk neked!</span></strong>
         </p>
+        
       </td>
     </tr>
 

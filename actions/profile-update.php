@@ -104,14 +104,24 @@ if (!empty($_FILES['avatar']['name'])) {
     }
 }
 
+// Notification preferences — defined keys, opt-out model (missing = enabled)
+$notifKeys    = ['tour_added'];
+$notifRaw     = $_POST['notif'] ?? [];
+$notifPrefs   = [];
+foreach ($notifKeys as $key) {
+    $notifPrefs[$key] = isset($notifRaw[$key]) ? 1 : 0;
+}
+
 // Build update query
 $fields = ['firstname=?','lastname=?','username=?','email=?',
            'dateofbirth=?','zipcode=?','city=?','address=?','phone=?',
-           'tshirt_size=?','emergency_name=?','emergency_relation=?','emergency_phone=?'];
+           'tshirt_size=?','emergency_name=?','emergency_relation=?','emergency_phone=?',
+           'notification_prefs=?'];
 $params = [$firstname, $lastname, $username, $email,
            $dateofbirth ?: null, $zipcode ?: null, $city ?: null,
            $address ?: null, $phone ?: null, $tshirtSize ?: null,
-           $emergencyName ?: null, $emergencyRelation ?: null, $emergencyPhone ?: null];
+           $emergencyName ?: null, $emergencyRelation ?: null, $emergencyPhone ?: null,
+           json_encode($notifPrefs, JSON_UNESCAPED_UNICODE)];
 
 if ($avatarFilename) {
     $fields[] = 'profile_picture=?';

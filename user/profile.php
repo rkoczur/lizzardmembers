@@ -160,6 +160,23 @@ include __DIR__ . '/../includes/user-header.php';
           </div>
         </div>
 
+        <?php
+        $notifPrefs = json_decode($user['notification_prefs'] ?? '{}', true) ?? [];
+        $notifTourAdded = ($notifPrefs['tour_added'] ?? 1) != 0;
+        ?>
+        <h3 style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin:24px 0 6px;padding-top:20px;border-top:1px solid var(--border);">E-mail értesítések</h3>
+        <p style="font-size:12px;color:var(--text-muted);margin-bottom:12px;">Az alábbi értesítőket küldjük e-mailben. Kikapcsolhatod bármelyiket, ha nem szeretnéd fogadni.</p>
+        <div class="notif-list">
+          <label class="notif-row">
+            <input type="checkbox" name="notif[tour_added]" value="1" <?= $notifTourAdded ? 'checked' : '' ?>>
+            <span class="notif-slider"></span>
+            <span class="notif-info">
+              <strong>Túra hozzárendelés</strong>
+              <small>Értesítést kapsz, ha új túrához adnak hozzá a rendszerben</small>
+            </span>
+          </label>
+        </div>
+
         <div class="flex gap-2" style="margin-top:20px;">
           <button type="submit" class="btn btn-primary">Változások mentése</button>
         </div>

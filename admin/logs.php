@@ -6,13 +6,15 @@ require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/login-log-schema.php';
 require_once __DIR__ . '/../includes/audit-schema.php';
+require_once __DIR__ . '/../includes/email-log-schema.php';
 requireAdminOrVezeto();
 
 $pdo = getDb();
 ensureLoginLogSchema($pdo);
 ensureAuditSchema($pdo);
+ensureEmailLogSchema($pdo);
 
-$activeTab = ($_GET['tab'] ?? 'login') === 'audit' ? 'audit' : 'login';
+$activeTab = in_array($_GET['tab'] ?? '', ['audit', 'email'], true) ? $_GET['tab'] : 'login';
 
 // ── Belépési napló adatok ───────────────────────────────────────────
 $filterStatus = $_GET['status'] ?? '';
@@ -116,6 +118,40 @@ $actionLabels  = ['create' => 'Létrehozás', 'update' => 'Módosítás', 'delet
 $actionClasses = ['create' => 'badge-active', 'update' => 'badge-overdue', 'delete' => 'badge-inactive'];
 $typeLabels    = ['member' => 'Tag', 'tour' => 'Túra'];
 
+// ── E-mail napló adatok ────────────────────────────────────────────
+$emailLogs   = [];
+$eTotal      = 0;
+$eTotalSent  = 0;
+$eTotalFailed= 0;
+$eTotalAll   = 0;
+$eSearch     = trim($_GET['eq']      ?? '');
+$eStatus     = in_array($_GET['estatus'] ?? '', ['sent','failed'], true) ? $_GET['estatus'] : '';
+$eType       = ($_GET['etype2'] ?? '') === 'tour_added' ? 'tour_added' : '';
+$eDays       = max(1, min(365, (int)($_GET['edays'] ?? 30)));
+
+$eWhere  = ['sent_at >= DATE_SUB(NOW(), INTERVAL ? DAY)'];
+$eParams = [$eDays];
+if ($eStatus) { $eWhere[] = 'status = ?';      $eParams[] = $eStatus; }
+if ($eType)   { $eWhere[] = 'email_type = ?';  $eParams[] = $eType;   }
+if ($eSearch !== '') {
+    $eWhere[]  = '(recipient_name LIKE ? OR recipient_email LIKE ? OR subject LIKE ?)';
+    $eParams[] = '%'.$eSearch.'%';
+    $eParams[] = '%'.$eSearch.'%';
+    $eParams[] = '%'.$eSearch.'%';
+}
+$eWhereClause = implode(' AND ', $eWhere);
+
+$eStmt = $pdo->prepare("SELECT id, user_id, recipient_email, recipient_name, subject, email_type, status, error_message, sent_at FROM email_log WHERE $eWhereClause ORDER BY sent_at DESC LIMIT 500");
+$eStmt->execute($eParams);
+$emailLogs = $eStmt->fetchAll();
+
+$etStmt = $pdo->prepare("SELECT COUNT(*) FROM email_log WHERE $eWhereClause"); $etStmt->execute($eParams); $eTotal = (int)$etStmt->fetchColumn();
+$esSent = $pdo->prepare("SELECT COUNT(*) FROM email_log WHERE status='sent'   AND sent_at >= DATE_SUB(NOW(), INTERVAL ? DAY)"); $esSent->execute([$eDays]); $eTotalSent  = (int)$esSent->fetchColumn();
+$esFail = $pdo->prepare("SELECT COUNT(*) FROM email_log WHERE status='failed' AND sent_at >= DATE_SUB(NOW(), INTERVAL ? DAY)"); $esFail->execute([$eDays]); $eTotalFailed = (int)$esFail->fetchColumn();
+$esAll  = $pdo->query("SELECT COUNT(*) FROM email_log"); $eTotalAll = (int)$esAll->fetchColumn();
+
+$emailTypeLabels = ['tour_added' => 'Túra értesítő'];
+
 $pageTitle  = 'Naplók';
 $activePage = 'logs';
 include __DIR__ . '/../includes/admin-header.php';
@@ -143,6 +179,10 @@ include __DIR__ . '/../includes/admin-header.php';
   <a href="?tab=audit"
      style="padding:10px 22px;font-size:14px;font-weight:600;text-decoration:none;border-bottom:2px solid <?= $activeTab==='audit' ? 'var(--primary)' : 'transparent' ?>;margin-bottom:-2px;color:<?= $activeTab==='audit' ? 'var(--primary)' : 'var(--text-muted)' ?>;">
     Audit napló
+  </a>
+  <a href="?tab=email"
+     style="padding:10px 22px;font-size:14px;font-weight:600;text-decoration:none;border-bottom:2px solid <?= $activeTab==='email' ? 'var(--primary)' : 'transparent' ?>;margin-bottom:-2px;color:<?= $activeTab==='email' ? 'var(--primary)' : 'var(--text-muted)' ?>;">
+    E-mail napló
   </a>
 </div>
 
@@ -253,7 +293,7 @@ include __DIR__ . '/../includes/admin-header.php';
   <?php endif; ?>
 </div>
 
-<?php else: ?>
+<?php elseif ($activeTab === 'audit'): ?>
 <!-- ══════════════════ AUDIT NAPLÓ ══════════════════ -->
 
 <div class="card" style="margin-bottom:16px;">
@@ -321,6 +361,165 @@ include __DIR__ . '/../includes/admin-header.php';
   </div>
   <?php endif; ?>
 </div>
+
+<?php elseif ($activeTab === 'email'): ?>
+<!-- ══════════════════ E-MAIL NAPLÓ ══════════════════ -->
+
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;">
+  <div class="card">
+    <div class="card-body" style="display:flex;align-items:center;gap:16px;">
+      <div style="font-size:28px;font-weight:700;color:var(--primary);"><?= number_format($eTotalSent) ?></div>
+      <div><div style="font-weight:600;font-size:14px;">Elküldve</div><div style="font-size:12px;color:var(--text-muted);">utolsó <?= $eDays ?> napban</div></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body" style="display:flex;align-items:center;gap:16px;">
+      <div style="font-size:28px;font-weight:700;color:var(--danger);"><?= number_format($eTotalFailed) ?></div>
+      <div><div style="font-weight:600;font-size:14px;">Sikertelen</div><div style="font-size:12px;color:var(--text-muted);">utolsó <?= $eDays ?> napban</div></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body" style="display:flex;align-items:center;gap:16px;">
+      <div style="font-size:28px;font-weight:700;color:var(--text);"><?= number_format($eTotalSent + $eTotalFailed) ?></div>
+      <div><div style="font-weight:600;font-size:14px;">Összes</div><div style="font-size:12px;color:var(--text-muted);">utolsó <?= $eDays ?> napban</div></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body" style="display:flex;align-items:center;gap:16px;">
+      <div style="font-size:28px;font-weight:700;color:var(--text-muted);"><?= number_format($eTotalAll) ?></div>
+      <div><div style="font-weight:600;font-size:14px;">Összes rekord</div><div style="font-size:12px;color:var(--text-muted);">teljes napló</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="card" style="margin-bottom:16px;">
+  <form method="get" class="filter-bar">
+    <input type="hidden" name="tab" value="email">
+    <div class="search-bar" style="flex:1;min-width:180px;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" name="eq" value="<?= e($eSearch) ?>" placeholder="Keresés neve, e-mail vagy tárgy alapján…">
+    </div>
+    <select name="etype2" class="form-control" style="width:auto;min-width:160px;">
+      <option value="">Minden típus</option>
+      <option value="tour_added" <?= $eType==='tour_added'?'selected':'' ?>>Túra értesítő</option>
+    </select>
+    <select name="estatus" class="form-control" style="width:auto;min-width:150px;">
+      <option value="">Minden státusz</option>
+      <option value="sent"   <?= $eStatus==='sent'  ?'selected':'' ?>>Elküldve</option>
+      <option value="failed" <?= $eStatus==='failed'?'selected':'' ?>>Sikertelen</option>
+    </select>
+    <select name="edays" class="form-control" style="width:auto;min-width:130px;">
+      <?php foreach ([7,14,30,60,90,180,365] as $d): ?>
+        <option value="<?= $d ?>" <?= $eDays===$d?'selected':'' ?>>Utolsó <?= $d ?> nap</option>
+      <?php endforeach; ?>
+    </select>
+    <button type="submit" class="btn btn-primary btn-sm">Szűrés</button>
+    <?php if ($eStatus || $eType || $eSearch !== '' || $eDays !== 30): ?>
+      <a href="?tab=email" class="btn btn-ghost btn-sm">Visszaállítás</a>
+    <?php endif; ?>
+  </form>
+</div>
+
+<div class="card">
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Dátum / idő</th>
+          <th>Címzett</th>
+          <th>Tárgy</th>
+          <th>Típus</th>
+          <th>Státusz</th>
+          <th style="width:80px;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php if (empty($emailLogs)): ?>
+        <tr><td colspan="6"><div class="empty-state"><div class="empty-icon">📧</div><p>Nincs e-mail a megadott feltételek alapján.</p></div></td></tr>
+        <?php else: foreach ($emailLogs as $log): ?>
+        <tr>
+          <td style="white-space:nowrap;font-size:13px;"><?= e((new DateTime($log['sent_at']))->format('Y.m.d H:i:s')) ?></td>
+          <td>
+            <div class="td-name"><?= e($log['recipient_name'] ?? '—') ?></div>
+            <div class="td-sub"><?= e($log['recipient_email']) ?></div>
+          </td>
+          <td style="font-size:13px;max-width:260px;"><?= e($log['subject']) ?></td>
+          <td>
+            <?php $tLabel = $emailTypeLabels[$log['email_type'] ?? ''] ?? e($log['email_type'] ?? '—'); ?>
+            <span class="badge badge-overdue" style="font-size:11px;"><?= $tLabel ?></span>
+          </td>
+          <td>
+            <?php if ($log['status'] === 'sent'): ?>
+              <span class="badge badge-active">Elküldve</span>
+            <?php else: ?>
+              <span class="badge badge-inactive">Sikertelen</span>
+              <?php if ($log['error_message']): ?><div style="font-size:11px;color:var(--text-muted);margin-top:2px;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="<?= e($log['error_message']) ?>"><?= e($log['error_message']) ?></div><?php endif; ?>
+            <?php endif; ?>
+          </td>
+          <td>
+            <button type="button" class="btn btn-ghost btn-sm"
+              data-preview-id="<?= (int)$log['id'] ?>"
+              data-subject="<?= e($log['subject']) ?>"
+              data-meta="<?= e(($log['recipient_name'] ?? '') . ' <' . $log['recipient_email'] . '> — ' . (new DateTime($log['sent_at']))->format('Y.m.d H:i')) ?>">
+              Előnézet
+            </button>
+          </td>
+        </tr>
+        <?php endforeach; endif; ?>
+      </tbody>
+    </table>
+  </div>
+  <?php if (!empty($emailLogs)): ?>
+  <div style="padding:12px 20px;font-size:12px;color:var(--text-muted);border-top:1px solid var(--border);">
+    <?= count($emailLogs) ?> bejegyzés látható <?= ($eStatus||$eType||$eSearch!=='') ? '(szűrve)' : '' ?> — összesen <?= $eTotal ?> az utolsó <?= $eDays ?> napban
+  </div>
+  <?php endif; ?>
+</div>
+
+<!-- Email előnézet modal -->
+<div id="email-preview-modal" style="display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.55);align-items:center;justify-content:center;">
+  <div style="background:var(--bg);border-radius:12px;width:min(860px,96vw);max-height:90vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.35);">
+    <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-shrink:0;">
+      <div style="min-width:0;">
+        <div id="email-preview-subject" style="font-weight:700;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"></div>
+        <div id="email-preview-meta" style="font-size:12px;color:var(--text-muted);margin-top:3px;"></div>
+      </div>
+      <button id="close-email-preview" class="btn btn-ghost btn-sm" style="flex-shrink:0;">Bezárás</button>
+    </div>
+    <iframe id="email-preview-frame" style="flex:1;border:none;width:100%;min-height:480px;" sandbox="allow-same-origin"></iframe>
+  </div>
+</div>
+
+<script>
+(function () {
+  var modal  = document.getElementById('email-preview-modal');
+  var frame  = document.getElementById('email-preview-frame');
+  var subjEl = document.getElementById('email-preview-subject');
+  var metaEl = document.getElementById('email-preview-meta');
+  var closeBtn = document.getElementById('close-email-preview');
+
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-preview-id]');
+    if (!btn) return;
+    subjEl.textContent = btn.getAttribute('data-subject');
+    metaEl.textContent = btn.getAttribute('data-meta');
+    frame.src = '<?= BASE_URL ?>/admin/email-log-preview.php?id=' + btn.getAttribute('data-preview-id');
+    modal.style.display = 'flex';
+  });
+
+  closeBtn.addEventListener('click', function () {
+    modal.style.display = 'none';
+    frame.src = '';
+  });
+
+  modal.addEventListener('click', function (e) {
+    if (e.target === modal) {
+      modal.style.display = 'none';
+      frame.src = '';
+    }
+  });
+}());
+</script>
 
 <?php endif; ?>
 

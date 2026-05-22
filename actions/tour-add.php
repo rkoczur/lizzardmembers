@@ -178,13 +178,15 @@ if (($memberIds) && ($_POST['send_tour_notification'] ?? '') === '1') {
         require_once __DIR__ . '/../includes/app-settings-schema.php';
         require_once __DIR__ . '/../includes/mailer.php';
         require_once __DIR__ . '/../includes/tour-notification-email.php';
+        require_once __DIR__ . '/../includes/email-log-schema.php';
 
         ensureAppSettingsSchema($pdo);
+        ensureEmailLogSchema($pdo);
         $smtp = getSmtpConfig($pdo);
 
         if ($smtp['host'] !== '') {
             $ph      = rtrim(str_repeat('?,', count($memberIds)), ',');
-            $sNew    = $pdo->prepare("SELECT id, firstname, lastname, email, level, points FROM users WHERE id IN ($ph)");
+            $sNew    = $pdo->prepare("SELECT id, firstname, lastname, email, level, points, notification_prefs FROM users WHERE id IN ($ph)");
             $sNew->execute(array_values($memberIds));
             $statsNew = [];
             foreach ($sNew->fetchAll() as $r) { $statsNew[$r['id']] = $r; }
@@ -222,6 +224,11 @@ if (($memberIds) && ($_POST['send_tour_notification'] ?? '') === '1') {
             foreach ($memberIds as $uid) {
                 if (!isset($statsNew[$uid])) continue;
                 $m = $statsNew[$uid];
+                $prefs = json_decode($m['notification_prefs'] ?? '{}', true) ?? [];
+                if (($prefs['tour_added'] ?? 1) == 0) continue;
+                $html          = '';
+                $emailSubject  = 'Új túrához adtak hozzá: ' . ($name ?: $countryName);
+                $recipientName = $m['lastname'] . ' ' . $m['firstname'];
                 try {
                     $html = buildTourNotificationEmailHtml(
                         $m['firstname'],
@@ -240,9 +247,11 @@ if (($memberIds) && ($_POST['send_tour_notification'] ?? '') === '1') {
                         $absBaseUrl,
                         APP_NAME
                     );
-                    $mailer->send($m['email'], $m['lastname'] . ' ' . $m['firstname'], 'Új túrához adtak hozzá: ' . ($name ?: $countryName), $html);
+                    $mailer->send($m['email'], $recipientName, $emailSubject, $html);
+                    logEmailEntry($pdo, (int)$uid, $m['email'], $recipientName, $emailSubject, $html, 'tour_added', 'sent');
                 } catch (Throwable $ex) {
                     error_log('Tour notification email uid=' . $uid . ': ' . $ex->getMessage());
+                    logEmailEntry($pdo, (int)$uid, $m['email'], $recipientName, $emailSubject, $html, 'tour_added', 'failed', $ex->getMessage());
                     $errCount++;
                 }
             }
