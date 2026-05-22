@@ -102,7 +102,7 @@ if (($_POST['send_welcome_email'] ?? '') === '1') {
             $loginUrl = $proto . '://' . $_SERVER['HTTP_HOST'] . BASE_URL . '/login.php';
             $html     = buildWelcomeEmailHtml($firstname, $username, $password, $loginUrl, APP_NAME);
             $mailer   = new SmtpMailer($smtp);
-            $mailer->send($email, $lastname . ' ' . $firstname, 'Üdvözlünk a ' . APP_NAME . '-ban!', $html);
+            $mailer->send($email, $lastname . ' ' . $firstname, 'Üdvözlünk a Lizzard Outdoorban!', $html);
             flash('success', $baseMsg . ' Az üdvözlő e-mail elküldve.');
         } else {
             flash('success', $baseMsg . ' (SMTP nincs beállítva, e-mail nem lett elküldve.)');

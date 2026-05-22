@@ -29,7 +29,7 @@ function buildWelcomeEmailHtml(
     <tr>
       <td style="background:#1a3d39;padding:32px 40px;text-align:center;">
         <div style="font-size:26px;font-weight:800;color:#F4E7CF;letter-spacing:.05em;">LIZZARD</div>
-        <div style="font-size:11px;color:#8fb5b2;margin-top:6px;letter-spacing:.15em;text-transform:uppercase;">Természetjáró Egyesület</div>
+        <div style="font-size:11px;color:#8fb5b2;margin-top:6px;letter-spacing:.15em;text-transform:uppercase;">Leguán Osztag Természetjáró Egyesület</div>
       </td>
     </tr>
 
