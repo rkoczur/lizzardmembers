@@ -264,6 +264,30 @@ function initTourAdminFilters() {
   });
 }
 
+/* ===== Date input: 4 számjegy után auto-ugrás hónapra ===== */
+function initDateYearLimit() {
+  document.querySelectorAll('input[type="date"]').forEach(function(input) {
+    var digitCount = 0;
+    input.addEventListener('focus', function() { digitCount = 0; });
+    input.addEventListener('keydown', function(e) {
+      if (/^\d$/.test(e.key)) {
+        digitCount++;
+        if (digitCount === 4) {
+          digitCount = 0;
+          var el = this;
+          setTimeout(function() {
+            el.dispatchEvent(new KeyboardEvent('keydown', {
+              key: 'ArrowRight', code: 'ArrowRight', keyCode: 39, which: 39, bubbles: true
+            }));
+          }, 10);
+        }
+      } else {
+        digitCount = 0;
+      }
+    });
+  });
+}
+
 /* ===== Mobile hamburger menu ===== */
 function initMobileMenu() {
   const btn     = document.getElementById('hamburger-btn');
@@ -319,4 +343,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initMemberPicker();
   initMobileMenu();
   initResponsiveTables();
+  initDateYearLimit();
 });

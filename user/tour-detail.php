@@ -50,6 +50,103 @@ $pageTitle  = e($title);
 $activePage = 'tours';
 include __DIR__ . '/../includes/user-header.php';
 
+function mtszBreakdownLines(array $t): array {
+    $type       = $t['tour_type'] ?? 'gyalogos';
+    $sub        = $t['sub_type'] ?? 'normal';
+    $days       = max(1, (int)($t['days'] ?? 1));
+    $date       = $t['tour_date'] ?? null;
+    $multiDay   = $t['multi_day_type'] ?? null;
+    $portages   = (int)($t['boat_portages'] ?? 0);
+    $normalKm   = ($t['total_km'] !== null && $t['total_km'] !== '')               ? (float)$t['total_km']        : null;
+    $normalElev = ($t['total_elevation'] !== null && $t['total_elevation'] !== '')  ? (int)$t['total_elevation']   : null;
+    $alpineKm   = ($t['alpine_km'] !== null && $t['alpine_km'] !== '')             ? (float)$t['alpine_km']        : null;
+    $alpineElev = ($t['alpine_elevation'] !== null && $t['alpine_elevation'] !== '') ? (int)$t['alpine_elevation']  : null;
+    $hours      = ($t['tour_hours'] !== null && $t['tour_hours'] !== '')            ? (float)$t['tour_hours']       : null;
+    $campNights = (int)($t['camping_nights_fixed'] ?? 0);
+    $hasAlpine  = ($alpineKm !== null && $alpineKm > 0) || ($alpineElev !== null && $alpineElev > 0);
+
+    $fn = function(float $n): string {
+        if ($n == (int)$n) return (string)(int)$n;
+        return number_format($n, 1, ',', '');
+    };
+
+    $lines = [];
+    $normalBase = 0.0;
+    $alpineBase = 0.0;
+
+    if ($type === 'gyalogos' || $type === 'kerekparos') {
+        if ($type === 'gyalogos') { $kr = ($sub === 'tajekozodasi') ? 3.0 : 1.5; $er = 2.0; }
+        else { $kr = ($sub === 'terep') ? 1.0 : 0.5; $er = ($sub === 'terep') ? 2.0 : 1.0; }
+
+        if ($normalKm !== null && $normalKm > 0) {
+            $v = $normalKm * $kr; $normalBase += $v;
+            $lines[] = "Nem magashegyi km: {$fn($normalKm)} × {$fn($kr)} = " . (int)round($v) . ' pont';
+        }
+        if ($normalElev !== null && $normalElev > 0) {
+            $v = ($normalElev / 100) * $er; $normalBase += $v;
+            $lines[] = "Nem magashegyi szint: {$normalElev} / 100 × {$fn($er)} = " . (int)round($v) . ' pont';
+        }
+        if ($alpineKm !== null && $alpineKm > 0) {
+            $v = $alpineKm * $kr; $alpineBase += $v;
+            $lines[] = "Magashegyi km: {$fn($alpineKm)} × {$fn($kr * 2)} = " . (int)round($v * 2) . ' pont';
+        }
+        if ($alpineElev !== null && $alpineElev > 0) {
+            $v = ($alpineElev / 100) * $er; $alpineBase += $v;
+            $lines[] = "Magashegyi szint: {$alpineElev} / 100 × {$fn($er * 2)} = " . (int)round($v * 2) . ' pont';
+        }
+    } elseif ($type === 'vizi') {
+        $rate = match($sub) { 'szemben' => 2.0, 'allovi' => 1.5, default => 1.0 };
+        if ($normalKm !== null && $normalKm > 0) {
+            $v = $normalKm * $rate; $normalBase += $v;
+            $lines[] = "Megtett km: {$fn($normalKm)} × {$fn($rate)} = " . (int)round($v) . ' pont';
+        }
+    } elseif ($type === 'si') {
+        if ($hours !== null && $hours > 0) {
+            $v = $hours * 6; $normalBase += $v;
+            $lines[] = "Síelési idő: {$fn($hours)} ó × 6 = " . (int)round($v) . ' pont';
+        }
+    } elseif ($type === 'barlangi') {
+        if ($hours !== null && $hours > 0) {
+            $rate = ($sub === 'kiepitetlen') ? 10 : 4;
+            $v = $hours * $rate; $normalBase += $v;
+            $lines[] = "Bejárási idő: {$fn($hours)} ó × {$rate} = " . (int)round($v) . ' pont';
+        }
+    } elseif ($type === 'munka') {
+        if ($hours !== null && $hours > 0) {
+            $v = $hours * 7; $normalBase += $v;
+            $lines[] = "Munka ideje: {$fn($hours)} ó × 7 = " . (int)round($v) . ' pont';
+        }
+    }
+
+    $bonusMult = ($hasAlpine && in_array($type, ['gyalogos', 'kerekparos'], true) && $alpineBase >= $normalBase) ? 2 : 1;
+
+    if ($type === 'gyalogos' && !$hasAlpine && $normalElev !== null && $normalElev <= 100) {
+        $eff = 3 * $bonusMult; $b = $days * $eff;
+        $lines[] = $days > 1 ? "Síkvidéki pluszpont: {$days} nap × {$eff} = {$b} pont" : "Síkvidéki pluszpont: {$b} pont";
+    }
+    if (in_array($type, ['gyalogos', 'kerekparos'], true) && $date) {
+        $month  = (int)date('n', strtotime($date));
+        $winter = $hasAlpine ? [11, 12, 1, 2, 3] : [12, 1, 2];
+        if (in_array($month, $winter, true)) {
+            $eff = 3 * $bonusMult; $b = $days * $eff;
+            $lines[] = $days > 1 ? "Téli pluszpont: {$days} nap × {$eff} = {$b} pont" : "Téli pluszpont: {$b} pont";
+        }
+    }
+    if ($campNights > 0 && $multiDay === 'csillag') {
+        $eff = 1 * $bonusMult; $b = $campNights * $eff;
+        $lines[] = "Állótábor: {$campNights} éj × {$eff} = {$b} pont";
+    } elseif ($campNights > 0 && $multiDay === 'vandor') {
+        $eff = 3 * $bonusMult; $b = $campNights * $eff;
+        $lines[] = "Mozgótábor: {$campNights} éj × {$eff} = {$b} pont";
+    }
+    if ($type === 'vizi' && $portages > 0) {
+        $eff = 3 * $bonusMult; $b = $portages * $eff;
+        $lines[] = "Hajóátemelés: {$portages} alkalom × {$eff} = {$b} pont";
+    }
+
+    return $lines;
+}
+
 function detailRow(string $label, $value): void {
     if ($value === null || $value === '' || $value === '—') return;
     echo '<tr><td style="width:40%;padding:8px 12px;color:var(--text-muted);font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;">' . htmlspecialchars($label) . '</td>';
@@ -194,6 +291,14 @@ function detailRow(string $label, $value): void {
           <div style="font-size:28px;font-weight:700;color:var(--primary);"><?= number_format((int)($tour['mtsz_points'] ?? 0)) ?></div>
         </div>
       </div>
+      <?php $mtszLines = mtszBreakdownLines($tour); if (!empty($mtszLines)): ?>
+      <div style="padding:10px 16px 14px;border-top:1px solid var(--border); text-align:right;">
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted);margin-bottom:6px;">MTSZ pont számítása</div>
+        <?php foreach ($mtszLines as $line): ?>
+        <div style="font-size:12px;color:var(--text-muted);line-height:1.9;font-family:monospace;"><?= e($line) ?></div>
+        <?php endforeach; ?>
+      </div>
+      <?php endif; ?>
     </div>
 
     <!-- 4. Résztvevők -->
@@ -242,7 +347,7 @@ function detailRow(string $label, $value): void {
 (function () {
   var map = L.map('tour-map');
   L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  maxZoom: 19,
+  maxZoom: 30,
   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
   }).addTo(map);
 

@@ -125,8 +125,21 @@
         </svg>
       </button>
       <span class="page-title"><?= e($pageTitle ?? '') ?></span>
+      <?php
+        $_userPageMap = [
+          'dashboard'  => '/user/index.php',
+          'profile'    => '/user/profile.php',
+          'toplist'    => '/user/toplist.php',
+          'tours'      => '/user/tours.php',
+          'statistics' => '/user/statistics.php',
+        ];
+        $_userViewUrl = BASE_URL . ($_userPageMap[$activePage ?? ''] ?? '/user/index.php');
+        if (basename($_SERVER['PHP_SELF']) === 'tour-detail.php' && !empty($_GET['id'])) {
+          $_userViewUrl = BASE_URL . '/user/tour-detail.php?id=' . (int)$_GET['id'];
+        }
+      ?>
       <div class="topbar-actions">
-        <a href="<?= BASE_URL ?>/user/index.php" class="btn btn-secondary btn-sm" title="Tagok portáljának megtekintése" style="display:flex;align-items:center;gap:5px;">
+        <a href="<?= $_userViewUrl ?>" class="btn btn-secondary btn-sm" title="Tagok portáljának megtekintése" style="display:flex;align-items:center;gap:5px;">
           <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
             <circle cx="12" cy="12" r="3"/>

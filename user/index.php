@@ -146,7 +146,7 @@ include __DIR__ . '/../includes/user-header.php';
           <div style="background:var(--border);border-radius:99px;height:10px;overflow:hidden;margin-bottom:8px;">
             <div style="background:var(--primary);width:100%;height:100%;border-radius:99px;"></div>
           </div>
-          <p style="color:var(--success);font-weight:600;">🎉 Elérte a legmagasabb fokozatot – Ezredes!</p>
+          <p style="color:var(--success);font-weight:600;">🎉 Elérted a legmagasabb fokozatot – Ezredes!</p>
         </div>
       </div>
     <?php endif; ?>

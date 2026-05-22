@@ -10,17 +10,19 @@ requireAdminOrVezeto();
 $pdo = getDb();
 ensureToursSchema($pdo);
 
-$validSorts = ['date_desc', 'date_asc', 'km_desc', 'km_asc', 'code', 'pts_desc', 'pts_asc'];
+$validSorts = ['date_desc', 'date_asc', 'km_desc', 'km_asc', 'code', 'pts_desc', 'pts_asc', 'members_desc', 'members_asc'];
 $sortBy     = in_array($_GET['sort'] ?? '', $validSorts, true) ? $_GET['sort'] : 'date_desc';
 
 $orderBy = match($sortBy) {
-    'date_asc'  => 't.tour_date ASC,  t.created_at ASC',
-    'km_desc'   => '(COALESCE(t.total_km,0)+COALESCE(t.alpine_km,0)) DESC, t.tour_date DESC',
-    'km_asc'    => '(COALESCE(t.total_km,0)+COALESCE(t.alpine_km,0)) ASC,  t.tour_date DESC',
-    'code'      => 'CAST(t.tour_code AS UNSIGNED) ASC, t.tour_code ASC',
-    'pts_desc'  => 't.points DESC, t.tour_date DESC',
-    'pts_asc'   => 't.points ASC,  t.tour_date DESC',
-    default     => 't.tour_date DESC, t.created_at DESC',
+    'date_asc'    => 't.tour_date ASC,  t.created_at ASC',
+    'km_desc'     => '(COALESCE(t.total_km,0)+COALESCE(t.alpine_km,0)) DESC, t.tour_date DESC',
+    'km_asc'      => '(COALESCE(t.total_km,0)+COALESCE(t.alpine_km,0)) ASC,  t.tour_date DESC',
+    'code'        => 'CAST(t.tour_code AS UNSIGNED) ASC, t.tour_code ASC',
+    'pts_desc'    => 't.points DESC, t.tour_date DESC',
+    'pts_asc'     => 't.points ASC,  t.tour_date DESC',
+    'members_desc' => 'member_count DESC, t.tour_date DESC',
+    'members_asc'  => 'member_count ASC,  t.tour_date DESC',
+    default       => 't.tour_date DESC, t.created_at DESC',
 };
 
 $tours = $pdo->query("
@@ -73,8 +75,10 @@ include __DIR__ . '/../includes/admin-header.php';
       <option value="km_desc"   <?= $sortBy === 'km_desc'   ? 'selected' : '' ?>>Km (több elől)</option>
       <option value="km_asc"    <?= $sortBy === 'km_asc'    ? 'selected' : '' ?>>Km (kevesebb elől)</option>
       <option value="code"      <?= $sortBy === 'code'      ? 'selected' : '' ?>>Sorszám szerint</option>
-      <option value="pts_desc"  <?= $sortBy === 'pts_desc'  ? 'selected' : '' ?>>Lizzardier pont (több elől)</option>
-      <option value="pts_asc"   <?= $sortBy === 'pts_asc'   ? 'selected' : '' ?>>Lizzardier pont (kevesebb elől)</option>
+      <option value="pts_desc"     <?= $sortBy === 'pts_desc'     ? 'selected' : '' ?>>Lizzardier pont (több elől)</option>
+      <option value="pts_asc"      <?= $sortBy === 'pts_asc'      ? 'selected' : '' ?>>Lizzardier pont (kevesebb elől)</option>
+      <option value="members_desc" <?= $sortBy === 'members_desc' ? 'selected' : '' ?>>Résztvevők (több elől)</option>
+      <option value="members_asc"  <?= $sortBy === 'members_asc'  ? 'selected' : '' ?>>Résztvevők (kevesebb elől)</option>
     </select>
     <a href="<?= BASE_URL ?>/actions/tours-export.php" class="btn btn-ghost btn-sm">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -160,7 +164,7 @@ include __DIR__ . '/../includes/admin-header.php';
           </td>
           <td><?= $t['total_elevation'] !== null ? number_format((int)$t['total_elevation']) . ' m' : '—' ?></td>
           <td><?= (int)$t['member_count'] ?> tag<?= ($t['guest_count'] ?? 0) > 0 ? ', ' . (int)$t['guest_count'] . ' vendég' : '' ?></td>
-          <td><strong><?= number_format((int)$t['points']) ?></strong></td>
+          <td><?= (int)$t['points'] > 0 ? '<strong>' . number_format((int)$t['points']) . '</strong>' : '' ?></td>
           <td><?= number_format((int)($t['mtsz_points'] ?? 0)) ?></td>
           <td>
             <a href="<?= BASE_URL ?>/admin/tour-detail.php?id=<?= $t['id'] ?>" class="btn btn-ghost btn-sm"><?= isAdmin() ? 'Módosítás' : 'Megtekintés' ?></a>

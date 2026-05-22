@@ -49,6 +49,32 @@ $scStmt = $pdo->prepare("SELECT COUNT(*) FROM login_log WHERE status='success' A
 $fcStmt = $pdo->prepare("SELECT COUNT(*) FROM login_log WHERE status='failed' AND event_type='login' AND created_at >= DATE_SUB(NOW(), INTERVAL ? DAY)"); $fcStmt->execute([$days]); $failCount = (int)$fcStmt->fetchColumn();
 $rcStmt = $pdo->prepare("SELECT COUNT(*) FROM login_log WHERE event_type='password_reset_complete' AND created_at >= DATE_SUB(NOW(), INTERVAL ? DAY)"); $rcStmt->execute([$days]); $resetCount = (int)$rcStmt->fetchColumn();
 
+function parseUserAgent(string $ua): string
+{
+    if ($ua === '') return '—';
+
+    // Device
+    if (preg_match('/iPhone/i', $ua))                          $device = 'iPhone';
+    elseif (preg_match('/iPad/i', $ua))                        $device = 'iPad';
+    elseif (preg_match('/Android/i', $ua))                     $device = 'Android';
+    elseif (preg_match('/Macintosh|Mac OS X/i', $ua))          $device = 'Mac';
+    elseif (preg_match('/Windows/i', $ua))                     $device = 'PC';
+    elseif (preg_match('/Linux/i', $ua))                       $device = 'Linux';
+    else                                                        $device = 'Egyéb';
+
+    // Browser — order matters: Edge before Chrome, Chrome before Safari
+    if (preg_match('/Edg\//i', $ua))                           $browser = 'Edge';
+    elseif (preg_match('/OPR\/|Opera/i', $ua))                 $browser = 'Opera';
+    elseif (preg_match('/Firefox\/(\d+)/i', $ua, $m))          $browser = 'Firefox ' . $m[1];
+    elseif (preg_match('/Chrome\/(\d+)/i', $ua, $m))           $browser = 'Chrome ' . $m[1];
+    elseif (preg_match('/Safari\/\d+/i', $ua) &&
+            preg_match('/Version\/(\d+)/i', $ua, $m))          $browser = 'Safari ' . $m[1];
+    elseif (preg_match('/MSIE|Trident/i', $ua))                $browser = 'IE';
+    else                                                        $browser = 'Ismeretlen';
+
+    return $device . ' · ' . $browser;
+}
+
 $failReasonLabels = [
     'wrong_password'   => 'Hibás jelszó',
     'unknown_user'     => 'Ismeretlen felhasználó',
@@ -214,7 +240,7 @@ include __DIR__ . '/../includes/admin-header.php';
               <?php if ($log['fail_reason']): ?><div style="font-size:11px;color:var(--text-muted);margin-top:2px;"><?= e($failReasonLabels[$log['fail_reason']] ?? $log['fail_reason']) ?></div><?php endif; ?>
             <?php endif; ?>
           </td>
-          <td style="font-size:12px;color:var(--text-muted);max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><?= e($log['user_agent']) ?></td>
+          <td style="font-size:12px;color:var(--text-muted);white-space:nowrap;"><?= e(parseUserAgent($log['user_agent'])) ?></td>
         </tr>
         <?php endforeach; endif; ?>
       </tbody>

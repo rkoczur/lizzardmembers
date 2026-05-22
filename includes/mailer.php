@@ -116,12 +116,16 @@ class SmtpMailer
             ));
         }
 
+        $fromDomain = substr(strrchr($this->fromEmail, '@'), 1) ?: 'localhost';
+        $messageId  = '<' . bin2hex(random_bytes(16)) . '.' . time() . '@' . $fromDomain . '>';
+
         $m  = "From: $from\r\n";
         $m .= "To: $to\r\n";
         $m .= 'Subject: =?UTF-8?B?' . base64_encode($subject) . "?=\r\n";
+        $m .= "Message-ID: $messageId\r\n";
+        $m .= 'Date: ' . date('r') . "\r\n";
         $m .= "MIME-Version: 1.0\r\n";
         $m .= "Content-Type: multipart/alternative; boundary=\"$boundary\"\r\n";
-        $m .= 'Date: ' . date('r') . "\r\n";
         $m .= "X-Mailer: LizzardMembers\r\n";
         $m .= "\r\n";
 

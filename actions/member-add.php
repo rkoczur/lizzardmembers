@@ -85,6 +85,36 @@ logAudit($pdo, 'create', 'member', $newId, $lastname . ' ' . $firstname, [
     ['k' => 'E-mail',         'v' => $email],
     ['k' => 'Szerepkör',      'v' => 'Tag'],
 ]);
-flash('success', $lastname . ' ' . $firstname . ' sikeresen regisztrálva.');
+
+$baseMsg = $lastname . ' ' . $firstname . ' sikeresen regisztrálva.';
+
+if (($_POST['send_welcome_email'] ?? '') === '1') {
+    try {
+        require_once __DIR__ . '/../includes/app-settings-schema.php';
+        require_once __DIR__ . '/../includes/mailer.php';
+        require_once __DIR__ . '/../includes/welcome-email.php';
+
+        ensureAppSettingsSchema($pdo);
+        $smtp = getSmtpConfig($pdo);
+
+        if ($smtp['host'] !== '') {
+            $proto    = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+            $loginUrl = $proto . '://' . $_SERVER['HTTP_HOST'] . BASE_URL . '/login.php';
+            $html     = buildWelcomeEmailHtml($firstname, $username, $password, $loginUrl, APP_NAME);
+            $mailer   = new SmtpMailer($smtp);
+            $mailer->send($email, $lastname . ' ' . $firstname, 'Üdvözlünk a ' . APP_NAME . '-ban!', $html);
+            flash('success', $baseMsg . ' Az üdvözlő e-mail elküldve.');
+        } else {
+            flash('success', $baseMsg . ' (SMTP nincs beállítva, e-mail nem lett elküldve.)');
+        }
+    } catch (Throwable $ex) {
+        error_log('Welcome email error for ' . $username . ': ' . $ex->getMessage());
+        flash('success', $baseMsg);
+        flash('error', 'Az üdvözlő e-mail küldése sikertelen: ' . $ex->getMessage());
+    }
+} else {
+    flash('success', $baseMsg);
+}
+
 header('Location: ' . BASE_URL . '/admin/member-detail.php?id=' . $newId);
 exit;

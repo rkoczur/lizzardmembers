@@ -101,7 +101,7 @@ include __DIR__ . '/../includes/user-header.php';
           </td>
           <td><?= $t['total_elevation'] !== null ? number_format((int)$t['total_elevation']) . ' m' : '—' ?></td>
           <td><?= (int)$t['member_count'] ?> tag<?= ($t['guest_count'] ?? 0) > 0 ? ', ' . (int)$t['guest_count'] . ' vendég' : '' ?></td>
-          <td><strong><?= number_format((int)$t['points']) ?></strong></td>
+          <td><?= (int)$t['points'] > 0 ? '<strong>' . number_format((int)$t['points']) . '</strong>' : '' ?></td>
           <td><?= number_format((int)($t['mtsz_points'] ?? 0)) ?></td>
           <td class="td-actions" style="white-space:nowrap;">
             <div style="display:flex;align-items:center;justify-content:flex-end;gap:6px;">

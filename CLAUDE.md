@@ -1,3 +1,6 @@
+# Basic rules
+Always update version number after every modification as stated in `/includes/version.php`
+
 # LizzardMembers — Root
 
 PHP/MySQL membership management app running on XAMPP at `/lizzardmembers`.
