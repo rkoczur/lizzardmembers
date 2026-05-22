@@ -176,7 +176,7 @@ HTML;
         </table>
 
         <p style="font-size:12px;color:#7a7269;line-height:1.75;margin:0;">
-          Az összes pontszámod, szinted és a részletes számítási módszert a Lizzard tagsági rendszerében tekintheted meg. 
+          Az összes pontszámod, szinted és a részletes számítási módszert a tagsági rendszerbe belépve tekintheted meg. 
           <strong><span style="color:#29776F;">Ha nem szeretnél ilyen értesítőket kapni, akkor lépj be a rendszerbe és a Saját Profilom menüpont alatt tudod módosítani milyen e-maileket küldhetünk neked!</span></strong>
         </p>
         
