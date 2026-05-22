@@ -1,5 +1,6 @@
 # Basic rules
 Always update version number after every modification as stated in `/includes/version.php`
+Do not modify any hardcoded text if it is "Lizzard Outdoor" or "Leguán Osztag" or "Leguán Osztag Természetjáró Egyesület"
 
 # LizzardMembers — Root
 
@@ -22,6 +23,7 @@ All UI elements must be in **Hungarian**!
 | `user/` | Member-facing pages (dashboard, profile) |
 | `actions/` | POST-only form handlers — no HTML output, always redirect after processing |
 | `assets/` | CSS, JS, images, uploaded avatars |
+| `wp-plugins/` | Wordpress plugins |
 
 ## Constants (defined in `includes/config.php`)
 - `BASE_URL` — e.g. `/lizzardmembers` — always use this for links, never hardcode paths

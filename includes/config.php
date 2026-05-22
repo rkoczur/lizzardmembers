@@ -11,6 +11,7 @@ define('DB_USER',    $_cfg['database']['user']     ?? 'root');
 define('DB_PASS',    $_cfg['database']['password'] ?? '');
 define('DB_NAME',    $_cfg['database']['dbname']   ?? '');
 define('BASE_URL',   rtrim($_cfg['app']['base_url']  ?? '', '/'));
+define('API_KEY',    $_cfg['app']['api_key'] ?? '');
 define('APP_NAME',   $_cfg['app']['app_name']         ?? 'LizzardMembers');
 define('AVATAR_DIR', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'avatars' . DIRECTORY_SEPARATOR);
 define('AVATAR_URL', BASE_URL . '/assets/uploads/avatars/');

@@ -325,6 +325,17 @@ function getFlagUrl(?string $filename): string
     return FLAG_URL . $filename;
 }
 
+function generateMemberPassword(): string
+{
+    $words = ['turist','hegyes','erdos','szikla','kaland','termek','kavics',
+              'virago','lombok','napfeny','vihart','szeles','ligetes','patak',
+              'vadon','mezos','dombos','berkes','cserje','csapat'];
+    $word  = $words[array_rand($words)];
+    $digits = str_pad((string)random_int(10, 99), 2, '0', STR_PAD_LEFT);
+    $upper  = chr(random_int(65, 90));
+    return ucfirst($word) . $digits . $upper;
+}
+
 function logAudit(PDO $pdo, string $action, string $entityType, int $entityId, string $entityLabel, ?array $changes = null): void
 {
     static $schemaEnsured = false;

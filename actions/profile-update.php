@@ -112,16 +112,20 @@ foreach ($notifKeys as $key) {
     $notifPrefs[$key] = isset($notifRaw[$key]) ? 1 : 0;
 }
 
+$consentEmailVis = isset($_POST['consent_email_visibility']) ? 1 : 0;
+$consentPhoto    = isset($_POST['consent_photo'])            ? 1 : 0;
+
 // Build update query
 $fields = ['firstname=?','lastname=?','username=?','email=?',
            'dateofbirth=?','zipcode=?','city=?','address=?','phone=?',
            'tshirt_size=?','emergency_name=?','emergency_relation=?','emergency_phone=?',
-           'notification_prefs=?'];
+           'notification_prefs=?','consent_email_visibility=?','consent_photo=?'];
 $params = [$firstname, $lastname, $username, $email,
            $dateofbirth ?: null, $zipcode ?: null, $city ?: null,
            $address ?: null, $phone ?: null, $tshirtSize ?: null,
            $emergencyName ?: null, $emergencyRelation ?: null, $emergencyPhone ?: null,
-           json_encode($notifPrefs, JSON_UNESCAPED_UNICODE)];
+           json_encode($notifPrefs, JSON_UNESCAPED_UNICODE),
+           $consentEmailVis, $consentPhoto];
 
 if ($avatarFilename) {
     $fields[] = 'profile_picture=?';

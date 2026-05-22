@@ -22,6 +22,12 @@
       </div>
     </div>
 
+    <?php
+    $_pendingApps = 0;
+    try {
+        $_pendingApps = (int)getDb()->query("SELECT COUNT(*) FROM member_applications WHERE status='pending'")->fetchColumn();
+    } catch (Throwable) {}
+    ?>
     <nav class="sidebar-nav">
       <div class="nav-section-label">Főmenü</div>
       <a href="<?= BASE_URL ?>/admin/index.php" class="<?= ($activePage ?? '') === 'dashboard' ? 'active' : '' ?>">
@@ -38,6 +44,20 @@
           <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
         </svg>
         Tagok
+      </a>
+      <a href="<?= BASE_URL ?>/admin/applications.php" class="<?= ($activePage ?? '') === 'applications' ? 'active' : '' ?>" style="display:flex;align-items:center;justify-content:space-between;">
+        <span style="display:flex;align-items:center;gap:10px;">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <line x1="19" y1="8" x2="19" y2="14"/>
+            <line x1="22" y1="11" x2="16" y2="11"/>
+          </svg>
+          Jelentkezések
+        </span>
+        <?php if ($_pendingApps > 0): ?>
+          <span style="background:var(--danger,#dc2626);color:#fff;border-radius:99px;padding:1px 8px;font-size:11px;font-weight:700;line-height:1.6;"><?= $_pendingApps ?></span>
+        <?php endif; ?>
       </a>
       <a href="<?= BASE_URL ?>/admin/tours.php" class="<?= ($activePage ?? '') === 'tours' ? 'active' : '' ?>">
         <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">

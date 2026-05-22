@@ -1,0 +1,134 @@
+/* LOTE Toplista plugin styles */
+.lote-toplist {
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 14px;
+  color: #1a1a1a;
+  max-width: 860px;
+}
+
+/* Tabs */
+.lote-tl-tabs {
+  display: flex;
+  gap: 4px;
+  border-bottom: 2px solid #e5e7eb;
+  margin-bottom: 0;
+}
+.lote-tl-tab {
+  background: none;
+  border: none;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #6b7280;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: color .15s, border-color .15s;
+}
+.lote-tl-tab:hover { color: #29776f; }
+.lote-tl-tab--active {
+  color: #29776f;
+  border-bottom-color: #29776f;
+}
+
+/* Panel */
+.lote-tl-panel { padding: 0; }
+.lote-tl-panel--hidden { display: none; }
+.lote-tl-empty {
+  padding: 24px;
+  text-align: center;
+  color: #9ca3af;
+  margin: 0;
+}
+.lote-tl-error {
+  color: #b91c1c;
+  padding: 12px;
+}
+
+/* Table */
+.lote-tl-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.lote-tl-table th,
+.lote-tl-table td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid #f0f0f0;
+  vertical-align: middle;
+}
+.lote-tl-table th {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: #9ca3af;
+  background: #f9fafb;
+}
+.lote-tl-table tr:last-child td { border-bottom: none; }
+.lote-tl-table tr:hover td { background: #f9fafb; }
+.lote-tl-r { text-align: right !important; }
+.lote-tl-name { font-weight: 600; }
+
+/* Rank badge */
+.lote-tl-rank {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 700;
+}
+.lote-tl-rank--gold   { background: #fef3c7; color: #92400e; border: 1.5px solid #f59e0b; }
+.lote-tl-rank--silver { background: #f1f5f9; color: #475569; border: 1.5px solid #94a3b8; }
+.lote-tl-rank--bronze { background: #fff7ed; color: #9a3412; border: 1.5px solid #f97316; }
+.lote-tl-rank--plain  { background: #f3f4f6; color: #6b7280; border: 1.5px solid #e5e7eb; }
+
+/* Level badges */
+.lote-tl-badge {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.lote-tl-lvl-1 { background: #f3f4f6; color: #6b7280; }
+.lote-tl-lvl-2 { background: #dcfce7; color: #166534; }
+.lote-tl-lvl-3 { background: #d1fae5; color: #065f46; }
+.lote-tl-lvl-4 { background: #ccfbf1; color: #134e4a; }
+.lote-tl-lvl-5 { background: #dbeafe; color: #1e40af; }
+.lote-tl-lvl-6 { background: #ede9fe; color: #5b21b6; }
+.lote-tl-lvl-7 { background: #ffedd5; color: #9a3412; }
+.lote-tl-lvl-8 { background: #fee2e2; color: #991b1b; }
+.lote-tl-lvl-9 { background: #fef9c3; color: #854d0e; border: 1px solid #f59e0b; }
+
+/* Level image */
+.lote-tl-img-col {
+  width: 56px;
+  padding-left: 4px !important;
+  padding-right: 4px !important;
+  text-align: center;
+}
+.lote-tl-lvl-img {
+  height: 56px;
+  width: auto;
+  display: block;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+/* Bonus note */
+.lote-tl-bonus {
+  color: #d97706;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+/* Mobile */
+@media (max-width: 540px) {
+  .lote-tl-tab { padding: 8px 12px; font-size: 13px; }
+  .lote-tl-table th, .lote-tl-table td { padding: 8px 8px; font-size: 13px; }
+}

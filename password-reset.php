@@ -35,7 +35,7 @@ if ($token !== '') {
     } elseif ($resetRow['used_at'] !== null) {
         $tokenErr = 'Ez a link már fel lett használva.';
     } elseif (new DateTime() > new DateTime($resetRow['expires_at'])) {
-        $tokenErr = 'A link lejárt. Kérjen újat!';
+        $tokenErr = 'A link lejárt. Kérj újat!';
     }
 }
 
@@ -93,7 +93,7 @@ $showReset = $token !== '' && $resetRow && !$tokenErr;
         <div class="alert alert-success"><?= e($resetMsg) ?></div>
       <?php endif; ?>
       <p style="color:var(--text-muted);font-size:13px;margin-bottom:16px;">
-        Adja meg a regisztrált e-mail címét. Ha megtaláljuk, küldünk egy visszaállítási linket.
+        Add meg a regisztrált e-mail címed. Ha megtaláljuk, küldünk egy visszaállítási linket.
       </p>
       <form method="post" action="<?= BASE_URL ?>/actions/password-reset-request.php">
         <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">

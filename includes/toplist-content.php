@@ -36,6 +36,7 @@ $allYearRows = $pdo->query("
     JOIN tours t ON t.id = tm.tour_id
     JOIN users u ON u.id = tm.user_id
     WHERE t.tour_date IS NOT NULL AND u.role != 'admin'
+          AND YEAR(t.tour_date) < YEAR(CURDATE())
     GROUP BY YEAR(t.tour_date), u.id, u.firstname, u.lastname, u.role
     ORDER BY yr ASC
 ")->fetchAll();

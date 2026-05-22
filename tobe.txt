@@ -3,3 +3,7 @@ WP plugin, amire ki tudom cserélni a belépési nyilatkozatot
   - kitöltéskor csak jelezzen az adminoknak
   - A rendszerben kell jóváhagyni a regisztrációt,de csak miután fizetett
   - A felhasználói adatok automatikusan kiküldésre kerülnek
+
+  - Értesítő email: LizzardMembers cseréje
+  - Értesítő email az adminnak is hogy új tag regisztrált
+  - A kérelmeknél legyen egy részletek gomb, ahol minden kitöltött mezőt meg lehet nézni amit a tag kitöltött!

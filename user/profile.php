@@ -177,6 +177,29 @@ include __DIR__ . '/../includes/user-header.php';
           </label>
         </div>
 
+        <h3 style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin:24px 0 6px;padding-top:20px;border-top:1px solid var(--border);">Hozzájárulások</h3>
+        <p style="font-size:12px;color:var(--text-muted);margin-bottom:12px;">Az alábbi hozzájárulásaidat bármikor visszavonhatod vagy módosíthatod.</p>
+        <div class="notif-list">
+          <?php $consentEmailVis = ($user['consent_email_visibility'] ?? null); ?>
+          <label class="notif-row">
+            <input type="checkbox" name="consent_email_visibility" value="1" <?= $consentEmailVis == 1 ? 'checked' : '' ?>>
+            <span class="notif-slider"></span>
+            <span class="notif-info">
+              <strong>E-mail láthatóság</strong>
+              <small>Hozzájárulok, hogy e-mail-címem az eseményszervezési levelezésekben a többi résztvevő számára látható legyen</small>
+            </span>
+          </label>
+          <?php $consentPhoto = ($user['consent_photo'] ?? null); ?>
+          <label class="notif-row">
+            <input type="checkbox" name="consent_photo" value="1" <?= $consentPhoto == 1 ? 'checked' : '' ?>>
+            <span class="notif-slider"></span>
+            <span class="notif-info">
+              <strong>Fénykép megjelenítés</strong>
+              <small>Hozzájárulok, hogy az egyesület eseményein rólam készült fényképek a L.O.T.E weboldalán és social-media felületeken megjelenjenek</small>
+            </span>
+          </label>
+        </div>
+
         <div class="flex gap-2" style="margin-top:20px;">
           <button type="submit" class="btn btn-primary">Változások mentése</button>
         </div>

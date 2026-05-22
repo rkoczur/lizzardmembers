@@ -28,8 +28,7 @@ function buildWelcomeEmailHtml(
     <!-- Header -->
     <tr>
       <td style="background:#1a3d39;padding:32px 40px;text-align:center;">
-        <div style="font-size:26px;font-weight:800;color:#F4E7CF;letter-spacing:.05em;">LIZZARD</div>
-        <div style="font-size:11px;color:#8fb5b2;margin-top:6px;letter-spacing:.15em;text-transform:uppercase;">Leguán Osztag Természetjáró Egyesület</div>
+        <div style="font-size:26px;font-weight:800;color:#F4E7CF;letter-spacing:.05em;">Lizzard Outdoor</div>
       </td>
     </tr>
 
@@ -38,8 +37,7 @@ function buildWelcomeEmailHtml(
       <td style="padding:36px 40px 28px;">
         <p style="font-size:16px;color:#333333;margin:0 0 14px 0;">Kedves <strong>{$f}</strong>!</p>
         <p style="font-size:14px;color:#555555;line-height:1.75;margin:0 0 24px 0;">
-          Örömmel értesítünk, hogy sikeresen regisztráltak a<strong>Leguán Osztag Természetjáró Egyesületbe</strong>. Az alábbiakban találod a tagsági rendszerhez szükséges bejelentkezési
-          adataidat — kérjük, tartsd ezeket biztonságos helyen!
+          Örömmel értesítünk, hogy sikeresen regisztráltak a <strong>Lizzard Outdoor</strong> egyesületbe. Az alábbiakban találod a tagsági rendszerhez szükséges bejelentkezési adataidat — kérjük, tartsd ezeket biztonságos helyen!
         </p>
 
         <!-- Credentials box -->
@@ -85,7 +83,7 @@ function buildWelcomeEmailHtml(
       <td style="background:#f5efe4;border-top:1px solid #ddd5c5;padding:20px 40px;text-align:center;">
         <p style="font-size:12px;color:#7a7269;margin:0;line-height:1.6;">
           Üdvözlettel,<br>
-          <strong style="color:#1a3d39;">Lizzard Outdoor Vezetősége</strong>
+          <strong style="color:#1a3d39;">{$a} Vezetősége</strong>
         </p>
       </td>
     </tr>

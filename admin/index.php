@@ -29,7 +29,10 @@ $inactiveMembers = (int)$pdo->query("
       AND (last_payment IS NULL OR last_payment = '0000-00-00' OR YEAR(last_payment) < YEAR(CURDATE()) - 1)
 ")->fetchColumn();
 
-$recentMembers = $pdo->query("SELECT id, firstname, lastname, email, member_since, last_payment, level, points, profile_picture, role FROM users ORDER BY created_at DESC LIMIT 8")->fetchAll();
+require_once __DIR__ . '/../includes/join-schema.php';
+ensureJoinSchema($pdo);
+$pendingApps  = $pdo->query("SELECT * FROM member_applications WHERE status='pending' ORDER BY submitted_at DESC LIMIT 8")->fetchAll();
+$pendingCount = count($pendingApps);
 
 $adminId   = getCurrentUserId();
 $adminStmt = $pdo->prepare("
@@ -195,52 +198,40 @@ include __DIR__ . '/../includes/admin-header.php';
   </div>
 </div>
 
-<div style="display:flex;align-items:center;margin-bottom:12px;">
-  <h2 style="font-size:16px;font-weight:700;">Tagok kezelése</h2>
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+  <h2 style="font-size:16px;font-weight:700;">Tagfelvételi kérelmek</h2>
+  <a href="<?= BASE_URL ?>/admin/applications.php" class="btn btn-ghost btn-sm">Összes kezelése</a>
 </div>
 
 <div class="card">
   <div class="card-header">
-    <h2>Legutóbbi tagok</h2>
-    <a href="<?= BASE_URL ?>/admin/members.php" class="btn btn-ghost btn-sm">Összes megtekintése</a>
+    <h2>Függőben lévő kérelmek</h2>
+    <?php if ($pendingCount > 0): ?>
+      <span class="badge badge-overdue"><?= $pendingCount ?> függőben</span>
+    <?php endif; ?>
   </div>
   <div class="table-wrap">
     <table>
       <thead>
-        <tr>
-          <th>Tag</th>
-          <th>Szerepkör</th>
-          <th>Tagság kezdete</th>
-          <th>Szint</th>
-          <th>Pontok</th>
-          <th>Tagság státusza</th>
-          <th></th>
-        </tr>
+        <tr><th>Beérkezett</th><th>Jelölt</th><th>Telefon / Város</th><th></th></tr>
       </thead>
       <tbody>
-        <?php foreach ($recentMembers as $m): ?>
-        <tr>
-          <td>
-            <div class="td-avatar">
-              <img src="<?= getAvatarUrl($m['profile_picture']) ?>" alt="">
-              <div>
-                <div class="td-name"><?= e($m['lastname'] . ' ' . $m['firstname']) ?></div>
-                <div class="td-sub"><?= e($m['email']) ?></div>
-              </div>
-            </div>
-          </td>
-          <td><span class="badge <?= $m['role'] === 'admin' ? 'badge-admin' : ($m['role'] === 'vezeto' ? 'badge-vezeto' : 'badge-user') ?>"><?= $m['role'] === 'admin' ? 'Admin' : ($m['role'] === 'vezeto' ? 'Vezető' : 'Tag') ?></span></td>
-          <td><?= formatDate($m['member_since']) ?></td>
-          <td><span class="level-badge <?= getLevelClass($m['level']) ?>"><?= getLevelLabel($m['level']) ?></span></td>
-          <td><strong><?= number_format($m['points']) ?></strong></td>
-          <?php $ms = getMemberStatus($m['last_payment']); ?>
-          <td><span class="badge <?= getMemberStatusClass($ms) ?>"><?= getMemberStatusLabel($ms) ?></span></td>
-          <td><a href="<?= BASE_URL ?>/admin/member-detail.php?id=<?= $m['id'] ?>" class="btn btn-ghost btn-sm">Megtekintés</a></td>
-        </tr>
-        <?php endforeach; ?>
-        <?php if (empty($recentMembers)): ?>
-        <tr><td colspan="6" class="empty-state"><p>Még nincsenek tagok.</p></td></tr>
-        <?php endif; ?>
+        <?php if (empty($pendingApps)): ?>
+          <tr><td colspan="4"><div class="empty-state"><div class="empty-icon">✅</div><p>Nincs függőben lévő tagfelvételi kérelem.</p></div></td></tr>
+        <?php else: foreach ($pendingApps as $a): ?>
+          <tr>
+            <td style="font-size:13px;white-space:nowrap;"><?= e((new DateTime($a['submitted_at']))->format('Y.m.d H:i')) ?></td>
+            <td>
+              <div class="td-name"><?= e($a['lastname'] . ' ' . $a['firstname']) ?></div>
+              <div class="td-sub"><?= e($a['email']) ?></div>
+            </td>
+            <td style="font-size:13px;color:var(--text-muted);">
+              <?php if ($a['phone']): ?><div><?= e($a['phone']) ?></div><?php endif; ?>
+              <?php if ($a['city']): ?><div><?= e($a['city']) ?></div><?php endif; ?>
+            </td>
+            <td><a href="<?= BASE_URL ?>/admin/applications.php?status=pending" class="btn btn-ghost btn-sm">Kezelés</a></td>
+          </tr>
+        <?php endforeach; endif; ?>
       </tbody>
     </table>
   </div>
