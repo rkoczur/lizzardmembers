@@ -82,6 +82,16 @@ function getLevelClass(int $level): string
     };
 }
 
+function getTourFeeDiscount(int $level): int
+{
+    return match(true) {
+        $level >= 9 => 15,
+        $level >= 7 => 10,
+        $level >= 5 => 5,
+        default     => 0,
+    };
+}
+
 function recalcUserStats(PDO $pdo): void
 {
     $pdo->exec("UPDATE users SET points = COALESCE((

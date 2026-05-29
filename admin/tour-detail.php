@@ -25,6 +25,8 @@ if (!$tour) {
     exit;
 }
 
+$isPending = ($tour['status'] ?? 'approved') === 'pending';
+
 $allMembers = $pdo->query("SELECT id, firstname, lastname, email, role FROM users ORDER BY lastname, firstname")->fetchAll();
 $countries  = getCountries($pdo);
 
@@ -67,9 +69,29 @@ include __DIR__ . '/../includes/admin-header.php';
     <h2>Túra adatai</h2>
     <?php if ($ro): ?>
       <span class="badge badge-vezeto" style="font-size:11px;">Csak megtekintés</span>
+    <?php elseif ($isPending): ?>
+      <span style="background:var(--warning,#f59e0b);color:#fff;border-radius:4px;padding:2px 10px;font-size:12px;font-weight:700;">Jóváhagyásra vár</span>
     <?php endif; ?>
   </div>
   <div class="card-body">
+  <?php if ($isPending): ?>
+    <?php
+    $submitterStmt = $pdo->prepare("SELECT CONCAT(lastname, ' ', firstname) AS name FROM users WHERE id = ? LIMIT 1");
+    $submitterStmt->execute([$tour['submitted_by'] ?? 0]);
+    $submitterName = $submitterStmt->fetchColumn() ?: null;
+    ?>
+    <div style="background:var(--warning-bg,#fffbeb);border:1px solid var(--warning,#f59e0b);border-radius:8px;padding:14px 18px;margin-bottom:18px;">
+      <div style="font-size:13px;font-weight:600;color:var(--warning,#b45309);margin-bottom:4px;">
+        Beküldött túra – jóváhagyás szükséges
+        <?php if ($submitterName): ?>
+          <span style="font-weight:400;color:var(--text-muted);">— beküldő: <?= e($submitterName) ?></span>
+        <?php endif; ?>
+      </div>
+      <?php if (!empty($tour['submission_notes'])): ?>
+        <div style="font-size:13px;color:var(--text);margin-top:6px;white-space:pre-wrap;"><?= e($tour['submission_notes']) ?></div>
+      <?php endif; ?>
+    </div>
+  <?php endif; ?>
     <form method="post" action="<?= BASE_URL ?>/actions/tour-update.php" id="tour-form" enctype="multipart/form-data">
       <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
       <input type="hidden" name="id" value="<?= $tour['id'] ?>">
@@ -277,10 +299,29 @@ include __DIR__ . '/../includes/admin-header.php';
 
       <?php if (!$ro): ?>
       <input type="hidden" name="send_tour_notification" id="send_tour_notification" value="">
+      <?php if ($isPending): ?>
+      <input type="hidden" name="approve_on_save" id="approve_on_save" value="">
+      <?php endif; ?>
 
       <div class="flex gap-2" style="margin-top:24px;">
-        <button type="button" id="btn-submit-tour" class="btn btn-primary">Változások mentése</button>
-        <a href="<?= BASE_URL ?>/admin/tours.php" class="btn btn-secondary">Mégse</a>
+        <?php if ($isPending): ?>
+          <button type="button" id="btn-approve-tour" class="btn btn-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" style="width:16px;height:16px;">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Elfogadás
+          </button>
+          <button type="button" id="btn-reject-tour" class="btn btn-danger">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" style="width:16px;height:16px;">
+              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+            Elutasítás
+          </button>
+          <a href="<?= BASE_URL ?>/admin/tours.php" class="btn btn-secondary">Mégse</a>
+        <?php else: ?>
+          <button type="button" id="btn-submit-tour" class="btn btn-primary">Változások mentése</button>
+          <a href="<?= BASE_URL ?>/admin/tours.php" class="btn btn-secondary">Mégse</a>
+        <?php endif; ?>
       </div>
       <?php else: ?>
       <div style="margin-top:24px;">
@@ -290,6 +331,13 @@ include __DIR__ . '/../includes/admin-header.php';
     </form>
   </div>
 </div>
+
+<?php if (!$ro && $isPending): ?>
+<form id="tour-reject-form" method="post" action="<?= BASE_URL ?>/actions/tour-reject.php" style="display:none;">
+  <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
+  <input type="hidden" name="tour_id" value="<?= $tour['id'] ?>">
+</form>
+<?php endif; ?>
 
 <?php
 $jsInitSubType  = json_encode($tour['sub_type']     ?? 'normal');
@@ -467,7 +515,34 @@ $jsInitAccom    = json_encode($tour['accommodation'] ?? '');
 })();
 </script>
 
-<?php if (!$ro): ?>
+<?php if (!$ro && $isPending): ?>
+<script>
+(function () {
+  var form       = document.getElementById('tour-form');
+  var approveBtn = document.getElementById('btn-approve-tour');
+  var rejectBtn  = document.getElementById('btn-reject-tour');
+  var rejectForm = document.getElementById('tour-reject-form');
+
+  if (approveBtn) {
+    approveBtn.addEventListener('click', function () {
+      if (!form.checkValidity()) { form.reportValidity(); return; }
+      document.getElementById('approve_on_save').value = '1';
+      form.submit();
+    });
+  }
+
+  if (rejectBtn && rejectForm) {
+    rejectBtn.addEventListener('click', function () {
+      if (confirm('Biztosan elutasítja ezt a túrát? A beküldés törlésre kerül.')) {
+        rejectForm.submit();
+      }
+    });
+  }
+})();
+</script>
+<?php endif; ?>
+
+<?php if (!$ro && !$isPending): ?>
 <!-- Tour notification preview modal -->
 <div class="modal-backdrop" id="tour-notification-modal">
   <div class="modal" style="max-width:660px;">

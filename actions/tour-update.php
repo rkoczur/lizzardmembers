@@ -25,6 +25,8 @@ $oldMemberStmt = $pdo->prepare("SELECT user_id FROM tour_members WHERE tour_id =
 $oldMemberStmt->execute([$id]);
 $oldMemberIds = $oldMemberStmt->fetchAll(PDO::FETCH_COLUMN);
 
+$approvePending = !empty($_POST['approve_on_save']) && ($tourBefore['status'] ?? 'approved') === 'pending';
+
 $name          = trim($_POST['name']          ?? '');
 $route         = trim($_POST['route']         ?? '');
 $country       = trim($_POST['country']       ?? '');
@@ -169,19 +171,28 @@ if ($memberIds) {
     }
 }
 
-// Capture stats before recalc for newly added members only
+$captureIds = $approvePending ? $memberIds : $addedIds;
 $statsOld = [];
-if ($addedIds) {
-    $ph = rtrim(str_repeat('?,', count($addedIds)), ',');
+if ($captureIds) {
+    $ph = rtrim(str_repeat('?,', count($captureIds)), ',');
     $sOld = $pdo->prepare("SELECT id, level, points FROM users WHERE id IN ($ph)");
-    $sOld->execute(array_values($addedIds));
+    $sOld->execute(array_values($captureIds));
     foreach ($sOld->fetchAll() as $r) { $statsOld[$r['id']] = $r; }
 }
 
 recalcUserStats($pdo);
 
-// Send tour notifications to newly added members
-if ($addedIds && ($_POST['send_tour_notification'] ?? '') === '1') {
+if ($approvePending) {
+    require_once __DIR__ . '/../includes/tours-schema.php';
+    $newTourCode = generateTourCode($pdo, $tourType);
+    $pdo->prepare("UPDATE tours SET status = 'approved', tour_code = ? WHERE id = ?")
+        ->execute([$newTourCode, $id]);
+} else {
+    $newTourCode = $tourBefore['tour_code'] ?? null;
+}
+
+$notifyIds = $approvePending ? $memberIds : $addedIds;
+if ($notifyIds && ($approvePending || ($_POST['send_tour_notification'] ?? '') === '1')) {
     try {
         require_once __DIR__ . '/../includes/app-settings-schema.php';
         require_once __DIR__ . '/../includes/mailer.php';
@@ -193,9 +204,9 @@ if ($addedIds && ($_POST['send_tour_notification'] ?? '') === '1') {
         $smtp = getSmtpConfig($pdo);
 
         if ($smtp['host'] !== '') {
-            $ph   = rtrim(str_repeat('?,', count($addedIds)), ',');
+            $ph   = rtrim(str_repeat('?,', count($notifyIds)), ',');
             $sNew = $pdo->prepare("SELECT id, firstname, lastname, email, level, points, notification_prefs FROM users WHERE id IN ($ph)");
-            $sNew->execute(array_values($addedIds));
+            $sNew->execute(array_values($notifyIds));
             $statsNew = [];
             foreach ($sNew->fetchAll() as $r) { $statsNew[$r['id']] = $r; }
 
@@ -231,7 +242,7 @@ if ($addedIds && ($_POST['send_tour_notification'] ?? '') === '1') {
             $mailer        = new SmtpMailer($smtp);
             $errCount      = 0;
 
-            foreach ($addedIds as $uid) {
+            foreach ($notifyIds as $uid) {
                 if (!isset($statsNew[$uid])) continue;
                 $m = $statsNew[$uid];
                 $prefs = json_decode($m['notification_prefs'] ?? '{}', true) ?? [];
@@ -250,7 +261,7 @@ if ($addedIds && ($_POST['send_tour_notification'] ?? '') === '1') {
                         $elevText,
                         $lizzardPoints,
                         $mtszPoints,
-                        $tourBefore['tour_code'] ?? '—',
+                        $newTourCode ?? '—',
                         (int)$m['level'],
                         (int)($statsOld[$uid]['level'] ?? 1),
                         $tourUrl,
@@ -325,6 +336,11 @@ if ($removedIds) {
 $tourLabel = $name ? $name . ' — ' . $country : $country;
 logAudit($pdo, 'update', 'tour', $id, $tourLabel, $auditChanges ?: null);
 
-flash('success', 'A túra adatai sikeresen frissítve (Lizzardier: ' . $lizzardPoints . ' pt, MTSZ: ' . $mtszPoints . ' pt).');
-header('Location: ' . $redirectTo);
+if ($approvePending) {
+    flash('success', 'A túra jóváhagyva és a tagok értesítve.');
+    header('Location: ' . BASE_URL . '/admin/tours.php');
+} else {
+    flash('success', 'A túra adatai sikeresen frissítve (Lizzardier: ' . $lizzardPoints . ' pt, MTSZ: ' . $mtszPoints . ' pt).');
+    header('Location: ' . $redirectTo);
+}
 exit;

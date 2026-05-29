@@ -53,6 +53,10 @@ function ensureToursSchema(PDO $pdo): void
         "ALTER TABLE `tours` ADD COLUMN `route` TEXT DEFAULT NULL AFTER `name`",
         // GPX fájl neve (feltöltött track)
         "ALTER TABLE `tours` ADD COLUMN `gpx_file` VARCHAR(255) DEFAULT NULL",
+        // Beküldési státusz és beküldő tag
+        "ALTER TABLE `tours` ADD COLUMN `status` ENUM('pending','approved') NOT NULL DEFAULT 'approved' AFTER `id`",
+        "ALTER TABLE `tours` ADD COLUMN `submitted_by` INT UNSIGNED DEFAULT NULL AFTER `status`",
+        "ALTER TABLE `tours` ADD COLUMN `submission_notes` TEXT DEFAULT NULL AFTER `route`",
     ] as $sql) {
         try { $pdo->exec($sql); } catch (PDOException) {}
     }

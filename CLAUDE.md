@@ -2,6 +2,11 @@
 Always update version number after every modification as stated in `/includes/version.php`
 Do not modify any hardcoded text if it is "Lizzard Outdoor" or "Leguán Osztag" or "Leguán Osztag Természetjáró Egyesület"
 
+## Deployment rule — FONTOS
+**Soha ne tölts fel semmit automatikusan a PROD szerverre (wh09.rackhost.hu FTP).**
+Minden módosítást csak a lokális DEV környezetben (`c:\xampp\htdocs\lizzardmembers`) végezz el.
+A PROD-ra feltöltést mindig a felhasználó végzi manuálisan, vagy explicit kérésre kerülhet sor.
+
 # LizzardMembers — Root
 
 PHP/MySQL membership management app running on XAMPP at `/lizzardmembers`.

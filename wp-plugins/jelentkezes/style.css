@@ -1,0 +1,497 @@
+/* LOTE Meghirdetett Túrák – Jelentkezés plugin v2.0 */
+
+.lote-ft-wrap [hidden] { display: none !important; }
+
+.lote-ft-wrap {
+  font-family: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ---- Login sáv ---- */
+.lote-ft-wrap .lote-ft-login-panel {
+  background: #1a3d39 !important;
+  border-radius: 10px 10px 0 0;
+  color: #fff !important;
+  overflow: hidden;
+}
+
+.lote-ft-wrap .lote-ft-teaser {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 13px 20px;
+  flex-wrap: wrap;
+}
+
+.lote-ft-wrap .lote-ft-teaser-text {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13.5px;
+  color: #e8d8b8 !important;
+  flex: 1;
+  min-width: 0;
+}
+
+.lote-ft-wrap .lote-ft-teaser-text svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: #c8a84b !important;
+}
+
+.lote-ft-wrap .lote-ft-login-toggle {
+  background: #c8a84b !important;
+  color: #1a3d39 !important;
+  border: none;
+  border-radius: 6px;
+  padding: 7px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  line-height: 1;
+  transition: background .15s;
+}
+
+.lote-ft-wrap .lote-ft-login-toggle:hover { background: #d4b560 !important; }
+
+.lote-ft-wrap .lote-ft-form-wrap {
+  padding: 14px 20px 18px;
+  border-top: 1px solid rgba(255,255,255,.1);
+}
+
+.lote-ft-wrap .lote-ft-login-form { display: flex; flex-direction: column; gap: 10px; }
+
+.lote-ft-wrap .lote-ft-login-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.lote-ft-wrap .lote-ft-field { display: flex; flex-direction: column; gap: 4px; }
+
+.lote-ft-wrap .lote-ft-field label {
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+.lote-ft-wrap .lote-ft-field input {
+  padding: 8px 10px;
+  border-radius: 5px;
+  border: 1px solid rgba(255,255,255,.2) !important;
+  background: rgba(255,255,255,.1) !important;
+  color: #fff !important;
+  font-size: 13.5px;
+  outline: none;
+  line-height: 1;
+  transition: border-color .15s;
+  box-shadow: none !important;
+}
+
+.lote-ft-wrap .lote-ft-field input::placeholder { color: rgba(255,255,255,.35) !important; }
+.lote-ft-wrap .lote-ft-field input:focus { border-color: #c8a84b !important; }
+
+.lote-ft-wrap .lote-ft-login-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lote-ft-wrap .lote-ft-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 18px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  line-height: 1;
+  transition: background .15s, opacity .15s;
+  white-space: nowrap;
+  text-decoration: none !important;
+}
+
+.lote-ft-wrap .lote-ft-btn--gold { background: #c8a84b !important; color: #1a3d39 !important; }
+.lote-ft-wrap .lote-ft-btn--gold:hover { background: #d4b560 !important; color: #1a3d39 !important; }
+.lote-ft-wrap .lote-ft-btn--gold:disabled { opacity: .6; cursor: not-allowed; }
+
+.lote-ft-wrap .lote-ft-cancel {
+  background: none !important;
+  border: none;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 4px 6px;
+}
+.lote-ft-wrap .lote-ft-cancel:hover { color: #fff !important; }
+
+.lote-ft-wrap .lote-ft-error {
+  background: rgba(220,38,38,.15) !important;
+  border: 1px solid rgba(220,38,38,.4) !important;
+  border-radius: 5px;
+  padding: 7px 12px;
+  font-size: 13px;
+  color: #fca5a5 !important;
+}
+
+.lote-ft-wrap .lote-ft-loggedin {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  font-size: 14px;
+}
+
+.lote-ft-wrap .lote-ft-loggedin svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: #4ade80 !important;
+}
+
+.lote-ft-wrap .lote-ft-panel-text { color: #e8d8b8 !important; }
+.lote-ft-wrap .lote-ft-panel-text strong,
+.lote-ft-wrap .lote-ft-loggedin strong { color: #fff !important; }
+
+/* ---- Form blokk ---- */
+.lote-ft-wrap .lote-ft-form-block {
+  border: 1px solid #e0d8ce;
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  background: #f7f4ef !important;
+  overflow: hidden;
+}
+
+.lote-ft-wrap .lote-ft-apply-toggle {
+  padding: 16px 20px;
+}
+
+.lote-ft-wrap .lote-ft-apply-btn {
+  display: block !important;
+  width: 100% !important;
+  padding: 13px !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  color: #fff !important;
+  background: #29776F !important;
+  border: none !important;
+  border-radius: 7px !important;
+  cursor: pointer !important;
+  transition: background .15s !important;
+  font-family: inherit !important;
+  line-height: 1 !important;
+  box-shadow: none !important;
+}
+
+.lote-ft-wrap .lote-ft-apply-btn:hover { background: #1e5e57 !important; }
+
+.lote-ft-wrap .lote-ft-apply-btn--open {
+  background: #6b6258 !important;
+}
+.lote-ft-wrap .lote-ft-apply-btn--open:hover { background: #5a5250 !important; }
+
+.lote-ft-wrap .lote-ft-form-inner {
+  padding: 20px 24px 24px;
+  border-top: 1px solid #e0d8ce;
+}
+
+.lote-ft-wrap .lote-ft-form-intro {
+  font-size: 13px !important;
+  color: #6b6258 !important;
+  margin: 0 0 18px !important;
+  line-height: 1.5 !important;
+}
+
+/* ---- Kapacitás sáv ---- */
+.lote-ft-wrap .lote-ft-capacity {
+  background: #f7f4ef !important;
+  border: 1px solid #e0d8ce !important;
+  border-radius: 8px !important;
+  padding: 12px 14px !important;
+  margin-bottom: 18px !important;
+}
+
+.lote-ft-wrap .lote-ft-capacity-row {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.lote-ft-wrap .lote-ft-cap-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.lote-ft-wrap .lote-ft-cap-label {
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: #8a7f76 !important;
+}
+
+.lote-ft-wrap .lote-ft-cap-num {
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  color: #2d2520 !important;
+}
+
+.lote-ft-wrap .lote-ft-spots-ok  { color: #16a34a !important; }
+.lote-ft-wrap .lote-ft-spots-low { color: #d97706 !important; }
+.lote-ft-wrap .lote-ft-spots-full { color: #dc2626 !important; }
+.lote-ft-wrap .lote-ft-spots-wait { color: #7c3aed !important; }
+
+.lote-ft-wrap .lote-ft-cap-track {
+  height: 6px;
+  background: #e0d8ce !important;
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.lote-ft-wrap .lote-ft-cap-fill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width .4s ease;
+}
+
+.lote-ft-wrap .lote-ft-cap-fill--ok   { background: #16a34a !important; }
+.lote-ft-wrap .lote-ft-cap-fill--low  { background: #d97706 !important; }
+.lote-ft-wrap .lote-ft-cap-fill--full { background: #dc2626 !important; }
+
+/* ---- Vendég szekció ---- */
+.lote-ft-wrap .lote-ft-guest-section {
+  margin-bottom: 4px;
+}
+
+.lote-ft-wrap .lote-ft-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+/* ---- Tag badge ---- */
+.lote-ft-wrap .lote-ft-member-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f0fdf4 !important;
+  border: 1px solid #bbf7d0 !important;
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 4px;
+  font-size: 13px;
+}
+
+.lote-ft-wrap .lote-ft-member-badge svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: #16a34a !important;
+}
+
+.lote-ft-wrap .lote-ft-m-name {
+  display: block;
+  font-weight: 600 !important;
+  color: #1a3d39 !important;
+  font-size: 14px !important;
+}
+
+.lote-ft-wrap .lote-ft-m-email {
+  color: #6b6258 !important;
+  font-size: 12px !important;
+  margin-top: 1px;
+}
+
+/* ---- Elválasztó ---- */
+.lote-ft-wrap .lote-ft-divider {
+  border: none !important;
+  border-top: 1px solid #e8e0d6 !important;
+  margin: 18px 0 !important;
+}
+
+/* ---- Mezők ---- */
+.lote-ft-wrap .lote-ft-field-wrap {
+  margin-bottom: 14px;
+}
+
+.lote-ft-wrap .lote-ft-label {
+  display: block !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #2d2520 !important;
+  margin-bottom: 6px !important;
+}
+
+.lote-ft-wrap .lote-ft-req {
+  color: #dc2626 !important;
+}
+
+.lote-ft-wrap .lote-ft-input,
+.lote-ft-wrap .lote-ft-select,
+.lote-ft-wrap .lote-ft-textarea {
+  display: block !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  padding: 9px 11px !important;
+  font-size: 14px !important;
+  line-height: 1.4 !important;
+  color: #2d2520 !important;
+  background: #fff !important;
+  border: 1px solid #d6cec4 !important;
+  border-radius: 6px !important;
+  outline: none !important;
+  box-shadow: none !important;
+  transition: border-color .15s !important;
+  font-family: inherit !important;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.lote-ft-wrap .lote-ft-input:focus,
+.lote-ft-wrap .lote-ft-select:focus,
+.lote-ft-wrap .lote-ft-textarea:focus {
+  border-color: #29776F !important;
+  box-shadow: 0 0 0 2px rgba(41,119,111,.12) !important;
+}
+
+.lote-ft-wrap .lote-ft-input::placeholder,
+.lote-ft-wrap .lote-ft-textarea::placeholder {
+  color: #a89f96 !important;
+}
+
+.lote-ft-wrap .lote-ft-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b6258' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 11px center !important;
+  padding-right: 30px !important;
+  cursor: pointer;
+}
+
+.lote-ft-wrap .lote-ft-textarea { resize: vertical !important; min-height: 72px !important; }
+
+.lote-ft-wrap .lote-ft-input-narrow { width: 90px !important; }
+
+/* ---- Radio / checkbox ---- */
+.lote-ft-wrap .lote-ft-radios {
+  display: flex;
+  gap: 18px;
+  margin-top: 4px;
+}
+
+.lote-ft-wrap .lote-ft-radio-wrap,
+.lote-ft-wrap .lote-ft-checkbox-wrap {
+  display: flex !important;
+  align-items: center !important;
+  gap: 7px !important;
+  font-size: 14px !important;
+  font-weight: normal !important;
+  color: #2d2520 !important;
+  cursor: pointer !important;
+  margin: 4px 0 0 !important;
+}
+
+.lote-ft-wrap .lote-ft-radio-wrap input,
+.lote-ft-wrap .lote-ft-checkbox-wrap input {
+  width: auto !important;
+  margin: 0 !important;
+  cursor: pointer;
+}
+
+.lote-ft-wrap .lote-ft-hint {
+  display: block !important;
+  font-size: 11.5px !important;
+  color: #8a7f76 !important;
+  margin-top: 5px !important;
+  line-height: 1.4 !important;
+}
+
+/* ---- Küldés ---- */
+.lote-ft-wrap .lote-ft-submit-wrap {
+  margin-top: 22px;
+}
+
+.lote-ft-wrap .lote-ft-submit-btn {
+  display: block !important;
+  width: 100% !important;
+  padding: 13px !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  color: #fff !important;
+  background: #29776F !important;
+  border: none !important;
+  border-radius: 7px !important;
+  cursor: pointer !important;
+  transition: background .15s !important;
+  font-family: inherit !important;
+  line-height: 1 !important;
+  box-shadow: none !important;
+}
+
+.lote-ft-wrap .lote-ft-submit-btn:hover { background: #1e5e57 !important; }
+.lote-ft-wrap .lote-ft-submit-btn:disabled { opacity: .65; cursor: not-allowed !important; }
+
+.lote-ft-wrap .lote-ft-inline-error {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #dc2626 !important;
+  line-height: 1.4;
+}
+
+/* ---- Siker állapot ---- */
+.lote-ft-wrap .lote-ft-success {
+  padding: 36px 24px;
+  text-align: center;
+}
+
+.lote-ft-wrap .lote-ft-success-ico {
+  font-size: 48px;
+  margin-bottom: 14px;
+  line-height: 1;
+}
+
+.lote-ft-wrap .lote-ft-success-title {
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  color: #1a3d39 !important;
+  margin: 0 0 10px !important;
+}
+
+.lote-ft-wrap .lote-ft-success-text {
+  font-size: 14px !important;
+  color: #6b6258 !important;
+  line-height: 1.6 !important;
+  margin: 0 !important;
+}
+
+/* ---- Empty / error ---- */
+.lote-ft-wrap .lote-ft-empty,
+.lote-ft-wrap > .lote-ft-error {
+  padding: 16px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.lote-ft-wrap .lote-ft-empty {
+  background: #faf7f3 !important;
+  border: 1px solid #e0d8ce;
+  color: #7a7269 !important;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 560px) {
+  .lote-ft-wrap .lote-ft-teaser { flex-direction: column; align-items: flex-start; }
+  .lote-ft-wrap .lote-ft-login-toggle { width: 100%; text-align: center; }
+  .lote-ft-wrap .lote-ft-login-fields { grid-template-columns: 1fr; }
+  .lote-ft-wrap .lote-ft-row-2 { grid-template-columns: 1fr !important; }
+}

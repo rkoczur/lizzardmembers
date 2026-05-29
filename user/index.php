@@ -4,9 +4,11 @@ require_once __DIR__ . '/../includes/config.php';
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
+require_once __DIR__ . '/../includes/future-tours-schema.php';
 requireUser();
 
 $pdo    = getDb();
+ensureFutureToursSchema($pdo);
 $userId = getCurrentUserId();
 $stmt   = $pdo->prepare("
     SELECT u.*, COALESCE(SUM(t.points), 0) AS computed_points
@@ -38,6 +40,20 @@ if (!$isMaxLevel) {
     $progress  = 100;
     $nextPts   = 500;
 }
+
+$myToursStmt = $pdo->prepare("
+    SELECT ft.name, ft.start_date, ft.participation_fee, ft.region,
+           fta.status, fta.paid_at, fta.applied_at, ft.id AS tour_id,
+           c.name_hu AS country_name, c.flag_filename AS country_flag
+    FROM future_tour_applications fta
+    JOIN future_tours ft ON ft.id = fta.future_tour_id
+    LEFT JOIN countries c ON c.code = ft.country
+    WHERE fta.user_id = ? AND fta.status != 'cancelled' AND ft.status != 'cancelled'
+    ORDER BY ft.start_date ASC
+");
+$myToursStmt->execute([$userId]);
+$myFutureTours  = $myToursStmt->fetchAll();
+$hasUnpaidTours = array_filter($myFutureTours, fn($t) => $t['status'] === 'confirmed' && !$t['paid_at']);
 
 $pageTitle  = 'Vezérlőpult';
 $activePage = 'dashboard';
@@ -152,6 +168,60 @@ include __DIR__ . '/../includes/user-header.php';
     <?php endif; ?>
   </div>
 </div>
+
+<!-- Applied future tours tile -->
+<?php if (!empty($myFutureTours)): ?>
+<div class="card" style="margin-bottom:20px;">
+  <div class="card-header" style="display:flex;justify-content:space-between;align-items:center;">
+    <h2>
+      Jelentkezéseim a meghirdetett túrákra
+      <?php if ($hasUnpaidTours): ?>
+        <span style="background:var(--danger);color:#fff;border-radius:99px;padding:1px 8px;font-size:11px;font-weight:700;margin-left:6px;vertical-align:middle;"><?= count($hasUnpaidTours) ?></span>
+      <?php endif; ?>
+    </h2>
+    <a href="<?= BASE_URL ?>/user/future-tours.php" class="btn btn-ghost btn-sm">Összes túra</a>
+  </div>
+  <div class="card-body" style="padding:0;">
+    <table style="width:100%;border-collapse:collapse;font-size:13.5px;">
+      <tbody>
+        <?php foreach ($myFutureTours as $mt): ?>
+        <?php $unpaid = $mt['status'] === 'confirmed' && !$mt['paid_at']; ?>
+        <tr style="border-bottom:1px solid var(--border);<?= $unpaid ? 'background:var(--danger-bg,#fef2f2);' : '' ?>">
+          <td style="padding:11px 16px;">
+            <div style="font-weight:600;"><?= e($mt['name']) ?></div>
+            <div style="font-size:12px;color:var(--text-muted);margin-top:2px;"><?= $mt['start_date'] ? formatDate($mt['start_date']) : '—' ?></div>
+          </td>
+          <td style="padding:11px 16px;white-space:nowrap;font-size:13px;">
+            <?php if ($mt['country_flag']): ?>
+              <img src="<?= e(getFlagUrl($mt['country_flag'])) ?>"
+                   style="width:16px;height:11px;object-fit:cover;vertical-align:middle;border:1px solid var(--border);border-radius:1px;margin-right:5px;" alt="">
+            <?php endif; ?>
+            <?= e($mt['country_name'] ?? '—') ?>
+            <?php if ($mt['region']): ?>
+              <div style="font-size:11px;color:var(--text-muted);margin-top:2px;"><?= e($mt['region']) ?></div>
+            <?php endif; ?>
+          </td>
+          <td style="padding:11px 16px;white-space:nowrap;">
+            <?php if ($mt['status'] === 'confirmed' && $mt['participation_fee'] !== null && !$mt['paid_at']): ?>
+              <span style="display:inline-flex;align-items:center;gap:5px;color:var(--danger,#c0392b);font-size:12.5px;font-weight:600;">⚠ Részvételi díj befizetése szükséges!</span>
+            <?php elseif ($mt['status'] === 'confirmed' && $mt['participation_fee'] !== null && $mt['paid_at']): ?>
+              <span style="display:inline-flex;align-items:center;gap:5px;color:var(--success,#16a34a);font-size:12.5px;font-weight:600;">✓ Részvételi díj rendezve</span>
+            <?php elseif ($mt['status'] === 'confirmed'): ?>
+              <span class="badge badge-active">Megerősített</span>
+            <?php else: ?>
+              <span style="background:var(--warning-bg,#fffbeb);color:var(--warning,#b45309);border-radius:4px;padding:2px 8px;font-size:11.5px;font-weight:600;border:1px solid var(--warning,#f59e0b);">Várólistán</span>
+            <?php endif; ?>
+          </td>
+          <td style="padding:11px 16px;text-align:right;">
+            <a href="<?= BASE_URL ?>/user/future-tour-detail.php?id=<?= (int)$mt['tour_id'] ?>" class="btn btn-ghost btn-sm">Részletek</a>
+          </td>
+        </tr>
+        <?php endforeach; ?>
+      </tbody>
+    </table>
+  </div>
+</div>
+<?php endif; ?>
 
 <!-- Profile summary -->
 <div class="card">

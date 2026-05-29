@@ -27,6 +27,10 @@
     try {
         $_pendingApps = (int)getDb()->query("SELECT COUNT(*) FROM member_applications WHERE status='pending'")->fetchColumn();
     } catch (Throwable) {}
+    $_pendingTours = 0;
+    try {
+        $_pendingTours = (int)getDb()->query("SELECT COUNT(*) FROM tours WHERE status='pending'")->fetchColumn();
+    } catch (Throwable) {}
     ?>
     <nav class="sidebar-nav">
       <div class="nav-section-label">Főmenü</div>
@@ -37,35 +41,31 @@
         </svg>
         Vezérlőpult
       </a>
-      <a href="<?= BASE_URL ?>/admin/members.php" class="<?= ($activePage ?? '') === 'members' ? 'active' : '' ?>">
-        <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-          <circle cx="9" cy="7" r="4"/>
-          <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
-        </svg>
-        Tagok
-      </a>
-      <a href="<?= BASE_URL ?>/admin/applications.php" class="<?= ($activePage ?? '') === 'applications' ? 'active' : '' ?>" style="display:flex;align-items:center;justify-content:space-between;">
+      <a href="<?= BASE_URL ?>/admin/members.php" class="<?= in_array($activePage ?? '', ['members', 'applications']) ? 'active' : '' ?>" style="display:flex;align-items:center;justify-content:space-between;">
         <span style="display:flex;align-items:center;gap:10px;">
           <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
             <circle cx="9" cy="7" r="4"/>
-            <line x1="19" y1="8" x2="19" y2="14"/>
-            <line x1="22" y1="11" x2="16" y2="11"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
           </svg>
-          Jelentkezések
+          Tagok
         </span>
         <?php if ($_pendingApps > 0): ?>
           <span style="background:var(--danger,#dc2626);color:#fff;border-radius:99px;padding:1px 8px;font-size:11px;font-weight:700;line-height:1.6;"><?= $_pendingApps ?></span>
         <?php endif; ?>
       </a>
-      <a href="<?= BASE_URL ?>/admin/tours.php" class="<?= ($activePage ?? '') === 'tours' ? 'active' : '' ?>">
-        <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/>
-          <line x1="8" y1="2" x2="8" y2="18"/>
-          <line x1="16" y1="6" x2="16" y2="22"/>
-        </svg>
-        Túrák
+      <a href="<?= BASE_URL ?>/admin/tours.php" class="<?= ($activePage ?? '') === 'tours' ? 'active' : '' ?>" style="display:flex;align-items:center;justify-content:space-between;">
+        <span style="display:flex;align-items:center;gap:10px;">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/>
+            <line x1="8" y1="2" x2="8" y2="18"/>
+            <line x1="16" y1="6" x2="16" y2="22"/>
+          </svg>
+          Túrák
+        </span>
+        <?php if ($_pendingTours > 0): ?>
+          <span style="background:var(--danger,#dc2626);color:#fff;border-radius:99px;padding:1px 8px;font-size:11px;font-weight:700;line-height:1.6;"><?= $_pendingTours ?></span>
+        <?php endif; ?>
       </a>
       <a href="<?= BASE_URL ?>/admin/toplist.php" class="<?= ($activePage ?? '') === 'toplist' ? 'active' : '' ?>">
         <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">

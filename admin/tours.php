@@ -27,12 +27,14 @@ $orderBy = match($sortBy) {
 
 $tours = $pdo->query("
     SELECT t.*, COUNT(tm.user_id) AS member_count,
-           c.name_hu AS country_name, c.flag_filename AS country_flag
+           c.name_hu AS country_name, c.flag_filename AS country_flag,
+           CONCAT(u.lastname, ' ', u.firstname) AS submitter_name
     FROM tours t
     LEFT JOIN tour_members tm ON tm.tour_id = t.id
     LEFT JOIN countries c ON c.code = t.country
+    LEFT JOIN users u ON u.id = t.submitted_by
     GROUP BY t.id
-    ORDER BY $orderBy
+    ORDER BY FIELD(t.status, 'pending', 'approved') ASC, $orderBy
 ")->fetchAll();
 
 // Csak a ténylegesen szereplő országok a szűrőmenühöz
@@ -46,6 +48,12 @@ $tourCountries = $pdo->query("
 
 $flash_success = getFlash('success');
 $flash_error   = getFlash('error');
+
+try {
+    require_once __DIR__ . '/../includes/future-tours-schema.php';
+    ensureFutureToursSchema($pdo);
+    $newAppsCount = (int)$pdo->query("SELECT COUNT(*) FROM future_tour_applications WHERE status != 'cancelled' AND paid_at IS NULL")->fetchColumn();
+} catch (Throwable) { $newAppsCount = 0; }
 
 $pageTitle  = 'Túrák';
 $activePage = 'tours';
@@ -115,6 +123,21 @@ include __DIR__ . '/../includes/admin-header.php';
   </div>
 </div>
 
+<!-- Tabs -->
+<div style="display:flex;gap:4px;margin-bottom:20px;border-bottom:2px solid var(--border);padding-bottom:0;">
+  <a href="<?= BASE_URL ?>/admin/tours.php"
+     style="padding:8px 18px;text-decoration:none;font-size:13.5px;font-weight:600;color:var(--primary);border-bottom:2px solid var(--primary);margin-bottom:-2px;">
+    Túranapló
+  </a>
+  <a href="<?= BASE_URL ?>/admin/future-tours.php"
+     style="padding:8px 18px;text-decoration:none;font-size:13.5px;font-weight:500;color:var(--text-muted);border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .15s;display:inline-flex;align-items:center;gap:6px;">
+    Meghirdetett Túrák
+    <?php if ($newAppsCount > 0): ?>
+      <span style="background:var(--danger,#dc2626);color:#fff;border-radius:99px;padding:1px 7px;font-size:11px;font-weight:700;line-height:1.6;"><?= $newAppsCount ?></span>
+    <?php endif; ?>
+  </a>
+</div>
+
 <div class="card">
   <div class="table-wrap">
     <table id="tour-table">
@@ -135,7 +158,7 @@ include __DIR__ . '/../includes/admin-header.php';
       </thead>
       <tbody>
         <?php foreach ($tours as $t): ?>
-        <tr data-type="<?= e($t['tour_type'] ?? 'gyalogos') ?>" data-country="<?= e($t['country'] ?? '') ?>">
+        <tr data-type="<?= e($t['tour_type'] ?? 'gyalogos') ?>" data-country="<?= e($t['country'] ?? '') ?>" <?= ($t['status'] ?? 'approved') === 'pending' ? 'style="background:var(--warning-bg,#fffbeb);"' : '' ?>>
           <td><code style="font-size:.85em;white-space:nowrap;"><?= e($t['tour_code'] ?? '—') ?></code></td>
           <td>
             <div class="td-name"><?= $t['name'] ? e($t['name']) : e($t['country_name'] ?? $t['country']) ?></div>
@@ -144,8 +167,19 @@ include __DIR__ . '/../includes/admin-header.php';
                 <img src="<?= e(getFlagUrl($t['country_flag'])) ?>"
                      style="width:18px;height:13px;object-fit:cover;vertical-align:middle;border:1px solid var(--border);border-radius:1px;margin-right:3px;" alt="">
               <?php endif; ?>
-              <?= e($t['country_name'] ?? $t['country']) ?><?= $t['region'] ? ' – ' . e($t['region']) : '' ?>
+              <?= e($t['country_name'] ?? $t['country']) ?>
             </div>
+            <?php if (($t['status'] ?? 'approved') === 'pending'): ?>
+              <div style="margin-top:4px;">
+                <span style="background:var(--warning,#f59e0b);color:#fff;border-radius:4px;padding:1px 7px;font-size:11px;font-weight:700;">Jóváhagyásra vár</span>
+                <?php if (!empty($t['submitter_name'])): ?>
+                  <small style="color:var(--text-muted);margin-left:5px;">– beküldő: <?= e($t['submitter_name']) ?></small>
+                <?php endif; ?>
+              </div>
+              <?php if (!empty($t['submission_notes'])): ?>
+                <div style="font-size:11px;color:var(--text-muted);margin-top:3px;font-style:italic;"><?= e(mb_substr($t['submission_notes'], 0, 80)) ?><?= mb_strlen($t['submission_notes']) > 80 ? '…' : '' ?></div>
+              <?php endif; ?>
+            <?php endif; ?>
           </td>
           <td><?= e(getTourTypeLabel($t['tour_type'] ?? 'gyalogos')) ?></td>
           <td><?= $t['tour_date'] ? formatDate($t['tour_date']) : '—' ?></td>
@@ -157,7 +191,6 @@ include __DIR__ . '/../includes/admin-header.php';
             $fullKm = $totalKmAll + $alpineKmAll;
             if ($fullKm > 0):
                 echo number_format($fullKm, 1, ',', ' ') . ' km';
-                if ($alpineKmAll > 0): ?><br><small style="color:var(--text-muted,#888);">(<?= number_format($alpineKmAll,1,',','') ?> km magashegyi)</small><?php endif;
             elseif ($t['tour_hours'] !== null):
                 echo number_format((float)$t['tour_hours'], 1, ',', ' ') . ' óra';
             else: echo '—'; endif; ?>
@@ -167,7 +200,7 @@ include __DIR__ . '/../includes/admin-header.php';
           <td><?= (int)$t['points'] > 0 ? '<strong>' . number_format((int)$t['points']) . '</strong>' : '' ?></td>
           <td><?= number_format((int)($t['mtsz_points'] ?? 0)) ?></td>
           <td>
-            <a href="<?= BASE_URL ?>/admin/tour-detail.php?id=<?= $t['id'] ?>" class="btn btn-ghost btn-sm"><?= isAdmin() ? 'Módosítás' : 'Megtekintés' ?></a>
+            <a href="<?= BASE_URL ?>/admin/tour-detail.php?id=<?= $t['id'] ?>" class="btn btn-ghost btn-sm"><?= ($t['status'] ?? 'approved') === 'pending' ? 'Áttekintés' : (isAdmin() ? 'Módosítás' : 'Megtekintés') ?></a>
           </td>
         </tr>
         <?php endforeach; ?>

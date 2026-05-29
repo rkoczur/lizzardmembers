@@ -13,7 +13,7 @@ $pdo          = getDb();
 $action       = $_POST['action'] ?? '';
 $appId        = (int)($_POST['app_id'] ?? 0);
 $adminId      = getCurrentUserId();
-$redirectBack = BASE_URL . '/admin/applications.php';
+$redirectBack = BASE_URL . '/admin/members.php?tab=applications';
 
 ensureJoinSchema($pdo);
 ensureUserSchema($pdo);
