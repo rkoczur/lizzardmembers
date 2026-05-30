@@ -79,7 +79,7 @@ add_shortcode('lote_jelentkezes', function (array $atts): string {
         <div id="<?= esc_attr($uid) ?>-teaser" class="lote-ft-teaser" hidden>
           <div class="lote-ft-teaser-text">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            <span class="lote-ft-panel-text" style="font-size: 14px;">Már tag vagy? Lépj be a jelentkezéshez!</span>
+            <span class="lote-ft-panel-text" style="font-size: 14px;">Ha már tag vagy jelentkezz be:</span>
           </div>
           <button type="button" class="lote-ft-login-toggle" id="<?= esc_attr($uid) ?>-toggle">Bejelentkezés</button>
         </div>
@@ -105,22 +105,38 @@ add_shortcode('lote_jelentkezes', function (array $atts): string {
         </div>
 
         <div id="<?= esc_attr($uid) ?>-loggedin" class="lote-ft-loggedin" hidden>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-          <span class="lote-ft-panel-text">Bejelentkezve: <strong id="<?= esc_attr($uid) ?>-name"></strong></span>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <span class="lote-ft-panel-text">Bejelentkezve: <strong id="<?= esc_attr($uid) ?>-name"></strong></span>
+          </div>
+          <button type="button" class="lote-ft-logout-btn" id="<?= esc_attr($uid) ?>-logout">Kijelentkezés</button>
         </div>
 
       </div>
 
       <!-- ===== Natív jelentkezési űrlapok ===== -->
       <?php foreach ($tours as $t):
-        $tid          = (int)$t['id'];
-        $customFields = $t['custom_fields'] ?? [];
-        $bId          = esc_attr($uid . '-block-' . $tid);
+        $tid           = (int)$t['id'];
+        $customFields  = $t['custom_fields'] ?? [];
+        $bId           = esc_attr($uid . '-block-' . $tid);
+        $disabledFlds  = $t['disabled_standard_fields'] ?? [];
+        $fldOn         = fn(string $f): bool => !in_array($f, $disabledFlds, true);
       ?>
       <div class="lote-ft-form-block" id="<?= $bId ?>">
 
         <!-- Jelentkezés toggle gomb -->
         <div class="lote-ft-apply-toggle" id="<?= esc_attr($uid) ?>-toggle-wrap-<?= $tid ?>">
+          <?php if ($t['participation_fee'] !== null): ?>
+          <div class="lote-ft-fee-card">
+            <span class="lote-ft-fee-badge" id="<?= esc_attr($uid) ?>-fee-badge-<?= $tid ?>" hidden></span>
+            <span class="lote-ft-fee-label">Részvételi díj</span>
+            <div class="lote-ft-fee-prices">
+              <span class="lote-ft-fee-base" id="<?= esc_attr($uid) ?>-fee-base-<?= $tid ?>"><?= number_format((float)$t['participation_fee'], 0, ',', ' ') ?> Ft</span>
+              <span class="lote-ft-fee-arrow" id="<?= esc_attr($uid) ?>-fee-arrow-<?= $tid ?>" hidden>→</span>
+              <span class="lote-ft-fee-disc" id="<?= esc_attr($uid) ?>-fee-disc-<?= $tid ?>" hidden></span>
+            </div>
+          </div>
+          <?php endif; ?>
           <button type="button" class="lote-ft-apply-btn" id="<?= esc_attr($uid) ?>-apply-toggle-<?= $tid ?>">Jelentkezés</button>
         </div>
 
@@ -190,6 +206,16 @@ add_shortcode('lote_jelentkezes', function (array $atts): string {
 
           <hr class="lote-ft-divider">
 
+          <?php if ($fldOn('departure_city')): ?>
+          <!-- Indulási helyszín -->
+          <div class="lote-ft-field-wrap">
+            <label class="lote-ft-label">Honnan indulnál? <span class="lote-ft-req">*</span></label>
+            <input class="lote-ft-input" type="text" name="departure_city" placeholder="pl. Budapest XIII. kerület" required>
+            <p class="lote-ft-hint">Budapest esetén a kerületet is add meg!</p>
+          </div>
+          <?php endif; ?>
+
+          <?php if ($fldOn('car_available')): ?>
           <!-- Autó -->
           <div class="lote-ft-field-wrap">
             <label class="lote-ft-label">Tudsz autóval jönni?</label>
@@ -208,7 +234,9 @@ add_shortcode('lote_jelentkezes', function (array $atts): string {
             <input class="lote-ft-input lote-ft-input-narrow" type="number" name="passengers" min="0" max="10" value="0">
             <p class="lote-ft-hint">Ha már megvan, hogy kivel utazol, akkor is a maximum számot írd be, és majd a megjegyzésnél jelezd, hogy ki az utasod.</p>
           </div>
+          <?php endif; ?>
 
+          <?php if ($fldOn('sharing_room')): ?>
           <!-- Szobamegosztás -->
           <div class="lote-ft-field-wrap">
             <label class="lote-ft-label">Szükség esetén aludnál egy helyen mással?</label>
@@ -218,12 +246,15 @@ add_shortcode('lote_jelentkezes', function (array $atts): string {
               <option value="no">Nem</option>
             </select>
           </div>
+          <?php endif; ?>
 
+          <?php if ($fldOn('notes')): ?>
           <!-- Megjegyzés -->
           <div class="lote-ft-field-wrap">
             <label class="lote-ft-label">Megjegyzések</label>
             <textarea class="lote-ft-textarea" name="notes" rows="3" placeholder="Egyéb megjegyzés, kérés…"></textarea>
           </div>
+          <?php endif; ?>
 
           <!-- Egyéni mezők -->
           <?php foreach ($customFields as $cf): ?>
@@ -279,7 +310,15 @@ add_shortcode('lote_jelentkezes', function (array $atts): string {
       var csrfUrl   = <?= json_encode($csrfUrl) ?>;
       var submitUrl = <?= json_encode($submitUrl) ?>;
       var emailUrl  = <?= json_encode($emailUrl) ?>;
-      var tourIds   = <?= json_encode(array_map('intval', $tourIds)) ?>;
+      var tourIds            = <?= json_encode(array_map('intval', $tourIds)) ?>;
+      var tourFees           = <?= json_encode(array_combine(
+            array_map('intval', $tourIds),
+            array_map(fn($t) => $t['participation_fee'], $tours)
+        )) ?>;
+      var tourDisabledFields = <?= json_encode(array_combine(
+            array_map('intval', $tourIds),
+            array_map(fn($t) => $t['disabled_standard_fields'] ?? [], $tours)
+        )) ?>;
 
       var wrap         = document.getElementById(uid);
       var teaser       = document.getElementById(uid + '-teaser');
@@ -305,9 +344,10 @@ add_shortcode('lote_jelentkezes', function (array $atts): string {
         .then(function(r) { return r.json(); })
         .then(function(d) {
           if (d.logged_in) {
-            loggedInUser = { firstname: d.firstname, lastname: d.lastname, email: d.email };
+            loggedInUser = { firstname: d.firstname, lastname: d.lastname, email: d.email, discount: d.discount || 0 };
             showLoggedIn(d.firstname, d.lastname);
             updateFormModes();
+            updateAllFeeDisplays(d.discount || 0);
           } else {
             showTeaser();
           }
@@ -365,9 +405,10 @@ add_shortcode('lote_jelentkezes', function (array $atts): string {
           .then(function(r) { return r.json(); })
           .then(function(d) {
             if (d.success) {
-              loggedInUser = { firstname: d.firstname, lastname: d.lastname, email: d.email };
+              loggedInUser = { firstname: d.firstname, lastname: d.lastname, email: d.email, discount: d.discount || 0 };
               showLoggedIn(d.firstname, d.lastname);
               updateFormModes();
+              updateAllFeeDisplays(d.discount || 0);
             } else {
               errBox.textContent      = d.error || 'Hiba történt.';
               errBox.hidden           = false;
@@ -448,7 +489,8 @@ add_shortcode('lote_jelentkezes', function (array $atts): string {
 
         hideErr(errEl);
 
-        var data = { tour_id: String(tid), csrf_token: csrfToken || '' };
+        var data           = { tour_id: String(tid), csrf_token: csrfToken || '' };
+        var disabledFields = tourDisabledFields[tid] || [];
 
         if (!loggedInUser) {
           var nameIn  = block.querySelector('[name="guest_name"]');
@@ -460,6 +502,12 @@ add_shortcode('lote_jelentkezes', function (array $atts): string {
 
           if (!data.guest_name) { showErr(errEl, 'A név megadása kötelező.'); return; }
           if (!data.guest_email) { showErr(errEl, 'Az e-mail cím megadása kötelező.'); return; }
+        }
+
+        var deptIn = block.querySelector('[name="departure_city"]');
+        data.departure_city = deptIn ? deptIn.value.trim() : '';
+        if (disabledFields.indexOf('departure_city') === -1 && !data.departure_city) {
+          showErr(errEl, 'Az indulási helyszín megadása kötelező.'); return;
         }
 
         var carIn  = block.querySelector('input[name="car_' + tid + '"]:checked');
@@ -530,6 +578,57 @@ add_shortcode('lote_jelentkezes', function (array $atts): string {
         } else {
           doPost();
         }
+      }
+
+      // ---- Részvételi díj kijelzés ----
+
+      function formatFt(amount) {
+        return Math.round(amount).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' Ft';
+      }
+
+      function updateAllFeeDisplays(discount) {
+        tourIds.forEach(function(tid) {
+          var fee     = tourFees[tid];
+          var baseEl  = document.getElementById(uid + '-fee-base-'  + tid);
+          var arrowEl = document.getElementById(uid + '-fee-arrow-' + tid);
+          var discEl  = document.getElementById(uid + '-fee-disc-'  + tid);
+          var badgeEl = document.getElementById(uid + '-fee-badge-' + tid);
+          if (!baseEl || fee === null || fee === undefined) return;
+          if (discount > 0) {
+            baseEl.classList.add('lote-ft-fee-base--crossed');
+            arrowEl.hidden      = false;
+            discEl.hidden       = false;
+            discEl.textContent  = formatFt(Math.round(fee * (1 - discount / 100)));
+            badgeEl.hidden      = false;
+            badgeEl.textContent = discount + '% tag kedvezmény';
+          } else {
+            baseEl.classList.remove('lote-ft-fee-base--crossed');
+            arrowEl.hidden = true;
+            discEl.hidden  = true;
+            badgeEl.hidden = true;
+          }
+        });
+      }
+
+      // ---- Kijelentkezés ----
+
+      var logoutBtn = document.getElementById(uid + '-logout');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', function() {
+          logoutBtn.disabled    = true;
+          logoutBtn.textContent = 'Kijelentkezés…';
+          fetch(authUrl + '?action=logout', { credentials: 'include' })
+            .then(function() {
+              loggedInUser = null;
+              showTeaser();
+              updateFormModes();
+              updateAllFeeDisplays(0);
+            })
+            .catch(function() {
+              logoutBtn.disabled    = false;
+              logoutBtn.textContent = 'Kijelentkezés';
+            });
+        });
       }
 
       function showErr(el, msg) {

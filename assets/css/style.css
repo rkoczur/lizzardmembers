@@ -195,6 +195,15 @@ ul { list-style: none; }
   border: 1px solid var(--border);
   overflow: hidden;
 }
+
+card-public-header {
+  background: #29776f;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
 .card-header {
   padding: 16px 20px;
   border-bottom: 1px solid var(--border);

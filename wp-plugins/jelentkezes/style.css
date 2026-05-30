@@ -1,4 +1,5 @@
-/* LOTE Meghirdetett Túrák – Jelentkezés plugin v2.0 */
+/* LOTE Meghirdetett Túrák – Jelentkezés plugin v2.1
+   Brand colors: #29776F | #F4E7CF | #DD9933 | #444444 */
 
 .lote-ft-wrap [hidden] { display: none !important; }
 
@@ -11,7 +12,7 @@
 
 /* ---- Login sáv ---- */
 .lote-ft-wrap .lote-ft-login-panel {
-  background: #1a3d39 !important;
+  background: #29776F !important;
   border-radius: 10px 10px 0 0;
   color: #fff !important;
   overflow: hidden;
@@ -31,7 +32,7 @@
   align-items: center;
   gap: 10px;
   font-size: 13.5px;
-  color: #e8d8b8 !important;
+  color: #F4E7CF !important;
   flex: 1;
   min-width: 0;
 }
@@ -40,12 +41,12 @@
   width: 20px;
   height: 20px;
   flex-shrink: 0;
-  color: #c8a84b !important;
+  color: #DD9933 !important;
 }
 
 .lote-ft-wrap .lote-ft-login-toggle {
-  background: #c8a84b !important;
-  color: #1a3d39 !important;
+  background: #DD9933 !important;
+  color: #444444 !important;
   border: none;
   border-radius: 6px;
   padding: 7px 16px;
@@ -58,11 +59,11 @@
   transition: background .15s;
 }
 
-.lote-ft-wrap .lote-ft-login-toggle:hover { background: #d4b560 !important; }
+.lote-ft-wrap .lote-ft-login-toggle:hover { background: #c88820 !important; }
 
 .lote-ft-wrap .lote-ft-form-wrap {
   padding: 14px 20px 18px;
-  border-top: 1px solid rgba(255,255,255,.1);
+  border-top: 1px solid rgba(255,255,255,.15);
 }
 
 .lote-ft-wrap .lote-ft-login-form { display: flex; flex-direction: column; gap: 10px; }
@@ -96,7 +97,7 @@
 }
 
 .lote-ft-wrap .lote-ft-field input::placeholder { color: rgba(255,255,255,.35) !important; }
-.lote-ft-wrap .lote-ft-field input:focus { border-color: #c8a84b !important; }
+.lote-ft-wrap .lote-ft-field input:focus { border-color: #DD9933 !important; }
 
 .lote-ft-wrap .lote-ft-login-row {
   display: flex;
@@ -120,8 +121,8 @@
   text-decoration: none !important;
 }
 
-.lote-ft-wrap .lote-ft-btn--gold { background: #c8a84b !important; color: #1a3d39 !important; }
-.lote-ft-wrap .lote-ft-btn--gold:hover { background: #d4b560 !important; color: #1a3d39 !important; }
+.lote-ft-wrap .lote-ft-btn--gold { background: #DD9933 !important; color: #444444 !important; }
+.lote-ft-wrap .lote-ft-btn--gold:hover { background: #c88820 !important; color: #444444 !important; }
 .lote-ft-wrap .lote-ft-btn--gold:disabled { opacity: .6; cursor: not-allowed; }
 
 .lote-ft-wrap .lote-ft-cancel {
@@ -145,8 +146,9 @@
 .lote-ft-wrap .lote-ft-loggedin {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 12px 20px;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px 10px 20px;
   font-size: 14px;
 }
 
@@ -154,24 +156,118 @@
   width: 18px;
   height: 18px;
   flex-shrink: 0;
-  color: #4ade80 !important;
+  color: #F4E7CF !important;
 }
 
-.lote-ft-wrap .lote-ft-panel-text { color: #e8d8b8 !important; }
+.lote-ft-wrap .lote-ft-logout-btn {
+  background: rgba(255,255,255,.12) !important;
+  border: 1px solid rgba(255,255,255,.25) !important;
+  color: #F4E7CF !important;
+  border-radius: 5px !important;
+  padding: 5px 12px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background .15s !important;
+  font-family: inherit !important;
+  line-height: 1 !important;
+}
+
+.lote-ft-wrap .lote-ft-logout-btn:hover { background: rgba(255,255,255,.22) !important; }
+.lote-ft-wrap .lote-ft-logout-btn:disabled { opacity: .55; cursor: not-allowed !important; }
+
+.lote-ft-wrap .lote-ft-panel-text { color: #F4E7CF !important; }
 .lote-ft-wrap .lote-ft-panel-text strong,
 .lote-ft-wrap .lote-ft-loggedin strong { color: #fff !important; }
 
 /* ---- Form blokk ---- */
 .lote-ft-wrap .lote-ft-form-block {
-  border: 1px solid #e0d8ce;
+  border: 1px solid #ddd0b0;
   border-top: none;
   border-radius: 0 0 10px 10px;
-  background: #f7f4ef !important;
+  background: #F4E7CF !important;
   overflow: hidden;
 }
 
 .lote-ft-wrap .lote-ft-apply-toggle {
   padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ---- Részvételi díj kártya ---- */
+.lote-ft-wrap .lote-ft-fee-card {
+  background: linear-gradient(135deg, #DD9933 0%, #c88820 100%);
+  border-radius: 9px;
+  padding: 13px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  text-align: center;
+  position: relative;
+}
+
+.lote-ft-wrap .lote-ft-fee-label {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase;
+  letter-spacing: .09em;
+  color: rgba(68, 68, 68, 0.6) !important;
+}
+
+.lote-ft-wrap .lote-ft-fee-prices {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+.lote-ft-wrap .lote-ft-fee-base {
+  font-size: 23px !important;
+  font-weight: 800 !important;
+  color: #444444 !important;
+  letter-spacing: -.02em;
+  line-height: 1;
+}
+
+.lote-ft-wrap .lote-ft-fee-base--crossed {
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  color: rgba(68, 68, 68, 0.4) !important;
+  text-decoration: line-through !important;
+  letter-spacing: 0;
+}
+
+.lote-ft-wrap .lote-ft-fee-arrow {
+  font-size: 15px !important;
+  color: rgba(68, 68, 68, 0.45) !important;
+}
+
+.lote-ft-wrap .lote-ft-fee-disc {
+  font-size: 23px !important;
+  font-weight: 800 !important;
+  color: #133633 !important;
+  letter-spacing: -.02em;
+  line-height: 1;
+}
+
+.lote-ft-wrap .lote-ft-fee-badge {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  background: rgba(68, 68, 68, 0.12) !important;
+  border: 1px solid rgba(68, 68, 68, 0.25) !important;
+  color: #444444 !important;
+  border-radius: 5px !important;
+  padding: 3px 9px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  white-space: nowrap;
 }
 
 .lote-ft-wrap .lote-ft-apply-btn {
@@ -191,16 +287,16 @@
   box-shadow: none !important;
 }
 
-.lote-ft-wrap .lote-ft-apply-btn:hover { background: #1e5e57 !important; }
+.lote-ft-wrap .lote-ft-apply-btn:hover { background: #205e57 !important; }
 
 .lote-ft-wrap .lote-ft-apply-btn--open {
-  background: #6b6258 !important;
+  background: #444444 !important;
 }
-.lote-ft-wrap .lote-ft-apply-btn--open:hover { background: #5a5250 !important; }
+.lote-ft-wrap .lote-ft-apply-btn--open:hover { background: #333333 !important; }
 
 .lote-ft-wrap .lote-ft-form-inner {
   padding: 20px 24px 24px;
-  border-top: 1px solid #e0d8ce;
+  border-top: 1px solid #ddd0b0;
 }
 
 .lote-ft-wrap .lote-ft-form-intro {
@@ -212,8 +308,8 @@
 
 /* ---- Kapacitás sáv ---- */
 .lote-ft-wrap .lote-ft-capacity {
-  background: #f7f4ef !important;
-  border: 1px solid #e0d8ce !important;
+  background: rgba(255,255,255,.5) !important;
+  border: 1px solid #ddd0b0 !important;
   border-radius: 8px !important;
   padding: 12px 14px !important;
   margin-bottom: 18px !important;
@@ -237,23 +333,23 @@
   font-weight: 600 !important;
   text-transform: uppercase;
   letter-spacing: .05em;
-  color: #8a7f76 !important;
+  color: rgba(68,68,68,.55) !important;
 }
 
 .lote-ft-wrap .lote-ft-cap-num {
   font-size: 15px !important;
   font-weight: 700 !important;
-  color: #2d2520 !important;
+  color: #444444 !important;
 }
 
-.lote-ft-wrap .lote-ft-spots-ok  { color: #16a34a !important; }
-.lote-ft-wrap .lote-ft-spots-low { color: #d97706 !important; }
+.lote-ft-wrap .lote-ft-spots-ok   { color: #16a34a !important; }
+.lote-ft-wrap .lote-ft-spots-low  { color: #d97706 !important; }
 .lote-ft-wrap .lote-ft-spots-full { color: #dc2626 !important; }
-.lote-ft-wrap .lote-ft-spots-wait { color: #7c3aed !important; }
+.lote-ft-wrap .lote-ft-spots-wait { color: #b45309 !important; }
 
 .lote-ft-wrap .lote-ft-cap-track {
   height: 6px;
-  background: #e0d8ce !important;
+  background: rgba(68,68,68,.15) !important;
   border-radius: 99px;
   overflow: hidden;
 }
@@ -285,8 +381,8 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  background: #f0fdf4 !important;
-  border: 1px solid #bbf7d0 !important;
+  background: rgba(41,119,111,.08) !important;
+  border: 1px solid rgba(41,119,111,.25) !important;
   border-radius: 8px;
   padding: 10px 14px;
   margin-bottom: 4px;
@@ -297,13 +393,13 @@
   width: 18px;
   height: 18px;
   flex-shrink: 0;
-  color: #16a34a !important;
+  color: #29776F !important;
 }
 
 .lote-ft-wrap .lote-ft-m-name {
   display: block;
   font-weight: 600 !important;
-  color: #1a3d39 !important;
+  color: #29776F !important;
   font-size: 14px !important;
 }
 
@@ -316,7 +412,7 @@
 /* ---- Elválasztó ---- */
 .lote-ft-wrap .lote-ft-divider {
   border: none !important;
-  border-top: 1px solid #e8e0d6 !important;
+  border-top: 1px solid #ddd0b0 !important;
   margin: 18px 0 !important;
 }
 
@@ -329,7 +425,7 @@
   display: block !important;
   font-size: 13px !important;
   font-weight: 600 !important;
-  color: #2d2520 !important;
+  color: #444444 !important;
   margin-bottom: 6px !important;
 }
 
@@ -346,9 +442,9 @@
   padding: 9px 11px !important;
   font-size: 14px !important;
   line-height: 1.4 !important;
-  color: #2d2520 !important;
+  color: #444444 !important;
   background: #fff !important;
-  border: 1px solid #d6cec4 !important;
+  border: 1px solid #ddd0b0 !important;
   border-radius: 6px !important;
   outline: none !important;
   box-shadow: none !important;
@@ -367,11 +463,11 @@
 
 .lote-ft-wrap .lote-ft-input::placeholder,
 .lote-ft-wrap .lote-ft-textarea::placeholder {
-  color: #a89f96 !important;
+  color: rgba(68,68,68,.35) !important;
 }
 
 .lote-ft-wrap .lote-ft-select {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b6258' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23444444' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") !important;
   background-repeat: no-repeat !important;
   background-position: right 11px center !important;
   padding-right: 30px !important;
@@ -396,7 +492,7 @@
   gap: 7px !important;
   font-size: 14px !important;
   font-weight: normal !important;
-  color: #2d2520 !important;
+  color: #444444 !important;
   cursor: pointer !important;
   margin: 4px 0 0 !important;
 }
@@ -411,7 +507,7 @@
 .lote-ft-wrap .lote-ft-hint {
   display: block !important;
   font-size: 11.5px !important;
-  color: #8a7f76 !important;
+  color: rgba(68,68,68,.55) !important;
   margin-top: 5px !important;
   line-height: 1.4 !important;
 }
@@ -438,7 +534,7 @@
   box-shadow: none !important;
 }
 
-.lote-ft-wrap .lote-ft-submit-btn:hover { background: #1e5e57 !important; }
+.lote-ft-wrap .lote-ft-submit-btn:hover { background: #205e57 !important; }
 .lote-ft-wrap .lote-ft-submit-btn:disabled { opacity: .65; cursor: not-allowed !important; }
 
 .lote-ft-wrap .lote-ft-inline-error {
@@ -463,7 +559,7 @@
 .lote-ft-wrap .lote-ft-success-title {
   font-size: 20px !important;
   font-weight: 700 !important;
-  color: #1a3d39 !important;
+  color: #29776F !important;
   margin: 0 0 10px !important;
 }
 
@@ -483,9 +579,9 @@
 }
 
 .lote-ft-wrap .lote-ft-empty {
-  background: #faf7f3 !important;
-  border: 1px solid #e0d8ce;
-  color: #7a7269 !important;
+  background: #F4E7CF !important;
+  border: 1px solid #ddd0b0;
+  color: #6b6258 !important;
 }
 
 /* ---- Responsive ---- */

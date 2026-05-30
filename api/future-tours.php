@@ -24,6 +24,7 @@ try {
         SELECT
             ft.id, ft.name, ft.description, ft.start_date, ft.num_days,
             ft.country, ft.region, ft.participation_fee, ft.max_attendees,
+            ft.disabled_standard_fields,
             c.name_hu AS country_name,
             (SELECT COUNT(*) FROM future_tour_applications fta
              WHERE fta.future_tour_id = ft.id AND fta.status = 'confirmed') AS confirmed_count,
@@ -45,7 +46,8 @@ try {
         $t['waitlist_count']   = (int)$t['waitlist_count'];
         $t['spots_left']       = max(0, $t['max_attendees'] - $t['confirmed_count']);
         $t['participation_fee']= $t['participation_fee'] !== null ? (float)$t['participation_fee'] : null;
-        $t['apply_path']       = '/user/future-tour-apply-public.php?id=' . $t['id'];
+        $t['apply_path']              = '/user/future-tour-apply-public.php?id=' . $t['id'];
+        $t['disabled_standard_fields'] = json_decode($t['disabled_standard_fields'] ?? '[]', true) ?: [];
 
         $cfStmt->execute([$t['id']]);
         $cfs = $cfStmt->fetchAll(PDO::FETCH_ASSOC);

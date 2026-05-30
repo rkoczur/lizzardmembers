@@ -19,10 +19,9 @@ if (!$isNew && !$id) {
     exit;
 }
 
-$tour           = null;
-$days           = [];
-$customFields   = [];
-$applications   = [];
+$tour         = null;
+$days         = [];
+$customFields = [];
 
 if (!$isNew) {
     $tour = $pdo->prepare("SELECT ft.*, c.name_hu AS country_name FROM future_tours ft LEFT JOIN countries c ON c.code = ft.country WHERE ft.id = ? LIMIT 1");
@@ -40,37 +39,6 @@ if (!$isNew) {
     $customFields = $pdo->prepare("SELECT * FROM future_tour_custom_fields WHERE future_tour_id = ? ORDER BY sort_order ASC, id ASC");
     $customFields->execute([$id]);
     $customFields = $customFields->fetchAll();
-
-    $applications = $pdo->prepare("
-        SELECT fta.*, u.firstname, u.lastname, u.email, u.phone
-        FROM future_tour_applications fta
-        LEFT JOIN users u ON u.id = fta.user_id
-        WHERE fta.future_tour_id = ? AND fta.status IN ('confirmed','waitlist')
-        ORDER BY fta.status ASC, fta.applied_at ASC
-    ");
-    $applications->execute([$id]);
-    $applications = $applications->fetchAll();
-
-    $pendingGuests = $pdo->prepare("
-        SELECT * FROM future_tour_applications
-        WHERE future_tour_id = ? AND status = 'pending'
-        ORDER BY applied_at ASC
-    ");
-    $pendingGuests->execute([$id]);
-    $pendingGuests = $pendingGuests->fetchAll();
-
-    $addableMembers = $pdo->prepare("
-        SELECT u.id, u.lastname, u.firstname
-        FROM users u
-        WHERE u.active = 1
-          AND u.id NOT IN (
-              SELECT user_id FROM future_tour_applications
-              WHERE future_tour_id = ? AND status != 'cancelled' AND user_id IS NOT NULL
-          )
-        ORDER BY u.lastname ASC, u.firstname ASC
-    ");
-    $addableMembers->execute([$id]);
-    $addableMembers = $addableMembers->fetchAll();
 }
 
 $countries = getCountries($pdo);
@@ -97,6 +65,7 @@ include __DIR__ . '/../includes/admin-header.php';
   </div>
   <div style="display:flex;gap:8px;align-items:center;">
     <?php if (!$isNew): ?>
+    <a href="<?= BASE_URL ?>/admin/future-tour-applicants.php?id=<?= (int)$id ?>" class="btn btn-secondary btn-sm">Jelentkezők</a>
     <button type="button" class="btn btn-secondary btn-sm" id="copy-public-link-btn"
             data-url="<?= e(((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http') . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . BASE_URL . '/user/future-tour-apply-public.php?id=' . (int)$id) ?>">
       Publikus link másolása
@@ -119,10 +88,7 @@ include __DIR__ . '/../includes/admin-header.php';
   </div>
 </div>
 
-<div style="display:grid;grid-template-columns:3fr 2fr;gap:20px;align-items:start;" class="future-tour-grid">
-
-  <!-- LEFT: Tour form -->
-  <div class="card">
+<div class="card" style="max-width:780px;">
     <div class="card-header">
       <h2><?= $isNew ? 'Túra adatai' : 'Túra szerkesztése' ?></h2>
     </div>
@@ -279,6 +245,37 @@ include __DIR__ . '/../includes/admin-header.php';
           <?php endif; ?>
         </div>
 
+        <?php
+        $disabledFields  = json_decode((!$isNew && isset($tour['disabled_standard_fields']) ? $tour['disabled_standard_fields'] : null) ?? '[]', true) ?: [];
+        $isFieldDisabled = fn(string $f): bool => in_array($f, $disabledFields, true);
+        ?>
+
+        <!-- STANDARD FIELD VISIBILITY -->
+        <div class="form-section-title" style="margin-top:24px;">Jelentkezési mezők</div>
+        <p style="font-size:13px;color:var(--text-muted);margin:0 0 12px;">Kapcsold ki azokat a mezőket, amelyek ennél a túránál nem relevánsak.</p>
+        <?php
+        $stdFields = [
+          'departure_city' => ['label' => 'Honnan indulnál?',          'desc' => 'Indulási hely — közlekedés megszervezéséhez'],
+          'car_available'  => ['label' => 'Autóval jönni?',             'desc' => 'Megkérdi az autót és a szabad ülőhelyeket'],
+          'sharing_room'   => ['label' => 'Szobamegosztás',             'desc' => 'Szobatárs-preferencia kérdése szállás esetén'],
+          'notes'          => ['label' => 'Megjegyzések',               'desc' => 'Szabad szöveges megjegyzés a jelentkezőtől'],
+        ];
+        ?>
+        <div class="notif-list" style="border:1px solid var(--border);border-radius:var(--radius,8px);overflow:hidden;<?= $ro ? 'opacity:.6;pointer-events:none;' : '' ?>">
+          <?php foreach ($stdFields as $fKey => $field): ?>
+          <label class="notif-row" style="padding:12px 16px;cursor:pointer;margin:0;">
+            <input type="checkbox" name="visible_fields[]" value="<?= e($fKey) ?>"
+                   <?= !$isFieldDisabled($fKey) ? 'checked' : '' ?>
+                   <?= $ro ? 'disabled' : '' ?>>
+            <span class="notif-slider"></span>
+            <span class="notif-info">
+              <strong><?= e($field['label']) ?></strong>
+              <small><?= e($field['desc']) ?></small>
+            </span>
+          </label>
+          <?php endforeach; ?>
+        </div>
+
         <!-- CUSTOM FIELDS -->
         <div class="form-section-title" style="margin-top:24px;">
           Egyedi jelentkezési mezők
@@ -324,167 +321,7 @@ include __DIR__ . '/../includes/admin-header.php';
         <?php endif; ?>
       </form>
     </div>
-  </div>
-
-  <!-- RIGHT: Applicants -->
-  <?php if (!$isNew): ?>
-  <div class="card" style="position:sticky;top:20px;">
-    <div class="card-header" style="display:flex;justify-content:space-between;align-items:center;">
-      <h2>Jelentkezők</h2>
-      <div style="display:flex;gap:8px;align-items:center;">
-        <span style="font-size:13px;color:var(--text-muted);">
-          <?= array_sum(array_map(fn($a) => $a['status'] === 'confirmed' ? 1 : 0, $applications)) ?>
-          / <?= (int)$tour['max_attendees'] ?> hely
-        </span>
-        <?php if (isAdmin()): ?>
-        <a href="<?= BASE_URL ?>/actions/future-tour-export.php?id=<?= (int)$id ?>" class="btn btn-ghost btn-sm">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="14" height="14">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-            <polyline points="7 10 12 15 17 10"/>
-            <line x1="12" y1="15" x2="12" y2="3"/>
-          </svg>
-          CSV
-        </a>
-        <?php endif; ?>
-      </div>
-    </div>
-    <div class="card-body" style="padding:0;">
-
-      <?php if (!empty($pendingGuests)): ?>
-      <!-- Pending guests -->
-      <div style="background:#fffbeb;border-bottom:2px solid var(--warning,#f59e0b);padding:8px 14px 6px;">
-        <span style="font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--warning,#b45309);">⏳ Jóváhagyásra vár (<?= count($pendingGuests) ?>)</span>
-      </div>
-      <table style="width:100%;border-collapse:collapse;font-size:13px;margin-bottom:2px;">
-        <tbody>
-          <?php foreach ($pendingGuests as $pg): ?>
-          <tr style="border-bottom:1px solid var(--border);background:#fffdf5;">
-            <td style="padding:9px 14px;">
-              <div style="font-weight:600;"><?= e($pg['guest_name']) ?></div>
-              <div style="font-size:11px;color:var(--text-muted);"><?= e($pg['guest_email']) ?><?= $pg['guest_phone'] ? ' · ' . e($pg['guest_phone']) : '' ?></div>
-              <span style="background:#f3e8d0;color:#92400e;border-radius:4px;padding:1px 6px;font-size:10.5px;font-weight:600;border:1px solid #d97706;">Vendég</span>
-            </td>
-            <td style="padding:9px 8px;color:var(--text-muted);font-size:12px;white-space:nowrap;">
-              <?= date('Y.m.d', strtotime($pg['applied_at'])) ?>
-            </td>
-            <td style="padding:9px 10px 9px 0;text-align:right;white-space:nowrap;">
-              <form method="post" action="<?= BASE_URL ?>/actions/future-tour-approve-guest.php" style="display:inline;">
-                <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
-                <input type="hidden" name="application_id" value="<?= (int)$pg['id'] ?>">
-                <input type="hidden" name="tour_id" value="<?= (int)$id ?>">
-                <button type="submit" class="btn btn-primary btn-sm" style="padding:4px 8px;font-size:11px;">Jóváhagy</button>
-              </form>
-              <form method="post" action="<?= BASE_URL ?>/actions/future-tour-reject-guest.php" style="display:inline;margin-left:4px;"
-                    onsubmit="return confirm('Biztosan elutasítja ezt a jelentkezést?')">
-                <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
-                <input type="hidden" name="application_id" value="<?= (int)$pg['id'] ?>">
-                <input type="hidden" name="tour_id" value="<?= (int)$id ?>">
-                <button type="submit" class="btn btn-danger btn-sm" style="padding:4px 8px;font-size:11px;">Elutasít</button>
-              </form>
-            </td>
-          </tr>
-          <?php endforeach; ?>
-        </tbody>
-      </table>
-      <?php endif; ?>
-
-      <?php if (empty($applications)): ?>
-        <div style="padding:24px;text-align:center;color:var(--text-muted);font-size:13px;">Még senki nem jelentkezett.</div>
-      <?php else: ?>
-        <div style="overflow-y:auto;max-height:460px;">
-          <table style="width:100%;border-collapse:collapse;font-size:13px;">
-            <thead>
-              <tr style="background:var(--card);border-bottom:1px solid var(--border);">
-                <th style="padding:8px 14px;text-align:left;font-weight:600;color:var(--text-muted);font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;">Résztvevő</th>
-                <th style="padding:8px 14px;text-align:left;font-weight:600;color:var(--text-muted);font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;">Dátum</th>
-                <th style="padding:8px 6px;text-align:center;font-weight:600;color:var(--text-muted);font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;">Fizetés</th>
-                <th style="padding:8px 6px;"></th>
-              </tr>
-            </thead>
-            <tbody>
-              <?php foreach ($applications as $app): ?>
-              <tr style="border-bottom:1px solid var(--border);<?= $app['status'] === 'waitlist' ? 'opacity:.7;' : '' ?>">
-                <td style="padding:10px 14px;">
-                  <?php if ($app['user_id']): ?>
-                    <div style="font-weight:600;"><?= e($app['lastname'] . ' ' . $app['firstname']) ?></div>
-                    <div style="font-size:11px;color:var(--text-muted);"><?= e($app['email']) ?></div>
-                  <?php else: ?>
-                    <div style="font-weight:600;"><?= e($app['guest_name']) ?></div>
-                    <div style="font-size:11px;color:var(--text-muted);"><?= e($app['guest_email']) ?></div>
-                    <span style="background:#f3e8d0;color:#92400e;border-radius:4px;padding:1px 6px;font-size:10.5px;font-weight:600;border:1px solid #d97706;">Vendég</span>
-                  <?php endif; ?>
-                  <?php if ($app['status'] === 'waitlist'): ?>
-                    <span style="background:var(--warning-bg,#fffbeb);color:var(--warning,#b45309);border-radius:4px;padding:1px 6px;font-size:10.5px;font-weight:600;border:1px solid var(--warning,#f59e0b);">Várólistán</span>
-                  <?php endif; ?>
-                </td>
-                <td style="padding:10px 14px;color:var(--text-muted);font-size:12px;white-space:nowrap;">
-                  <?= date('Y.m.d', strtotime($app['applied_at'])) ?>
-                </td>
-                <td style="padding:10px 6px;text-align:center;">
-                  <?php if ($app['paid_at']): ?>
-                    <form method="post" action="<?= BASE_URL ?>/actions/future-tour-mark-paid.php" style="display:inline;">
-                      <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
-                      <input type="hidden" name="application_id" value="<?= (int)$app['id'] ?>">
-                      <input type="hidden" name="tour_id" value="<?= (int)$id ?>">
-                      <button type="submit" title="Fizetés visszavonása" style="background:none;border:none;cursor:pointer;font-size:16px;line-height:1;color:var(--primary);">✓</button>
-                    </form>
-                  <?php else: ?>
-                    <form method="post" action="<?= BASE_URL ?>/actions/future-tour-mark-paid.php" style="display:inline;">
-                      <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
-                      <input type="hidden" name="application_id" value="<?= (int)$app['id'] ?>">
-                      <input type="hidden" name="tour_id" value="<?= (int)$id ?>">
-                      <button type="submit" title="Fizetés rögzítése"
-                              style="background:none;border:none;cursor:pointer;font-size:16px;line-height:1;color:var(--danger);">⚠</button>
-                    </form>
-                  <?php endif; ?>
-                </td>
-                <td style="padding:10px 10px 10px 0;text-align:right;">
-                  <?php if (isAdmin()): ?>
-                  <form method="post" action="<?= BASE_URL ?>/actions/future-tour-remove-applicant.php"
-                        onsubmit="return confirmDelete('Biztosan eltávolítja ezt a személyt a túráról?')">
-                    <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
-                    <input type="hidden" name="application_id" value="<?= (int)$app['id'] ?>">
-                    <input type="hidden" name="tour_id" value="<?= (int)$id ?>">
-                    <button type="submit" class="btn btn-danger btn-sm" style="padding:4px 8px;font-size:11px;">Eltávolít</button>
-                  </form>
-                  <?php endif; ?>
-                </td>
-              </tr>
-              <?php endforeach; ?>
-            </tbody>
-          </table>
-        </div>
-      <?php endif; ?>
-    </div>
-    <?php if (isAdmin() && !empty($addableMembers)): ?>
-    <div style="padding:12px 16px;border-top:1px solid var(--border);">
-      <form method="post" action="<?= BASE_URL ?>/actions/future-tour-add-applicant.php" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
-        <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
-        <input type="hidden" name="tour_id" value="<?= (int)$id ?>">
-        <select name="user_id" style="flex:1;min-width:140px;font-size:13px;">
-          <option value="">— Tag kiválasztása —</option>
-          <?php foreach ($addableMembers as $m): ?>
-            <option value="<?= (int)$m['id'] ?>"><?= e($m['lastname'] . ' ' . $m['firstname']) ?></option>
-          <?php endforeach; ?>
-        </select>
-        <select name="status" style="width:130px;font-size:13px;">
-          <option value="confirmed">Megerősített</option>
-          <option value="waitlist">Várólistán</option>
-        </select>
-        <button type="submit" class="btn btn-primary btn-sm">Hozzáadás</button>
-      </form>
-    </div>
-    <?php endif; ?>
-  </div>
-  <?php endif; ?>
-
-</div><!-- .future-tour-grid -->
-
-<style>
-  @media (max-width: 768px) {
-    .future-tour-grid { grid-template-columns: 1fr !important; }
-  }
-</style>
+</div>
 
 <script>
 // Day rows management

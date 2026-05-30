@@ -22,6 +22,7 @@ $stmt   = $pdo->prepare("
 $stmt->execute([$userId]);
 $user = $stmt->fetch();
 
+$feeDiscount       = getTourFeeDiscount((int)($user['level'] ?? 1));
 $memberStatus      = getMemberStatus($user['last_payment']);
 $memberStatusLabel = getMemberStatusLabel($memberStatus);
 $memberStatusClass = getMemberStatusClass($memberStatus);
@@ -202,8 +203,19 @@ include __DIR__ . '/../includes/user-header.php';
             <?php endif; ?>
           </td>
           <td style="padding:11px 16px;white-space:nowrap;">
-            <?php if ($mt['status'] === 'confirmed' && $mt['participation_fee'] !== null && !$mt['paid_at']): ?>
-              <span style="display:inline-flex;align-items:center;gap:5px;color:var(--danger,#c0392b);font-size:12.5px;font-weight:600;">⚠ Részvételi díj befizetése szükséges!</span>
+            <?php if ($mt['status'] === 'confirmed' && $mt['participation_fee'] !== null && !$mt['paid_at']):
+              $baseFee  = (float)$mt['participation_fee'];
+              $dispFee  = $feeDiscount > 0 ? $baseFee * (1 - $feeDiscount / 100) : $baseFee;
+            ?>
+              <div style="display:flex;flex-direction:column;gap:2px;">
+                <span style="color:var(--danger,#c0392b);font-size:13px;font-weight:700;">⚠ Fizetendő: <?= number_format($dispFee, 0, ',', ' ') ?> Ft</span>
+                <?php if ($feeDiscount > 0): ?>
+                  <span style="font-size:11px;color:var(--text-muted);">
+                    <s><?= number_format($baseFee, 0, ',', ' ') ?> Ft</s>
+                    &nbsp;–&nbsp;<?= $feeDiscount ?>% tag kedvezmény
+                  </span>
+                <?php endif; ?>
+              </div>
             <?php elseif ($mt['status'] === 'confirmed' && $mt['participation_fee'] !== null && $mt['paid_at']): ?>
               <span style="display:inline-flex;align-items:center;gap:5px;color:var(--success,#16a34a);font-size:12.5px;font-weight:600;">✓ Részvételi díj rendezve</span>
             <?php elseif ($mt['status'] === 'confirmed'): ?>

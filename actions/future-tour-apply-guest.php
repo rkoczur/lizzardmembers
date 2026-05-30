@@ -71,16 +71,17 @@ if ($dupStmt->fetch()) {
     $fail('Ezzel az e-mail címmel már van aktív jelentkezés erre a túrára.');
 }
 
-$carAvailable = isset($_POST['car_available']) && $_POST['car_available'] === '1' ? 1 : 0;
-$passengers   = $carAvailable ? max(0, (int)($_POST['passengers'] ?? 0)) : 0;
-$sharingRoom  = in_array($_POST['sharing_room'] ?? '', ['same_gender','yes','no']) ? $_POST['sharing_room'] : 'same_gender';
-$notes        = trim($_POST['notes'] ?? '') ?: null;
+$carAvailable  = isset($_POST['car_available']) && $_POST['car_available'] === '1' ? 1 : 0;
+$passengers    = $carAvailable ? max(0, (int)($_POST['passengers'] ?? 0)) : 0;
+$sharingRoom   = in_array($_POST['sharing_room'] ?? '', ['same_gender','yes','no']) ? $_POST['sharing_room'] : 'same_gender';
+$notes         = trim($_POST['notes'] ?? '') ?: null;
+$departureCity = trim($_POST['departure_city'] ?? '') ?: null;
 
 $pdo->prepare("
     INSERT INTO future_tour_applications
-        (future_tour_id, user_id, guest_name, guest_email, guest_phone, status, car_available, passengers, sharing_room, notes)
-    VALUES (?, NULL, ?, ?, ?, 'pending', ?, ?, ?, ?)
-")->execute([$tourId, $guestName, $guestEmail, $guestPhone, $carAvailable, $passengers, $sharingRoom, $notes]);
+        (future_tour_id, user_id, guest_name, guest_email, guest_phone, status, car_available, passengers, sharing_room, notes, departure_city)
+    VALUES (?, NULL, ?, ?, ?, 'pending', ?, ?, ?, ?, ?)
+")->execute([$tourId, $guestName, $guestEmail, $guestPhone, $carAvailable, $passengers, $sharingRoom, $notes, $departureCity]);
 $appId = (int)$pdo->lastInsertId();
 
 // Save custom field answers

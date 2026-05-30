@@ -51,12 +51,14 @@ function ensureFutureToursSchema(PDO $pdo): void {
     try { $pdo->exec("ALTER TABLE future_tours ADD COLUMN travel TEXT DEFAULT NULL AFTER accommodation"); } catch (Throwable) {}
     try { $pdo->exec("ALTER TABLE future_tours ADD COLUMN equipment TEXT DEFAULT NULL AFTER travel"); } catch (Throwable) {}
     try { $pdo->exec("ALTER TABLE future_tours ADD COLUMN experience TEXT DEFAULT NULL AFTER equipment"); } catch (Throwable) {}
+    try { $pdo->exec("ALTER TABLE future_tours ADD COLUMN disabled_standard_fields TEXT DEFAULT NULL AFTER experience"); } catch (Throwable) {}
     // Guest application support
     try { $pdo->exec("ALTER TABLE future_tour_applications MODIFY user_id INT UNSIGNED NULL"); } catch (Throwable) {}
     try { $pdo->exec("ALTER TABLE future_tour_applications MODIFY status ENUM('confirmed','waitlist','cancelled','pending') NOT NULL DEFAULT 'confirmed'"); } catch (Throwable) {}
     try { $pdo->exec("ALTER TABLE future_tour_applications ADD COLUMN guest_name VARCHAR(255) DEFAULT NULL AFTER user_id"); } catch (Throwable) {}
     try { $pdo->exec("ALTER TABLE future_tour_applications ADD COLUMN guest_email VARCHAR(255) DEFAULT NULL AFTER guest_name"); } catch (Throwable) {}
     try { $pdo->exec("ALTER TABLE future_tour_applications ADD COLUMN guest_phone VARCHAR(50) DEFAULT NULL AFTER guest_email"); } catch (Throwable) {}
+    try { $pdo->exec("ALTER TABLE future_tour_applications ADD COLUMN departure_city VARCHAR(255) DEFAULT NULL AFTER notes"); } catch (Throwable) {}
 
     $pdo->exec("
         CREATE TABLE IF NOT EXISTS future_tour_applications (
@@ -71,6 +73,7 @@ function ensureFutureToursSchema(PDO $pdo): void {
             passengers      TINYINT UNSIGNED NOT NULL DEFAULT 0,
             sharing_room    ENUM('same_gender','yes','no') NOT NULL DEFAULT 'same_gender',
             notes           TEXT,
+            departure_city  VARCHAR(255) DEFAULT NULL,
             paid_at         TIMESTAMP NULL DEFAULT NULL,
             applied_at      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
             UNIQUE KEY uq_tour_user (future_tour_id, user_id),

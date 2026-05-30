@@ -25,6 +25,11 @@ $travel        = trim($_POST['travel']        ?? '') ?: null;
 $equipment     = trim($_POST['equipment']     ?? '') ?: null;
 $experience    = trim($_POST['experience']    ?? '') ?: null;
 
+$allowedStdFields   = ['departure_city', 'car_available', 'sharing_room', 'notes'];
+$visibleFields      = array_values(array_intersect($_POST['visible_fields'] ?? [], $allowedStdFields));
+$disabledFields     = array_values(array_diff($allowedStdFields, $visibleFields));
+$disabledFieldsJson = !empty($disabledFields) ? json_encode($disabledFields) : null;
+
 if (!$name) {
     flash('error', 'A túra nevének megadása kötelező.');
     header('Location: ' . BASE_URL . '/admin/future-tour-detail.php?new=1');
@@ -36,8 +41,8 @@ if (!$startDate) {
     exit;
 }
 
-$stmt = $pdo->prepare("INSERT INTO future_tours (name, description, start_date, num_days, max_attendees, participation_fee, country, region, accommodation, travel, equipment, experience, status, created_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-$stmt->execute([$name, $description ?: null, $startDate, $numDays, $maxAttendees, $fee, $country, $region, $accommodation, $travel, $equipment, $experience, $status, getCurrentUserId()]);
+$stmt = $pdo->prepare("INSERT INTO future_tours (name, description, start_date, num_days, max_attendees, participation_fee, country, region, accommodation, travel, equipment, experience, status, disabled_standard_fields, created_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+$stmt->execute([$name, $description ?: null, $startDate, $numDays, $maxAttendees, $fee, $country, $region, $accommodation, $travel, $equipment, $experience, $status, $disabledFieldsJson, getCurrentUserId()]);
 $tourId = (int)$pdo->lastInsertId();
 
 // Save days

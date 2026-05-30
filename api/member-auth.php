@@ -31,14 +31,18 @@ if ($action === 'logout') {
 if ($action === 'status') {
     if (isLoggedIn()) {
         $pdo  = getDb();
-        $stmt = $pdo->prepare("SELECT firstname, lastname, email FROM users WHERE id = ? LIMIT 1");
+        $stmt = $pdo->prepare("SELECT firstname, lastname, email, level FROM users WHERE id = ? LIMIT 1");
         $stmt->execute([getCurrentUserId()]);
-        $u = $stmt->fetch();
+        $u        = $stmt->fetch();
+        $level    = (int)($u['level'] ?? 1);
+        $discount = getTourFeeDiscount($level);
         echo json_encode([
             'logged_in' => true,
             'firstname' => $u['firstname'] ?? '',
             'lastname'  => $u['lastname']  ?? '',
             'email'     => $u['email']     ?? '',
+            'level'     => $level,
+            'discount'  => $discount,
         ], JSON_UNESCAPED_UNICODE);
     } else {
         echo json_encode(['logged_in' => false]);
@@ -79,9 +83,12 @@ if (!$user || !password_verify($password, $user['password'])) {
 
 setUserSession($user);
 
+$discount = getTourFeeDiscount((int)($user['level'] ?? 1));
 echo json_encode([
     'success'   => true,
     'firstname' => $user['firstname'],
     'lastname'  => $user['lastname'],
     'email'     => $user['email'],
+    'level'     => (int)($user['level'] ?? 1),
+    'discount'  => $discount,
 ], JSON_UNESCAPED_UNICODE);

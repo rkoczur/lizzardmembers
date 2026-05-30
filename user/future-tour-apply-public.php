@@ -47,6 +47,9 @@ $customFieldsStmt = $pdo->prepare("SELECT * FROM future_tour_custom_fields WHERE
 $customFieldsStmt->execute([$id]);
 $customFields = $customFieldsStmt->fetchAll();
 
+$disabledFields  = json_decode($tour['disabled_standard_fields'] ?? '[]', true) ?: [];
+$fieldEnabled    = fn(string $f): bool => !in_array($f, $disabledFields, true);
+
 $flash_error = getFlash('error');
 $embed = !empty($_GET['embed']); // beágyazott mód (WP plugin iframe)
 ?>
@@ -61,7 +64,7 @@ $embed = !empty($_GET['embed']); // beágyazott mód (WP plugin iframe)
     body { background: var(--bg-outer, #f5efe4); min-height: 100vh; padding: 32px 16px; margin: 0; }
     .public-wrap { max-width: 620px; margin: 0 auto; }
     .public-header { text-align: center; margin-bottom: 28px; }
-    .public-header img { width: 56px; height: 56px; object-fit: contain; margin-bottom: 10px; }
+    .public-header img { width: 100px; height: 100px; object-fit: contain; margin-bottom: 10px; }
     .public-header .app-name { font-size: 20px; font-weight: 700; color: var(--primary); }
     .public-header .app-sub  { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
     <?php if ($embed): ?>
@@ -78,39 +81,39 @@ $embed = !empty($_GET['embed']); // beágyazott mód (WP plugin iframe)
 
   <?php if (!$embed): ?>
   <div class="public-header">
-    <img src="<?= BASE_URL ?>/assets/img/lizzard_logo.png" alt="<?= APP_NAME ?>">
+    <img src="<?= BASE_URL ?>/assets/img/logo-sotet.png" alt="<?= APP_NAME ?>">
     <div class="app-name"><?= APP_NAME ?></div>
     <div class="app-sub">Túrajelentkezés</div>
   </div>
 
   <!-- Tour info card (csak nem-beágyazott módban) -->
-  <div class="card" style="margin-bottom:16px;">
+  <div class="card" style="margin-bottom:16px;background:#29776f;color:#fff;border:none;">
     <div class="card-body">
-      <h2 style="margin:0 0 14px;"><?= e($tour['name']) ?></h2>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
-        <div style="padding:12px 14px;background:var(--bg,#fff);">
-          <div style="font-size:11px;text-transform:uppercase;color:var(--text-muted);letter-spacing:.05em;margin-bottom:4px;">Kezdés</div>
-          <div style="font-weight:600;"><?= $tour['start_date'] ? formatDate($tour['start_date']) : '—' ?></div>
+      <h2 style="margin:0 0 14px;color:#fff;"><?= e($tour['name']) ?></h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:1px;background:rgba(255,255,255,.25);border:1px solid rgba(255,255,255,.2);border-radius:8px;overflow:hidden;">
+        <div style="padding:12px 14px;background:rgba(255,255,255,.92);">
+          <div style="font-size:11px;text-transform:uppercase;color:#29776f;letter-spacing:.05em;margin-bottom:4px;font-weight:700;">Kezdés</div>
+          <div style="font-weight:600;color:#1a3d39;"><?= $tour['start_date'] ? formatDate($tour['start_date']) : '—' ?></div>
         </div>
-        <div style="padding:12px 14px;background:var(--bg,#fff);">
-          <div style="font-size:11px;text-transform:uppercase;color:var(--text-muted);letter-spacing:.05em;margin-bottom:4px;">Időtartam</div>
-          <div style="font-weight:600;"><?= (int)$tour['num_days'] ?> nap</div>
+        <div style="padding:12px 14px;background:rgba(255,255,255,.92);">
+          <div style="font-size:11px;text-transform:uppercase;color:#29776f;letter-spacing:.05em;margin-bottom:4px;font-weight:700;">Időtartam</div>
+          <div style="font-weight:600;color:#1a3d39;"><?= (int)$tour['num_days'] ?> nap</div>
         </div>
         <?php if (!empty($tour['country_name'])): ?>
-        <div style="padding:12px 14px;background:var(--bg,#fff);">
-          <div style="font-size:11px;text-transform:uppercase;color:var(--text-muted);letter-spacing:.05em;margin-bottom:4px;">Helyszín</div>
-          <div style="font-weight:600;"><?= e($tour['country_name']) ?><?= !empty($tour['region']) ? ' · ' . e($tour['region']) : '' ?></div>
+        <div style="padding:12px 14px;background:rgba(255,255,255,.92);">
+          <div style="font-size:11px;text-transform:uppercase;color:#29776f;letter-spacing:.05em;margin-bottom:4px;font-weight:700;">Helyszín</div>
+          <div style="font-weight:600;color:#1a3d39;"><?= e($tour['country_name']) ?><?= !empty($tour['region']) ? ' · ' . e($tour['region']) : '' ?></div>
         </div>
         <?php endif; ?>
         <?php if ($tour['participation_fee'] !== null): ?>
-        <div style="padding:12px 14px;background:var(--bg,#fff);">
-          <div style="font-size:11px;text-transform:uppercase;color:var(--text-muted);letter-spacing:.05em;margin-bottom:4px;">Részvételi díj</div>
-          <div style="font-weight:600;"><?= number_format((float)$tour['participation_fee'], 0, ',', ' ') ?> Ft</div>
+        <div style="padding:12px 14px;background:rgba(255,255,255,.92);">
+          <div style="font-size:11px;text-transform:uppercase;color:#29776f;letter-spacing:.05em;margin-bottom:4px;font-weight:700;">Részvételi díj</div>
+          <div style="font-weight:600;color:#1a3d39;"><?= number_format((float)$tour['participation_fee'], 0, ',', ' ') ?> Ft</div>
         </div>
         <?php endif; ?>
       </div>
       <?php if (!empty($tour['description'])): ?>
-        <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border);color:var(--text);line-height:1.6;white-space:pre-wrap;font-size:14px;"><?= e($tour['description']) ?></div>
+        <div style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.3);color:rgba(255,255,255,.92);line-height:1.6;white-space:pre-wrap;font-size:14px;"><?= e($tour['description']) ?></div>
       <?php endif; ?>
     </div>
   </div>
@@ -141,12 +144,18 @@ $embed = !empty($_GET['embed']); // beágyazott mód (WP plugin iframe)
 
       <?php if ($memberLoggedIn): ?>
       <!-- Logged-in member form -->
-      <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:10px 14px;font-size:13px;margin-bottom:12px;display:flex;align-items:center;gap:10px;">
-        <span style="font-size:18px;">✅</span>
-        <div>
-          <strong>Bejelentkezve: <?= e($memberUser['lastname'] . ' ' . $memberUser['firstname']) ?></strong>
-          <div style="color:var(--text-muted);font-size:12px;margin-top:2px;"><?= e($memberUser['email']) ?></div>
+      <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:10px 14px;font-size:13px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="font-size:18px;">✅</span>
+          <div>
+            <strong>Bejelentkezve: <?= e($memberUser['lastname'] . ' ' . $memberUser['firstname']) ?></strong>
+            <div style="color:var(--text-muted);font-size:12px;margin-top:2px;"><?= e($memberUser['email']) ?></div>
+          </div>
         </div>
+        <button type="button" id="public-logout-btn"
+                style="background:none;border:1px solid #bbf7d0;border-radius:6px;padding:5px 12px;font-size:12px;cursor:pointer;color:#15803d;white-space:nowrap;">
+          Kijelentkezés
+        </button>
       </div>
       <form method="post" action="<?= BASE_URL ?>/actions/future-tour-apply.php">
         <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
@@ -154,8 +163,41 @@ $embed = !empty($_GET['embed']); // beágyazott mód (WP plugin iframe)
         <input type="hidden" name="public_redirect" value="1">
 
       <?php else: ?>
-      <!-- Guest form -->
+      <!-- Login panel -->
+      <div id="public-login-panel" style="background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:16px;">
+        <div id="public-login-teaser" style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;">
+          <span style="font-size:13px;color:var(--text-muted);">Ha már tag vagy, jelentkezz be:</span>
+          <button type="button" id="public-login-toggle"
+                  style="background:#29776f;color:#fff;border:none;border-radius:6px;padding:6px 14px;font-size:13px;cursor:pointer;font-weight:600;">
+            Bejelentkezés
+          </button>
+        </div>
+        <div id="public-login-form-wrap" style="display:none;margin-top:12px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;" class="login-fields-grid">
+            <div class="form-group">
+              <label style="font-size:12.5px;font-weight:600;">Felhasználónév vagy e-mail</label>
+              <input type="text" id="public-login-user" autocomplete="username" placeholder="felhasznalonev" style="margin-top:4px;">
+            </div>
+            <div class="form-group">
+              <label style="font-size:12.5px;font-weight:600;">Jelszó</label>
+              <input type="password" id="public-login-pass" autocomplete="current-password" placeholder="••••••••" style="margin-top:4px;">
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <button type="button" id="public-login-submit"
+                    style="background:#29776f;color:#fff;border:none;border-radius:6px;padding:7px 18px;font-size:13px;cursor:pointer;font-weight:600;">
+              Bejelentkezés
+            </button>
+            <button type="button" id="public-login-cancel"
+                    style="background:none;border:none;font-size:13px;color:var(--text-muted);cursor:pointer;padding:4px 6px;">
+              Mégse
+            </button>
+          </div>
+          <div id="public-login-err" style="display:none;color:var(--danger,#dc2626);font-size:13px;margin-top:8px;"></div>
+        </div>
+      </div>
 
+      <!-- Guest form -->
       <form method="post" action="<?= BASE_URL ?>/actions/future-tour-apply-guest.php" id="guest-apply-form">
         <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
         <input type="hidden" name="tour_id" value="<?= (int)$id ?>">
@@ -183,6 +225,16 @@ $embed = !empty($_GET['embed']); // beágyazott mód (WP plugin iframe)
 
         <hr style="border:none;border-top:1px solid var(--border);margin:20px 0;">
 
+        <?php if ($fieldEnabled('departure_city')): ?>
+        <!-- Departure city -->
+        <div class="form-group" style="margin-bottom:16px;">
+          <label style="font-size:13px;font-weight:600;">Honnan indulnál? <span style="color:var(--danger)">*</span></label>
+          <input type="text" name="departure_city" required placeholder="pl. Budapest XIII. kerület" style="margin-top:6px;width:100%;">
+          <small style="display:block;color:var(--text-muted);font-size:11.5px;margin-top:4px;">Budapest esetén a kerületet is add meg!</small>
+        </div>
+        <?php endif; ?>
+
+        <?php if ($fieldEnabled('car_available')): ?>
         <!-- Car -->
         <div class="form-group" style="margin-bottom:16px;">
           <label style="font-size:13px;font-weight:600;">Tudsz autóval jönni?</label>
@@ -204,7 +256,9 @@ $embed = !empty($_GET['embed']); // beágyazott mód (WP plugin iframe)
             </small>
           </div>
         </div>
+        <?php endif; ?>
 
+        <?php if ($fieldEnabled('sharing_room')): ?>
         <!-- Sharing room -->
         <div class="form-group" style="margin-bottom:16px;">
           <label style="font-size:13px;font-weight:600;">Szükség esetén aludnál egy helyen mással?</label>
@@ -214,12 +268,15 @@ $embed = !empty($_GET['embed']); // beágyazott mód (WP plugin iframe)
             <option value="no">Nem</option>
           </select>
         </div>
+        <?php endif; ?>
 
+        <?php if ($fieldEnabled('notes')): ?>
         <!-- Notes -->
         <div class="form-group" style="margin-bottom:16px;">
           <label style="font-size:13px;font-weight:600;">Megjegyzések</label>
           <textarea name="notes" rows="3" placeholder="Egyéb megjegyzés, kérés…" style="margin-top:6px;"></textarea>
         </div>
+        <?php endif; ?>
 
         <!-- Custom fields -->
         <?php foreach ($customFields as $cf): ?>
@@ -261,14 +318,96 @@ $embed = !empty($_GET['embed']); // beágyazott mód (WP plugin iframe)
 <style>
   @media (max-width: 480px) {
     .guest-id-grid { grid-template-columns: 1fr !important; }
+    .login-fields-grid { grid-template-columns: 1fr !important; }
   }
 </style>
 <script>
 document.querySelectorAll('input[name="car_available"]').forEach(r => {
   r.addEventListener('change', () => {
-    document.getElementById('passengers-row').style.display = r.value === '1' ? 'block' : 'none';
+    var row = document.getElementById('passengers-row');
+    if (row) row.style.display = r.value === '1' ? 'block' : 'none';
   });
 });
+
+// ---- Kijelentkezés (bejelentkezett állapotban) ----
+(function () {
+  var logoutBtn = document.getElementById('public-logout-btn');
+  if (!logoutBtn) return;
+  logoutBtn.addEventListener('click', function () {
+    logoutBtn.disabled    = true;
+    logoutBtn.textContent = 'Kijelentkezés…';
+    fetch(<?= json_encode(BASE_URL . '/api/member-auth.php') ?> + '?action=logout', { credentials: 'include' })
+      .then(function () { location.reload(); })
+      .catch(function () { location.reload(); });
+  });
+})();
+
+// ---- Bejelentkezés panel (vendég állapotban) ----
+(function () {
+  var panel      = document.getElementById('public-login-panel');
+  if (!panel) return;
+
+  var teaser     = document.getElementById('public-login-teaser');
+  var formWrap   = document.getElementById('public-login-form-wrap');
+  var toggleBtn  = document.getElementById('public-login-toggle');
+  var cancelBtn  = document.getElementById('public-login-cancel');
+  var submitBtn  = document.getElementById('public-login-submit');
+  var userInput  = document.getElementById('public-login-user');
+  var passInput  = document.getElementById('public-login-pass');
+  var errBox     = document.getElementById('public-login-err');
+  var authUrl    = <?= json_encode(BASE_URL . '/api/member-auth.php') ?>;
+
+  toggleBtn.addEventListener('click', function () {
+    teaser.style.display   = 'none';
+    formWrap.style.display = 'block';
+    userInput.focus();
+  });
+
+  cancelBtn.addEventListener('click', function () {
+    teaser.style.display   = 'flex';
+    formWrap.style.display = 'none';
+    errBox.style.display   = 'none';
+    userInput.value = '';
+    passInput.value = '';
+  });
+
+  submitBtn.addEventListener('click', doLogin);
+  [userInput, passInput].forEach(function (inp) {
+    inp.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') doLogin();
+    });
+  });
+
+  function doLogin() {
+    errBox.style.display   = 'none';
+    submitBtn.disabled     = true;
+    submitBtn.textContent  = 'Bejelentkezés…';
+
+    var body = new URLSearchParams({
+      login:    userInput.value.trim(),
+      password: passInput.value,
+    });
+
+    fetch(authUrl, { method: 'POST', credentials: 'include', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body.toString() })
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (d.success) {
+          location.reload();
+        } else {
+          errBox.textContent    = d.error || 'Hiba történt.';
+          errBox.style.display  = 'block';
+          submitBtn.disabled    = false;
+          submitBtn.textContent = 'Bejelentkezés';
+        }
+      })
+      .catch(function () {
+        errBox.textContent    = 'Hálózati hiba. Kérjük próbáld újra.';
+        errBox.style.display  = 'block';
+        submitBtn.disabled    = false;
+        submitBtn.textContent = 'Bejelentkezés';
+      });
+  }
+})();
 
 (function () {
   var form = document.getElementById('guest-apply-form');

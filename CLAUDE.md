@@ -60,6 +60,21 @@ Level = derived from points via `getLevelFromPoints()`. Both are recalculated by
 | 8 | Alezredes | 330 |
 | 9 | Ezredes | 500 |
 
+## Tour participation fee discount (`getTourFeeDiscount`)
+Defined in `includes/functions.php`. Returns the percentage discount based on member level:
+
+| Member level | Discount |
+|---|---|
+| 1–4 | 0% |
+| 5–6 | 5% |
+| 7–8 | 10% |
+| 9 | 15% |
+
+Usage: `$discount = getTourFeeDiscount((int)$user['level']);`
+Effective fee: `$tour['participation_fee'] * (1 - $discount / 100)`
+- Guests (no `user_id`) always pay the full fee — pass `0` as level or skip the call.
+- Query pattern: always include `COALESCE(u.level, 1) AS user_level` when joining users to applications.
+
 ## Page boilerplate pattern
 ```php
 session_start();

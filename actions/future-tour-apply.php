@@ -52,21 +52,22 @@ $confirmedCount = (int)$confirmedStmt->fetchColumn();
 $appStatus = $confirmedCount >= (int)$tour['max_attendees'] ? 'waitlist' : 'confirmed';
 
 // Parse form fields
-$carAvailable = isset($_POST['car_available']) && $_POST['car_available'] === '1' ? 1 : 0;
-$passengers   = $carAvailable ? max(0, (int)($_POST['passengers'] ?? 0)) : 0;
-$sharingRoom  = in_array($_POST['sharing_room'] ?? '', ['same_gender','yes','no']) ? $_POST['sharing_room'] : 'same_gender';
-$notes        = trim($_POST['notes'] ?? '') ?: null;
+$carAvailable  = isset($_POST['car_available']) && $_POST['car_available'] === '1' ? 1 : 0;
+$passengers    = $carAvailable ? max(0, (int)($_POST['passengers'] ?? 0)) : 0;
+$sharingRoom   = in_array($_POST['sharing_room'] ?? '', ['same_gender','yes','no']) ? $_POST['sharing_room'] : 'same_gender';
+$notes         = trim($_POST['notes'] ?? '') ?: null;
+$departureCity = trim($_POST['departure_city'] ?? '') ?: null;
 
 if ($existing && $existing['status'] === 'cancelled') {
     // Re-apply
-    $pdo->prepare("UPDATE future_tour_applications SET status=?, car_available=?, passengers=?, sharing_room=?, notes=?, paid_at=NULL, applied_at=NOW() WHERE id=?")
-        ->execute([$appStatus, $carAvailable, $passengers, $sharingRoom, $notes, $existing['id']]);
+    $pdo->prepare("UPDATE future_tour_applications SET status=?, car_available=?, passengers=?, sharing_room=?, notes=?, departure_city=?, paid_at=NULL, applied_at=NOW() WHERE id=?")
+        ->execute([$appStatus, $carAvailable, $passengers, $sharingRoom, $notes, $departureCity, $existing['id']]);
     $appId = $existing['id'];
     // Clear old answers
     $pdo->prepare("DELETE FROM future_tour_application_answers WHERE application_id = ?")->execute([$appId]);
 } else {
-    $pdo->prepare("INSERT INTO future_tour_applications (future_tour_id, user_id, status, car_available, passengers, sharing_room, notes) VALUES (?, ?, ?, ?, ?, ?, ?)")
-        ->execute([$tourId, $userId, $appStatus, $carAvailable, $passengers, $sharingRoom, $notes]);
+    $pdo->prepare("INSERT INTO future_tour_applications (future_tour_id, user_id, status, car_available, passengers, sharing_room, notes, departure_city) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
+        ->execute([$tourId, $userId, $appStatus, $carAvailable, $passengers, $sharingRoom, $notes, $departureCity]);
     $appId = (int)$pdo->lastInsertId();
 }
 

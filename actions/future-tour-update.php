@@ -39,6 +39,11 @@ $travel        = trim($_POST['travel']        ?? '') ?: null;
 $equipment     = trim($_POST['equipment']     ?? '') ?: null;
 $experience    = trim($_POST['experience']    ?? '') ?: null;
 
+$allowedStdFields   = ['departure_city', 'car_available', 'sharing_room', 'notes'];
+$visibleFields      = array_values(array_intersect($_POST['visible_fields'] ?? [], $allowedStdFields));
+$disabledFields     = array_values(array_diff($allowedStdFields, $visibleFields));
+$disabledFieldsJson = !empty($disabledFields) ? json_encode($disabledFields) : null;
+
 if (!$name) {
     flash('error', 'A túra nevének megadása kötelező.');
     header('Location: ' . BASE_URL . '/admin/future-tour-detail.php?id=' . $id);
@@ -50,8 +55,8 @@ if (!$startDate) {
     exit;
 }
 
-$pdo->prepare("UPDATE future_tours SET name=?, description=?, start_date=?, num_days=?, max_attendees=?, participation_fee=?, country=?, region=?, accommodation=?, travel=?, equipment=?, experience=?, status=? WHERE id=?")
-    ->execute([$name, $description ?: null, $startDate, $numDays, $maxAttendees, $fee, $country, $region, $accommodation, $travel, $equipment, $experience, $status, $id]);
+$pdo->prepare("UPDATE future_tours SET name=?, description=?, start_date=?, num_days=?, max_attendees=?, participation_fee=?, country=?, region=?, accommodation=?, travel=?, equipment=?, experience=?, status=?, disabled_standard_fields=? WHERE id=?")
+    ->execute([$name, $description ?: null, $startDate, $numDays, $maxAttendees, $fee, $country, $region, $accommodation, $travel, $equipment, $experience, $status, $disabledFieldsJson, $id]);
 
 // Sync days: delete existing, re-insert from POST
 $pdo->prepare("DELETE FROM future_tour_days WHERE future_tour_id = ?")->execute([$id]);

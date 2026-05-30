@@ -15,7 +15,8 @@ $tours = $pdo->query("
            c.name_hu AS country_name, c.flag_filename AS country_flag,
            (SELECT COUNT(*) FROM future_tour_applications fta WHERE fta.future_tour_id = ft.id AND fta.status = 'confirmed') AS confirmed_count,
            (SELECT COUNT(*) FROM future_tour_applications fta WHERE fta.future_tour_id = ft.id AND fta.status = 'waitlist')  AS waitlist_count,
-           (SELECT COUNT(*) FROM future_tour_applications fta WHERE fta.future_tour_id = ft.id AND fta.status != 'cancelled' AND fta.paid_at IS NULL) AS unpaid_count
+           (SELECT COUNT(*) FROM future_tour_applications fta WHERE fta.future_tour_id = ft.id AND fta.status != 'cancelled' AND fta.paid_at IS NULL) AS unpaid_count,
+           (SELECT COUNT(*) FROM future_tour_applications fta WHERE fta.future_tour_id = ft.id AND fta.status = 'pending') AS pending_count
     FROM future_tours ft
     LEFT JOIN countries c ON c.code = ft.country
     ORDER BY ft.start_date ASC, ft.created_at DESC
@@ -126,9 +127,20 @@ include __DIR__ . '/../includes/admin-header.php';
             <span class="badge <?= $statusColors[$st] ?? 'badge-inactive' ?>"><?= $statusLabels[$st] ?? e($st) ?></span>
           </td>
           <td>
-            <a href="<?= BASE_URL ?>/admin/future-tour-detail.php?id=<?= (int)$t['id'] ?>" class="btn btn-ghost btn-sm">
-              <?= isAdmin() ? 'Szerkesztés' : 'Megtekintés' ?>
-            </a>
+            <?php $appTotal = (int)$t['confirmed_count'] + (int)$t['waitlist_count']; ?>
+            <div style="display:flex;gap:4px;align-items:stretch;white-space:nowrap;">
+              <a href="<?= BASE_URL ?>/admin/future-tour-applicants.php?id=<?= (int)$t['id'] ?>" class="btn btn-ghost btn-sm">
+                Jelentkezők
+                <?php if ((int)$t['pending_count'] > 0): ?>
+                  <span style="background:var(--warning,#f59e0b);color:#fff;border-radius:99px;padding:2px 6px;font-size:10.5px;font-weight:700;line-height:1;margin-left:2px;" title="Jóváhagyásra vár"><?= (int)$t['pending_count'] ?></span>
+                <?php elseif ($appTotal > 0): ?>
+                  <span style="background:var(--primary);color:#fff;border-radius:99px;padding:2px 6px;font-size:10.5px;font-weight:700;line-height:1;margin-left:2px;"><?= $appTotal ?></span>
+                <?php endif; ?>
+              </a>
+              <a href="<?= BASE_URL ?>/admin/future-tour-detail.php?id=<?= (int)$t['id'] ?>" class="btn btn-ghost btn-sm">
+                <?= isAdmin() ? 'Szerkesztés' : 'Megtekintés' ?>
+              </a>
+            </div>
           </td>
         </tr>
         <?php endforeach; ?>
