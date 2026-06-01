@@ -93,37 +93,37 @@ include __DIR__ . '/../includes/admin-header.php';
 </div>
 
 <!-- Tour summary bar -->
-<div style="display:flex;gap:20px;align-items:center;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 20px;margin-bottom:20px;flex-wrap:wrap;">
-  <div>
-    <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;font-weight:600;">Időpont</div>
-    <div style="font-weight:600;"><?= $tour['start_date'] ? formatDate($tour['start_date']) : '—' ?></div>
+<div class="info-bar">
+  <div class="info-bar-item">
+    <div>Időpont</div>
+    <div><?= $tour['start_date'] ? formatDate($tour['start_date']) : '—' ?></div>
   </div>
-  <div style="width:1px;background:var(--border);align-self:stretch;"></div>
-  <div>
-    <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;font-weight:600;">Férőhelyek</div>
-    <div style="font-weight:600;">
+  <div class="vr"></div>
+  <div class="info-bar-item">
+    <div>Férőhelyek</div>
+    <div>
       <span style="color:var(--primary);"><?= $confirmedCount ?></span> / <?= (int)$tour['max_attendees'] ?>
       <?php if (array_sum(array_map(fn($a) => $a['status'] === 'waitlist' ? 1 : 0, $applications)) > 0): ?>
         <span style="color:var(--warning,#f59e0b);font-size:12px;margin-left:4px;">(+<?= array_sum(array_map(fn($a) => $a['status'] === 'waitlist' ? 1 : 0, $applications)) ?> várólistán)</span>
       <?php endif; ?>
     </div>
   </div>
-  <div style="width:1px;background:var(--border);align-self:stretch;"></div>
-  <div>
-    <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;font-weight:600;">Részvételi díj</div>
-    <div style="font-weight:600;">
+  <div class="vr"></div>
+  <div class="info-bar-item">
+    <div>Részvételi díj</div>
+    <div>
       <?php if ($tour['participation_fee'] !== null): ?>
         <?= number_format((float)$tour['participation_fee'], 0, ',', '&nbsp;') ?> Ft
       <?php else: ?>
-        <span style="color:var(--text-muted);">—</span>
+        <span class="text-muted">—</span>
       <?php endif; ?>
     </div>
   </div>
   <?php if (!empty($tour['country_name'])): ?>
-  <div style="width:1px;background:var(--border);align-self:stretch;"></div>
-  <div>
-    <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;font-weight:600;">Helyszín</div>
-    <div style="font-weight:600;"><?= e($tour['country_name']) ?><?= !empty($tour['region']) ? ', ' . e($tour['region']) : '' ?></div>
+  <div class="vr"></div>
+  <div class="info-bar-item">
+    <div>Helyszín</div>
+    <div><?= e($tour['country_name']) ?><?= !empty($tour['region']) ? ', ' . e($tour['region']) : '' ?></div>
   </div>
   <?php endif; ?>
 </div>
@@ -149,7 +149,7 @@ include __DIR__ . '/../includes/admin-header.php';
         <tr style="border-bottom:1px solid var(--border);background:#fffdf5;">
           <td style="padding:10px 16px;">
             <div style="font-weight:600;"><?= e($pg['guest_name']) ?></div>
-            <span style="background:#f3e8d0;color:#92400e;border-radius:4px;padding:1px 6px;font-size:10.5px;font-weight:600;border:1px solid #d97706;">Vendég</span>
+            <span class="badge-guest">Vendég</span>
           </td>
           <td style="padding:10px 16px;color:var(--text-muted);font-size:12px;">
             <?= e($pg['guest_email']) ?><?= $pg['guest_phone'] ? '<br>' . e($pg['guest_phone']) : '' ?>
@@ -182,7 +182,7 @@ include __DIR__ . '/../includes/admin-header.php';
 
 <!-- Applicants table -->
 <div class="card">
-  <div class="card-header" style="display:flex;justify-content:space-between;align-items:center;">
+  <div class="card-header flex-between">
     <h2>Megerősített jelentkezők</h2>
   </div>
   <div class="card-body" style="padding:0;">
@@ -206,7 +206,7 @@ include __DIR__ . '/../includes/admin-header.php';
         </thead>
         <tbody>
           <?php foreach ($applications as $app): ?>
-          <tr style="border-bottom:1px solid var(--border);<?= $app['status'] === 'waitlist' ? 'opacity:.65;' : '' ?>">
+          <tr class="<?= $app['status'] === 'waitlist' ? 'row-dim' : '' ?>" style="border-bottom:1px solid var(--border);">
             <td style="padding:12px 16px;">
               <?php if ($app['user_id']): ?>
                 <div style="font-weight:600;"><?= e($app['lastname'] . ' ' . $app['firstname']) ?></div>
@@ -220,10 +220,10 @@ include __DIR__ . '/../includes/admin-header.php';
                 <?php if ($app['guest_phone']): ?>
                   <div style="font-size:11.5px;color:var(--text-muted);"><?= e($app['guest_phone']) ?></div>
                 <?php endif; ?>
-                <span style="background:#f3e8d0;color:#92400e;border-radius:4px;padding:1px 6px;font-size:10.5px;font-weight:600;border:1px solid #d97706;margin-top:2px;display:inline-block;">Vendég</span>
+                <span class="badge-guest" style="margin-top:2px;">Vendég</span>
               <?php endif; ?>
               <?php if ($app['status'] === 'waitlist'): ?>
-                <span style="background:var(--warning-bg,#fffbeb);color:var(--warning,#b45309);border-radius:4px;padding:1px 6px;font-size:10.5px;font-weight:600;border:1px solid var(--warning,#f59e0b);margin-top:2px;display:inline-block;">Várólistán</span>
+                <span class="badge-waitlist" style="margin-top:2px;">Várólistán</span>
               <?php endif; ?>
             </td>
             <td style="padding:12px 12px;font-size:13px;color:var(--text);">
@@ -239,10 +239,10 @@ include __DIR__ . '/../includes/admin-header.php';
             </td>
             <td style="padding:12px 12px;text-align:center;">
               <?php if ($app['car_available']): ?>
-                <span style="display:inline-flex;align-items:center;gap:4px;background:#dcfce7;color:#166534;border-radius:6px;padding:3px 10px;font-size:12.5px;font-weight:600;white-space:nowrap;">
+                <span class="badge-car">
                   🚗 Igen
                   <?php if ((int)$app['passengers'] > 0): ?>
-                    <span style="background:#166534;color:#fff;border-radius:99px;padding:0 5px;font-size:11px;line-height:1.7;"><?= (int)$app['passengers'] ?> hely</span>
+                    <span style="background:#166534;color:#fff;border-radius:99px;padding:0 5px;font-size:11px;line-height:1;"><?= (int)$app['passengers'] ?> hely</span>
                   <?php else: ?>
                     <span style="font-weight:400;font-size:11px;">(utas nincs)</span>
                   <?php endif; ?>
@@ -263,7 +263,7 @@ include __DIR__ . '/../includes/admin-header.php';
                 </span>
                 <?php if ($discount > 0): ?>
                   <div style="font-size:10.5px;color:var(--text-muted);text-decoration:line-through;line-height:1.2;"><?= number_format((float)$tour['participation_fee'], 0, ',', '&nbsp;') ?> Ft</div>
-                  <div style="font-size:10.5px;"><span style="background:var(--primary);color:#fff;border-radius:3px;padding:0 4px;">-<?= $discount ?>%</span></div>
+                  <div><span class="badge-discount">-<?= $discount ?>%</span></div>
                 <?php endif; ?>
               <?php else: ?>
                 <span style="color:var(--text-muted);font-size:12.5px;">—</span>

@@ -51,7 +51,7 @@
           Tagok
         </span>
         <?php if ($_pendingApps > 0): ?>
-          <span style="background:var(--danger,#dc2626);color:#fff;border-radius:99px;padding:1px 8px;font-size:11px;font-weight:700;line-height:1.6;"><?= $_pendingApps ?></span>
+          <span class="badge-counter badge-counter-danger"><?= $_pendingApps ?></span>
         <?php endif; ?>
       </a>
       <a href="<?= BASE_URL ?>/admin/tours.php" class="<?= ($activePage ?? '') === 'tours' ? 'active' : '' ?>" style="display:flex;align-items:center;justify-content:space-between;">
@@ -64,7 +64,7 @@
           Túrák
         </span>
         <?php if ($_pendingTours > 0): ?>
-          <span style="background:var(--danger,#dc2626);color:#fff;border-radius:99px;padding:1px 8px;font-size:11px;font-weight:700;line-height:1.6;"><?= $_pendingTours ?></span>
+          <span class="badge-counter badge-counter-danger"><?= $_pendingTours ?></span>
         <?php endif; ?>
       </a>
       <a href="<?= BASE_URL ?>/admin/toplist.php" class="<?= ($activePage ?? '') === 'toplist' ? 'active' : '' ?>">

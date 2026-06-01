@@ -67,17 +67,13 @@ include __DIR__ . '/../includes/admin-header.php';
 <?php endif; ?>
 
 <!-- Main tab navigation -->
-<div style="display:flex;gap:4px;margin-bottom:20px;border-bottom:2px solid var(--border);padding-bottom:0;">
-  <a href="<?= BASE_URL ?>/admin/members.php"
-     style="padding:8px 16px;font-size:13px;font-weight:<?= $tab === 'members' ? '700' : '500' ?>;color:<?= $tab === 'members' ? 'var(--primary)' : 'var(--text-muted)' ?>;border-bottom:2px solid <?= $tab === 'members' ? 'var(--primary)' : 'transparent' ?>;margin-bottom:-2px;text-decoration:none;transition:color .15s;">
-    Tagok
-  </a>
+<div class="tab-nav">
+  <a href="<?= BASE_URL ?>/admin/members.php" class="tab-link<?= $tab === 'members' ? ' active' : '' ?>">Tagok</a>
   <?php if (isAdmin()): ?>
-  <a href="<?= BASE_URL ?>/admin/members.php?tab=applications"
-     style="padding:8px 16px;font-size:13px;font-weight:<?= $tab === 'applications' ? '700' : '500' ?>;color:<?= $tab === 'applications' ? 'var(--primary)' : 'var(--text-muted)' ?>;border-bottom:2px solid <?= $tab === 'applications' ? 'var(--primary)' : 'transparent' ?>;margin-bottom:-2px;text-decoration:none;transition:color .15s;display:inline-flex;align-items:center;gap:6px;">
+  <a href="<?= BASE_URL ?>/admin/members.php?tab=applications" class="tab-link<?= $tab === 'applications' ? ' active' : '' ?>">
     Jelentkezések
     <?php if ($pendingCount > 0): ?>
-      <span style="background:var(--danger,#dc2626);color:#fff;border-radius:99px;padding:1px 8px;font-size:11px;font-weight:700;line-height:1.6;"><?= $pendingCount ?></span>
+      <span class="badge-counter badge-counter-danger"><?= $pendingCount ?></span>
     <?php endif; ?>
   </a>
   <?php endif; ?>
@@ -290,7 +286,7 @@ function memberDelete(btn) {
 </div>
 
 <!-- Filter subtabs -->
-<div style="display:flex;gap:4px;margin-bottom:16px;border-bottom:2px solid var(--border);padding-bottom:0;">
+<div class="tab-nav" style="margin-bottom:16px;">
   <?php
   $subTabs = [
     'pending'  => 'Függőben (' . $pendingCount . ')',
@@ -302,10 +298,7 @@ function memberDelete(btn) {
     $isActive = $statusFilter === $key;
   ?>
     <a href="<?= BASE_URL ?>/admin/members.php?tab=applications&status=<?= e($key) ?>"
-       style="padding:8px 16px;font-size:13px;font-weight:<?= $isActive ? '700' : '500' ?>;
-              color:<?= $isActive ? 'var(--primary)' : 'var(--text-muted)' ?>;
-              border-bottom:2px solid <?= $isActive ? 'var(--primary)' : 'transparent' ?>;
-              margin-bottom:-2px;text-decoration:none;transition:color .15s;">
+       class="tab-link<?= $isActive ? ' active' : '' ?>">
       <?= e($label) ?>
     </a>
   <?php endforeach; ?>

@@ -4,6 +4,7 @@ require_once __DIR__ . '/../includes/config.php';
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
+require_once __DIR__ . '/../includes/login-log-schema.php';
 
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store');
@@ -67,6 +68,7 @@ if ($login === '' || $password === '') {
 
 try {
     $pdo  = getDb();
+    ensureLoginLogSchema($pdo);
     $stmt = $pdo->prepare("SELECT * FROM users WHERE (username = ? OR email = ?) AND active = 1 LIMIT 1");
     $stmt->execute([$login, $login]);
     $user = $stmt->fetch();
@@ -76,11 +78,26 @@ try {
     exit;
 }
 
-if (!$user || !password_verify($password, $user['password'])) {
+$ip        = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
+$userAgent = substr($_SERVER['HTTP_USER_AGENT'] ?? '', 0, 500);
+$writeLog  = function (string $status, ?int $uid, string $name, string $uname, ?string $reason) use ($pdo, $ip, $userAgent): void {
+    $pdo->prepare("INSERT INTO login_log (user_id, name, username, ip, user_agent, status, fail_reason) VALUES (?,?,?,?,?,?,?)")
+        ->execute([$uid ?: null, $name, $uname, $ip, $userAgent, $status, $reason]);
+};
+
+if (!$user) {
+    $writeLog('failed', null, '', $login, 'unknown_user');
     echo json_encode(['error' => 'Hibás felhasználónév/e-mail cím vagy jelszó.'], JSON_UNESCAPED_UNICODE);
     exit;
 }
 
+if (!password_verify($password, $user['password'])) {
+    $writeLog('failed', (int)$user['id'], $user['lastname'] . ' ' . $user['firstname'], $user['username'], 'wrong_password');
+    echo json_encode(['error' => 'Hibás felhasználónév/e-mail cím vagy jelszó.'], JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
+$writeLog('success', (int)$user['id'], $user['lastname'] . ' ' . $user['firstname'], $user['username'], null);
 setUserSession($user);
 
 $discount = getTourFeeDiscount((int)($user['level'] ?? 1));

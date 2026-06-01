@@ -175,6 +175,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       Belépés az egyesületbe
     </a>
     <p style="text-align:center;margin-top:10px;font-size:12px;color:var(--text-muted);">Még nem vagy tag? Küldd el belépési kérelmedet!</p>
+    <p style="text-align:center;margin-top:14px;font-size:12px;color:var(--text-muted);">
+      <a href="<?= BASE_URL ?>/help.php" style="color:var(--text-muted);">📖 Felhasználói útmutató</a>
+    </p>
 
   </div>
 </div>

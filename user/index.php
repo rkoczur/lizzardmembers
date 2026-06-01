@@ -221,7 +221,7 @@ include __DIR__ . '/../includes/user-header.php';
             <?php elseif ($mt['status'] === 'confirmed'): ?>
               <span class="badge badge-active">Megerősített</span>
             <?php else: ?>
-              <span style="background:var(--warning-bg,#fffbeb);color:var(--warning,#b45309);border-radius:4px;padding:2px 8px;font-size:11.5px;font-weight:600;border:1px solid var(--warning,#f59e0b);">Várólistán</span>
+              <span class="badge-waitlist">Várólistán</span>
             <?php endif; ?>
           </td>
           <td style="padding:11px 16px;text-align:right;">

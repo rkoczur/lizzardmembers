@@ -60,23 +60,8 @@ $embed = !empty($_GET['embed']); // beágyazott mód (WP plugin iframe)
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jelentkezés – <?= e($tour['name']) ?> — <?= APP_NAME ?></title>
   <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/style.css">
-  <style>
-    body { background: var(--bg-outer, #f5efe4); min-height: 100vh; padding: 32px 16px; margin: 0; }
-    .public-wrap { max-width: 620px; margin: 0 auto; }
-    .public-header { text-align: center; margin-bottom: 28px; }
-    .public-header img { width: 100px; height: 100px; object-fit: contain; margin-bottom: 10px; }
-    .public-header .app-name { font-size: 20px; font-weight: 700; color: var(--primary); }
-    .public-header .app-sub  { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
-    <?php if ($embed): ?>
-    body { background: transparent !important; padding: 4px 0 0 !important; min-height: 0 !important; }
-    .public-wrap { max-width: 100% !important; }
-    .card { box-shadow: none !important; border-radius: 0 !important; border: none !important; }
-    .card-header { padding: 10px 20px !important; }
-    .card-body { padding-top: 12px !important; }
-    <?php endif; ?>
-  </style>
 </head>
-<body>
+<body class="<?= $embed ? 'public-page embed-mode' : 'public-page' ?>">
 <div class="public-wrap">
 
   <?php if (!$embed): ?>
@@ -90,25 +75,25 @@ $embed = !empty($_GET['embed']); // beágyazott mód (WP plugin iframe)
   <div class="card" style="margin-bottom:16px;background:#29776f;color:#fff;border:none;">
     <div class="card-body">
       <h2 style="margin:0 0 14px;color:#fff;"><?= e($tour['name']) ?></h2>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:1px;background:rgba(255,255,255,.25);border:1px solid rgba(255,255,255,.2);border-radius:8px;overflow:hidden;">
-        <div style="padding:12px 14px;background:rgba(255,255,255,.92);">
-          <div style="font-size:11px;text-transform:uppercase;color:#29776f;letter-spacing:.05em;margin-bottom:4px;font-weight:700;">Kezdés</div>
-          <div style="font-weight:600;color:#1a3d39;"><?= $tour['start_date'] ? formatDate($tour['start_date']) : '—' ?></div>
+      <div class="tour-stats-grid" style="background:rgba(255,255,255,.25);border-color:rgba(255,255,255,.2);">
+        <div class="tour-stat-cell" style="padding:12px 14px;background:rgba(255,255,255,.92);">
+          <div class="tour-stat-label" style="color:#29776f;">Kezdés</div>
+          <div class="tour-stat-value" style="color:#1a3d39;"><?= $tour['start_date'] ? formatDate($tour['start_date']) : '—' ?></div>
         </div>
-        <div style="padding:12px 14px;background:rgba(255,255,255,.92);">
-          <div style="font-size:11px;text-transform:uppercase;color:#29776f;letter-spacing:.05em;margin-bottom:4px;font-weight:700;">Időtartam</div>
-          <div style="font-weight:600;color:#1a3d39;"><?= (int)$tour['num_days'] ?> nap</div>
+        <div class="tour-stat-cell" style="padding:12px 14px;background:rgba(255,255,255,.92);">
+          <div class="tour-stat-label" style="color:#29776f;">Időtartam</div>
+          <div class="tour-stat-value" style="color:#1a3d39;"><?= (int)$tour['num_days'] ?> nap</div>
         </div>
         <?php if (!empty($tour['country_name'])): ?>
-        <div style="padding:12px 14px;background:rgba(255,255,255,.92);">
-          <div style="font-size:11px;text-transform:uppercase;color:#29776f;letter-spacing:.05em;margin-bottom:4px;font-weight:700;">Helyszín</div>
-          <div style="font-weight:600;color:#1a3d39;"><?= e($tour['country_name']) ?><?= !empty($tour['region']) ? ' · ' . e($tour['region']) : '' ?></div>
+        <div class="tour-stat-cell" style="padding:12px 14px;background:rgba(255,255,255,.92);">
+          <div class="tour-stat-label" style="color:#29776f;">Helyszín</div>
+          <div class="tour-stat-value" style="color:#1a3d39;"><?= e($tour['country_name']) ?><?= !empty($tour['region']) ? ' · ' . e($tour['region']) : '' ?></div>
         </div>
         <?php endif; ?>
         <?php if ($tour['participation_fee'] !== null): ?>
-        <div style="padding:12px 14px;background:rgba(255,255,255,.92);">
-          <div style="font-size:11px;text-transform:uppercase;color:#29776f;letter-spacing:.05em;margin-bottom:4px;font-weight:700;">Részvételi díj</div>
-          <div style="font-weight:600;color:#1a3d39;"><?= number_format((float)$tour['participation_fee'], 0, ',', ' ') ?> Ft</div>
+        <div class="tour-stat-cell" style="padding:12px 14px;background:rgba(255,255,255,.92);">
+          <div class="tour-stat-label" style="color:#29776f;">Részvételi díj</div>
+          <div class="tour-stat-value" style="color:#1a3d39;"><?= number_format((float)$tour['participation_fee'], 0, ',', ' ') ?> Ft</div>
         </div>
         <?php endif; ?>
       </div>
@@ -122,7 +107,7 @@ $embed = !empty($_GET['embed']); // beágyazott mód (WP plugin iframe)
   <?php if ($done): ?>
   <!-- Success state -->
   <div class="card">
-    <div class="card-body" style="text-align:center;padding:36px 24px;">
+    <div class="card-body card-body-center" style="padding:36px 24px;">
       <div style="font-size:48px;margin-bottom:16px;">✅</div>
       <h2 style="margin:0 0 10px;color:var(--primary);">Jelentkezés elküldve!</h2>
       <p style="color:var(--text-muted);font-size:14px;line-height:1.6;margin:0;">
@@ -315,12 +300,6 @@ $embed = !empty($_GET['embed']); // beágyazott mód (WP plugin iframe)
 
 </div>
 
-<style>
-  @media (max-width: 480px) {
-    .guest-id-grid { grid-template-columns: 1fr !important; }
-    .login-fields-grid { grid-template-columns: 1fr !important; }
-  }
-</style>
 <script>
 document.querySelectorAll('input[name="car_available"]').forEach(r => {
   r.addEventListener('change', () => {

@@ -124,16 +124,12 @@ include __DIR__ . '/../includes/admin-header.php';
 </div>
 
 <!-- Tabs -->
-<div style="display:flex;gap:4px;margin-bottom:20px;border-bottom:2px solid var(--border);padding-bottom:0;">
-  <a href="<?= BASE_URL ?>/admin/tours.php"
-     style="padding:8px 18px;text-decoration:none;font-size:13.5px;font-weight:600;color:var(--primary);border-bottom:2px solid var(--primary);margin-bottom:-2px;">
-    Túranapló
-  </a>
-  <a href="<?= BASE_URL ?>/admin/future-tours.php"
-     style="padding:8px 18px;text-decoration:none;font-size:13.5px;font-weight:500;color:var(--text-muted);border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .15s;display:inline-flex;align-items:center;gap:6px;">
+<div class="tab-nav">
+  <a href="<?= BASE_URL ?>/admin/tours.php" class="tab-link active">Túranapló</a>
+  <a href="<?= BASE_URL ?>/admin/future-tours.php" class="tab-link">
     Meghirdetett Túrák
     <?php if ($newAppsCount > 0): ?>
-      <span style="background:var(--danger,#dc2626);color:#fff;border-radius:99px;padding:1px 7px;font-size:11px;font-weight:700;line-height:1.6;"><?= $newAppsCount ?></span>
+      <span class="badge-counter badge-counter-danger"><?= $newAppsCount ?></span>
     <?php endif; ?>
   </a>
 </div>
@@ -165,7 +161,7 @@ include __DIR__ . '/../includes/admin-header.php';
             <div class="td-sub">
               <?php if (!empty($t['country_flag'])): ?>
                 <img src="<?= e(getFlagUrl($t['country_flag'])) ?>"
-                     style="width:18px;height:13px;object-fit:cover;vertical-align:middle;border:1px solid var(--border);border-radius:1px;margin-right:3px;" alt="">
+                     class="flag-img" style="margin-right:3px;" alt="">
               <?php endif; ?>
               <?= e($t['country_name'] ?? $t['country']) ?>
             </div>

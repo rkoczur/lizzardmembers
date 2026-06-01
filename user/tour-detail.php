@@ -164,13 +164,6 @@ function detailRow(string $label, $value): void {
   </div>
 </div>
 
-<style>
-@media (max-width: 768px) {
-  #tour-layout { grid-template-columns: 1fr !important; }
-  #tour-map-col { position: static !important; }
-  #tour-map { height: 320px !important; max-height: 320px !important; min-height: 0 !important; }
-}
-</style>
 
 <div id="tour-layout" style="display:grid;grid-template-columns:<?= $hasMap ? 'minmax(0,1fr) minmax(0,1.6fr)' : '1fr 1fr' ?>;gap:20px;align-items:start;">
 

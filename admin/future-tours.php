@@ -52,16 +52,12 @@ include __DIR__ . '/../includes/admin-header.php';
 </div>
 
 <!-- Tabs -->
-<div style="display:flex;gap:4px;margin-bottom:20px;border-bottom:2px solid var(--border);padding-bottom:0;">
-  <a href="<?= BASE_URL ?>/admin/tours.php"
-     style="padding:8px 18px;text-decoration:none;font-size:13.5px;font-weight:500;color:var(--text-muted);border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .15s;">
-    Túranapló
-  </a>
-  <a href="<?= BASE_URL ?>/admin/future-tours.php"
-     style="padding:8px 18px;text-decoration:none;font-size:13.5px;font-weight:600;color:var(--primary);border-bottom:2px solid var(--primary);margin-bottom:-2px;display:inline-flex;align-items:center;gap:6px;">
+<div class="tab-nav">
+  <a href="<?= BASE_URL ?>/admin/tours.php" class="tab-link">Túranapló</a>
+  <a href="<?= BASE_URL ?>/admin/future-tours.php" class="tab-link active">
     Meghirdetett Túrák
     <?php if ($newAppsCount > 0): ?>
-      <span style="background:var(--danger,#dc2626);color:#fff;border-radius:99px;padding:1px 7px;font-size:11px;font-weight:700;line-height:1.6;"><?= $newAppsCount ?></span>
+      <span class="badge-counter badge-counter-danger"><?= $newAppsCount ?></span>
     <?php endif; ?>
   </a>
 </div>
@@ -88,14 +84,14 @@ include __DIR__ . '/../includes/admin-header.php';
             <div style="display:flex;align-items:center;gap:7px;">
               <div class="td-name"><?= e($t['name']) ?></div>
               <?php if ((int)$t['unpaid_count'] > 0): ?>
-                <span style="background:var(--danger,#dc2626);color:#fff;border-radius:99px;padding:1px 7px;font-size:11px;font-weight:700;line-height:1.6;flex-shrink:0;" title="<?= (int)$t['unpaid_count'] ?> nem fizetett jelentkező"><?= (int)$t['unpaid_count'] ?></span>
+                <span class="badge-counter badge-counter-danger" title="<?= (int)$t['unpaid_count'] ?> nem fizetett jelentkező"><?= (int)$t['unpaid_count'] ?></span>
               <?php endif; ?>
             </div>
           </td>
           <td>
             <?php if (!empty($t['country_flag'])): ?>
               <img src="<?= e(getFlagUrl($t['country_flag'])) ?>"
-                   style="width:18px;height:13px;object-fit:cover;vertical-align:middle;border:1px solid var(--border);border-radius:1px;margin-right:4px;" alt="">
+                   class="flag-img" style="margin-right:4px;" alt="">
             <?php endif; ?>
             <?= e($t['country_name'] ?? $t['country'] ?? '—') ?>
             <?php if (!empty($t['region'])): ?>
@@ -132,9 +128,9 @@ include __DIR__ . '/../includes/admin-header.php';
               <a href="<?= BASE_URL ?>/admin/future-tour-applicants.php?id=<?= (int)$t['id'] ?>" class="btn btn-ghost btn-sm">
                 Jelentkezők
                 <?php if ((int)$t['pending_count'] > 0): ?>
-                  <span style="background:var(--warning,#f59e0b);color:#fff;border-radius:99px;padding:2px 6px;font-size:10.5px;font-weight:700;line-height:1;margin-left:2px;" title="Jóváhagyásra vár"><?= (int)$t['pending_count'] ?></span>
+                  <span class="badge-counter badge-counter-warning" title="Jóváhagyásra vár"><?= (int)$t['pending_count'] ?></span>
                 <?php elseif ($appTotal > 0): ?>
-                  <span style="background:var(--primary);color:#fff;border-radius:99px;padding:2px 6px;font-size:10.5px;font-weight:700;line-height:1;margin-left:2px;"><?= $appTotal ?></span>
+                  <span class="badge-counter badge-counter-primary"><?= $appTotal ?></span>
                 <?php endif; ?>
               </a>
               <a href="<?= BASE_URL ?>/admin/future-tour-detail.php?id=<?= (int)$t['id'] ?>" class="btn btn-ghost btn-sm">

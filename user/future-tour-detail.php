@@ -75,7 +75,7 @@ include __DIR__ . '/../includes/user-header.php';
   </div>
 </div>
 
-<div style="display:grid;grid-template-columns:3fr 2fr;gap:20px;align-items:start;" class="future-detail-grid">
+<div class="future-detail-grid">
 
   <!-- LEFT: Tour details -->
   <div>
@@ -88,7 +88,7 @@ include __DIR__ . '/../includes/user-header.php';
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
           <?php if (!empty($tour['country_flag'])): ?>
             <img src="<?= e(getFlagUrl($tour['country_flag'])) ?>"
-                 style="width:22px;height:16px;object-fit:cover;border:1px solid var(--border);border-radius:2px;flex-shrink:0;" alt="">
+                 class="flag-img-lg" alt="">
           <?php endif; ?>
           <span style="font-size:15px;font-weight:700;"><?= e($tour['country_name'] ?? $tour['country'] ?? '—') ?></span>
           <?php if (!empty($tour['region'])): ?>
@@ -98,32 +98,32 @@ include __DIR__ . '/../includes/user-header.php';
         </div>
 
         <!-- Stats grid -->
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
-          <div style="padding:14px 16px;background:var(--bg,#fff);">
-            <div style="font-size:11px;text-transform:uppercase;color:var(--text-muted);letter-spacing:.05em;margin-bottom:5px;">Kezdés</div>
-            <div style="font-weight:600;font-size:14px;"><?= $tour['start_date'] ? formatDate($tour['start_date']) : '—' ?></div>
+        <div class="tour-stats-grid">
+          <div class="tour-stat-cell">
+            <div class="tour-stat-label">Kezdés</div>
+            <div class="tour-stat-value"><?= $tour['start_date'] ? formatDate($tour['start_date']) : '—' ?></div>
           </div>
-          <div style="padding:14px 16px;background:var(--bg,#fff);">
-            <div style="font-size:11px;text-transform:uppercase;color:var(--text-muted);letter-spacing:.05em;margin-bottom:5px;">Időtartam</div>
-            <div style="font-weight:600;font-size:14px;"><?= (int)$tour['num_days'] ?> nap</div>
+          <div class="tour-stat-cell">
+            <div class="tour-stat-label">Időtartam</div>
+            <div class="tour-stat-value"><?= (int)$tour['num_days'] ?> nap</div>
           </div>
-          <div style="padding:14px 16px;background:var(--bg,#fff);">
-            <div style="font-size:11px;text-transform:uppercase;color:var(--text-muted);letter-spacing:.05em;margin-bottom:5px;">Helyek</div>
-            <div style="font-weight:600;font-size:14px;color:<?= $spotsLeft > 0 ? 'var(--primary)' : 'var(--danger)' ?>;">
+          <div class="tour-stat-cell">
+            <div class="tour-stat-label">Helyek</div>
+            <div class="tour-stat-value" style="color:<?= $spotsLeft > 0 ? 'var(--primary)' : 'var(--danger)' ?>;">
               <?= $spotsLeft > 0 ? $spotsLeft . ' / ' . (int)$tour['max_attendees'] : 'Betelt' ?>
             </div>
           </div>
           <?php if ($tour['participation_fee'] !== null): ?>
-          <div style="padding:14px 16px;background:var(--bg,#fff);">
-            <div style="font-size:11px;text-transform:uppercase;color:var(--text-muted);letter-spacing:.05em;margin-bottom:5px;">Részvételi díj</div>
+          <div class="tour-stat-cell">
+            <div class="tour-stat-label">Részvételi díj</div>
             <?php if ($feeDiscount > 0): ?>
               <div style="font-size:12px;color:var(--text-muted);text-decoration:line-through;line-height:1.3;"><?= number_format((float)$tour['participation_fee'], 0, ',', ' ') ?> Ft</div>
-              <div style="font-weight:700;font-size:14px;color:var(--primary);">
+              <div class="tour-stat-value" style="color:var(--primary);">
                 <?= number_format((float)$tour['participation_fee'] * (1 - $feeDiscount / 100), 0, ',', ' ') ?> Ft
-                <span style="font-size:10px;background:var(--primary);color:#fff;border-radius:3px;padding:1px 4px;vertical-align:middle;margin-left:2px;">-<?= $feeDiscount ?>%</span>
+                <span class="badge-discount" style="margin-left:2px;">-<?= $feeDiscount ?>%</span>
               </div>
             <?php else: ?>
-              <div style="font-weight:600;font-size:14px;"><?= number_format((float)$tour['participation_fee'], 0, ',', ' ') ?> Ft</div>
+              <div class="tour-stat-value"><?= number_format((float)$tour['participation_fee'], 0, ',', ' ') ?> Ft</div>
             <?php endif; ?>
           </div>
           <?php endif; ?>
@@ -190,8 +190,8 @@ include __DIR__ . '/../includes/user-header.php';
   </div>
 
   <!-- RIGHT: Application status / CTA -->
-  <div class="card" style="position:sticky;top:20px;">
-    <div class="card-body" style="text-align:center;padding:28px 24px;">
+  <div class="card sticky-panel">
+    <div class="card-body card-body-center">
       <?php if ($myApp && $myApp['status'] === 'confirmed'): ?>
         <div style="font-size:40px;margin-bottom:12px;">✅</div>
         <div style="font-weight:700;font-size:17px;margin-bottom:6px;color:var(--primary);">Sikeresen jelentkeztél!</div>
@@ -199,7 +199,7 @@ include __DIR__ . '/../includes/user-header.php';
         <?php if ($myApp['paid_at']): ?>
           <div style="color:var(--primary);font-size:13px;font-weight:600;margin-bottom:16px;">✓ Részvételi díj befizetve</div>
         <?php else: ?>
-          <div style="background:var(--warning-bg,#fffbeb);border:1px solid var(--warning,#f59e0b);border-radius:6px;padding:10px 14px;font-size:12.5px;color:var(--warning,#b45309);margin-bottom:16px;text-align:left;">
+          <div class="alert-warning-box" style="margin-bottom:16px;text-align:left;">
             ⚠ Részvételi díjad még nem érkezett meg. Kérjük, 14 napon belül utalj!
           </div>
         <?php endif; ?>
@@ -243,17 +243,11 @@ include __DIR__ . '/../includes/user-header.php';
 
 </div><!-- .future-detail-grid -->
 
-<style>
-  @media (max-width: 768px) {
-    .future-detail-grid { grid-template-columns: 1fr !important; }
-  }
-</style>
-
 <!-- Application Modal -->
 <?php if ((!$myApp || $myApp['status'] === 'cancelled') && $tour['status'] === 'open'): ?>
 <div id="apply-modal-backdrop" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;align-items:center;justify-content:center;padding:16px;">
   <div style="background:var(--bg,#fff);border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.18);width:100%;max-width:560px;max-height:92vh;overflow-y:auto;">
-    <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--border);">
+    <div class="flex-between" style="padding:20px 24px;border-bottom:1px solid var(--border);">
       <h2 style="margin:0;font-size:18px;">Jelentkezés – <?= e($tour['name']) ?></h2>
       <button id="close-apply-modal" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--text-muted);line-height:1;">✕</button>
     </div>

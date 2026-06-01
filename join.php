@@ -22,68 +22,6 @@ $flash_error   = getFlash('error');
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Belépés az egyesületbe — <?= APP_NAME ?></title>
   <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/style.css">
-  <style>
-    .join-card {
-      max-width: 660px;
-      width: 100%;
-    }
-    .consent-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .consent-row {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      cursor: pointer;
-      padding: 12px 14px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      transition: border-color .15s, background .15s;
-    }
-    .consent-row:hover {
-      background: var(--bg-alt, #f8f9fa);
-      border-color: var(--primary);
-    }
-    .consent-row input[type="checkbox"] {
-      margin-top: 2px;
-      flex-shrink: 0;
-      width: 17px;
-      height: 17px;
-      accent-color: var(--primary);
-      cursor: pointer;
-    }
-    .consent-row-text {
-      font-size: 13px;
-      color: var(--text);
-      line-height: 1.55;
-    }
-    .consent-row-text a {
-      color: var(--primary);
-      text-decoration: underline;
-    }
-    .consent-row-required {
-      border-color: #d97706;
-      background: rgba(217, 119, 6, .04);
-    }
-    .consent-row-required:hover {
-      background: rgba(217, 119, 6, .08);
-    }
-    .join-success-icon {
-      width: 64px;
-      height: 64px;
-      background: rgba(41, 119, 111, .12);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 20px;
-    }
-    .join-success-icon svg {
-      color: var(--primary);
-    }
-  </style>
 </head>
 <body>
 <div class="login-page">

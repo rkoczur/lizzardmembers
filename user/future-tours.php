@@ -46,15 +46,9 @@ include __DIR__ . '/../includes/user-header.php';
 </div>
 
 <!-- Tabs -->
-<div style="display:flex;gap:4px;margin-bottom:20px;border-bottom:2px solid var(--border);padding-bottom:0;">
-  <a href="<?= BASE_URL ?>/user/tours.php"
-     style="padding:8px 18px;text-decoration:none;font-size:13.5px;font-weight:500;color:var(--text-muted);border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .15s;">
-    Túranapló
-  </a>
-  <a href="<?= BASE_URL ?>/user/future-tours.php"
-     style="padding:8px 18px;text-decoration:none;font-size:13.5px;font-weight:600;color:var(--primary);border-bottom:2px solid var(--primary);margin-bottom:-2px;">
-    Meghirdetett Túrák
-  </a>
+<div class="tab-nav">
+  <a href="<?= BASE_URL ?>/user/tours.php" class="tab-link">Túranapló</a>
+  <a href="<?= BASE_URL ?>/user/future-tours.php" class="tab-link active">Meghirdetett Túrák</a>
 </div>
 
 <div class="card">
@@ -83,15 +77,15 @@ include __DIR__ . '/../includes/user-header.php';
           <td>
             <div class="td-name"><?= e($t['name']) ?></div>
             <?php if ($myStatus === 'confirmed'): ?>
-              <span style="background:var(--primary-light,#cce6e3);color:var(--primary);border-radius:4px;padding:1px 7px;font-size:10.5px;font-weight:600;">Jelentkeztem</span>
+              <span class="badge-confirmed">Jelentkeztem</span>
             <?php elseif ($myStatus === 'waitlist'): ?>
-              <span style="background:var(--warning-bg,#fffbeb);color:var(--warning,#b45309);border-radius:4px;padding:1px 7px;font-size:10.5px;font-weight:600;border:1px solid var(--warning,#f59e0b);">Várólistán</span>
+              <span class="badge-waitlist">Várólistán</span>
             <?php endif; ?>
           </td>
           <td>
             <?php if (!empty($t['country_flag'])): ?>
               <img src="<?= e(getFlagUrl($t['country_flag'])) ?>"
-                   style="width:18px;height:13px;object-fit:cover;vertical-align:middle;border:1px solid var(--border);border-radius:1px;margin-right:4px;" alt="">
+                   class="flag-img" style="margin-right:4px;" alt="">
             <?php endif; ?>
             <?= e($t['country_name'] ?? $t['country'] ?? '—') ?>
             <?php if (!empty($t['region'])): ?>

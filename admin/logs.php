@@ -126,7 +126,12 @@ $eTotalFailed= 0;
 $eTotalAll   = 0;
 $eSearch     = trim($_GET['eq']      ?? '');
 $eStatus     = in_array($_GET['estatus'] ?? '', ['sent','failed'], true) ? $_GET['estatus'] : '';
-$eType       = ($_GET['etype2'] ?? '') === 'tour_added' ? 'tour_added' : '';
+$allowedETypes = ['tour_added','tour_submitted','tour_rejected',
+    'join_confirm','join_admin_notify','welcome',
+    'future_tour_application','future_tour_guest_application',
+    'future_tour_new_application_admin','future_tour_guest_application_admin',
+    'future_tour_waitlist_promoted','future_tour_guest_approved','future_tour_guest_rejected'];
+$eType       = in_array($_GET['etype2'] ?? '', $allowedETypes, true) ? $_GET['etype2'] : '';
 $eDays       = max(1, min(365, (int)($_GET['edays'] ?? 30)));
 
 $eWhere  = ['sent_at >= DATE_SUB(NOW(), INTERVAL ? DAY)'];
@@ -150,7 +155,21 @@ $esSent = $pdo->prepare("SELECT COUNT(*) FROM email_log WHERE status='sent'   AN
 $esFail = $pdo->prepare("SELECT COUNT(*) FROM email_log WHERE status='failed' AND sent_at >= DATE_SUB(NOW(), INTERVAL ? DAY)"); $esFail->execute([$eDays]); $eTotalFailed = (int)$esFail->fetchColumn();
 $esAll  = $pdo->query("SELECT COUNT(*) FROM email_log"); $eTotalAll = (int)$esAll->fetchColumn();
 
-$emailTypeLabels = ['tour_added' => 'Túra értesítő'];
+$emailTypeLabels = [
+    'tour_added'                       => 'Túra értesítő',
+    'tour_submitted'                   => 'Túra beküldve',
+    'tour_rejected'                    => 'Túra elutasítva',
+    'join_confirm'                     => 'Belépési kérelem visszaigazolás',
+    'join_admin_notify'                => 'Belépési kérelem (admin)',
+    'welcome'                          => 'Üdvözlő e-mail',
+    'future_tour_application'          => 'API: Meghirdetett túra – jelentkezés',
+    'future_tour_guest_application'    => 'API: Meghirdetett túra – vendég jelentkezés',
+    'future_tour_new_application_admin'=> 'API: Meghirdetett túra – jelentkezés (admin)',
+    'future_tour_guest_application_admin' => 'API: Meghirdetett túra – vendég (admin)',
+    'future_tour_waitlist_promoted'    => 'Meghirdetett túra – várólistáról előre',
+    'future_tour_guest_approved'       => 'Meghirdetett túra – vendég jóváhagyva',
+    'future_tour_guest_rejected'       => 'Meghirdetett túra – vendég elutasítva',
+];
 
 $pageTitle  = 'Naplók';
 $activePage = 'logs';
@@ -171,19 +190,10 @@ include __DIR__ . '/../includes/admin-header.php';
 </div>
 
 <!-- Tabsáv -->
-<div style="display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:20px;">
-  <a href="?tab=login"
-     style="padding:10px 22px;font-size:14px;font-weight:600;text-decoration:none;border-bottom:2px solid <?= $activeTab==='login' ? 'var(--primary)' : 'transparent' ?>;margin-bottom:-2px;color:<?= $activeTab==='login' ? 'var(--primary)' : 'var(--text-muted)' ?>;">
-    Belépési napló
-  </a>
-  <a href="?tab=audit"
-     style="padding:10px 22px;font-size:14px;font-weight:600;text-decoration:none;border-bottom:2px solid <?= $activeTab==='audit' ? 'var(--primary)' : 'transparent' ?>;margin-bottom:-2px;color:<?= $activeTab==='audit' ? 'var(--primary)' : 'var(--text-muted)' ?>;">
-    Audit napló
-  </a>
-  <a href="?tab=email"
-     style="padding:10px 22px;font-size:14px;font-weight:600;text-decoration:none;border-bottom:2px solid <?= $activeTab==='email' ? 'var(--primary)' : 'transparent' ?>;margin-bottom:-2px;color:<?= $activeTab==='email' ? 'var(--primary)' : 'var(--text-muted)' ?>;">
-    E-mail napló
-  </a>
+<div class="tab-nav tab-nav-flush">
+  <a href="?tab=login" class="tab-link<?= $activeTab === 'login' ? ' active' : '' ?>">Belépési napló</a>
+  <a href="?tab=audit" class="tab-link<?= $activeTab === 'audit' ? ' active' : '' ?>">Audit napló</a>
+  <a href="?tab=email" class="tab-link<?= $activeTab === 'email' ? ' active' : '' ?>">E-mail napló</a>
 </div>
 
 <?php if ($activeTab === 'login'): ?>
@@ -399,9 +409,27 @@ include __DIR__ . '/../includes/admin-header.php';
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       <input type="text" name="eq" value="<?= e($eSearch) ?>" placeholder="Keresés neve, e-mail vagy tárgy alapján…">
     </div>
-    <select name="etype2" class="form-control" style="width:auto;min-width:160px;">
+    <select name="etype2" class="form-control" style="width:auto;min-width:200px;">
       <option value="">Minden típus</option>
-      <option value="tour_added" <?= $eType==='tour_added'?'selected':'' ?>>Túra értesítő</option>
+      <optgroup label="Klasszikus túrák">
+        <option value="tour_added"     <?= $eType==='tour_added'    ?'selected':'' ?>>Túra értesítő</option>
+        <option value="tour_submitted" <?= $eType==='tour_submitted'?'selected':'' ?>>Túra beküldve</option>
+        <option value="tour_rejected"  <?= $eType==='tour_rejected' ?'selected':'' ?>>Túra elutasítva</option>
+      </optgroup>
+      <optgroup label="Tagság">
+        <option value="join_confirm"      <?= $eType==='join_confirm'     ?'selected':'' ?>>Belépési kérelem visszaigazolás</option>
+        <option value="join_admin_notify" <?= $eType==='join_admin_notify'?'selected':'' ?>>Belépési kérelem (admin)</option>
+        <option value="welcome"           <?= $eType==='welcome'          ?'selected':'' ?>>Üdvözlő e-mail</option>
+      </optgroup>
+      <optgroup label="Meghirdetett túrák">
+        <option value="future_tour_application"           <?= $eType==='future_tour_application'          ?'selected':'' ?>>Jelentkezés visszaigazolás</option>
+        <option value="future_tour_guest_application"     <?= $eType==='future_tour_guest_application'    ?'selected':'' ?>>Vendég jelentkezés visszaigazolás</option>
+        <option value="future_tour_new_application_admin" <?= $eType==='future_tour_new_application_admin'?'selected':'' ?>>Új jelentkezés (admin)</option>
+        <option value="future_tour_guest_application_admin" <?= $eType==='future_tour_guest_application_admin'?'selected':'' ?>>Új vendég jelentkezés (admin)</option>
+        <option value="future_tour_waitlist_promoted"     <?= $eType==='future_tour_waitlist_promoted'    ?'selected':'' ?>>Várólistáról előre lépett</option>
+        <option value="future_tour_guest_approved"        <?= $eType==='future_tour_guest_approved'       ?'selected':'' ?>>Vendég jóváhagyva</option>
+        <option value="future_tour_guest_rejected"        <?= $eType==='future_tour_guest_rejected'       ?'selected':'' ?>>Vendég elutasítva</option>
+      </optgroup>
     </select>
     <select name="estatus" class="form-control" style="width:auto;min-width:150px;">
       <option value="">Minden státusz</option>

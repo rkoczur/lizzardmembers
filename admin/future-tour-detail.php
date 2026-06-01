@@ -172,12 +172,12 @@ include __DIR__ . '/../includes/admin-header.php';
         <div id="days-container">
           <?php if (!empty($days)): ?>
             <?php foreach ($days as $i => $day): ?>
-            <div class="day-row" style="border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:10px;position:relative;">
+            <div class="day-row">
               <?php if (!$ro): ?>
-                <button type="button" class="remove-day-btn" style="position:absolute;top:8px;right:10px;background:none;border:none;color:var(--danger);font-size:16px;cursor:pointer;line-height:1;" title="Nap törlése">✕</button>
+                <button type="button" class="remove-day-btn btn-remove" style="position:absolute;top:8px;right:10px;" title="Nap törlése">✕</button>
               <?php endif; ?>
               <input type="hidden" name="day_id[]" value="<?= (int)$day['id'] ?>">
-              <div class="form-grid" style="grid-template-columns:auto 1fr 1fr 1fr;gap:10px;align-items:end;">
+              <div class="day-row-grid">
                 <div class="form-group">
                   <label><?= (int)$day['day_number'] ?>. nap</label>
                   <input type="hidden" name="day_number[]" value="<?= (int)$day['day_number'] ?>">
@@ -208,10 +208,10 @@ include __DIR__ . '/../includes/admin-header.php';
             <?php endforeach; ?>
           <?php elseif ($isNew): ?>
             <!-- one empty day row for new tours -->
-            <div class="day-row" style="border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:10px;position:relative;">
-              <button type="button" class="remove-day-btn" style="position:absolute;top:8px;right:10px;background:none;border:none;color:var(--danger);font-size:16px;cursor:pointer;line-height:1;" title="Nap törlése">✕</button>
+            <div class="day-row">
+              <button type="button" class="remove-day-btn btn-remove" style="position:absolute;top:8px;right:10px;" title="Nap törlése">✕</button>
               <input type="hidden" name="day_id[]" value="0">
-              <div class="form-grid" style="grid-template-columns:auto 1fr 1fr 1fr;gap:10px;align-items:end;">
+              <div class="day-row-grid">
                 <div class="form-group">
                   <label>1. nap</label>
                   <input type="hidden" name="day_number[]" value="1">
@@ -286,7 +286,7 @@ include __DIR__ . '/../includes/admin-header.php';
         <div id="fields-container">
           <?php if (!empty($customFields)): ?>
             <?php foreach ($customFields as $cf): ?>
-            <div class="field-row" style="border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin-bottom:8px;">
+            <div class="field-row">
               <input type="hidden" name="field_id[]" value="<?= (int)$cf['id'] ?>">
               <div style="display:flex;gap:10px;align-items:center;">
                 <input type="text" name="field_name[]" value="<?= e($cf['field_name']) ?>" placeholder="Mező neve" style="flex:1;" <?= $ro ? 'readonly' : '' ?>>
@@ -298,7 +298,7 @@ include __DIR__ . '/../includes/admin-header.php';
                   <option value="select"   <?= $cf['field_type'] === 'select'   ? 'selected' : '' ?>>Legördülő lista</option>
                 </select>
                 <?php if (!$ro): ?>
-                  <button type="button" class="remove-field-btn" style="background:none;border:none;color:var(--danger);font-size:18px;cursor:pointer;padding:0 4px;line-height:1;flex-shrink:0;" title="Törlés">✕</button>
+                  <button type="button" class="remove-field-btn btn-remove btn-remove-lg" title="Törlés">✕</button>
                 <?php endif; ?>
               </div>
               <div class="field-options-wrap" style="margin-top:8px;<?= $cf['field_type'] !== 'select' ? 'display:none;' : '' ?>">
@@ -335,11 +335,10 @@ document.getElementById('add-day-btn')?.addEventListener('click', function() {
 
   const row = document.createElement('div');
   row.className = 'day-row';
-  row.style.cssText = 'border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:10px;position:relative;';
   row.innerHTML = `
-    <button type="button" class="remove-day-btn" style="position:absolute;top:8px;right:10px;background:none;border:none;color:var(--danger);font-size:16px;cursor:pointer;line-height:1;" title="Nap törlése">✕</button>
+    <button type="button" class="remove-day-btn btn-remove" style="position:absolute;top:8px;right:10px;" title="Nap törlése">✕</button>
     <input type="hidden" name="day_id[]" value="0">
-    <div class="form-grid" style="grid-template-columns:auto 1fr 1fr 1fr;gap:10px;align-items:end;">
+    <div class="day-row-grid">
       <div class="form-group"><label>${dayCount}. nap</label><input type="hidden" name="day_number[]" value="${dayCount}"></div>
       <div class="form-group"><label>Túratípus</label>
         <select name="day_tour_type[]">
@@ -385,7 +384,6 @@ document.getElementById('add-field-btn')?.addEventListener('click', function() {
 
   const row = document.createElement('div');
   row.className = 'field-row';
-  row.style.cssText = 'border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin-bottom:8px;';
   row.innerHTML = `
     <input type="hidden" name="field_id[]" value="0">
     <div style="display:flex;gap:10px;align-items:center;">
@@ -397,7 +395,7 @@ document.getElementById('add-field-btn')?.addEventListener('click', function() {
         <option value="textarea">Hosszú szöveg</option>
         <option value="select">Legördülő lista</option>
       </select>
-      <button type="button" class="remove-field-btn" style="background:none;border:none;color:var(--danger);font-size:18px;cursor:pointer;padding:0 4px;line-height:1;flex-shrink:0;" title="Törlés">✕</button>
+      <button type="button" class="remove-field-btn btn-remove btn-remove-lg" title="Törlés">✕</button>
     </div>
     <div class="field-options-wrap" style="margin-top:8px;display:none;">
       <label style="font-size:11.5px;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:.04em;">Lehetséges válaszok (vesszővel elválasztva)</label>
