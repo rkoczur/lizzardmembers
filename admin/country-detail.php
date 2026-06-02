@@ -32,7 +32,7 @@ $tourCount = (int)$tcStmt->fetchColumn();
 $flash_success = getFlash('success');
 $flash_error   = getFlash('error');
 
-$pageTitle  = e($country['name_hu']) . ' (' . e($country['code']) . ')';
+$pageTitle  = ($country['name_hu'] ?? '') . ' (' . ($country['code'] ?? '') . ')';
 $activePage = 'settings';
 include __DIR__ . '/../includes/admin-header.php';
 ?>

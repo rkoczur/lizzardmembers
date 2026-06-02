@@ -779,14 +779,19 @@ body.embed-mode .card-body { padding-top: 12px !important; }
   .rg-3, .rg-3-2, .rg-2 { grid-template-columns: 1fr; }
   .rg-4 { grid-template-columns: repeat(2, 1fr); }
 
-  /* Túralista: felesleges oszlopok elrejtése — csak Kód, Elnevezés, Ország, Dátum, Gomb marad */
-  #tour-table th:nth-child(4),  #tour-table td:nth-child(4),   /* Túramód */
-  #tour-table th:nth-child(6),  #tour-table td:nth-child(6),   /* Napok */
-  #tour-table th:nth-child(7),  #tour-table td:nth-child(7),   /* Km */
-  #tour-table th:nth-child(8),  #tour-table td:nth-child(8),   /* Szintemelkedés */
-  #tour-table th:nth-child(9),  #tour-table td:nth-child(9),   /* Résztvevők */
-  #tour-table th:nth-child(10), #tour-table td:nth-child(10),  /* Lizzardier */
-  #tour-table th:nth-child(11), #tour-table td:nth-child(11) { display: none; }  /* MTSZ pont */
+  /* Túranapló: csak Kód(1), Elnevezés/Ország(2), Dátum(4), Gomb(11) marad */
+  #tour-table th:nth-child(3),  #tour-table td:nth-child(3),   /* Túramód */
+  #tour-table th:nth-child(5),  #tour-table td:nth-child(5),   /* Napok */
+  #tour-table th:nth-child(6),  #tour-table td:nth-child(6),   /* Km */
+  #tour-table th:nth-child(7),  #tour-table td:nth-child(7),   /* Szintemelkedés */
+  #tour-table th:nth-child(8),  #tour-table td:nth-child(8),   /* Résztvevők */
+  #tour-table th:nth-child(9),  #tour-table td:nth-child(9),   /* Lizzardier */
+  #tour-table th:nth-child(10), #tour-table td:nth-child(10) { display: none; }  /* MTSZ pont */
+
+  /* Meghirdetett túrák: csak Túra neve(1), Időpont(3), Státusz(6), Gomb(7) marad */
+  #future-tours-table th:nth-child(2), #future-tours-table td:nth-child(2),  /* Ország/Tájegység */
+  #future-tours-table th:nth-child(4), #future-tours-table td:nth-child(4),  /* Napok */
+  #future-tours-table th:nth-child(5), #future-tours-table td:nth-child(5) { display: none; }  /* Helyek */
 
   /* Toplist mobil tab váltó */
   .toplist-mobile-tabs {
@@ -803,6 +808,17 @@ body.embed-mode .card-body { padding-top: 12px !important; }
   #tour-layout  { grid-template-columns: 1fr !important; }
   #tour-map-col { position: static !important; }
   #tour-map     { height: 320px !important; max-height: 320px !important; min-height: 0 !important; }
+
+  /* Admin layouts */
+  #compose-grid,
+  #settings-grid  { grid-template-columns: 1fr; }
+
+  /* User layouts */
+  #profile-info-grid { grid-template-columns: 1fr; }
+
+  /* Pontszámok kártya — border iránya megfordul */
+  #pts-grid                    { grid-template-columns: 1fr; }
+  #pts-grid > div:first-child  { border-right: none; border-bottom: 1px solid var(--border); }
 }
 
 /* ===== Responsive — telefon (≤ 640 px) ===== */

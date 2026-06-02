@@ -43,10 +43,17 @@ if (!$isNew) {
 
 $countries = getCountries($pdo);
 
+$gpxFiles = [];
+if (!$isNew) {
+    $gpxFilesStmt = $pdo->prepare("SELECT * FROM future_tour_gpx_files WHERE future_tour_id = ? ORDER BY sort_order ASC, uploaded_at ASC");
+    $gpxFilesStmt->execute([$id]);
+    $gpxFiles = $gpxFilesStmt->fetchAll();
+}
+
 $flash_success = getFlash('success');
 $flash_error   = getFlash('error');
 
-$pageTitle  = $isNew ? 'Új meghirdetett túra' : e($tour['name'] ?? 'Meghirdetett túra');
+$pageTitle  = $isNew ? 'Új meghirdetett túra' : ($tour['name'] ?? 'Meghirdetett túra');
 $activePage = 'tours';
 include __DIR__ . '/../includes/admin-header.php';
 ?>
@@ -93,7 +100,7 @@ include __DIR__ . '/../includes/admin-header.php';
       <h2><?= $isNew ? 'Túra adatai' : 'Túra szerkesztése' ?></h2>
     </div>
     <div class="card-body">
-      <form method="post" action="<?= BASE_URL ?>/actions/<?= $isNew ? 'future-tour-add' : 'future-tour-update' ?>.php" id="future-tour-form">
+      <form method="post" enctype="multipart/form-data" action="<?= BASE_URL ?>/actions/<?= $isNew ? 'future-tour-add' : 'future-tour-update' ?>.php" id="future-tour-form">
         <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
         <?php if (!$isNew): ?>
           <input type="hidden" name="id" value="<?= (int)$id ?>">
@@ -312,6 +319,34 @@ include __DIR__ . '/../includes/admin-header.php';
         <p id="fields-empty-msg" style="color:var(--text-muted);font-size:13px;<?= !empty($customFields) ? 'display:none;' : '' ?>">
           Nincsenek egyedi mezők — csak az alap jelentkezési kérdések jelennek meg.
         </p>
+
+        <?php if (!$isNew): ?>
+        <div class="form-section-title" style="margin-top:24px;">GPX térképek</div>
+        <?php if (!empty($gpxFiles)): ?>
+          <?php foreach ($gpxFiles as $gf): ?>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--bg,#f8fafc);border:1px solid var(--border);border-radius:8px;margin-bottom:8px;font-size:13px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="var(--success,#16a34a)" stroke-width="2.5" style="flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg>
+            <span style="font-family:monospace;color:var(--text-muted);font-size:11px;white-space:nowrap;"><?= e($gf['filename']) ?></span>
+            <?php if (!$ro): ?>
+            <input type="text" name="gpx_label[<?= (int)$gf['id'] ?>]" value="<?= e($gf['label'] ?? '') ?>" placeholder="Térkép neve (pl. 1. nap útvonala)" style="flex:1;font-size:13px;">
+            <label style="display:flex;align-items:center;gap:6px;cursor:pointer;color:var(--danger,#dc2626);white-space:nowrap;">
+              <input type="checkbox" name="delete_gpx_ids[]" value="<?= (int)$gf['id'] ?>"> Törlés
+            </label>
+            <?php else: ?>
+            <span style="flex:1;color:var(--text-muted);"><?= e($gf['label'] ?? '') ?></span>
+            <?php endif; ?>
+          </div>
+          <?php endforeach; ?>
+        <?php elseif ($ro): ?>
+          <p style="color:var(--text-muted);font-size:13px;">Nincs feltöltött GPX fájl.</p>
+        <?php endif; ?>
+        <?php if (!$ro): ?>
+          <div>
+            <input type="file" name="gpx_files[]" accept=".gpx" multiple>
+            <small style="display:block;margin-top:5px;color:var(--text-muted);font-size:12px;">Több .gpx fájl is kijelölhető egyszerre. Max. 5 MB/fájl.</small>
+          </div>
+        <?php endif; ?>
+        <?php endif; ?>
 
         <?php if (!$ro): ?>
         <div style="margin-top:28px;display:flex;gap:12px;">

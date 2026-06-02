@@ -44,8 +44,18 @@ if (!$consentRules) {
     exit;
 }
 
-// Duplicate pending check
-$dup = $pdo->prepare("SELECT id FROM member_applications WHERE email = ? AND status = 'pending' LIMIT 1");
+// Check existing member with this email
+$existingUser = $pdo->prepare("SELECT id FROM users WHERE email = ? LIMIT 1");
+$existingUser->execute([$email]);
+if ($existingUser->fetch()) {
+    flash('error', 'Ezzel az e-mail-címmel már regisztrált tag létezik a rendszerben. Ha elfelejtette jelszavát, használja a jelszó-visszaállítást.');
+    $_SESSION['join_old'] = $_POST;
+    header('Location: ' . $redirectBack);
+    exit;
+}
+
+// Duplicate pending/approved application check
+$dup = $pdo->prepare("SELECT id FROM member_applications WHERE email = ? AND status IN ('pending','approved') LIMIT 1");
 $dup->execute([$email]);
 if ($dup->fetch()) {
     flash('error', 'Ezzel az e-mail-címmel már van folyamatban lévő jelentkezés. Ha nem te adtad le, lépj kapcsolatba az egyesülettel.');

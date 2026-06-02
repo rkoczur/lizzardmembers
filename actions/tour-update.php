@@ -112,52 +112,44 @@ $pdo->prepare("UPDATE tours SET
     $id,
 ]);
 
-// GPX fájl kezelése
-$gpxCurrent = $tourBefore['gpx_file'] ?? null;
-if (!empty($_POST['delete_gpx']) && $gpxCurrent) {
-    $oldPath = GPX_DIR . $gpxCurrent;
-    if (file_exists($oldPath)) {
-        @unlink($oldPath);
-    }
-    $pdo->prepare("UPDATE tours SET gpx_file = NULL WHERE id = ?")->execute([$id]);
-    $gpxCurrent = null;
-} elseif (isset($_FILES['gpx_file']) && $_FILES['gpx_file']['error'] === UPLOAD_ERR_OK) {
-    $gpxTmp  = $_FILES['gpx_file']['tmp_name'];
-    $gpxOrig = $_FILES['gpx_file']['name'];
-    $gpxExt  = strtolower(pathinfo($gpxOrig, PATHINFO_EXTENSION));
-    $gpxSize = $_FILES['gpx_file']['size'];
+// GPX: meglévő fájlok feliratának mentése
+foreach ($_POST['gpx_label'] ?? [] as $gfId => $label) {
+    $gfId = (int)$gfId;
+    if (!$gfId) continue;
+    $pdo->prepare("UPDATE tour_gpx_files SET label = ? WHERE id = ? AND tour_id = ?")
+        ->execute([trim($label) ?: null, $gfId, $id]);
+}
 
-    if ($gpxExt !== 'gpx') {
-        flash('error', 'Csak .gpx kiterjesztésű fájl tölthető fel.');
-        header('Location: ' . $redirectTo);
-        exit;
+// GPX fájlok kezelése — törlés
+$deleteGpxIds = array_values(array_filter(array_map('intval', $_POST['delete_gpx_ids'] ?? [])));
+if ($deleteGpxIds) {
+    $ph   = implode(',', array_fill(0, count($deleteGpxIds), '?'));
+    $rows = $pdo->prepare("SELECT filename FROM tour_gpx_files WHERE id IN ($ph) AND tour_id = ?");
+    $rows->execute(array_merge($deleteGpxIds, [$id]));
+    foreach ($rows->fetchAll(PDO::FETCH_COLUMN) as $fname) {
+        if ($fname && file_exists(GPX_DIR . $fname)) @unlink(GPX_DIR . $fname);
     }
-    if ($gpxSize > 5 * 1024 * 1024) {
-        flash('error', 'A GPX fájl mérete nem haladhatja meg az 5 MB-ot.');
-        header('Location: ' . $redirectTo);
-        exit;
+    $pdo->prepare("DELETE FROM tour_gpx_files WHERE id IN ($ph) AND tour_id = ?")
+        ->execute(array_merge($deleteGpxIds, [$id]));
+}
+
+// GPX fájlok kezelése — feltöltés
+if (!empty($_FILES['gpx_files']['tmp_name'])) {
+    if (!is_dir(GPX_DIR)) mkdir(GPX_DIR, 0755, true);
+    $allowedMimes = ['text/xml','application/xml','application/gpx+xml','text/plain','application/octet-stream'];
+    $insGpx = $pdo->prepare("INSERT IGNORE INTO tour_gpx_files (tour_id, filename, sort_order) VALUES (?, ?, ?)");
+    $sortBase = (int)$pdo->query("SELECT COALESCE(MAX(sort_order),0) FROM tour_gpx_files WHERE tour_id = $id")->fetchColumn();
+    foreach ($_FILES['gpx_files']['tmp_name'] as $i => $tmp) {
+        if (($_FILES['gpx_files']['error'][$i] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK) continue;
+        $ext  = strtolower(pathinfo($_FILES['gpx_files']['name'][$i] ?? '', PATHINFO_EXTENSION));
+        $size = (int)($_FILES['gpx_files']['size'][$i] ?? 0);
+        $mime = (new finfo(FILEINFO_MIME_TYPE))->file($tmp);
+        if ($ext !== 'gpx' || $size > 5 * 1024 * 1024 || !in_array($mime, $allowedMimes, true)) continue;
+        $newFile = 'gpx_' . $id . '_' . time() . '_' . $i . '.gpx';
+        if (move_uploaded_file($tmp, GPX_DIR . $newFile)) {
+            $insGpx->execute([$id, $newFile, $sortBase + $i + 1]);
+        }
     }
-    $finfo = new finfo(FILEINFO_MIME_TYPE);
-    $mime  = $finfo->file($gpxTmp);
-    $allowedMimes = ['text/xml', 'application/xml', 'application/gpx+xml', 'text/plain', 'application/octet-stream'];
-    if (!in_array($mime, $allowedMimes, true)) {
-        flash('error', 'Érvénytelen GPX fájl formátum.');
-        header('Location: ' . $redirectTo);
-        exit;
-    }
-    if (!is_dir(GPX_DIR)) {
-        mkdir(GPX_DIR, 0755, true);
-    }
-    if ($gpxCurrent && file_exists(GPX_DIR . $gpxCurrent)) {
-        @unlink(GPX_DIR . $gpxCurrent);
-    }
-    $gpxFile = 'gpx_' . $id . '_' . time() . '.gpx';
-    if (!move_uploaded_file($gpxTmp, GPX_DIR . $gpxFile)) {
-        flash('error', 'A GPX fájl feltöltése sikertelen.');
-        header('Location: ' . $redirectTo);
-        exit;
-    }
-    $pdo->prepare("UPDATE tours SET gpx_file = ? WHERE id = ?")->execute([$gpxFile, $id]);
 }
 
 $addedIds   = array_values(array_diff($memberIds, $oldMemberIds));

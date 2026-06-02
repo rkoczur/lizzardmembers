@@ -33,7 +33,7 @@ $tourCount = (int)$tcStmt->fetchColumn();
 $flash_success = getFlash('success');
 $flash_error   = getFlash('error');
 
-$pageTitle  = e($member['lastname'] . ' ' . $member['firstname']);
+$pageTitle  = ($member['lastname'] ?? '') . ' ' . ($member['firstname'] ?? '');
 $activePage = 'members';
 include __DIR__ . '/../includes/admin-header.php';
 ?>

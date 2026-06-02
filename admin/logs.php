@@ -199,7 +199,7 @@ include __DIR__ . '/../includes/admin-header.php';
 <?php if ($activeTab === 'login'): ?>
 <!-- ══════════════════ BELÉPÉSI NAPLÓ ══════════════════ -->
 
-<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;">
+<div class="rg-4">
   <div class="card">
     <div class="card-body" style="display:flex;align-items:center;gap:16px;">
       <div style="font-size:28px;font-weight:700;color:var(--primary);"><?= number_format($successCount) ?></div>
@@ -375,7 +375,7 @@ include __DIR__ . '/../includes/admin-header.php';
 <?php elseif ($activeTab === 'email'): ?>
 <!-- ══════════════════ E-MAIL NAPLÓ ══════════════════ -->
 
-<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;">
+<div class="rg-4">
   <div class="card">
     <div class="card-body" style="display:flex;align-items:center;gap:16px;">
       <div style="font-size:28px;font-weight:700;color:var(--primary);"><?= number_format($eTotalSent) ?></div>

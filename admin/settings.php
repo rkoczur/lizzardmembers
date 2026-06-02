@@ -34,7 +34,7 @@ include __DIR__ . '/../includes/admin-header.php';
   <h1>Beállítások</h1>
 </div>
 
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start;">
+<div id="settings-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start;">
 
   <!-- Országok -->
   <div class="card">

@@ -42,7 +42,13 @@
         <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path d="M3 12l9-9 9 9"/><path d="M9 21V12h6v9"/><path d="M3 12v9h18v-9"/>
         </svg>
-        Túrák
+        Túranapló
+      </a>
+      <a href="<?= BASE_URL ?>/user/future-tours.php" class="<?= ($activePage ?? '') === 'future-tours' ? 'active' : '' ?>">
+        <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+        </svg>
+        Meghirdetett Túrák
       </a>
       <a href="<?= BASE_URL ?>/user/statistics.php" class="<?= ($activePage ?? '') === 'statistics' ? 'active' : '' ?>">
         <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -58,7 +64,7 @@
         </svg>
         Saját profilom
       </a>
-      <a href="<?= BASE_URL ?>/help.php" class="<?= ($activePage ?? '') === 'help' ? 'active' : '' ?>">
+      <a href="<?= BASE_URL ?>/help.php" target="_blank" rel="noopener" class="<?= ($activePage ?? '') === 'help' ? 'active' : '' ?>">
         <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <circle cx="12" cy="12" r="10"/>
           <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
@@ -103,15 +109,19 @@
       <span class="page-title"><?= e($pageTitle ?? '') ?></span>
       <?php if (isAdminOrVezeto()):
         $_adminPageMap = [
-          'dashboard'  => '/admin/index.php',
-          'profile'    => '/admin/profile.php',
-          'toplist'    => '/admin/toplist.php',
-          'tours'      => '/admin/tours.php',
-          'statistics' => '/admin/statistics.php',
+          'dashboard'    => '/admin/index.php',
+          'profile'      => '/admin/profile.php',
+          'toplist'      => '/admin/toplist.php',
+          'tours'        => '/admin/tours.php',
+          'future-tours' => '/admin/future-tours.php',
+          'statistics'   => '/admin/statistics.php',
         ];
         $_adminViewUrl = BASE_URL . ($_adminPageMap[$activePage ?? ''] ?? '/admin/index.php');
         if (basename($_SERVER['PHP_SELF']) === 'tour-detail.php' && !empty($_GET['id'])) {
           $_adminViewUrl = BASE_URL . '/admin/tour-detail.php?id=' . (int)$_GET['id'];
+        }
+        if (basename($_SERVER['PHP_SELF']) === 'future-tour-detail.php' && !empty($_GET['id'])) {
+          $_adminViewUrl = BASE_URL . '/admin/future-tour-detail.php?id=' . (int)$_GET['id'];
         }
       ?>
       <div class="topbar-actions">

@@ -60,7 +60,7 @@ $flash_error   = getFlash('error');
 
 $confirmedCount = array_sum(array_map(fn($a) => $a['status'] === 'confirmed' ? 1 : 0, $applications));
 
-$pageTitle  = 'Jelentkezők – ' . e($tour['name']);
+$pageTitle  = 'Jelentkezők – ' . ($tour['name'] ?? '');
 $activePage = 'tours';
 include __DIR__ . '/../includes/admin-header.php';
 ?>

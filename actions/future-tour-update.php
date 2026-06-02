@@ -113,6 +113,46 @@ if ($keepIds) {
     $pdo->prepare("DELETE FROM future_tour_custom_fields WHERE future_tour_id = ?")->execute([$id]);
 }
 
+// GPX: meglévő fájlok feliratának mentése
+foreach ($_POST['gpx_label'] ?? [] as $gfId => $label) {
+    $gfId = (int)$gfId;
+    if (!$gfId) continue;
+    $pdo->prepare("UPDATE future_tour_gpx_files SET label = ? WHERE id = ? AND future_tour_id = ?")
+        ->execute([trim($label) ?: null, $gfId, $id]);
+}
+
+// GPX fájlok kezelése — törlés
+$deleteGpxIds = array_values(array_filter(array_map('intval', $_POST['delete_gpx_ids'] ?? [])));
+if ($deleteGpxIds) {
+    $ph   = implode(',', array_fill(0, count($deleteGpxIds), '?'));
+    $rows = $pdo->prepare("SELECT filename FROM future_tour_gpx_files WHERE id IN ($ph) AND future_tour_id = ?");
+    $rows->execute(array_merge($deleteGpxIds, [$id]));
+    foreach ($rows->fetchAll(PDO::FETCH_COLUMN) as $fname) {
+        if ($fname && file_exists(GPX_DIR . $fname)) @unlink(GPX_DIR . $fname);
+    }
+    $pdo->prepare("DELETE FROM future_tour_gpx_files WHERE id IN ($ph) AND future_tour_id = ?")
+        ->execute(array_merge($deleteGpxIds, [$id]));
+}
+
+// GPX fájlok kezelése — feltöltés
+if (!empty($_FILES['gpx_files']['tmp_name'])) {
+    if (!is_dir(GPX_DIR)) mkdir(GPX_DIR, 0755, true);
+    $allowedMimes = ['text/xml','application/xml','application/gpx+xml','text/plain','application/octet-stream'];
+    $insGpx = $pdo->prepare("INSERT IGNORE INTO future_tour_gpx_files (future_tour_id, filename, sort_order) VALUES (?, ?, ?)");
+    $sortBase = (int)$pdo->query("SELECT COALESCE(MAX(sort_order),0) FROM future_tour_gpx_files WHERE future_tour_id = $id")->fetchColumn();
+    foreach ($_FILES['gpx_files']['tmp_name'] as $i => $tmp) {
+        if (($_FILES['gpx_files']['error'][$i] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK) continue;
+        $ext  = strtolower(pathinfo($_FILES['gpx_files']['name'][$i] ?? '', PATHINFO_EXTENSION));
+        $size = (int)($_FILES['gpx_files']['size'][$i] ?? 0);
+        $mime = (new finfo(FILEINFO_MIME_TYPE))->file($tmp);
+        if ($ext !== 'gpx' || $size > 5 * 1024 * 1024 || !in_array($mime, $allowedMimes, true)) continue;
+        $newFile = 'gpx_ft_' . $id . '_' . time() . '_' . $i . '.gpx';
+        if (move_uploaded_file($tmp, GPX_DIR . $newFile)) {
+            $insGpx->execute([$id, $newFile, $sortBase + $i + 1]);
+        }
+    }
+}
+
 flash('success', 'Meghirdetett túra sikeresen mentve.');
 header('Location: ' . BASE_URL . '/admin/future-tour-detail.php?id=' . $id);
 exit;

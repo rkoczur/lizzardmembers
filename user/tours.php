@@ -29,13 +29,13 @@ $myTourStmt = $pdo->prepare("SELECT tour_id FROM tour_members WHERE user_id = ?"
 $myTourStmt->execute([$userId]);
 $myTourIds = array_fill_keys($myTourStmt->fetchAll(PDO::FETCH_COLUMN), true);
 
-$pageTitle  = 'Túrák';
+$pageTitle  = 'Túranapló';
 $activePage = 'tours';
 include __DIR__ . '/../includes/user-header.php';
 ?>
 
 <div class="page-header">
-  <h1>Túrák</h1>
+  <h1>Túranapló</h1>
   <div class="flex items-center gap-2">
     <div class="search-bar">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -58,12 +58,6 @@ include __DIR__ . '/../includes/user-header.php';
       Túra beküldése
     </a>
   </div>
-</div>
-
-<!-- Tabs -->
-<div class="tab-nav">
-  <a href="<?= BASE_URL ?>/user/tours.php" class="tab-link active">Túranapló</a>
-  <a href="<?= BASE_URL ?>/user/future-tours.php" class="tab-link">Meghirdetett Túrák</a>
 </div>
 
 <div class="card">

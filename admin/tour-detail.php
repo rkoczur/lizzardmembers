@@ -34,10 +34,14 @@ $assignedStmt = $pdo->prepare("SELECT u.id, u.firstname, u.lastname, u.email, u.
 $assignedStmt->execute([$id]);
 $assignedMembers = $assignedStmt->fetchAll();
 
+$gpxFilesStmt = $pdo->prepare("SELECT * FROM tour_gpx_files WHERE tour_id = ? ORDER BY sort_order ASC, uploaded_at ASC");
+$gpxFilesStmt->execute([$id]);
+$gpxFiles = $gpxFilesStmt->fetchAll();
+
 $flash_success = getFlash('success');
 $flash_error   = getFlash('error');
 
-$pageTitle  = $tour['name'] ? e($tour['name']) : e($tour['country'] . ($tour['region'] ? ' – ' . $tour['region'] : ''));
+$pageTitle  = $tour['name'] ?: ($tour['country'] . ($tour['region'] ? ' – ' . $tour['region'] : ''));
 $activePage = 'tours';
 include __DIR__ . '/../includes/admin-header.php';
 ?>
@@ -249,23 +253,29 @@ include __DIR__ . '/../includes/admin-header.php';
         </div>
       </div>
 
-      <?php if (!$ro): ?>
-      <div class="form-section-title">GPX térkép</div>
-      <div class="form-grid">
-        <div class="form-group full">
-          <label>GPX fájl</label>
-          <?php if (!empty($tour['gpx_file'])): ?>
-          <div style="margin-bottom:8px;padding:10px 14px;background:var(--bg-subtle,#f5f5f5);border:1px solid var(--border);border-radius:6px;display:flex;align-items:center;gap:10px;">
-            <span style="color:var(--success,#16a34a);font-size:16px;">✓</span>
-            <span style="font-size:13px;font-family:monospace;"><?= e($tour['gpx_file']) ?></span>
-            <label style="margin-left:auto;display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px;">
-              <input type="checkbox" name="delete_gpx" value="1"> GPX fájl törlése
-            </label>
-          </div>
+      <div class="form-section-title">GPX térképek</div>
+      <?php if (!empty($gpxFiles)): ?>
+        <?php foreach ($gpxFiles as $gf): ?>
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--bg-subtle,#f5f5f5);border:1px solid var(--border);border-radius:6px;margin-bottom:8px;font-size:13px;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="var(--success,#16a34a)" stroke-width="2.5" style="flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg>
+          <span style="font-family:monospace;color:var(--text-muted);font-size:11px;white-space:nowrap;"><?= e($gf['filename']) ?></span>
+          <?php if (!$ro): ?>
+          <input type="text" name="gpx_label[<?= (int)$gf['id'] ?>]" value="<?= e($gf['label'] ?? '') ?>" placeholder="Térkép neve (pl. 1. nap útvonala)" style="flex:1;font-size:13px;">
+          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;color:var(--danger,#dc2626);white-space:nowrap;">
+            <input type="checkbox" name="delete_gpx_ids[]" value="<?= (int)$gf['id'] ?>"> Törlés
+          </label>
+          <?php else: ?>
+          <span style="flex:1;color:var(--text-muted);"><?= e($gf['label'] ?? '') ?></span>
           <?php endif; ?>
-          <input type="file" name="gpx_file" accept=".gpx">
-          <small style="color:var(--text-muted);">Csak .gpx formátum, max. 5 MB.<?= !empty($tour['gpx_file']) ? ' Új fájl feltöltése felülírja a régit.' : '' ?></small>
         </div>
+        <?php endforeach; ?>
+      <?php elseif ($ro): ?>
+        <p style="color:var(--text-muted);font-size:13px;">Nincs feltöltött GPX fájl.</p>
+      <?php endif; ?>
+      <?php if (!$ro): ?>
+      <div>
+        <input type="file" name="gpx_files[]" accept=".gpx" multiple>
+        <small style="display:block;margin-top:5px;color:var(--text-muted);font-size:12px;">Több .gpx fájl is kijelölhető egyszerre. Max. 5 MB/fájl.</small>
       </div>
       <?php endif; ?>
 

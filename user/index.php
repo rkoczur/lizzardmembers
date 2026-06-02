@@ -242,7 +242,7 @@ include __DIR__ . '/../includes/user-header.php';
     <a href="<?= BASE_URL ?>/user/profile.php" class="btn btn-ghost btn-sm">Profil szerkesztése</a>
   </div>
   <div class="card-body">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+    <div id="profile-info-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
       <div>
         <div class="text-muted" style="font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;">Teljes név</div>
         <div><?= e($user['lastname'] . ' ' . $user['firstname']) ?></div>

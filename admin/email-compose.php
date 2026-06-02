@@ -63,7 +63,7 @@ include __DIR__ . '/../includes/admin-header.php';
   </div>
 </div>
 
-<div style="display:grid;grid-template-columns:1fr 2fr;gap:20px;align-items:start;">
+<div id="compose-grid" style="display:grid;grid-template-columns:1fr 2fr;gap:20px;align-items:start;">
 
   <!-- Bal: Címzettek -->
   <div class="card">

@@ -83,6 +83,23 @@ function ensureToursSchema(PDO $pdo): void
         @mkdir(GPX_DIR, 0755, true);
     }
 
+    // Multiple GPX files per tour
+    $pdo->exec("CREATE TABLE IF NOT EXISTS `tour_gpx_files` (
+        `id`          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        `tour_id`     INT UNSIGNED NOT NULL,
+        `filename`    VARCHAR(255) NOT NULL,
+        `label`       VARCHAR(255) DEFAULT NULL,
+        `sort_order`  INT NOT NULL DEFAULT 0,
+        `uploaded_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE KEY `uq_filename` (`filename`),
+        FOREIGN KEY (`tour_id`) REFERENCES `tours`(`id`) ON DELETE CASCADE
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+    // Migrate old single gpx_file column data
+    try {
+        $pdo->exec("INSERT IGNORE INTO tour_gpx_files (tour_id, filename)
+                    SELECT id, gpx_file FROM tours WHERE gpx_file IS NOT NULL");
+    } catch (Throwable) {}
+
     // Alap országok feltöltése üres táblánál
     if ((int)$pdo->query("SELECT COUNT(*) FROM countries")->fetchColumn() === 0) {
         $ins = $pdo->prepare("INSERT IGNORE INTO countries (code, name_hu) VALUES (?, ?)");

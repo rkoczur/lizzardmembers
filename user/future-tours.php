@@ -29,8 +29,8 @@ $myApps = array_column($myApplicationStmt->fetchAll(), 'status', 'future_tour_id
 $flash_success = getFlash('success');
 $flash_error   = getFlash('error');
 
-$pageTitle  = 'Túrák';
-$activePage = 'tours';
+$pageTitle  = 'Meghirdetett Túrák';
+$activePage = 'future-tours';
 include __DIR__ . '/../includes/user-header.php';
 ?>
 
@@ -42,18 +42,12 @@ include __DIR__ . '/../includes/user-header.php';
 <?php endif; ?>
 
 <div class="page-header">
-  <h1>Túrák</h1>
-</div>
-
-<!-- Tabs -->
-<div class="tab-nav">
-  <a href="<?= BASE_URL ?>/user/tours.php" class="tab-link">Túranapló</a>
-  <a href="<?= BASE_URL ?>/user/future-tours.php" class="tab-link active">Meghirdetett Túrák</a>
+  <h1>Meghirdetett Túrák</h1>
 </div>
 
 <div class="card">
   <div class="table-wrap">
-    <table>
+    <table id="future-tours-table">
       <thead>
         <tr>
           <th>Túra neve</th>
@@ -112,7 +106,7 @@ include __DIR__ . '/../includes/user-header.php';
               <span class="badge badge-inactive">Lezárt</span>
             <?php endif; ?>
           </td>
-          <td>
+          <td class="td-actions">
             <a href="<?= BASE_URL ?>/user/future-tour-detail.php?id=<?= (int)$t['id'] ?>" class="btn btn-ghost btn-sm">
               <?= $myStatus ? 'Részletek' : 'Megtekintés/Jelentkezés' ?>
             </a>

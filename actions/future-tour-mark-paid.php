@@ -38,5 +38,5 @@ if ($app['paid_at']) {
     flash('success', 'Fizetés megjelölve.');
 }
 
-header('Location: ' . BASE_URL . '/admin/future-tour-detail.php?id=' . $tourId);
+header('Location: ' . BASE_URL . '/admin/future-tour-applicants.php?id=' . $tourId);
 exit;

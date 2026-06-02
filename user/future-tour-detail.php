@@ -53,11 +53,16 @@ $userStmt->execute([$userId]);
 $userLevel = (int)($userStmt->fetchColumn() ?: 1);
 $feeDiscount = getTourFeeDiscount($userLevel);
 
+$gpxFilesStmt = $pdo->prepare("SELECT * FROM future_tour_gpx_files WHERE future_tour_id = ? ORDER BY sort_order ASC, uploaded_at ASC");
+$gpxFilesStmt->execute([$id]);
+$gpxFiles = $gpxFilesStmt->fetchAll();
+$hasMap = !empty($gpxFiles);
+
 $flash_success = getFlash('success');
 $flash_error   = getFlash('error');
 
-$pageTitle  = e($tour['name']);
-$activePage = 'tours';
+$pageTitle  = $tour['name'] ?? '';
+$activePage = 'future-tours';
 include __DIR__ . '/../includes/user-header.php';
 ?>
 
@@ -187,10 +192,12 @@ include __DIR__ . '/../includes/user-header.php';
     </div>
     <?php endforeach; ?>
 
+
   </div>
 
-  <!-- RIGHT: Application status / CTA -->
-  <div class="card sticky-panel">
+  <!-- RIGHT: Application status / CTA + Térképek -->
+  <div style="display:flex;flex-direction:column;gap:16px;">
+    <div class="card sticky-panel">
     <div class="card-body card-body-center">
       <?php if ($myApp && $myApp['status'] === 'confirmed'): ?>
         <div style="font-size:40px;margin-bottom:12px;">✅</div>
@@ -239,7 +246,18 @@ include __DIR__ . '/../includes/user-header.php';
         </button>
       <?php endif; ?>
     </div>
-  </div>
+    </div><!-- /sticky-panel -->
+
+    <?php foreach ($gpxFiles as $gi => $gf): ?>
+    <div class="card">
+      <div class="card-header">
+        <h2><?= !empty($gf['label']) ? e($gf['label']) : ('Térkép' . (count($gpxFiles) > 1 ? ' ' . ($gi + 1) . '.' : '')) ?></h2>
+      </div>
+      <div id="tour-map-<?= $gi ?>" style="height:400px;border-radius:0 0 var(--radius,8px) var(--radius,8px);overflow:hidden;"></div>
+    </div>
+    <?php endforeach; ?>
+
+  </div><!-- /right col -->
 
 </div><!-- .future-detail-grid -->
 
@@ -360,6 +378,33 @@ document.querySelectorAll('input[name="car_available"]').forEach(r => {
     document.getElementById('passengers-row').style.display = r.value === '1' ? 'block' : 'none';
   });
 });
+</script>
+<?php endif; ?>
+
+<?php if ($hasMap): ?>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.7.0/gpx.min.js"></script>
+<script>
+<?php foreach ($gpxFiles as $gi => $gf): ?>
+(function () {
+  var map = L.map('tour-map-<?= $gi ?>');
+  L.tileLayer('https://api.mapy.cz/v1/maptiles/outdoor/256/{z}/{x}/{y}?apikey=nS0JOXTt2SpKYOi_URYlCjoXhR5tUiXnXIDijo4MY0Q', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> &copy; <a href="https://mapy.cz/" target="_blank">Mapy.cz</a>'
+  }).addTo(map);
+  new L.GPX(<?= json_encode(GPX_URL . $gf['filename']) ?>, {
+    async: true,
+    polyline_options: { color: '#ff0000', weight: 5, opacity: 1 },
+    marker_options: { startIconUrl: null, endIconUrl: null, shadowUrl: null }
+  }).on('loaded', function (e) {
+    map.fitBounds(e.target.getBounds(), { padding: [20, 20] });
+  }).on('error', function () {
+    document.getElementById('tour-map-<?= $gi ?>').innerHTML =
+      '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--text-muted,#888);">Nem sikerült betölteni a GPX fájlt.</div>';
+  }).addTo(map);
+})();
+<?php endforeach; ?>
 </script>
 <?php endif; ?>
 

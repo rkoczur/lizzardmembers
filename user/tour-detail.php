@@ -43,10 +43,13 @@ $isMine = $pdo->prepare("SELECT 1 FROM tour_members WHERE tour_id = ? AND user_i
 $isMine->execute([$id, $userId]);
 $isMine = (bool)$isMine->fetchColumn();
 
-$hasMap = !empty($tour['gpx_file']);
+$gpxFilesStmt = $pdo->prepare("SELECT * FROM tour_gpx_files WHERE tour_id = ? ORDER BY sort_order ASC, uploaded_at ASC");
+$gpxFilesStmt->execute([$id]);
+$gpxFiles = $gpxFilesStmt->fetchAll();
+$hasMap = !empty($gpxFiles);
 
 $title = $tour['name'] ?: ($tour['country'] . ($tour['region'] ? ' – ' . $tour['region'] : ''));
-$pageTitle  = e($title);
+$pageTitle  = $title;
 $activePage = 'tours';
 include __DIR__ . '/../includes/user-header.php';
 
@@ -165,9 +168,9 @@ function detailRow(string $label, $value): void {
 </div>
 
 
-<div id="tour-layout" style="display:grid;grid-template-columns:<?= $hasMap ? 'minmax(0,1fr) minmax(0,1.6fr)' : '1fr 1fr' ?>;gap:20px;align-items:start;">
+<div id="tour-layout" style="display:grid;grid-template-columns:<?= $hasMap ? '1fr 1.6fr' : '1fr' ?>;gap:20px;align-items:start;">
 
-  <!-- Bal oszlop: kártyák -->
+  <!-- Bal oszlop: Adatok -->
   <div style="display:flex;flex-direction:column;gap:20px;">
 
     <!-- 1. Általános adatok -->
@@ -274,7 +277,7 @@ function detailRow(string $label, $value): void {
     <!-- 3. Pontszámok -->
     <div class="card">
       <div class="card-header"><h2>Pontszámok</h2></div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;">
+      <div id="pts-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:0;">
         <div style="padding:20px;text-align:center;border-right:1px solid var(--border);">
           <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted);margin-bottom:6px;">Lizzardier pont</div>
           <div style="font-size:28px;font-weight:700;color:var(--warning);"><?= number_format((int)$tour['points']) ?></div>
@@ -320,13 +323,17 @@ function detailRow(string $label, $value): void {
 
   </div><!-- /bal oszlop -->
 
+  <!-- Jobb oszlop: Térképek (ha van GPX) -->
   <?php if ($hasMap): ?>
-  <!-- Jobb oszlop: Térkép -->
-  <div id="tour-map-col" style="position:sticky;top:20px;">
+  <div style="display:flex;flex-direction:column;gap:20px;">
+    <?php foreach ($gpxFiles as $gi => $gf): ?>
     <div class="card">
-      <div class="card-header"><h2>Térkép</h2></div>
-      <div id="tour-map" style="height:calc(100vh - 140px);min-height:400px;max-height:800px;border-radius:0 0 var(--radius,8px) var(--radius,8px);overflow:hidden;"></div>
+      <div class="card-header">
+        <h2><?= !empty($gf['label']) ? e($gf['label']) : ('Térkép' . (count($gpxFiles) > 1 ? ' ' . ($gi + 1) . '.' : '')) ?></h2>
+      </div>
+      <div id="tour-map-<?= $gi ?>" style="height:500px;border-radius:0 0 var(--radius,8px) var(--radius,8px);overflow:hidden;"></div>
     </div>
+    <?php endforeach; ?>
   </div>
   <?php endif; ?>
 
@@ -337,24 +344,25 @@ function detailRow(string $label, $value): void {
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.7.0/gpx.min.js"></script>
 <script>
+<?php foreach ($gpxFiles as $gi => $gf): ?>
 (function () {
-  var map = L.map('tour-map');
-  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  maxZoom: 30,
-  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+  var map = L.map('tour-map-<?= $gi ?>');
+  L.tileLayer('https://api.mapy.cz/v1/maptiles/outdoor/256/{z}/{x}/{y}?apikey=nS0JOXTt2SpKYOi_URYlCjoXhR5tUiXnXIDijo4MY0Q', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> &copy; <a href="https://mapy.cz/" target="_blank">Mapy.cz</a>'
   }).addTo(map);
-
-  new L.GPX(<?= json_encode(GPX_URL . $tour['gpx_file']) ?>, {
+  new L.GPX(<?= json_encode(GPX_URL . $gf['filename']) ?>, {
     async: true,
-    polyline_options: { color: '#e03030', weight: 3, opacity: 0.85 },
+    polyline_options: { color: '#ff0000', weight: 7, opacity: 1 },
     marker_options: { startIconUrl: null, endIconUrl: null, shadowUrl: null }
   }).on('loaded', function (e) {
     map.fitBounds(e.target.getBounds(), { padding: [20, 20] });
   }).on('error', function () {
-    document.getElementById('tour-map').innerHTML =
+    document.getElementById('tour-map-<?= $gi ?>').innerHTML =
       '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--text-muted,#888);">Nem sikerült betölteni a GPX fájlt.</div>';
   }).addTo(map);
 })();
+<?php endforeach; ?>
 </script>
 <?php endif; ?>
 
