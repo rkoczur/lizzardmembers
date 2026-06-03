@@ -52,6 +52,7 @@ function ensureFutureToursSchema(PDO $pdo): void {
     try { $pdo->exec("ALTER TABLE future_tours ADD COLUMN equipment TEXT DEFAULT NULL AFTER travel"); } catch (Throwable) {}
     try { $pdo->exec("ALTER TABLE future_tours ADD COLUMN experience TEXT DEFAULT NULL AFTER equipment"); } catch (Throwable) {}
     try { $pdo->exec("ALTER TABLE future_tours ADD COLUMN disabled_standard_fields TEXT DEFAULT NULL AFTER experience"); } catch (Throwable) {}
+    try { $pdo->exec("ALTER TABLE future_tours ADD COLUMN requires_membership TINYINT(1) NOT NULL DEFAULT 0 AFTER disabled_standard_fields"); } catch (Throwable) {}
     // GPX file support for future tours (legacy single-file column, kept for migration)
     try { $pdo->exec("ALTER TABLE future_tours ADD COLUMN gpx_file VARCHAR(255) DEFAULT NULL"); } catch (Throwable) {}
     // Multiple GPX files per future tour
@@ -69,6 +70,7 @@ function ensureFutureToursSchema(PDO $pdo): void {
         $pdo->exec("INSERT IGNORE INTO future_tour_gpx_files (future_tour_id, filename)
                     SELECT id, gpx_file FROM future_tours WHERE gpx_file IS NOT NULL");
     } catch (Throwable) {}
+    try { $pdo->exec("ALTER TABLE future_tours ADD COLUMN lizzardier_points INT UNSIGNED DEFAULT NULL AFTER participation_fee"); } catch (Throwable) {}
     // Guest application support
     try { $pdo->exec("ALTER TABLE future_tour_applications MODIFY user_id INT UNSIGNED NULL"); } catch (Throwable) {}
     try { $pdo->exec("ALTER TABLE future_tour_applications MODIFY status ENUM('confirmed','waitlist','cancelled','pending') NOT NULL DEFAULT 'confirmed'"); } catch (Throwable) {}
@@ -76,6 +78,7 @@ function ensureFutureToursSchema(PDO $pdo): void {
     try { $pdo->exec("ALTER TABLE future_tour_applications ADD COLUMN guest_email VARCHAR(255) DEFAULT NULL AFTER guest_name"); } catch (Throwable) {}
     try { $pdo->exec("ALTER TABLE future_tour_applications ADD COLUMN guest_phone VARCHAR(50) DEFAULT NULL AFTER guest_email"); } catch (Throwable) {}
     try { $pdo->exec("ALTER TABLE future_tour_applications ADD COLUMN departure_city VARCHAR(255) DEFAULT NULL AFTER notes"); } catch (Throwable) {}
+    try { $pdo->exec("ALTER TABLE future_tour_applications ADD COLUMN member_application_id INT UNSIGNED DEFAULT NULL AFTER paid_at"); } catch (Throwable) {}
 
     $pdo->exec("
         CREATE TABLE IF NOT EXISTS future_tour_applications (

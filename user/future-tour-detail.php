@@ -118,6 +118,12 @@ include __DIR__ . '/../includes/user-header.php';
               <?= $spotsLeft > 0 ? $spotsLeft . ' / ' . (int)$tour['max_attendees'] : 'Betelt' ?>
             </div>
           </div>
+          <?php if ($tour['lizzardier_points'] !== null): ?>
+          <div class="tour-stat-cell">
+            <div class="tour-stat-label">Lizzardier</div>
+            <div class="tour-stat-value" style="color:var(--primary);"><?= (int)$tour['lizzardier_points'] ?> pont</div>
+          </div>
+          <?php endif; ?>
           <?php if ($tour['participation_fee'] !== null): ?>
           <div class="tour-stat-cell">
             <div class="tour-stat-label">Részvételi díj</div>
@@ -262,6 +268,10 @@ include __DIR__ . '/../includes/user-header.php';
 </div><!-- .future-detail-grid -->
 
 <!-- Application Modal -->
+<?php
+$modalDisabledFields = json_decode($tour['disabled_standard_fields'] ?? '[]', true) ?: [];
+$modalFieldOn = fn(string $f): bool => !in_array($f, $modalDisabledFields, true);
+?>
 <?php if ((!$myApp || $myApp['status'] === 'cancelled') && $tour['status'] === 'open'): ?>
 <div id="apply-modal-backdrop" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;align-items:center;justify-content:center;padding:16px;">
   <div style="background:var(--bg,#fff);border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.18);width:100%;max-width:560px;max-height:92vh;overflow-y:auto;">
@@ -278,6 +288,16 @@ include __DIR__ . '/../includes/user-header.php';
         <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
         <input type="hidden" name="tour_id" value="<?= (int)$id ?>">
 
+        <?php if ($modalFieldOn('departure_city')): ?>
+        <!-- Departure city -->
+        <div class="form-group" style="margin-bottom:16px;">
+          <label style="font-size:13px;font-weight:600;">Honnan indulnál? <span style="color:var(--danger)">*</span></label>
+          <input type="text" name="departure_city" required placeholder="pl. Budapest XIII. kerület" style="margin-top:6px;width:100%;">
+          <small style="display:block;color:var(--text-muted);font-size:11.5px;margin-top:4px;">Budapest esetén a kerületet is add meg!</small>
+        </div>
+        <?php endif; ?>
+
+        <?php if ($modalFieldOn('car_available')): ?>
         <!-- Car -->
         <div class="form-group" style="margin-bottom:16px;">
           <label style="font-size:13px;font-weight:600;">Tudsz autóval jönni?</label>
@@ -290,7 +310,6 @@ include __DIR__ . '/../includes/user-header.php';
             </label>
           </div>
         </div>
-
         <div id="passengers-row" style="margin-bottom:16px;display:none;">
           <div class="form-group">
             <label style="font-size:13px;font-weight:600;">Ha igen, hány hely van melletted?</label>
@@ -300,7 +319,9 @@ include __DIR__ . '/../includes/user-header.php';
             </small>
           </div>
         </div>
+        <?php endif; ?>
 
+        <?php if ($modalFieldOn('sharing_room')): ?>
         <!-- Sharing room -->
         <div class="form-group" style="margin-bottom:16px;">
           <label style="font-size:13px;font-weight:600;">Szükség esetén aludnál egy helyen mással?</label>
@@ -310,12 +331,15 @@ include __DIR__ . '/../includes/user-header.php';
             <option value="no">Nem</option>
           </select>
         </div>
+        <?php endif; ?>
 
+        <?php if ($modalFieldOn('notes')): ?>
         <!-- Notes -->
         <div class="form-group" style="margin-bottom:16px;">
           <label style="font-size:13px;font-weight:600;">Megjegyzések</label>
           <textarea name="notes" rows="3" placeholder="Egyéb megjegyzés, kérés…" style="margin-top:6px;"></textarea>
         </div>
+        <?php endif; ?>
 
         <!-- Custom fields -->
         <?php foreach ($customFields as $cf): ?>

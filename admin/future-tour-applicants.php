@@ -5,10 +5,12 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/future-tours-schema.php';
+require_once __DIR__ . '/../includes/join-schema.php';
 requireAdminOrVezeto();
 
 $pdo = getDb();
 ensureFutureToursSchema($pdo);
+ensureJoinSchema($pdo);
 
 $id = (int)($_GET['id'] ?? 0);
 if (!$id) {
@@ -35,9 +37,11 @@ $applications->execute([$id]);
 $applications = $applications->fetchAll();
 
 $pendingGuests = $pdo->prepare("
-    SELECT * FROM future_tour_applications
-    WHERE future_tour_id = ? AND status = 'pending'
-    ORDER BY applied_at ASC
+    SELECT fta.*, ma.id AS ma_id, ma.status AS ma_status
+    FROM future_tour_applications fta
+    LEFT JOIN member_applications ma ON ma.id = fta.member_application_id
+    WHERE fta.future_tour_id = ? AND fta.status = 'pending'
+    ORDER BY fta.applied_at ASC
 ");
 $pendingGuests->execute([$id]);
 $pendingGuests = $pendingGuests->fetchAll();
@@ -149,7 +153,11 @@ include __DIR__ . '/../includes/admin-header.php';
         <tr style="border-bottom:1px solid var(--border);background:#fffdf5;">
           <td style="padding:10px 16px;">
             <div style="font-weight:600;"><?= e($pg['guest_name']) ?></div>
-            <span class="badge-guest">Vendég</span>
+            <?php if ($pg['member_application_id']): ?>
+              <span style="display:inline-block;margin-top:3px;background:#dbeafe;color:#1e40af;font-size:11px;font-weight:600;padding:1px 7px;border-radius:99px;">Tagságra jelentkező</span>
+            <?php else: ?>
+              <span class="badge-guest">Vendég</span>
+            <?php endif; ?>
           </td>
           <td style="padding:10px 16px;color:var(--text-muted);font-size:12px;">
             <?= e($pg['guest_email']) ?><?= $pg['guest_phone'] ? '<br>' . e($pg['guest_phone']) : '' ?>
@@ -158,19 +166,26 @@ include __DIR__ . '/../includes/admin-header.php';
             <?= date('Y.m.d H:i', strtotime($pg['applied_at'])) ?>
           </td>
           <td style="padding:10px 16px;text-align:right;white-space:nowrap;">
-            <form method="post" action="<?= BASE_URL ?>/actions/future-tour-approve-guest.php" style="display:inline;">
-              <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
-              <input type="hidden" name="application_id" value="<?= (int)$pg['id'] ?>">
-              <input type="hidden" name="tour_id" value="<?= $id ?>">
-              <button type="submit" class="btn btn-primary btn-sm">Jóváhagy</button>
-            </form>
-            <form method="post" action="<?= BASE_URL ?>/actions/future-tour-reject-guest.php" style="display:inline;margin-left:6px;"
-                  onsubmit="return confirm('Biztosan elutasítja ezt a jelentkezést?')">
-              <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
-              <input type="hidden" name="application_id" value="<?= (int)$pg['id'] ?>">
-              <input type="hidden" name="tour_id" value="<?= $id ?>">
-              <button type="submit" class="btn btn-danger btn-sm">Elutasít</button>
-            </form>
+            <?php if ($pg['member_application_id']): ?>
+              <span style="font-size:12px;color:var(--text-muted);font-style:italic;">
+                Automatikusan átkerül, ha tagsági kérelme jóváhagyásra kerül.
+              </span>
+              <a href="<?= BASE_URL ?>/admin/members.php?tab=applications" class="btn btn-ghost btn-sm" style="margin-left:8px;">Tagkérelmek</a>
+            <?php else: ?>
+              <form method="post" action="<?= BASE_URL ?>/actions/future-tour-approve-guest.php" style="display:inline;">
+                <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
+                <input type="hidden" name="application_id" value="<?= (int)$pg['id'] ?>">
+                <input type="hidden" name="tour_id" value="<?= $id ?>">
+                <button type="submit" class="btn btn-primary btn-sm">Jóváhagy</button>
+              </form>
+              <form method="post" action="<?= BASE_URL ?>/actions/future-tour-reject-guest.php" style="display:inline;margin-left:6px;"
+                    onsubmit="return confirm('Biztosan elutasítja ezt a jelentkezést?')">
+                <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
+                <input type="hidden" name="application_id" value="<?= (int)$pg['id'] ?>">
+                <input type="hidden" name="tour_id" value="<?= $id ?>">
+                <button type="submit" class="btn btn-danger btn-sm">Elutasít</button>
+              </form>
+            <?php endif; ?>
           </td>
         </tr>
         <?php endforeach; ?>

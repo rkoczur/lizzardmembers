@@ -2,7 +2,7 @@
 /*
 Plugin Name: LOTE Meghirdetett Túrák – Jelentkezés
 Description: Leguán Osztag Természetjáró Egyesület meghirdetett túrák natív jelentkezési űrlapja. Shortcode: [lote_jelentkezes] vagy [lote_jelentkezes id="5"]
-Version:     2.1
+Version:     2.2
 Author:      Leguán Osztag Természetjáró Egyesület
 */
 
@@ -12,13 +12,14 @@ if (!defined('LOTE_FT_APP_BASE')) {
     define('LOTE_FT_APP_BASE', '/lizzardmembers');
 }
 
-define('LOTE_FT_API_TOURS',   LOTE_FT_APP_BASE . '/api/future-tours.php');
-define('LOTE_FT_API_AUTH',    LOTE_FT_APP_BASE . '/api/member-auth.php');
-define('LOTE_FT_API_CSRF',    LOTE_FT_APP_BASE . '/api/csrf-token.php');
-define('LOTE_FT_API_SUBMIT',  LOTE_FT_APP_BASE . '/api/submit-application.php');
-define('LOTE_FT_API_EMAIL',   LOTE_FT_APP_BASE . '/api/check-member-email.php');
-define('LOTE_FT_CACHE_KEY',   'lote_ft_tours_v2');
-define('LOTE_FT_CACHE_TTL',   120);
+define('LOTE_FT_API_TOURS',     LOTE_FT_APP_BASE . '/api/future-tours.php');
+define('LOTE_FT_API_AUTH',      LOTE_FT_APP_BASE . '/api/member-auth.php');
+define('LOTE_FT_API_CSRF',      LOTE_FT_APP_BASE . '/api/csrf-token.php');
+define('LOTE_FT_API_SUBMIT',    LOTE_FT_APP_BASE . '/api/submit-application.php');
+define('LOTE_FT_API_EMAIL',     LOTE_FT_APP_BASE . '/api/check-member-email.php');
+define('LOTE_FT_API_JOIN_TOUR', LOTE_FT_APP_BASE . '/api/join-tour-submit.php');
+define('LOTE_FT_CACHE_KEY',     'lote_ft_tours_v3');
+define('LOTE_FT_CACHE_TTL',     120);
 
 function lote_ft_fetch(): ?array
 {
@@ -41,16 +42,17 @@ function lote_ft_fetch(): ?array
 }
 
 add_shortcode('lote_jelentkezes', function (array $atts): string {
-    wp_enqueue_style('lote-jelentkezes', plugins_url('style.css', __FILE__), [], '2.0');
+    wp_enqueue_style('lote-jelentkezes', plugins_url('style.css', __FILE__), [], '2.3');
 
     $atts = shortcode_atts(['id' => ''], $atts);
     $data = lote_ft_fetch();
     $uid  = 'lote-ft-' . substr(md5(uniqid()), 0, 8);
 
-    $authUrl   = esc_url(home_url(LOTE_FT_API_AUTH));
-    $csrfUrl   = esc_url(home_url(LOTE_FT_API_CSRF));
-    $submitUrl = esc_url(home_url(LOTE_FT_API_SUBMIT));
-    $emailUrl  = esc_url(home_url(LOTE_FT_API_EMAIL));
+    $authUrl     = esc_url(home_url(LOTE_FT_API_AUTH));
+    $csrfUrl     = esc_url(home_url(LOTE_FT_API_CSRF));
+    $submitUrl   = esc_url(home_url(LOTE_FT_API_SUBMIT));
+    $emailUrl    = esc_url(home_url(LOTE_FT_API_EMAIL));
+    $joinTourUrl = esc_url(home_url(LOTE_FT_API_JOIN_TOUR));
 
     if (!$data) {
         return '<p class="lote-ft-error">A jelentkezési űrlap jelenleg nem érhető el. Kérjük, próbáld újra később.</p>';
@@ -116,16 +118,19 @@ add_shortcode('lote_jelentkezes', function (array $atts): string {
 
       <!-- ===== Natív jelentkezési űrlapok ===== -->
       <?php foreach ($tours as $t):
-        $tid           = (int)$t['id'];
-        $customFields  = $t['custom_fields'] ?? [];
-        $bId           = esc_attr($uid . '-block-' . $tid);
-        $disabledFlds  = $t['disabled_standard_fields'] ?? [];
-        $fldOn         = fn(string $f): bool => !in_array($f, $disabledFlds, true);
+        $tid             = (int)$t['id'];
+        $customFields    = $t['custom_fields'] ?? [];
+        $bId             = esc_attr($uid . '-block-' . $tid);
+        $disabledFlds    = $t['disabled_standard_fields'] ?? [];
+        $fldOn           = fn(string $f): bool => !in_array($f, $disabledFlds, true);
+        $requiresMember  = !empty($t['requires_membership']);
       ?>
       <div class="lote-ft-form-block" id="<?= $bId ?>">
 
         <!-- Jelentkezés toggle gomb -->
         <div class="lote-ft-apply-toggle" id="<?= esc_attr($uid) ?>-toggle-wrap-<?= $tid ?>">
+          <?php if ($requiresMember): ?>
+          <?php endif; ?>
           <?php if ($t['participation_fee'] !== null): ?>
           <div class="lote-ft-fee-card">
             <span class="lote-ft-fee-badge" id="<?= esc_attr($uid) ?>-fee-badge-<?= $tid ?>" hidden></span>
@@ -142,8 +147,6 @@ add_shortcode('lote_jelentkezes', function (array $atts): string {
 
         <!-- Form tartalom -->
         <div class="lote-ft-form-inner" id="<?= esc_attr($uid) ?>-inner-<?= $tid ?>" hidden>
-
-          <p class="lote-ft-form-intro">Az alábbi űrlapon jelentkezhetsz a túrára. A jelentkezésedet az adminisztrátor hagyja jóvá, erről e-mailben értesítünk.</p>
 
           <?php
             $maxAtt   = (int)$t['max_attendees'];
@@ -177,119 +180,282 @@ add_shortcode('lote_jelentkezes', function (array $atts): string {
             </div>
           </div>
 
-          <!-- Vendég mezők (bejelentkezés előtt látható) -->
-          <div class="lote-ft-guest-section" id="<?= esc_attr($uid) ?>-guest-<?= $tid ?>">
+          <!-- ===== JOIN SECTION (csak tagoknak + nem bejelentkezett) ===== -->
+          <div class="lote-ft-join-section" id="<?= esc_attr($uid) ?>-join-<?= $tid ?>" hidden>
+
+            <!-- Notice -->
+            <div style="background:#fffbeb;border:1px solid #f59e0b;border-radius:8px;padding:14px 16px;margin-bottom:14px;font-size:13px;color:#92400e;line-height:1.55;">
+              <strong>Ez a túra csak az egyesület tagjai számára érhető el.</strong><br>
+              <span style="color:#b45309;font-size:12.5px;line-height:1.1;">Ha már tag vagy, lépj be az alábbi gombbal. Ha még nem vagy tag, az alábbi űrlappal egyszerre kérheted felvételedet és jelentkezhetsz a túrára. ⚠ <strong>Fontos:</strong> A tagság csak az éves tagdíj befizetésével válik érvényessé. Az éves tagdíj összege: <strong>5 000 Ft</strong></span>
+            </div>
+
+            <!-- Mini login sáv -->
+            <div style="background:#f8fafc;border:1px solid #e5e7eb;border-radius:8px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;">
+              <span style="font-size:13px;color:#6b7280;">Ha már tag vagy, jelentkezz be:</span>
+              <button type="button" id="<?= esc_attr($uid) ?>-join-login-<?= $tid ?>" style="background:#29776f;color:#fff;border:none;border-radius:6px;padding:6px 14px;font-size:13px;cursor:pointer;font-weight:600;">Bejelentkezés</button>
+            </div>
+
+            <!-- Elválasztó -->
+            <div style="display:flex;align-items:center;gap:10px;margin:20px 0;">
+              <hr style="flex:1;border:none;border-top:1px solid #e5e7eb;margin:0;">
+              <span style="font-size:13px;color:#9ca3af;white-space:nowrap;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border-bottom:2px solid #29776F;">Tagfelvételi kérelemmel jelentkezés:</span>
+              <hr style="flex:1;border:none;border-top:1px solid #e5e7eb;margin:0;">
+            </div>
+
+            <!-- Személyes adatok -->
             <div class="lote-ft-row-2">
               <div class="lote-ft-field-wrap">
-                <label class="lote-ft-label">Teljes név <span class="lote-ft-req">*</span></label>
-                <input class="lote-ft-input" type="text" name="guest_name" placeholder="pl. Kovács János">
+                <label class="lote-ft-label">Vezetéknév <span class="lote-ft-req">*</span></label>
+                <input class="lote-ft-input" type="text" name="lastname">
+              </div>
+              <div class="lote-ft-field-wrap">
+                <label class="lote-ft-label">Keresztnév <span class="lote-ft-req">*</span></label>
+                <input class="lote-ft-input" type="text" name="firstname">
               </div>
               <div class="lote-ft-field-wrap">
                 <label class="lote-ft-label">E-mail cím <span class="lote-ft-req">*</span></label>
-                <input class="lote-ft-input" type="email" name="guest_email" placeholder="pelda@email.hu">
+                <input class="lote-ft-input" type="email" name="email">
+              </div>
+              <div class="lote-ft-field-wrap">
+                <label class="lote-ft-label">Telefonszám</label>
+                <input class="lote-ft-input" type="tel" name="phone">
+              </div>
+              <div class="lote-ft-field-wrap">
+                <label class="lote-ft-label">Születési dátum <span class="lote-ft-req">*</span></label>
+                <input class="lote-ft-input" type="date" name="dateofbirth">
+              </div>
+              <div class="lote-ft-field-wrap">
+                <label class="lote-ft-label">Irányítószám <span class="lote-ft-req">*</span></label>
+                <input class="lote-ft-input" type="text" name="zipcode">
+              </div>
+              <div class="lote-ft-field-wrap">
+                <label class="lote-ft-label">Város <span class="lote-ft-req">*</span></label>
+                <input class="lote-ft-input" type="text" name="city">
+              </div>
+              <div class="lote-ft-field-wrap">
+                <label class="lote-ft-label">Lakcím <span class="lote-ft-req">*</span></label>
+                <input class="lote-ft-input" type="text" name="address">
               </div>
             </div>
             <div class="lote-ft-field-wrap">
-              <label class="lote-ft-label">Telefonszám</label>
-              <input class="lote-ft-input" type="tel" name="guest_phone" placeholder="+36 30 123 4567">
+              <label class="lote-ft-label">Megjegyzés / Motiváció</label>
+              <textarea class="lote-ft-textarea" name="message" rows="2"></textarea>
             </div>
-          </div>
 
-          <!-- Tag badge (bejelentkezés után látható) -->
-          <div class="lote-ft-member-badge" id="<?= esc_attr($uid) ?>-member-<?= $tid ?>" hidden>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-            <div>
-              <strong class="lote-ft-m-name"></strong>
-              <div class="lote-ft-m-email"></div>
+            <!-- Túra-specifikus adatok -->
+            <div style="display:flex;align-items:center;gap:10px;margin:20px 0 16px;">
+              <hr style="flex:1;border:none;border-top:1px solid #e5e7eb;margin:0;">
+              <span style="font-size:13px;color:#9ca3af;white-space:nowrap;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border-bottom:2px solid #29776F;">Túra-specifikus adatok</span>
+              <hr style="flex:1;border:none;border-top:1px solid #e5e7eb;margin:0;">
             </div>
-          </div>
 
-          <hr class="lote-ft-divider">
-
-          <?php if ($fldOn('departure_city')): ?>
-          <!-- Indulási helyszín -->
-          <div class="lote-ft-field-wrap">
-            <label class="lote-ft-label">Honnan indulnál? <span class="lote-ft-req">*</span></label>
-            <input class="lote-ft-input" type="text" name="departure_city" placeholder="pl. Budapest XIII. kerület" required>
-            <p class="lote-ft-hint">Budapest esetén a kerületet is add meg!</p>
-          </div>
-          <?php endif; ?>
-
-          <?php if ($fldOn('car_available')): ?>
-          <!-- Autó -->
-          <div class="lote-ft-field-wrap">
-            <label class="lote-ft-label">Tudsz autóval jönni?</label>
-            <div class="lote-ft-radios">
-              <label class="lote-ft-radio-wrap">
-                <input type="radio" name="car_<?= $tid ?>" value="1"> Igen
-              </label>
-              <label class="lote-ft-radio-wrap">
-                <input type="radio" name="car_<?= $tid ?>" value="0" checked> Nem
-              </label>
+            <?php if ($fldOn('departure_city')): ?>
+            <div class="lote-ft-field-wrap">
+              <label class="lote-ft-label">Honnan indulnál? <span class="lote-ft-req">*</span></label>
+              <input class="lote-ft-input" type="text" name="departure_city" placeholder="pl. Budapest XIII. kerület">
+              <p class="lote-ft-hint">Budapest esetén a kerületet is add meg!</p>
             </div>
-          </div>
-
-          <div class="lote-ft-field-wrap" id="<?= esc_attr($uid) ?>-pass-<?= $tid ?>" hidden>
-            <label class="lote-ft-label">Hány hely van melletted?</label>
-            <input class="lote-ft-input lote-ft-input-narrow" type="number" name="passengers" min="0" max="10" value="0">
-            <p class="lote-ft-hint">Ha már megvan, hogy kivel utazol, akkor is a maximum számot írd be, és majd a megjegyzésnél jelezd, hogy ki az utasod.</p>
-          </div>
-          <?php endif; ?>
-
-          <?php if ($fldOn('sharing_room')): ?>
-          <!-- Szobamegosztás -->
-          <div class="lote-ft-field-wrap">
-            <label class="lote-ft-label">Szükség esetén aludnál egy helyen mással?</label>
-            <select class="lote-ft-select" name="sharing_room">
-              <option value="same_gender">Igen, de csak azonos neművel</option>
-              <option value="yes">Igen</option>
-              <option value="no">Nem</option>
-            </select>
-          </div>
-          <?php endif; ?>
-
-          <?php if ($fldOn('notes')): ?>
-          <!-- Megjegyzés -->
-          <div class="lote-ft-field-wrap">
-            <label class="lote-ft-label">Megjegyzések</label>
-            <textarea class="lote-ft-textarea" name="notes" rows="3" placeholder="Egyéb megjegyzés, kérés…"></textarea>
-          </div>
-          <?php endif; ?>
-
-          <!-- Egyéni mezők -->
-          <?php foreach ($customFields as $cf): ?>
-          <div class="lote-ft-field-wrap">
-            <label class="lote-ft-label"><?= esc_html($cf['field_name']) ?></label>
-            <?php if ($cf['field_type'] === 'textarea'): ?>
-              <textarea class="lote-ft-textarea" name="custom_field_<?= (int)$cf['id'] ?>" rows="2"></textarea>
-            <?php elseif ($cf['field_type'] === 'checkbox'): ?>
-              <label class="lote-ft-checkbox-wrap">
-                <input type="checkbox" name="custom_field_<?= (int)$cf['id'] ?>" value="1"> Igen
-              </label>
-            <?php elseif ($cf['field_type'] === 'select' && !empty($cf['field_options'])): ?>
-              <select class="lote-ft-select" name="custom_field_<?= (int)$cf['id'] ?>">
-                <option value="">— válassz —</option>
-                <?php foreach (array_filter(array_map('trim', explode(',', $cf['field_options']))) as $opt): ?>
-                  <option value="<?= esc_attr($opt) ?>"><?= esc_html($opt) ?></option>
-                <?php endforeach; ?>
-              </select>
-            <?php elseif ($cf['field_type'] === 'number'): ?>
-              <input class="lote-ft-input lote-ft-input-narrow" type="number" name="custom_field_<?= (int)$cf['id'] ?>">
-            <?php else: ?>
-              <input class="lote-ft-input" type="text" name="custom_field_<?= (int)$cf['id'] ?>">
             <?php endif; ?>
-          </div>
-          <?php endforeach; ?>
 
-          <!-- Küldés -->
-          <div class="lote-ft-submit-wrap">
-            <button type="button" class="lote-ft-submit-btn" id="<?= esc_attr($uid) ?>-submit-<?= $tid ?>">
-              Jelentkezés elküldése
-            </button>
-          </div>
-          <div class="lote-ft-inline-error" id="<?= esc_attr($uid) ?>-form-err-<?= $tid ?>" hidden></div>
+            <?php if ($fldOn('car_available')): ?>
+            <div class="lote-ft-field-wrap">
+              <label class="lote-ft-label">Tudsz autóval jönni?</label>
+              <div class="lote-ft-radios">
+                <label class="lote-ft-radio-wrap">
+                  <input type="radio" name="j_car_<?= $tid ?>" value="1"> Igen
+                </label>
+                <label class="lote-ft-radio-wrap">
+                  <input type="radio" name="j_car_<?= $tid ?>" value="0" checked> Nem
+                </label>
+              </div>
+            </div>
+            <div class="lote-ft-field-wrap" id="<?= esc_attr($uid) ?>-jpass-<?= $tid ?>" hidden>
+              <label class="lote-ft-label">Hány hely van melletted?</label>
+              <input class="lote-ft-input lote-ft-input-narrow" type="number" name="passengers" min="0" max="10" value="0">
+              <p class="lote-ft-hint">Ha már megvan, hogy kivel utazol, akkor is a maximum számot írd be, és majd a megjegyzésnél jelezd, hogy ki az utasod.</p>
+            </div>
+            <?php endif; ?>
 
-        </div>
+            <?php if ($fldOn('sharing_room')): ?>
+            <div class="lote-ft-field-wrap">
+              <label class="lote-ft-label">Szükség esetén aludnál egy helyen mással?</label>
+              <select class="lote-ft-select" name="sharing_room">
+                <option value="same_gender">Igen, de csak azonos neművel</option>
+                <option value="yes">Igen</option>
+                <option value="no">Nem</option>
+              </select>
+            </div>
+            <?php endif; ?>
+
+            <?php if ($fldOn('notes')): ?>
+            <div class="lote-ft-field-wrap">
+              <label class="lote-ft-label">Megjegyzések a túrával kapcsolatban</label>
+              <textarea class="lote-ft-textarea" name="notes" rows="2" placeholder="Egyéb megjegyzés, kérés…"></textarea>
+            </div>
+            <?php endif; ?>
+
+            <?php foreach ($customFields as $cf): ?>
+            <div class="lote-ft-field-wrap">
+              <label class="lote-ft-label"><?= esc_html($cf['field_name']) ?></label>
+              <?php if ($cf['field_type'] === 'textarea'): ?>
+                <textarea class="lote-ft-textarea" name="j_custom_field_<?= (int)$cf['id'] ?>" rows="2"></textarea>
+              <?php elseif ($cf['field_type'] === 'checkbox'): ?>
+                <label class="lote-ft-checkbox-wrap">
+                  <input type="checkbox" name="j_custom_field_<?= (int)$cf['id'] ?>" value="1"> Igen
+                </label>
+              <?php elseif ($cf['field_type'] === 'select' && !empty($cf['field_options'])): ?>
+                <select class="lote-ft-select" name="j_custom_field_<?= (int)$cf['id'] ?>">
+                  <option value="">— válassz —</option>
+                  <?php foreach (array_filter(array_map('trim', explode(',', $cf['field_options']))) as $opt): ?>
+                    <option value="<?= esc_attr($opt) ?>"><?= esc_html($opt) ?></option>
+                  <?php endforeach; ?>
+                </select>
+              <?php elseif ($cf['field_type'] === 'number'): ?>
+                <input class="lote-ft-input lote-ft-input-narrow" type="number" name="j_custom_field_<?= (int)$cf['id'] ?>">
+              <?php else: ?>
+                <input class="lote-ft-input" type="text" name="j_custom_field_<?= (int)$cf['id'] ?>">
+              <?php endif; ?>
+            </div>
+            <?php endforeach; ?>
+
+            <!-- Hozzájárulások -->
+            <div class="lote-ft-consents">
+              <label class="lote-ft-consent-row">
+                <input type="checkbox" name="consent_email" value="1">
+                <span>Hozzájárulok, hogy e-mail-címem az események szervezésekor a levelezésekben nyilvánosan megjelenjen.</span>
+              </label>
+              <label class="lote-ft-consent-row">
+                <input type="checkbox" name="consent_photo" value="1">
+                <span>Hozzájárulok, hogy az egyesület eseményein rólam készült fotók a L.O.T.E. weboldalán és social-media felületeken megjelenjenek.</span>
+              </label>
+              <label class="lote-ft-consent-row lote-ft-consent-row--required">
+                <input type="checkbox" name="consent_rules" value="1">
+                <span>Elolvastam és elfogadom az <a href="https://www.lizzard.hu/wp-content/uploads/2018/05/gdpr_adatvedelem_lote_20150521.pdf" target="_blank" rel="noopener noreferrer">Adatvédelmi Tájékoztatóban</a>, az Alapszabályban és a Részvételi feltételekben foglaltakat. <strong style="color:#d97706;">— Kötelező</strong></span>
+              </label>
+            </div>
+
+            <div class="lote-ft-submit-wrap">
+              <button type="button" class="lote-ft-submit-btn" id="<?= esc_attr($uid) ?>-join-submit-<?= $tid ?>">
+                Tagságra és túrára jelentkezés
+              </button>
+            </div>
+            <div class="lote-ft-inline-error" id="<?= esc_attr($uid) ?>-join-err-<?= $tid ?>" hidden></div>
+
+          </div><!-- /join-section -->
+
+          <!-- ===== REGULAR SECTION (vendég / bejelentkezett tag) ===== -->
+          <div id="<?= esc_attr($uid) ?>-regular-<?= $tid ?>">
+
+            <p class="lote-ft-form-intro">Az alábbi űrlapon jelentkezhetsz a túrára. A jelentkezésedet az adminisztrátor hagyja jóvá, erről e-mailben értesítünk.</p>
+
+            <!-- Vendég mezők (bejelentkezés előtt látható) -->
+            <div class="lote-ft-guest-section" id="<?= esc_attr($uid) ?>-guest-<?= $tid ?>">
+              <div class="lote-ft-row-2">
+                <div class="lote-ft-field-wrap">
+                  <label class="lote-ft-label">Teljes név <span class="lote-ft-req">*</span></label>
+                  <input class="lote-ft-input" type="text" name="guest_name" placeholder="pl. Kovács János">
+                </div>
+                <div class="lote-ft-field-wrap">
+                  <label class="lote-ft-label">E-mail cím <span class="lote-ft-req">*</span></label>
+                  <input class="lote-ft-input" type="email" name="guest_email" placeholder="pelda@email.hu">
+                </div>
+              </div>
+              <div class="lote-ft-field-wrap">
+                <label class="lote-ft-label">Telefonszám</label>
+                <input class="lote-ft-input" type="tel" name="guest_phone" placeholder="+36 30 123 4567">
+              </div>
+            </div>
+
+            <!-- Tag badge (bejelentkezés után látható) -->
+            <div class="lote-ft-member-badge" id="<?= esc_attr($uid) ?>-member-<?= $tid ?>" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              <div>
+                <strong class="lote-ft-m-name"></strong>
+                <div class="lote-ft-m-email"></div>
+              </div>
+            </div>
+
+            <hr class="lote-ft-divider">
+
+            <?php if ($fldOn('departure_city')): ?>
+            <div class="lote-ft-field-wrap">
+              <label class="lote-ft-label">Honnan indulnál? <span class="lote-ft-req">*</span></label>
+              <input class="lote-ft-input" type="text" name="departure_city" placeholder="pl. Budapest XIII. kerület" required>
+              <p class="lote-ft-hint">Budapest esetén a kerületet is add meg!</p>
+            </div>
+            <?php endif; ?>
+
+            <?php if ($fldOn('car_available')): ?>
+            <div class="lote-ft-field-wrap">
+              <label class="lote-ft-label">Tudsz autóval jönni?</label>
+              <div class="lote-ft-radios">
+                <label class="lote-ft-radio-wrap">
+                  <input type="radio" name="car_<?= $tid ?>" value="1"> Igen
+                </label>
+                <label class="lote-ft-radio-wrap">
+                  <input type="radio" name="car_<?= $tid ?>" value="0" checked> Nem
+                </label>
+              </div>
+            </div>
+            <div class="lote-ft-field-wrap" id="<?= esc_attr($uid) ?>-pass-<?= $tid ?>" hidden>
+              <label class="lote-ft-label">Hány hely van melletted?</label>
+              <input class="lote-ft-input lote-ft-input-narrow" type="number" name="passengers" min="0" max="10" value="0">
+              <p class="lote-ft-hint">Ha már megvan, hogy kivel utazol, akkor is a maximum számot írd be, és majd a megjegyzésnél jelezd, hogy ki az utasod.</p>
+            </div>
+            <?php endif; ?>
+
+            <?php if ($fldOn('sharing_room')): ?>
+            <div class="lote-ft-field-wrap">
+              <label class="lote-ft-label">Szükség esetén aludnál egy helyen mással?</label>
+              <select class="lote-ft-select" name="sharing_room">
+                <option value="same_gender">Igen, de csak azonos neművel</option>
+                <option value="yes">Igen</option>
+                <option value="no">Nem</option>
+              </select>
+            </div>
+            <?php endif; ?>
+
+            <?php if ($fldOn('notes')): ?>
+            <div class="lote-ft-field-wrap">
+              <label class="lote-ft-label">Megjegyzések</label>
+              <textarea class="lote-ft-textarea" name="notes" rows="3" placeholder="Egyéb megjegyzés, kérés…"></textarea>
+            </div>
+            <?php endif; ?>
+
+            <?php foreach ($customFields as $cf): ?>
+            <div class="lote-ft-field-wrap">
+              <label class="lote-ft-label"><?= esc_html($cf['field_name']) ?></label>
+              <?php if ($cf['field_type'] === 'textarea'): ?>
+                <textarea class="lote-ft-textarea" name="custom_field_<?= (int)$cf['id'] ?>" rows="2"></textarea>
+              <?php elseif ($cf['field_type'] === 'checkbox'): ?>
+                <label class="lote-ft-checkbox-wrap">
+                  <input type="checkbox" name="custom_field_<?= (int)$cf['id'] ?>" value="1"> Igen
+                </label>
+              <?php elseif ($cf['field_type'] === 'select' && !empty($cf['field_options'])): ?>
+                <select class="lote-ft-select" name="custom_field_<?= (int)$cf['id'] ?>">
+                  <option value="">— válassz —</option>
+                  <?php foreach (array_filter(array_map('trim', explode(',', $cf['field_options']))) as $opt): ?>
+                    <option value="<?= esc_attr($opt) ?>"><?= esc_html($opt) ?></option>
+                  <?php endforeach; ?>
+                </select>
+              <?php elseif ($cf['field_type'] === 'number'): ?>
+                <input class="lote-ft-input lote-ft-input-narrow" type="number" name="custom_field_<?= (int)$cf['id'] ?>">
+              <?php else: ?>
+                <input class="lote-ft-input" type="text" name="custom_field_<?= (int)$cf['id'] ?>">
+              <?php endif; ?>
+            </div>
+            <?php endforeach; ?>
+
+            <div class="lote-ft-submit-wrap">
+              <button type="button" class="lote-ft-submit-btn" id="<?= esc_attr($uid) ?>-submit-<?= $tid ?>">
+                Jelentkezés elküldése
+              </button>
+            </div>
+            <div class="lote-ft-inline-error" id="<?= esc_attr($uid) ?>-form-err-<?= $tid ?>" hidden></div>
+
+          </div><!-- /regular-section -->
+
+        </div><!-- /form-inner -->
 
         <!-- Siker állapot -->
         <div class="lote-ft-success" id="<?= esc_attr($uid) ?>-success-<?= $tid ?>" hidden>
@@ -305,13 +471,14 @@ add_shortcode('lote_jelentkezes', function (array $atts): string {
 
     <script>
     (function () {
-      var uid       = <?= json_encode($uid) ?>;
-      var authUrl   = <?= json_encode($authUrl) ?>;
-      var csrfUrl   = <?= json_encode($csrfUrl) ?>;
-      var submitUrl = <?= json_encode($submitUrl) ?>;
-      var emailUrl  = <?= json_encode($emailUrl) ?>;
-      var tourIds            = <?= json_encode(array_map('intval', $tourIds)) ?>;
-      var tourFees           = <?= json_encode(array_combine(
+      var uid          = <?= json_encode($uid) ?>;
+      var authUrl      = <?= json_encode($authUrl) ?>;
+      var csrfUrl      = <?= json_encode($csrfUrl) ?>;
+      var submitUrl    = <?= json_encode($submitUrl) ?>;
+      var emailUrl     = <?= json_encode($emailUrl) ?>;
+      var joinTourUrl  = <?= json_encode($joinTourUrl) ?>;
+      var tourIds      = <?= json_encode(array_map('intval', $tourIds)) ?>;
+      var tourFees     = <?= json_encode(array_combine(
             array_map('intval', $tourIds),
             array_map(fn($t) => $t['participation_fee'], $tours)
         )) ?>;
@@ -319,17 +486,21 @@ add_shortcode('lote_jelentkezes', function (array $atts): string {
             array_map('intval', $tourIds),
             array_map(fn($t) => $t['disabled_standard_fields'] ?? [], $tours)
         )) ?>;
+      var tourRequiresMembership = <?= json_encode(array_combine(
+            array_map('intval', $tourIds),
+            array_map(fn($t) => !empty($t['requires_membership']), $tours)
+        )) ?>;
 
-      var wrap         = document.getElementById(uid);
-      var teaser       = document.getElementById(uid + '-teaser');
-      var formWrap     = document.getElementById(uid + '-form-wrap');
-      var loginForm    = document.getElementById(uid + '-login-form');
-      var toggle       = document.getElementById(uid + '-toggle');
-      var cancel       = document.getElementById(uid + '-cancel');
-      var errBox       = document.getElementById(uid + '-err');
-      var loggedinEl   = document.getElementById(uid + '-loggedin');
-      var nameEl       = document.getElementById(uid + '-name');
-      var loginSubmit  = document.getElementById(uid + '-submit');
+      var wrap        = document.getElementById(uid);
+      var teaser      = document.getElementById(uid + '-teaser');
+      var formWrap    = document.getElementById(uid + '-form-wrap');
+      var loginForm   = document.getElementById(uid + '-login-form');
+      var toggle      = document.getElementById(uid + '-toggle');
+      var cancel      = document.getElementById(uid + '-cancel');
+      var errBox      = document.getElementById(uid + '-err');
+      var loggedinEl  = document.getElementById(uid + '-loggedin');
+      var nameEl      = document.getElementById(uid + '-name');
+      var loginSubmit = document.getElementById(uid + '-submit');
 
       var loggedInUser = null;
       var csrfToken    = null;
@@ -350,36 +521,37 @@ add_shortcode('lote_jelentkezes', function (array $atts): string {
             updateAllFeeDisplays(d.discount || 0);
           } else {
             showTeaser();
+            updateFormModes();
           }
         })
-        .catch(function() { showTeaser(); });
+        .catch(function() { showTeaser(); updateFormModes(); });
 
       // ---- Login panel ----
 
       function showLoggedIn(firstname, lastname) {
-        teaser.hidden          = true;
-        teaser.style.display   = 'none';
-        formWrap.hidden        = true;
-        loggedinEl.hidden      = false;
+        teaser.hidden            = true;
+        teaser.style.display     = 'none';
+        formWrap.hidden          = true;
+        loggedinEl.hidden        = false;
         loggedinEl.style.display = 'flex';
-        nameEl.textContent     = (lastname + ' ' + firstname).trim();
+        nameEl.textContent       = (lastname + ' ' + firstname).trim();
       }
 
       function showTeaser() {
-        teaser.hidden          = false;
-        teaser.style.display   = '';
-        formWrap.hidden        = true;
-        loggedinEl.hidden      = true;
+        teaser.hidden           = false;
+        teaser.style.display    = '';
+        formWrap.hidden         = true;
+        loggedinEl.hidden       = true;
         loggedinEl.style.display = 'none';
-        errBox.hidden          = true;
+        errBox.hidden           = true;
         loginForm.reset();
         loginSubmit.disabled    = false;
         loginSubmit.textContent = 'Bejelentkezés';
       }
 
       function showLoginForm() {
-        teaser.hidden   = true;
-        formWrap.hidden = false;
+        teaser.hidden     = true;
+        formWrap.hidden   = false;
         loggedinEl.hidden = true;
         loginForm.querySelector('input[name="login"]').focus();
       }
@@ -424,23 +596,32 @@ add_shortcode('lote_jelentkezes', function (array $atts): string {
           });
       });
 
-      // ---- Form mód váltás (vendég ↔ tag) ----
+      // ---- Form mód váltás (vendég / tag / join) ----
 
       function updateFormModes() {
         tourIds.forEach(function(tid) {
-          var gSection = document.getElementById(uid + '-guest-' + tid);
-          var mSection = document.getElementById(uid + '-member-' + tid);
-          if (!gSection || !mSection) return;
-          if (loggedInUser) {
-            gSection.hidden = true;
-            mSection.hidden = false;
-            var nEl = mSection.querySelector('.lote-ft-m-name');
-            var eEl = mSection.querySelector('.lote-ft-m-email');
-            if (nEl) nEl.textContent = (loggedInUser.lastname + ' ' + loggedInUser.firstname).trim();
-            if (eEl) eEl.textContent = loggedInUser.email;
-          } else {
-            gSection.hidden = false;
-            mSection.hidden = true;
+          var joinSec    = document.getElementById(uid + '-join-' + tid);
+          var regularSec = document.getElementById(uid + '-regular-' + tid);
+          var gSection   = document.getElementById(uid + '-guest-' + tid);
+          var mSection   = document.getElementById(uid + '-member-' + tid);
+
+          var needsJoin = tourRequiresMembership[tid] && !loggedInUser;
+
+          if (joinSec)    joinSec.hidden    = !needsJoin;
+          if (regularSec) regularSec.hidden = needsJoin;
+
+          if (!needsJoin && gSection && mSection) {
+            if (loggedInUser) {
+              gSection.hidden = true;
+              mSection.hidden = false;
+              var nEl = mSection.querySelector('.lote-ft-m-name');
+              var eEl = mSection.querySelector('.lote-ft-m-email');
+              if (nEl) nEl.textContent = (loggedInUser.lastname + ' ' + loggedInUser.firstname).trim();
+              if (eEl) eEl.textContent = loggedInUser.email;
+            } else {
+              gSection.hidden = false;
+              mSection.hidden = true;
+            }
           }
         });
       }
@@ -463,22 +644,48 @@ add_shortcode('lote_jelentkezes', function (array $atts): string {
           });
         }
 
-        // Autó radio toggle
-        block.querySelectorAll('input[name="car_' + tid + '"]').forEach(function(r) {
-          r.addEventListener('change', function() {
-            var passRow = document.getElementById(uid + '-pass-' + tid);
-            if (passRow) passRow.hidden = (r.value !== '1');
+        // Autó radio toggle – regular section
+        var regularSec = document.getElementById(uid + '-regular-' + tid);
+        if (regularSec) {
+          regularSec.querySelectorAll('input[name="car_' + tid + '"]').forEach(function(r) {
+            r.addEventListener('change', function() {
+              var passRow = document.getElementById(uid + '-pass-' + tid);
+              if (passRow) passRow.hidden = (r.value !== '1');
+            });
           });
-        });
+        }
 
-        // Beküldés gomb
+        // Autó radio toggle – join section
+        var joinSec = document.getElementById(uid + '-join-' + tid);
+        if (joinSec) {
+          joinSec.querySelectorAll('input[name="j_car_' + tid + '"]').forEach(function(r) {
+            r.addEventListener('change', function() {
+              var passRow = document.getElementById(uid + '-jpass-' + tid);
+              if (passRow) passRow.hidden = (r.value !== '1');
+            });
+          });
+        }
+
+        // Regular submit gomb
         var submitBtn = document.getElementById(uid + '-submit-' + tid);
         if (submitBtn) {
           submitBtn.addEventListener('click', function() { handleSubmit(tid); });
         }
+
+        // Join submit gomb
+        var joinSubmitBtn = document.getElementById(uid + '-join-submit-' + tid);
+        if (joinSubmitBtn) {
+          joinSubmitBtn.addEventListener('click', function() { handleJoinSubmit(tid); });
+        }
+
+        // Mini login gomb a join sectionben
+        var joinLoginBtn = document.getElementById(uid + '-join-login-' + tid);
+        if (joinLoginBtn) {
+          joinLoginBtn.addEventListener('click', showLoginForm);
+        }
       });
 
-      // ---- Beküldés ----
+      // ---- Regular beküldés ----
 
       function handleSubmit(tid) {
         var block     = document.getElementById(uid + '-block-' + tid);
@@ -500,28 +707,31 @@ add_shortcode('lote_jelentkezes', function (array $atts): string {
           data.guest_email = emailIn ? emailIn.value.trim() : '';
           data.guest_phone = phoneIn ? phoneIn.value.trim() : '';
 
-          if (!data.guest_name) { showErr(errEl, 'A név megadása kötelező.'); return; }
+          if (!data.guest_name)  { showErr(errEl, 'A név megadása kötelező.'); return; }
           if (!data.guest_email) { showErr(errEl, 'Az e-mail cím megadása kötelező.'); return; }
         }
 
-        var deptIn = block.querySelector('[name="departure_city"]');
+        var regularSec = document.getElementById(uid + '-regular-' + tid);
+        var deptIn = regularSec ? regularSec.querySelector('[name="departure_city"]') : null;
         data.departure_city = deptIn ? deptIn.value.trim() : '';
         if (disabledFields.indexOf('departure_city') === -1 && !data.departure_city) {
           showErr(errEl, 'Az indulási helyszín megadása kötelező.'); return;
         }
 
-        var carIn  = block.querySelector('input[name="car_' + tid + '"]:checked');
+        var carIn  = regularSec ? regularSec.querySelector('input[name="car_' + tid + '"]:checked') : null;
         data.car_available = carIn ? carIn.value : '0';
-        var passIn = block.querySelector('[name="passengers"]');
+        var passIn = regularSec ? regularSec.querySelector('[name="passengers"]') : null;
         data.passengers    = passIn ? passIn.value : '0';
-        var roomIn = block.querySelector('[name="sharing_room"]');
+        var roomIn = regularSec ? regularSec.querySelector('[name="sharing_room"]') : null;
         data.sharing_room  = roomIn ? roomIn.value : 'same_gender';
-        var notesIn = block.querySelector('[name="notes"]');
+        var notesIn = regularSec ? regularSec.querySelector('[name="notes"]') : null;
         data.notes = notesIn ? notesIn.value : '';
 
-        block.querySelectorAll('[name^="custom_field_"]').forEach(function(inp) {
-          data[inp.name] = (inp.type === 'checkbox') ? (inp.checked ? '1' : '') : inp.value;
-        });
+        if (regularSec) {
+          regularSec.querySelectorAll('[name^="custom_field_"]').forEach(function(inp) {
+            data[inp.name] = (inp.type === 'checkbox') ? (inp.checked ? '1' : '') : inp.value;
+          });
+        }
 
         submitBtn.disabled    = true;
         submitBtn.textContent = 'Küldés…';
@@ -580,10 +790,118 @@ add_shortcode('lote_jelentkezes', function (array $atts): string {
         }
       }
 
+      // ---- Join+tour beküldés (csak tagoknak túra, nem bejelentkezett) ----
+
+      function handleJoinSubmit(tid) {
+        var joinSec   = document.getElementById(uid + '-join-' + tid);
+        var inner     = document.getElementById(uid + '-inner-' + tid);
+        var successEl = document.getElementById(uid + '-success-' + tid);
+        var submitBtn = document.getElementById(uid + '-join-submit-' + tid);
+        var errEl     = document.getElementById(uid + '-join-err-' + tid);
+
+        hideErr(errEl);
+
+        function getJoinVal(name) {
+          var el = joinSec ? joinSec.querySelector('[name="' + name + '"]') : null;
+          return el ? el.value.trim() : '';
+        }
+
+        var lastname    = getJoinVal('lastname');
+        var firstname   = getJoinVal('firstname');
+        var email       = getJoinVal('email');
+        var dateofbirth = getJoinVal('dateofbirth');
+        var zipcode     = getJoinVal('zipcode');
+        var city        = getJoinVal('city');
+        var address     = getJoinVal('address');
+        var consentRulesEl = joinSec ? joinSec.querySelector('[name="consent_rules"]') : null;
+
+        if (!lastname || !firstname || !email || !dateofbirth || !zipcode || !city || !address) {
+          showErr(errEl, 'A csillaggal jelölt mezők kitöltése kötelező.'); return;
+        }
+        if (!consentRulesEl || !consentRulesEl.checked) {
+          showErr(errEl, 'Az adatvédelmi tájékoztató és az alapszabály elfogadása kötelező.'); return;
+        }
+
+        var disabledFields = tourDisabledFields[tid] || [];
+
+        var data = {
+          tour_id:       String(tid),
+          csrf_token:    csrfToken || '',
+          lastname:      lastname,
+          firstname:     firstname,
+          email:         email,
+          phone:         getJoinVal('phone'),
+          dateofbirth:   dateofbirth,
+          zipcode:       zipcode,
+          city:          city,
+          address:       address,
+          message:       getJoinVal('message'),
+          consent_email: (joinSec && joinSec.querySelector('[name="consent_email"]') && joinSec.querySelector('[name="consent_email"]').checked) ? '1' : '0',
+          consent_photo: (joinSec && joinSec.querySelector('[name="consent_photo"]') && joinSec.querySelector('[name="consent_photo"]').checked) ? '1' : '0',
+          consent_rules: '1',
+        };
+
+        // Tour-specific fields from join section
+        var deptIn = joinSec ? joinSec.querySelector('[name="departure_city"]') : null;
+        data.departure_city = deptIn ? deptIn.value.trim() : '';
+        if (disabledFields.indexOf('departure_city') === -1 && !data.departure_city) {
+          showErr(errEl, 'Az indulási helyszín megadása kötelező.'); return;
+        }
+
+        var carIn = joinSec ? joinSec.querySelector('input[name="j_car_' + tid + '"]:checked') : null;
+        data.car_available = carIn ? carIn.value : '0';
+        var passIn = joinSec ? joinSec.querySelector('[name="passengers"]') : null;
+        data.passengers = passIn ? passIn.value : '0';
+        var roomIn = joinSec ? joinSec.querySelector('[name="sharing_room"]') : null;
+        data.sharing_room = roomIn ? roomIn.value : 'same_gender';
+        var notesIn = joinSec ? joinSec.querySelector('[name="notes"]') : null;
+        data.notes = notesIn ? notesIn.value : '';
+
+        // Custom fields (j_custom_field_N → custom_field_N)
+        if (joinSec) {
+          joinSec.querySelectorAll('[name^="j_custom_field_"]').forEach(function(inp) {
+            var realName = inp.name.substring(2); // strip 'j_' prefix
+            data[realName] = (inp.type === 'checkbox') ? (inp.checked ? '1' : '') : inp.value;
+          });
+        }
+
+        submitBtn.disabled    = true;
+        submitBtn.textContent = 'Küldés…';
+
+        fetch(joinTourUrl, {
+          method:      'POST',
+          credentials: 'include',
+          headers:     { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body:        new URLSearchParams(data).toString(),
+        })
+          .then(function(r) { return r.json(); })
+          .then(function(d) {
+            if (d.success) {
+              var titleEl = successEl.querySelector('.lote-ft-success-title');
+              var textEl  = successEl.querySelector('.lote-ft-success-text');
+              if (titleEl) titleEl.textContent = 'Tagságra jelentkezés elküldve!';
+              if (textEl)  textEl.innerHTML    = 'Köszönjük! Kérelmedet megkaptuk, hamarosan visszajelzünk e-mailben.<br>Amint taggá váltál, automatikusan jóváhagyjuk a túrajelentkezésedet is.';
+              inner.hidden     = true;
+              successEl.hidden = false;
+              var toggleWrap = document.getElementById(uid + '-toggle-wrap-' + tid);
+              if (toggleWrap) toggleWrap.hidden = true;
+            } else {
+              submitBtn.disabled    = false;
+              submitBtn.textContent = 'Tagságra és túrára jelentkezés';
+              showErr(errEl, d.error || 'Hiba történt. Kérjük próbáld újra.');
+            }
+          })
+          .catch(function() {
+            submitBtn.disabled    = false;
+            submitBtn.textContent = 'Tagságra és túrára jelentkezés';
+            showErr(errEl, 'Hálózati hiba. Kérjük próbáld újra.');
+          });
+      }
+
       // ---- Részvételi díj kijelzés ----
 
       function formatFt(amount) {
-        return Math.round(amount).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' Ft';
+        return Math.round(amount).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' Ft';
       }
 
       function updateAllFeeDisplays(discount) {

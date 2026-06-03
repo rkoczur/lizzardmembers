@@ -10,7 +10,11 @@ verifyCsrf();
 $pdo = getDb();
 ensureJoinSchema($pdo);
 
-$redirectBack = BASE_URL . '/join.php';
+$tourId      = (int)($_POST['tour_id']    ?? 0);
+$joinEmbed   = !empty($_POST['join_embed']);
+$redirectBack = $tourId > 0
+    ? BASE_URL . '/user/future-tour-apply-public.php?id=' . $tourId . ($joinEmbed ? '&embed=1' : '')
+    : BASE_URL . '/join.php';
 
 $lastname    = trim($_POST['lastname']    ?? '');
 $firstname   = trim($_POST['firstname']  ?? '');
@@ -77,6 +81,42 @@ $pdo->prepare("INSERT INTO member_applications
         $message     ?: null,
         $consentEmail, $consentPhoto, $consentRules,
     ]);
+$memberAppId = (int)$pdo->lastInsertId();
+
+// If submitted via a membership-required tour page, also create a pending tour application
+if ($tourId > 0) {
+    require_once __DIR__ . '/../includes/future-tours-schema.php';
+    ensureFutureToursSchema($pdo);
+
+    $tourRow = $pdo->prepare("SELECT id FROM future_tours WHERE id = ? AND status = 'open' LIMIT 1");
+    $tourRow->execute([$tourId]);
+    if ($tourRow->fetch()) {
+        $carAvailable  = isset($_POST['car_available']) && $_POST['car_available'] === '1' ? 1 : 0;
+        $passengers    = $carAvailable ? max(0, (int)($_POST['passengers'] ?? 0)) : 0;
+        $sharingRoom   = in_array($_POST['sharing_room'] ?? '', ['same_gender','yes','no']) ? $_POST['sharing_room'] : 'same_gender';
+        $tourNotes     = trim($_POST['notes'] ?? '') ?: null;
+        $departureCity = trim($_POST['departure_city'] ?? '') ?: null;
+        $guestName     = $lastname . ' ' . $firstname;
+
+        $pdo->prepare("
+            INSERT INTO future_tour_applications
+                (future_tour_id, user_id, guest_name, guest_email, guest_phone, status,
+                 car_available, passengers, sharing_room, notes, departure_city, member_application_id)
+            VALUES (?, NULL, ?, ?, ?, 'pending', ?, ?, ?, ?, ?, ?)
+        ")->execute([$tourId, $guestName, $email, $phone ?: null,
+                     $carAvailable, $passengers, $sharingRoom, $tourNotes, $departureCity, $memberAppId]);
+
+        $tourAppId = (int)$pdo->lastInsertId();
+
+        $cfStmt = $pdo->prepare("SELECT id FROM future_tour_custom_fields WHERE future_tour_id = ?");
+        $cfStmt->execute([$tourId]);
+        $answerStmt = $pdo->prepare("INSERT INTO future_tour_application_answers (application_id, field_id, answer) VALUES (?, ?, ?)");
+        foreach ($cfStmt->fetchAll() as $cf) {
+            $answer = isset($_POST['custom_field_' . $cf['id']]) ? trim($_POST['custom_field_' . $cf['id']]) : '';
+            $answerStmt->execute([$tourAppId, $cf['id'], $answer]);
+        }
+    }
+}
 
 // Confirmation email (optional — only if SMTP is configured)
 try {
@@ -192,5 +232,6 @@ AHTML;
     error_log('Join confirmation email: ' . $ex->getMessage());
 }
 
-header('Location: ' . $redirectBack . '?submitted=1');
+$successParam = $tourId > 0 ? '&membership_submitted=1' : '?submitted=1';
+header('Location: ' . $redirectBack . $successParam);
 exit;

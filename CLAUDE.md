@@ -90,3 +90,8 @@ include __DIR__ . '/../includes/admin-header.php'; // or user-header.php
 // ... HTML ...
 include __DIR__ . '/../includes/admin-footer.php'; // or user-footer.php
 ```
+
+# Guest application
+
+1. At the tour details, make a checkbox: need membership.
+2. In the public application form (both the API and the native) there should be a new logic: If the tour needs membership, then after clicking on the "jelentkezés" button, display the user registration form - same as the join.php - and tell the user, that this tour is only for members, and here you can register yourself as a member. If the tour is not required membership, then the logic stays the same as now!

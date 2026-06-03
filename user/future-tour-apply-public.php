@@ -21,8 +21,11 @@ if ($memberLoggedIn) {
     }
 }
 
-$id   = (int)($_GET['id'] ?? 0);
-$done = isset($_GET['done']);
+$id                 = (int)($_GET['id'] ?? 0);
+$done               = isset($_GET['done']);
+$membershipSubmitted = isset($_GET['membership_submitted']);
+$joinOld            = $_SESSION['join_old'] ?? [];
+unset($_SESSION['join_old']);
 
 if (!$id) {
     header('Location: ' . BASE_URL . '/login.php');
@@ -117,6 +120,19 @@ $embed = !empty($_GET['embed']); // beágyazott mód (WP plugin iframe)
     </div>
   </div>
 
+  <?php elseif ($membershipSubmitted): ?>
+  <!-- Membership application submitted -->
+  <div class="card">
+    <div class="card-body card-body-center" style="padding:36px 24px;">
+      <div style="font-size:48px;margin-bottom:16px;">✅</div>
+      <h2 style="margin:0 0 10px;color:var(--primary);">Tagságra jelentkezés elküldve!</h2>
+      <p style="color:var(--text-muted);font-size:14px;line-height:1.6;margin:0;">
+        Köszönjük a jelentkezésedet! Az egyesület képviselői hamarosan átnézik, és e-mailben értesítünk a döntésről.<br>
+        Amint taggá váltál, visszajöhetsz és feliratkozhatsz a túrára.
+      </p>
+    </div>
+  </div>
+
   <?php else: ?>
   <!-- Application form -->
   <div class="card">
@@ -146,6 +162,279 @@ $embed = !empty($_GET['embed']); // beágyazott mód (WP plugin iframe)
         <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
         <input type="hidden" name="tour_id" value="<?= (int)$id ?>">
         <input type="hidden" name="public_redirect" value="1">
+
+        <hr style="border:none;border-top:1px solid var(--border);margin:20px 0;">
+
+        <?php if ($fieldEnabled('departure_city')): ?>
+        <div class="form-group" style="margin-bottom:16px;">
+          <label style="font-size:13px;font-weight:600;">Honnan indulnál? <span style="color:var(--danger)">*</span></label>
+          <input type="text" name="departure_city" required placeholder="pl. Budapest XIII. kerület" style="margin-top:6px;width:100%;">
+          <small style="display:block;color:var(--text-muted);font-size:11.5px;margin-top:4px;">Budapest esetén a kerületet is add meg!</small>
+        </div>
+        <?php endif; ?>
+
+        <?php if ($fieldEnabled('car_available')): ?>
+        <div class="form-group" style="margin-bottom:16px;">
+          <label style="font-size:13px;font-weight:600;">Tudsz autóval jönni?</label>
+          <div style="display:flex;gap:16px;margin-top:6px;">
+            <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-weight:normal;">
+              <input type="radio" name="car_available" value="1" id="car-yes"> Igen
+            </label>
+            <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-weight:normal;">
+              <input type="radio" name="car_available" value="0" id="car-no" checked> Nem
+            </label>
+          </div>
+        </div>
+        <div id="passengers-row" style="margin-bottom:16px;display:none;">
+          <div class="form-group">
+            <label style="font-size:13px;font-weight:600;">Ha igen, hány hely van melletted?</label>
+            <input type="number" name="passengers" min="0" max="10" value="0" style="width:80px;margin-top:6px;">
+            <small style="display:block;color:var(--text-muted);font-size:11.5px;margin-top:4px;">Ha már megvan, hogy kivel utazol, akkor is a maximum számot írd be, és majd a megjegyzésnél jelezd, hogy ki az utasod.</small>
+          </div>
+        </div>
+        <?php endif; ?>
+
+        <?php if ($fieldEnabled('sharing_room')): ?>
+        <div class="form-group" style="margin-bottom:16px;">
+          <label style="font-size:13px;font-weight:600;">Szükség esetén aludnál egy helyen mással?</label>
+          <select name="sharing_room" style="margin-top:6px;width:100%;">
+            <option value="same_gender">Igen, de csak azonos neművel</option>
+            <option value="yes">Igen</option>
+            <option value="no">Nem</option>
+          </select>
+        </div>
+        <?php endif; ?>
+
+        <?php if ($fieldEnabled('notes')): ?>
+        <div class="form-group" style="margin-bottom:16px;">
+          <label style="font-size:13px;font-weight:600;">Megjegyzések</label>
+          <textarea name="notes" rows="3" placeholder="Egyéb megjegyzés, kérés…" style="margin-top:6px;"></textarea>
+        </div>
+        <?php endif; ?>
+
+        <?php foreach ($customFields as $cf): ?>
+        <div class="form-group" style="margin-bottom:16px;">
+          <label style="font-size:13px;font-weight:600;"><?= e($cf['field_name']) ?></label>
+          <?php if ($cf['field_type'] === 'textarea'): ?>
+            <textarea name="custom_field_<?= (int)$cf['id'] ?>" rows="2" style="margin-top:6px;"></textarea>
+          <?php elseif ($cf['field_type'] === 'checkbox'): ?>
+            <label style="display:flex;align-items:center;gap:8px;margin-top:8px;font-weight:normal;cursor:pointer;">
+              <input type="checkbox" name="custom_field_<?= (int)$cf['id'] ?>" value="1"> Igen
+            </label>
+          <?php elseif ($cf['field_type'] === 'select' && !empty($cf['field_options'])): ?>
+            <select name="custom_field_<?= (int)$cf['id'] ?>" style="margin-top:6px;width:100%;">
+              <option value="">— válassz —</option>
+              <?php foreach (array_map('trim', explode(',', $cf['field_options'])) as $opt): ?>
+                <?php if ($opt !== ''): ?><option value="<?= e($opt) ?>"><?= e($opt) ?></option><?php endif; ?>
+              <?php endforeach; ?>
+            </select>
+          <?php elseif ($cf['field_type'] === 'number'): ?>
+            <input type="number" name="custom_field_<?= (int)$cf['id'] ?>" style="margin-top:6px;">
+          <?php else: ?>
+            <input type="text" name="custom_field_<?= (int)$cf['id'] ?>" style="margin-top:6px;">
+          <?php endif; ?>
+        </div>
+        <?php endforeach; ?>
+
+        <div style="margin-top:24px;">
+          <button type="submit" class="btn btn-primary" style="width:100%;padding:13px;font-size:15px;">Jelentkezés elküldése</button>
+        </div>
+      </form>
+
+      <?php elseif (!empty($tour['requires_membership'])): ?>
+      <!-- Membership required: login panel + join form -->
+      <div style="background:#fffbeb;border:1px solid #f59e0b;border-radius:8px;padding:14px 16px;margin-bottom:16px;font-size:13.5px;color:#92400e;line-height:1.55;">
+        <strong>Ez a túra csak az egyesület tagjai számára érhető el.</strong><br>
+        <span style="color:#b45309;">Ha már tag vagy, lépj be. Ha még nem vagy tag, itt kérheted felvételedet az egyesületbe.</span>
+      </div>
+
+      <!-- Login panel -->
+      <div id="public-login-panel" style="background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:16px;">
+        <div id="public-login-teaser" style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;">
+          <span style="font-size:13px;color:var(--text-muted);">Ha már tag vagy, jelentkezz be:</span>
+          <button type="button" id="public-login-toggle"
+                  style="background:#29776f;color:#fff;border:none;border-radius:6px;padding:6px 14px;font-size:13px;cursor:pointer;font-weight:600;">
+            Bejelentkezés
+          </button>
+        </div>
+        <div id="public-login-form-wrap" style="display:none;margin-top:12px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;" class="login-fields-grid">
+            <div class="form-group">
+              <label style="font-size:12.5px;font-weight:600;">Felhasználónév vagy e-mail</label>
+              <input type="text" id="public-login-user" autocomplete="username" placeholder="felhasznalonev" style="margin-top:4px;">
+            </div>
+            <div class="form-group">
+              <label style="font-size:12.5px;font-weight:600;">Jelszó</label>
+              <input type="password" id="public-login-pass" autocomplete="current-password" placeholder="••••••••" style="margin-top:4px;">
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <button type="button" id="public-login-submit"
+                    style="background:#29776f;color:#fff;border:none;border-radius:6px;padding:7px 18px;font-size:13px;cursor:pointer;font-weight:600;">
+              Bejelentkezés
+            </button>
+            <button type="button" id="public-login-cancel"
+                    style="background:none;border:none;font-size:13px;color:var(--text-muted);cursor:pointer;padding:4px 6px;">
+              Mégse
+            </button>
+          </div>
+          <div id="public-login-err" style="display:none;color:var(--danger,#dc2626);font-size:13px;margin-top:8px;"></div>
+        </div>
+      </div>
+
+      <!-- Divider -->
+      <div style="display:flex;align-items:center;gap:10px;margin:20px 0;">
+        <hr style="flex:1;border:none;border-top:1px solid var(--border);margin:0;">
+        <span style="font-size:12.5px;color:var(--text-muted);white-space:nowrap;">Ha még nem vagy tag:</span>
+        <hr style="flex:1;border:none;border-top:1px solid var(--border);margin:0;">
+      </div>
+
+      <!-- Join form -->
+      <form method="post" action="<?= BASE_URL ?>/actions/join-submit.php" id="join-apply-form">
+        <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
+        <input type="hidden" name="tour_id" value="<?= (int)$id ?>">
+        <?php if ($embed): ?><input type="hidden" name="join_embed" value="1"><?php endif; ?>
+
+        <div style="margin-bottom:10px;font-size:12.5px;color:#555;line-height:1.65;background:var(--card,#f5efe4);border-radius:8px;padding:12px 14px;">
+          Jelen belépési nyilatkozat benyújtásával kérem a Leguán Osztag Természetjáró Egyesület (L.O.T.E. - 1041 Budapest, Rózsa u. 59.) elnökségét, hogy az Egyesület rendes tagjává szíveskedjen fogadni. Az Alapszabályt és a Részvételi feltételeket megismertem és elfogadom. A tagsági díjat és a fizetési módot ismerem és elfogadom. Hozzájárulok, hogy a megadott adataimat a L.O.T.E. tárolja, kezelje és a Magyar Természetjáró Szövetségnek továbbítsa.
+        </div>
+        <div style="background:#fef3c7;border:1px solid #f59e0b;border-radius:6px;padding:10px 14px;margin-bottom:16px;font-size:13px;color:#92400e;line-height:1.55;">
+          ⚠ <strong>Fontos:</strong> A tagság csak az éves tagdíj befizetésével válik érvényessé. Az éves tagdíj összege: <strong>5 000 Ft</strong>.
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;" class="guest-id-grid">
+          <div class="form-group">
+            <label style="font-size:13px;font-weight:600;">Vezetéknév <span style="color:var(--danger)">*</span></label>
+            <input type="text" name="lastname" required style="margin-top:6px;" value="<?= e($joinOld['lastname'] ?? '') ?>">
+          </div>
+          <div class="form-group">
+            <label style="font-size:13px;font-weight:600;">Keresztnév <span style="color:var(--danger)">*</span></label>
+            <input type="text" name="firstname" required style="margin-top:6px;" value="<?= e($joinOld['firstname'] ?? '') ?>">
+          </div>
+          <div class="form-group">
+            <label style="font-size:13px;font-weight:600;">E-mail cím <span style="color:var(--danger)">*</span></label>
+            <input type="email" name="email" required style="margin-top:6px;" value="<?= e($joinOld['email'] ?? '') ?>">
+          </div>
+          <div class="form-group">
+            <label style="font-size:13px;font-weight:600;">Telefonszám</label>
+            <input type="tel" name="phone" style="margin-top:6px;" value="<?= e($joinOld['phone'] ?? '') ?>">
+          </div>
+          <div class="form-group">
+            <label style="font-size:13px;font-weight:600;">Születési dátum <span style="color:var(--danger)">*</span></label>
+            <input type="date" name="dateofbirth" required style="margin-top:6px;" value="<?= e($joinOld['dateofbirth'] ?? '') ?>">
+          </div>
+          <div class="form-group">
+            <label style="font-size:13px;font-weight:600;">Irányítószám <span style="color:var(--danger)">*</span></label>
+            <input type="text" name="zipcode" required style="margin-top:6px;" value="<?= e($joinOld['zipcode'] ?? '') ?>">
+          </div>
+          <div class="form-group">
+            <label style="font-size:13px;font-weight:600;">Város <span style="color:var(--danger)">*</span></label>
+            <input type="text" name="city" required style="margin-top:6px;" value="<?= e($joinOld['city'] ?? '') ?>">
+          </div>
+          <div class="form-group">
+            <label style="font-size:13px;font-weight:600;">Lakcím <span style="color:var(--danger)">*</span></label>
+            <input type="text" name="address" required style="margin-top:6px;" value="<?= e($joinOld['address'] ?? '') ?>">
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:16px;">
+          <label style="font-size:13px;font-weight:600;">Megjegyzés / Motiváció</label>
+          <textarea name="message" rows="2" style="margin-top:6px;resize:vertical;"><?= e($joinOld['message'] ?? '') ?></textarea>
+        </div>
+
+        <div style="margin-bottom:20px;">
+          <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;cursor:pointer;margin-bottom:8px;font-weight:normal;">
+            <input type="checkbox" name="consent_email" value="1" style="margin-top:2px;" <?= !empty($joinOld) && isset($joinOld['consent_email']) ? 'checked' : '' ?>>
+            <span>Hozzájárulok, hogy e-mail-címem az események szervezésekor a levelezésekben nyilvánosan megjelenjen.</span>
+          </label>
+          <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;cursor:pointer;margin-bottom:8px;font-weight:normal;">
+            <input type="checkbox" name="consent_photo" value="1" style="margin-top:2px;" <?= !empty($joinOld) && isset($joinOld['consent_photo']) ? 'checked' : '' ?>>
+            <span>Hozzájárulok, hogy az egyesület eseményein rólam készült fotók a L.O.T.E. weboldalán és social-media felületeken megjelenjenek.</span>
+          </label>
+          <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;cursor:pointer;font-weight:normal;">
+            <input type="checkbox" name="consent_rules" value="1" required style="margin-top:2px;" <?= !empty($joinOld) && isset($joinOld['consent_rules']) ? 'checked' : '' ?>>
+            <span>Elolvastam és elfogadom az <a href="https://www.lizzard.hu/wp-content/uploads/2018/05/gdpr_adatvedelem_lote_20150521.pdf" target="_blank" rel="noopener noreferrer">Adatvédelmi Tájékoztatóban</a>, az Alapszabályban és a Részvételi feltételekben foglaltakat. <strong style="color:#d97706;">— Kötelező</strong></span>
+          </label>
+        </div>
+
+        <!-- Tour application fields -->
+        <hr style="border:none;border-top:1px solid var(--border);margin:20px 0;">
+        <p style="font-size:13.5px;font-weight:700;color:var(--text);margin:0 0 4px;">Túra-specifikus adatok</p>
+        <p style="font-size:12.5px;color:var(--text-muted);margin:0 0 16px;">Az alábbi adatokat a túraszervezők rögzítik a részvételedhez.</p>
+
+        <?php if ($fieldEnabled('departure_city')): ?>
+        <div class="form-group" style="margin-bottom:16px;">
+          <label style="font-size:13px;font-weight:600;">Honnan indulnál? <span style="color:var(--danger)">*</span></label>
+          <input type="text" name="departure_city" required placeholder="pl. Budapest XIII. kerület" style="margin-top:6px;width:100%;">
+          <small style="display:block;color:var(--text-muted);font-size:11.5px;margin-top:4px;">Budapest esetén a kerületet is add meg!</small>
+        </div>
+        <?php endif; ?>
+
+        <?php if ($fieldEnabled('car_available')): ?>
+        <div class="form-group" style="margin-bottom:16px;">
+          <label style="font-size:13px;font-weight:600;">Tudsz autóval jönni?</label>
+          <div style="display:flex;gap:16px;margin-top:6px;">
+            <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-weight:normal;">
+              <input type="radio" name="car_available" value="1" id="join-car-yes"> Igen
+            </label>
+            <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-weight:normal;">
+              <input type="radio" name="car_available" value="0" id="join-car-no" checked> Nem
+            </label>
+          </div>
+        </div>
+        <div id="join-passengers-row" style="margin-bottom:16px;display:none;">
+          <div class="form-group">
+            <label style="font-size:13px;font-weight:600;">Ha igen, hány hely van melletted?</label>
+            <input type="number" name="passengers" min="0" max="10" value="0" style="width:80px;margin-top:6px;">
+          </div>
+        </div>
+        <?php endif; ?>
+
+        <?php if ($fieldEnabled('sharing_room')): ?>
+        <div class="form-group" style="margin-bottom:16px;">
+          <label style="font-size:13px;font-weight:600;">Szükség esetén aludnál egy helyen mással?</label>
+          <select name="sharing_room" style="margin-top:6px;width:100%;">
+            <option value="same_gender">Igen, de csak azonos neművel</option>
+            <option value="yes">Igen</option>
+            <option value="no">Nem</option>
+          </select>
+        </div>
+        <?php endif; ?>
+
+        <?php if ($fieldEnabled('notes')): ?>
+        <div class="form-group" style="margin-bottom:16px;">
+          <label style="font-size:13px;font-weight:600;">Megjegyzések a túrával kapcsolatban</label>
+          <textarea name="notes" rows="2" placeholder="Egyéb megjegyzés, kérés…" style="margin-top:6px;"></textarea>
+        </div>
+        <?php endif; ?>
+
+        <?php foreach ($customFields as $cf): ?>
+        <div class="form-group" style="margin-bottom:16px;">
+          <label style="font-size:13px;font-weight:600;"><?= e($cf['field_name']) ?></label>
+          <?php if ($cf['field_type'] === 'textarea'): ?>
+            <textarea name="custom_field_<?= (int)$cf['id'] ?>" rows="2" style="margin-top:6px;"></textarea>
+          <?php elseif ($cf['field_type'] === 'checkbox'): ?>
+            <label style="display:flex;align-items:center;gap:8px;margin-top:8px;font-weight:normal;cursor:pointer;">
+              <input type="checkbox" name="custom_field_<?= (int)$cf['id'] ?>" value="1"> Igen
+            </label>
+          <?php elseif ($cf['field_type'] === 'select' && !empty($cf['field_options'])): ?>
+            <select name="custom_field_<?= (int)$cf['id'] ?>" style="margin-top:6px;width:100%;">
+              <option value="">— válassz —</option>
+              <?php foreach (array_map('trim', explode(',', $cf['field_options'])) as $opt): ?>
+                <?php if ($opt !== ''): ?><option value="<?= e($opt) ?>"><?= e($opt) ?></option><?php endif; ?>
+              <?php endforeach; ?>
+            </select>
+          <?php elseif ($cf['field_type'] === 'number'): ?>
+            <input type="number" name="custom_field_<?= (int)$cf['id'] ?>" style="margin-top:6px;">
+          <?php else: ?>
+            <input type="text" name="custom_field_<?= (int)$cf['id'] ?>" style="margin-top:6px;">
+          <?php endif; ?>
+        </div>
+        <?php endforeach; ?>
+
+        <div style="margin-top:24px;">
+          <button type="submit" class="btn btn-primary" style="width:100%;padding:13px;font-size:15px;">Tagságra jelentkezés elküldése</button>
+        </div>
+      </form>
 
       <?php else: ?>
       <!-- Login panel -->
@@ -206,12 +495,9 @@ $embed = !empty($_GET['embed']); // beágyazott mód (WP plugin iframe)
           <input type="tel" name="guest_phone" placeholder="+36 30 123 4567" style="margin-top:6px;">
         </div>
 
-      <?php endif; ?>
-
         <hr style="border:none;border-top:1px solid var(--border);margin:20px 0;">
 
         <?php if ($fieldEnabled('departure_city')): ?>
-        <!-- Departure city -->
         <div class="form-group" style="margin-bottom:16px;">
           <label style="font-size:13px;font-weight:600;">Honnan indulnál? <span style="color:var(--danger)">*</span></label>
           <input type="text" name="departure_city" required placeholder="pl. Budapest XIII. kerület" style="margin-top:6px;width:100%;">
@@ -220,7 +506,6 @@ $embed = !empty($_GET['embed']); // beágyazott mód (WP plugin iframe)
         <?php endif; ?>
 
         <?php if ($fieldEnabled('car_available')): ?>
-        <!-- Car -->
         <div class="form-group" style="margin-bottom:16px;">
           <label style="font-size:13px;font-weight:600;">Tudsz autóval jönni?</label>
           <div style="display:flex;gap:16px;margin-top:6px;">
@@ -244,7 +529,6 @@ $embed = !empty($_GET['embed']); // beágyazott mód (WP plugin iframe)
         <?php endif; ?>
 
         <?php if ($fieldEnabled('sharing_room')): ?>
-        <!-- Sharing room -->
         <div class="form-group" style="margin-bottom:16px;">
           <label style="font-size:13px;font-weight:600;">Szükség esetén aludnál egy helyen mással?</label>
           <select name="sharing_room" style="margin-top:6px;width:100%;">
@@ -256,14 +540,12 @@ $embed = !empty($_GET['embed']); // beágyazott mód (WP plugin iframe)
         <?php endif; ?>
 
         <?php if ($fieldEnabled('notes')): ?>
-        <!-- Notes -->
         <div class="form-group" style="margin-bottom:16px;">
           <label style="font-size:13px;font-weight:600;">Megjegyzések</label>
           <textarea name="notes" rows="3" placeholder="Egyéb megjegyzés, kérés…" style="margin-top:6px;"></textarea>
         </div>
         <?php endif; ?>
 
-        <!-- Custom fields -->
         <?php foreach ($customFields as $cf): ?>
         <div class="form-group" style="margin-bottom:16px;">
           <label style="font-size:13px;font-weight:600;"><?= e($cf['field_name']) ?></label>
@@ -277,9 +559,7 @@ $embed = !empty($_GET['embed']); // beágyazott mód (WP plugin iframe)
             <select name="custom_field_<?= (int)$cf['id'] ?>" style="margin-top:6px;width:100%;">
               <option value="">— válassz —</option>
               <?php foreach (array_map('trim', explode(',', $cf['field_options'])) as $opt): ?>
-                <?php if ($opt !== ''): ?>
-                  <option value="<?= e($opt) ?>"><?= e($opt) ?></option>
-                <?php endif; ?>
+                <?php if ($opt !== ''): ?><option value="<?= e($opt) ?>"><?= e($opt) ?></option><?php endif; ?>
               <?php endforeach; ?>
             </select>
           <?php elseif ($cf['field_type'] === 'number'): ?>
@@ -294,6 +574,8 @@ $embed = !empty($_GET['embed']); // beágyazott mód (WP plugin iframe)
           <button type="submit" class="btn btn-primary" style="width:100%;padding:13px;font-size:15px;">Jelentkezés elküldése</button>
         </div>
       </form>
+      <?php endif; ?>
+
     </div>
   </div>
   <?php endif; ?>
@@ -303,8 +585,10 @@ $embed = !empty($_GET['embed']); // beágyazott mód (WP plugin iframe)
 <script>
 document.querySelectorAll('input[name="car_available"]').forEach(r => {
   r.addEventListener('change', () => {
-    var row = document.getElementById('passengers-row');
-    if (row) row.style.display = r.value === '1' ? 'block' : 'none';
+    ['passengers-row', 'join-passengers-row'].forEach(id => {
+      var row = document.getElementById(id);
+      if (row) row.style.display = r.value === '1' ? 'block' : 'none';
+    });
   });
 });
 

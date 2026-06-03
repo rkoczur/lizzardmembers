@@ -18,12 +18,15 @@ $numDays       = max(1, count(array_filter($_POST['day_number'] ?? [], fn($v) =>
 $maxAttendees  = max(1, (int)($_POST['max_attendees'] ?? 1));
 $country       = trim($_POST['country']       ?? '') ?: null;
 $region        = trim($_POST['region']        ?? '') ?: null;
-$fee           = ($_POST['participation_fee'] ?? '') !== '' ? max(0, (int)$_POST['participation_fee']) : null;
+$fee              = ($_POST['participation_fee'] ?? '') !== '' ? max(0, (int)$_POST['participation_fee']) : null;
+$lizzardierPoints = ($_POST['lizzardier_points'] ?? '') !== '' ? max(0, (int)$_POST['lizzardier_points']) : null;
 $status        = in_array($_POST['status'] ?? '', ['open','closed','cancelled']) ? $_POST['status'] : 'open';
 $accommodation = trim($_POST['accommodation'] ?? '') ?: null;
 $travel        = trim($_POST['travel']        ?? '') ?: null;
 $equipment     = trim($_POST['equipment']     ?? '') ?: null;
 $experience    = trim($_POST['experience']    ?? '') ?: null;
+
+$requiresMembership = !empty($_POST['requires_membership']) ? 1 : 0;
 
 $allowedStdFields   = ['departure_city', 'car_available', 'sharing_room', 'notes'];
 $visibleFields      = array_values(array_intersect($_POST['visible_fields'] ?? [], $allowedStdFields));
@@ -41,8 +44,8 @@ if (!$startDate) {
     exit;
 }
 
-$stmt = $pdo->prepare("INSERT INTO future_tours (name, description, start_date, num_days, max_attendees, participation_fee, country, region, accommodation, travel, equipment, experience, status, disabled_standard_fields, created_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-$stmt->execute([$name, $description ?: null, $startDate, $numDays, $maxAttendees, $fee, $country, $region, $accommodation, $travel, $equipment, $experience, $status, $disabledFieldsJson, getCurrentUserId()]);
+$stmt = $pdo->prepare("INSERT INTO future_tours (name, description, start_date, num_days, max_attendees, participation_fee, lizzardier_points, country, region, accommodation, travel, equipment, experience, status, disabled_standard_fields, requires_membership, created_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+$stmt->execute([$name, $description ?: null, $startDate, $numDays, $maxAttendees, $fee, $lizzardierPoints, $country, $region, $accommodation, $travel, $equipment, $experience, $status, $disabledFieldsJson, $requiresMembership, getCurrentUserId()]);
 $tourId = (int)$pdo->lastInsertId();
 
 // Save days

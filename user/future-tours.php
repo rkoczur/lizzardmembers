@@ -54,6 +54,7 @@ include __DIR__ . '/../includes/user-header.php';
           <th>Ország / Tájegység</th>
           <th>Időpont</th>
           <th>Napok</th>
+          <th>Lizzardier</th>
           <th>Helyek</th>
           <th>Státusz</th>
           <th></th>
@@ -89,6 +90,13 @@ include __DIR__ . '/../includes/user-header.php';
           <td><?= $t['start_date'] ? formatDate($t['start_date']) : '—' ?></td>
           <td><?= (int)$t['num_days'] ?> nap</td>
           <td>
+            <?php if ($t['lizzardier_points'] !== null): ?>
+              <span style="font-weight:600;color:var(--primary);"><?= (int)$t['lizzardier_points'] ?> pont</span>
+            <?php else: ?>
+              <span style="color:var(--text-muted);">—</span>
+            <?php endif; ?>
+          </td>
+          <td>
             <?php if ($spotsLeft > 0): ?>
               <span style="color:var(--primary);font-weight:600;"><?= $spotsLeft ?></span>
               <span style="color:var(--text-muted);font-size:12px;">/ <?= $maxSlots ?> szabad</span>
@@ -114,7 +122,7 @@ include __DIR__ . '/../includes/user-header.php';
         </tr>
         <?php endforeach; ?>
         <?php if (empty($tours)): ?>
-        <tr><td colspan="7">
+        <tr><td colspan="8">
           <div class="empty-state">
             <div class="empty-icon">🗓️</div>
             <p>Jelenleg nincs meghirdetett túra.</p>

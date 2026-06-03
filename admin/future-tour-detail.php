@@ -129,12 +129,28 @@ include __DIR__ . '/../includes/admin-header.php';
             <input type="number" name="participation_fee" min="0" step="1" value="<?= $tour['participation_fee'] !== null ? (int)$tour['participation_fee'] : '' ?>" placeholder="pl. 15000" <?= $ro ? 'readonly' : '' ?>>
           </div>
           <div class="form-group">
+            <label>Szerezhető Lizzardier pont</label>
+            <input type="number" name="lizzardier_points" min="0" step="1" value="<?= $tour['lizzardier_points'] !== null ? (int)$tour['lizzardier_points'] : '' ?>" placeholder="pl. 5" <?= $ro ? 'readonly' : '' ?>>
+            <small style="display:block;margin-top:4px;color:var(--text-muted);font-size:12px;">A pont csak a túra teljesítése után kerül jóváírásra.</small>
+          </div>
+          <div class="form-group">
             <label>Státusz</label>
             <select name="status" <?= $ro ? 'disabled' : '' ?>>
               <option value="open"      <?= ($tour['status'] ?? 'open') === 'open'      ? 'selected' : '' ?>>Nyitott – lehet jelentkezni</option>
               <option value="closed"    <?= ($tour['status'] ?? 'open') === 'closed'    ? 'selected' : '' ?>>Lezárt</option>
               <option value="cancelled" <?= ($tour['status'] ?? 'open') === 'cancelled' ? 'selected' : '' ?>>Törölve</option>
             </select>
+          </div>
+          <div class="form-group full">
+            <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-weight:normal;<?= $ro ? 'opacity:.6;pointer-events:none;' : '' ?>">
+              <input type="checkbox" name="requires_membership" value="1"
+                     <?= !empty($tour['requires_membership']) ? 'checked' : '' ?>
+                     <?= $ro ? 'disabled' : '' ?>>
+              <span>
+                <strong>Csak tagoknak szóló túra</strong>
+                <small style="display:block;font-weight:normal;color:var(--text-muted);margin-top:3px;">Ha aktív, nem bejelentkezett látogatóknak a vendégjelentkezés helyett tagfelvételi kérelem jelenik meg.</small>
+              </span>
+            </label>
           </div>
           <div class="form-group">
             <label>Ország</label>

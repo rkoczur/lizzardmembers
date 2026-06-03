@@ -584,6 +584,61 @@
   color: #6b6258 !important;
 }
 
+/* ---- Join – consent sorok ---- */
+.lote-ft-wrap .lote-ft-consents {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.lote-ft-wrap .lote-ft-consent-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  transition: border-color .15s, background .15s;
+  font-weight: normal;
+  margin: 0;
+}
+
+.lote-ft-wrap .lote-ft-consent-row:hover {
+  background: #f8f9fa;
+  border-color: #29776F;
+}
+
+.lote-ft-wrap .lote-ft-consent-row input[type="checkbox"] {
+  margin-top: 2px;
+  flex-shrink: 0;
+  width: 17px;
+  height: 17px;
+  accent-color: #29776F;
+  cursor: pointer;
+}
+
+.lote-ft-wrap .lote-ft-consent-row span {
+  font-size: 13px;
+  color: #333;
+  line-height: 1.55;
+}
+
+.lote-ft-wrap .lote-ft-consent-row a {
+  color: #29776F;
+  text-decoration: underline;
+}
+
+.lote-ft-wrap .lote-ft-consent-row--required {
+  border-color: #d97706;
+  background: rgba(217, 119, 6, .04);
+}
+
+.lote-ft-wrap .lote-ft-consent-row--required:hover {
+  background: rgba(217, 119, 6, .08);
+}
+
 /* ---- Responsive ---- */
 @media (max-width: 560px) {
   .lote-ft-wrap .lote-ft-teaser { flex-direction: column; align-items: flex-start; }
