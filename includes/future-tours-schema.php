@@ -71,6 +71,8 @@ function ensureFutureToursSchema(PDO $pdo): void {
                     SELECT id, gpx_file FROM future_tours WHERE gpx_file IS NOT NULL");
     } catch (Throwable) {}
     try { $pdo->exec("ALTER TABLE future_tours ADD COLUMN lizzardier_points INT UNSIGNED DEFAULT NULL AFTER participation_fee"); } catch (Throwable) {}
+    try { $pdo->exec("ALTER TABLE future_tours ADD COLUMN cover_img VARCHAR(255) DEFAULT NULL AFTER name"); } catch (Throwable) {}
+    try { $pdo->exec("ALTER TABLE future_tours ADD COLUMN short_intro VARCHAR(500) DEFAULT NULL AFTER description"); } catch (Throwable) {}
     // Guest application support
     try { $pdo->exec("ALTER TABLE future_tour_applications MODIFY user_id INT UNSIGNED NULL"); } catch (Throwable) {}
     try { $pdo->exec("ALTER TABLE future_tour_applications MODIFY status ENUM('confirmed','waitlist','cancelled','pending') NOT NULL DEFAULT 'confirmed'"); } catch (Throwable) {}

@@ -116,6 +116,10 @@ include __DIR__ . '/../includes/admin-header.php';
             <label>Leírás</label>
             <textarea name="description" rows="4" <?= $ro ? 'readonly' : '' ?>><?= e($tour['description'] ?? '') ?></textarea>
           </div>
+          <div class="form-group full">
+            <label>Rövid leírás <small style="font-weight:400;color:var(--text-muted);">(túrakártyán látható)</small></label>
+            <input type="text" name="short_intro" maxlength="200" value="<?= e($tour['short_intro'] ?? '') ?>" placeholder="pl. Háromnapos gyalogtúra a Bükkben, közepes nehézséggel." <?= $ro ? 'readonly' : '' ?>>
+          </div>
           <div class="form-group">
             <label>Kezdés dátuma <span style="color:var(--danger)">*</span></label>
             <input type="date" name="start_date" value="<?= e($tour['start_date'] ?? '') ?>" required <?= $ro ? 'readonly' : '' ?>>
@@ -183,6 +187,27 @@ include __DIR__ . '/../includes/admin-header.php';
             <label>Szükséges tapasztalat és erőnlét</label>
             <textarea name="experience" rows="3" <?= $ro ? 'readonly' : '' ?>><?= e($tour['experience'] ?? '') ?></textarea>
           </div>
+        </div>
+
+        <!-- Cover image -->
+        <div class="form-section-title" style="margin-top:24px;">Borítókép</div>
+        <div class="form-group">
+          <?php if (!$isNew && !empty($tour['cover_img'])): ?>
+            <div style="margin-bottom:12px;">
+              <img src="<?= BASE_URL ?>/assets/uploads/tour-covers/<?= e($tour['cover_img']) ?>" style="max-width:300px;height:200px;object-fit:cover;border-radius:8px;display:block;">
+            </div>
+            <?php if (!$ro): ?>
+            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;text-transform:none;letter-spacing:0;font-weight:600;margin-bottom:10px;">
+              <input type="checkbox" name="delete_cover_img" value="1">
+              Borítókép törlése
+            </label>
+            <?php endif; ?>
+          <?php endif; ?>
+          <?php if (!$ro): ?>
+            <label>Kép feltöltése</label>
+            <input type="file" name="cover_img" accept="image/jpeg,image/png,image/webp">
+            <small style="color:var(--text-muted);font-size:12px;">JPG, PNG vagy WebP; max. 5 MB. Megjelenítve: 300×200 px (automatikus vágás).</small>
+          <?php endif; ?>
         </div>
 
         <!-- DAYS -->

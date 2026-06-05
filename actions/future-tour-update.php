@@ -27,6 +27,7 @@ if (!$tour->fetch()) {
 
 $name          = trim($_POST['name']          ?? '');
 $description   = trim($_POST['description']   ?? '');
+$shortIntro    = trim($_POST['short_intro']   ?? '') ?: null;
 $startDate     = trim($_POST['start_date']    ?? '');
 $numDays       = max(1, count(array_filter($_POST['day_number'] ?? [], fn($v) => $v !== '')));
 $maxAttendees  = max(1, (int)($_POST['max_attendees'] ?? 1));
@@ -58,8 +59,36 @@ if (!$startDate) {
     exit;
 }
 
-$pdo->prepare("UPDATE future_tours SET name=?, description=?, start_date=?, num_days=?, max_attendees=?, participation_fee=?, lizzardier_points=?, country=?, region=?, accommodation=?, travel=?, equipment=?, experience=?, status=?, disabled_standard_fields=?, requires_membership=? WHERE id=?")
-    ->execute([$name, $description ?: null, $startDate, $numDays, $maxAttendees, $fee, $lizzardierPoints, $country, $region, $accommodation, $travel, $equipment, $experience, $status, $disabledFieldsJson, $requiresMembership, $id]);
+// Cover image handling
+$COVER_DIR = __DIR__ . '/../assets/uploads/tour-covers/';
+if (!is_dir($COVER_DIR)) mkdir($COVER_DIR, 0755, true);
+
+$coverStmt = $pdo->prepare("SELECT cover_img FROM future_tours WHERE id = ? LIMIT 1");
+$coverStmt->execute([$id]);
+$currentCover = $coverStmt->fetchColumn() ?: null;
+$newCoverImg  = $currentCover;
+
+if (!empty($_POST['delete_cover_img'])) {
+    if ($currentCover && file_exists($COVER_DIR . $currentCover)) @unlink($COVER_DIR . $currentCover);
+    $newCoverImg = null;
+}
+
+if (!empty($_FILES['cover_img']['tmp_name']) && $_FILES['cover_img']['error'] === UPLOAD_ERR_OK) {
+    $allowedMimes = ['image/jpeg','image/png','image/webp'];
+    $size = (int)($_FILES['cover_img']['size'] ?? 0);
+    $mime = (new finfo(FILEINFO_MIME_TYPE))->file($_FILES['cover_img']['tmp_name']);
+    $ext  = match($mime) { 'image/jpeg' => 'jpg', 'image/png' => 'png', 'image/webp' => 'webp', default => '' };
+    if ($ext && $size <= 5 * 1024 * 1024) {
+        $newFile = 'tour_cover_' . $id . '_' . time() . '.' . $ext;
+        if (move_uploaded_file($_FILES['cover_img']['tmp_name'], $COVER_DIR . $newFile)) {
+            if ($currentCover && file_exists($COVER_DIR . $currentCover)) @unlink($COVER_DIR . $currentCover);
+            $newCoverImg = $newFile;
+        }
+    }
+}
+
+$pdo->prepare("UPDATE future_tours SET name=?, description=?, short_intro=?, start_date=?, num_days=?, max_attendees=?, participation_fee=?, lizzardier_points=?, country=?, region=?, accommodation=?, travel=?, equipment=?, experience=?, status=?, disabled_standard_fields=?, requires_membership=?, cover_img=? WHERE id=?")
+    ->execute([$name, $description ?: null, $shortIntro, $startDate, $numDays, $maxAttendees, $fee, $lizzardierPoints, $country, $region, $accommodation, $travel, $equipment, $experience, $status, $disabledFieldsJson, $requiresMembership, $newCoverImg, $id]);
 
 // Sync days: delete existing, re-insert from POST
 $pdo->prepare("DELETE FROM future_tour_days WHERE future_tour_id = ?")->execute([$id]);

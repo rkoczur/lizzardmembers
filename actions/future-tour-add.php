@@ -13,6 +13,7 @@ ensureFutureToursSchema($pdo);
 
 $name          = trim($_POST['name']          ?? '');
 $description   = trim($_POST['description']   ?? '');
+$shortIntro    = trim($_POST['short_intro']   ?? '') ?: null;
 $startDate     = trim($_POST['start_date']    ?? '');
 $numDays       = max(1, count(array_filter($_POST['day_number'] ?? [], fn($v) => $v !== '')));
 $maxAttendees  = max(1, (int)($_POST['max_attendees'] ?? 1));
@@ -44,8 +45,8 @@ if (!$startDate) {
     exit;
 }
 
-$stmt = $pdo->prepare("INSERT INTO future_tours (name, description, start_date, num_days, max_attendees, participation_fee, lizzardier_points, country, region, accommodation, travel, equipment, experience, status, disabled_standard_fields, requires_membership, created_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-$stmt->execute([$name, $description ?: null, $startDate, $numDays, $maxAttendees, $fee, $lizzardierPoints, $country, $region, $accommodation, $travel, $equipment, $experience, $status, $disabledFieldsJson, $requiresMembership, getCurrentUserId()]);
+$stmt = $pdo->prepare("INSERT INTO future_tours (name, description, short_intro, start_date, num_days, max_attendees, participation_fee, lizzardier_points, country, region, accommodation, travel, equipment, experience, status, disabled_standard_fields, requires_membership, created_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+$stmt->execute([$name, $description ?: null, $shortIntro, $startDate, $numDays, $maxAttendees, $fee, $lizzardierPoints, $country, $region, $accommodation, $travel, $equipment, $experience, $status, $disabledFieldsJson, $requiresMembership, getCurrentUserId()]);
 $tourId = (int)$pdo->lastInsertId();
 
 // Save days
@@ -78,6 +79,23 @@ foreach ($fieldNames as $i => $fname) {
     $ftype   = in_array($fieldTypes[$i] ?? '', ['text','number','checkbox','select','textarea']) ? $fieldTypes[$i] : 'text';
     $fopts   = $ftype === 'select' ? (trim($fieldOptions[$i] ?? '') ?: null) : null;
     $fieldStmt->execute([$tourId, $fname, $ftype, $fopts, $i]);
+}
+
+// Cover image upload (after INSERT so we have $tourId)
+$COVER_DIR = __DIR__ . '/../assets/uploads/tour-covers/';
+if (!is_dir($COVER_DIR)) mkdir($COVER_DIR, 0755, true);
+
+if (!empty($_FILES['cover_img']['tmp_name']) && $_FILES['cover_img']['error'] === UPLOAD_ERR_OK) {
+    $allowedMimes = ['image/jpeg','image/png','image/webp'];
+    $size = (int)($_FILES['cover_img']['size'] ?? 0);
+    $mime = (new finfo(FILEINFO_MIME_TYPE))->file($_FILES['cover_img']['tmp_name']);
+    $ext  = match($mime) { 'image/jpeg' => 'jpg', 'image/png' => 'png', 'image/webp' => 'webp', default => '' };
+    if ($ext && $size <= 5 * 1024 * 1024) {
+        $newFile = 'tour_cover_' . $tourId . '_' . time() . '.' . $ext;
+        if (move_uploaded_file($_FILES['cover_img']['tmp_name'], $COVER_DIR . $newFile)) {
+            $pdo->prepare("UPDATE future_tours SET cover_img = ? WHERE id = ?")->execute([$newFile, $tourId]);
+        }
+    }
 }
 
 flash('success', 'Meghirdetett túra sikeresen létrehozva.');

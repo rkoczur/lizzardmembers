@@ -16,16 +16,12 @@ if (!databaseExists()) {
     exit;
 }
 
-// If not logged in
-if (!isLoggedIn()) {
-    header('Location: ' . BASE_URL . '/login.php');
+// Logged-in users go directly to their dashboard
+if (isLoggedIn()) {
+    header('Location: ' . BASE_URL . (isAdmin() ? '/admin/index.php' : '/user/index.php'));
     exit;
 }
 
-// Redirect based on role
-if (isAdmin()) {
-    header('Location: ' . BASE_URL . '/admin/index.php');
-} else {
-    header('Location: ' . BASE_URL . '/user/index.php');
-}
+// Guests see the public homepage
+header('Location: ' . BASE_URL . '/public/index.php');
 exit;
