@@ -58,13 +58,6 @@ include __DIR__ . '/includes/public-header.php';
     <div class="card">
       <div class="card-body">
 
-        <div style="margin-bottom:22px;font-size:13px;color:#444;line-height:1.7;">
-          <p style="margin:0 0 10px;">Jelen belépési nyilatkozat benyújtásával kérem a Leguán Osztag Természetjáró Egyesület (L.O.T.E. - 1041 Budapest, Rózsa u. 59.) elnökségét, hogy az Egyesület rendes tagjává szíveskedjen fogadni.</p>
-          <p style="margin:0 0 10px;">Az Alapszabályt és a Részvételi feltételeket megismertem és az abban foglaltakat magamra nézve elfogadom. A tagsági díjat és a tagdíj fizetés módját ismerem és elfogadom.</p>
-          <p style="margin:0 0 10px;">Alulírott kijelentem, hogy az általam közölt adatok a valóságnak megfelelnek, és tudomásul veszem, hogy a valótlan adatközlés a tagsági regisztráció törlését és fegyelmi eljárást von maga után.</p>
-          <p style="margin:0;">Jelen nyilatkozat elküldésével hozzájárulok, hogy a megadott adataimat a L.O.T.E. tárolja és kezelje, a Magyar Természetjáró Szövetségnek továbbítsa, valamint, a Magyar Természetjáró Szövetség azokat kezelje, tárolja és a tagnyilvántartás céljából felhasználja a tagság érvényességi idejére. A tag jogosult jelen hozzájárulását írásban bármikor visszavonni.</p>
-        </div>
-
         <form method="post" action="<?= BASE_URL ?>/actions/join-submit.php" novalidate>
           <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
 

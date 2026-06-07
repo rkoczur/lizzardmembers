@@ -5,7 +5,8 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/public-schema.php';
-requireAdmin();
+requireLeader();
+$ro = !canManageDocuments();
 
 $pdo = getDb();
 ensurePublicSchema($pdo);
@@ -62,12 +63,14 @@ include __DIR__ . '/../includes/admin-header.php';
             <td style="font-family:monospace;font-size:12px;color:var(--text-muted);"><?= e($d['filename']) ?></td>
             <td><?= (int)$d['sort_order'] ?></td>
             <td class="td-actions">
+              <?php if (!$ro): ?>
               <form method="post" action="<?= BASE_URL ?>/actions/document-delete.php" style="margin:0;"
                     onsubmit="return confirm('Biztosan törlöd ezt a dokumentumot?')">
                 <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
                 <input type="hidden" name="id" value="<?= (int)$d['id'] ?>">
                 <button type="submit" class="btn btn-danger btn-sm">Törlés</button>
               </form>
+              <?php endif; ?>
             </td>
           </tr>
           <?php endforeach; ?>
@@ -80,6 +83,7 @@ include __DIR__ . '/../includes/admin-header.php';
   </div>
 
   <!-- Upload form -->
+  <?php if (!$ro): ?>
   <div class="card">
     <div class="card-header"><h2>PDF feltöltése</h2></div>
     <div class="card-body">
@@ -116,6 +120,7 @@ include __DIR__ . '/../includes/admin-header.php';
       </form>
     </div>
   </div>
+  <?php endif; ?>
 
 </div>
 

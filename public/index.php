@@ -19,16 +19,6 @@ $heroImgFile = $heroImgStmt->fetchColumn() ?: null;
 // Latest 3 news posts
 $latestPosts = $pdo->query("SELECT * FROM posts WHERE published = 1 ORDER BY created_at DESC LIMIT 3")->fetchAll();
 
-// Next 3 upcoming open tours
-$upcomingTours = $pdo->query("
-    SELECT ft.*, c.name_hu AS country_name, c.flag_filename AS country_flag,
-           (SELECT COUNT(*) FROM future_tour_applications fta WHERE fta.future_tour_id = ft.id AND fta.status = 'confirmed') AS confirmed_count
-    FROM future_tours ft
-    LEFT JOIN countries c ON c.code = ft.country
-    WHERE ft.status != 'cancelled' AND ft.start_date >= CURDATE()
-    ORDER BY ft.start_date ASC
-    LIMIT 3
-")->fetchAll();
 
 $HU_MONTHS = ['január','február','március','április','május','június','július','augusztus','szeptember','október','november','december'];
 function huDateRange(string $startYmd, int $numDays, array $m): string {
@@ -77,11 +67,36 @@ include __DIR__ . '/../includes/public-header.php';
   </div>
 </section>
 
-<!-- Upcoming tours -->
-<?php if (!empty($upcomingTours)): ?>
+<!-- About strip -->
+<section class="pub-strip">
+  <div style="max-width:700px;margin:0 auto;">
+    <h2>Kik vagyunk mi?</h2>
+    <p>A Leguán Osztag Természetjáró Egyesület egy 2017-ben bejegyzett outdoor közösség. Gyalogtúráktól a vízitúrán és kerékpározáson át a sziklamászásig sokféle programot szervezünk – mindig barátságos légkörben, egyenlő feltételek mellett.</p>
+    <a href="<?= BASE_URL ?>/public/rolunk.php" class="btn-hero-ghost" style="display:inline-flex;align-items:center;gap:8px;">Tudj meg többet →</a>
+  </div>
+</section>
+
+<!-- Tour calendar (after "Who are we") -->
+<?php
+$upcomingTours = $pdo->query("
+    SELECT ft.*, c.name_hu AS country_name, c.flag_filename AS country_flag,
+           (SELECT COUNT(*) FROM future_tour_applications fta WHERE fta.future_tour_id = ft.id AND fta.status = 'confirmed') AS confirmed_count
+    FROM future_tours ft
+    LEFT JOIN countries c ON c.code = ft.country
+    WHERE ft.status != 'cancelled' AND ft.start_date >= CURDATE()
+    ORDER BY ft.start_date ASC
+    LIMIT 3
+")->fetchAll();
+?>
 <div class="pub-wrap">
   <h2 class="pub-section-title">Közelgő túrák</h2>
   <p class="pub-section-subtitle">Jelentkezz a következő kalandokra!</p>
+  <?php if (empty($upcomingTours)): ?>
+    <div style="text-align:center;padding:40px;color:var(--text-muted);">
+      <div style="font-size:40px;margin-bottom:10px;">🗓️</div>
+      <p>Jelenleg nincs meghirdetett túra. Kövess minket Facebookon!</p>
+    </div>
+  <?php else: ?>
   <div class="pub-tour-cards">
     <?php foreach ($upcomingTours as $t): ?>
     <?php
@@ -133,90 +148,7 @@ include __DIR__ . '/../includes/public-header.php';
     <?php endforeach; ?>
   </div>
   <div style="margin-top:20px;text-align:center;">
-    <a href="<?= BASE_URL ?>/public/turanyptar.php" class="btn btn-ghost">Összes túra megtekintése →</a>
-  </div>
-</div>
-<?php endif; ?>
-
-<!-- About strip -->
-<section class="pub-strip">
-  <div style="max-width:700px;margin:0 auto;">
-    <h2>Kik vagyunk mi?</h2>
-    <p>A Leguán Osztag Természetjáró Egyesület egy 2017-ben bejegyzett outdoor közösség. Gyalogtúráktól a vízitúrán és kerékpározáson át a sziklamászásig sokféle programot szervezünk – mindig barátságos légkörben, egyenlő feltételek mellett.</p>
-    <a href="<?= BASE_URL ?>/public/rolunk.php" class="btn-hero-ghost" style="display:inline-flex;align-items:center;gap:8px;">Tudj meg többet →</a>
-  </div>
-</section>
-
-<!-- Tour calendar (after "Who are we") -->
-<?php
-$allTours = $pdo->query("
-    SELECT ft.*, c.name_hu AS country_name, c.flag_filename AS country_flag,
-           (SELECT COUNT(*) FROM future_tour_applications fta WHERE fta.future_tour_id = ft.id AND fta.status = 'confirmed') AS confirmed_count,
-           (SELECT COUNT(*) FROM future_tour_applications fta WHERE fta.future_tour_id = ft.id AND fta.status = 'waitlist')  AS waitlist_count
-    FROM future_tours ft
-    LEFT JOIN countries c ON c.code = ft.country
-    WHERE ft.status != 'cancelled'
-    ORDER BY ft.start_date ASC, ft.created_at DESC
-")->fetchAll();
-?>
-<div class="pub-wrap">
-  <h2 class="pub-section-title">Túranaptár</h2>
-  <p class="pub-section-subtitle">Összes meghirdetett és közelgő túra.</p>
-  <?php if (empty($allTours)): ?>
-    <div style="text-align:center;padding:40px;color:var(--text-muted);">
-      <div style="font-size:40px;margin-bottom:10px;">🗓️</div>
-      <p>Jelenleg nincs meghirdetett túra. Kövess minket Facebookon!</p>
-    </div>
-  <?php else: ?>
-  <div class="pub-tour-cards">
-    <?php foreach ($allTours as $t): ?>
-    <?php
-    $confirmed = (int)$t['confirmed_count'];
-    $maxSlots  = (int)$t['max_attendees'];
-    $spotsLeft = max(0, $maxSlots - $confirmed);
-    $huDateRange = $t['start_date'] ? huDateRange($t['start_date'], (int)$t['num_days'], $HU_MONTHS) : '—';
-    ?>
-    <a href="<?= BASE_URL ?>/public/tour-detail.php?id=<?= (int)$t['id'] ?>" class="pub-tour-card">
-      <?php if (!empty($t['cover_img'])): ?>
-        <img src="<?= BASE_URL ?>/assets/uploads/tour-covers/<?= e($t['cover_img']) ?>" class="pub-tour-card-img" alt="<?= e($t['name']) ?>">
-      <?php else: ?>
-        <div class="pub-tour-card-img-placeholder">
-          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path d="M3 17l5-8 4 6 3-4 5 6H3z"/></svg>
-        </div>
-      <?php endif; ?>
-      <div class="pub-tour-card-body">
-        <div class="pub-tour-card-title-row">
-          <div class="pub-tour-card-title">
-            <?php if (!empty($t['country_flag'])): ?>
-              <img src="<?= e(getFlagUrl($t['country_flag'])) ?>" alt="">
-            <?php endif; ?>
-            <?= e($t['name']) ?>
-          </div>
-          <div class="pub-tour-card-spots">
-            <?php if ($t['status'] !== 'open'): ?>
-              <span class="badge badge-inactive">Lezárt</span>
-            <?php elseif ($spotsLeft > 0): ?>
-              <span class="badge badge-active"><?= $spotsLeft ?> szabad hely</span>
-            <?php else: ?>
-              <span class="badge badge-overdue">Betelt</span>
-            <?php endif; ?>
-          </div>
-        </div>
-        <div class="pub-tour-card-dates"><?= $huDateRange ?></div>
-        <?php if (!empty($t['short_intro'])): ?>
-          <div class="pub-tour-card-intro"><?= e($t['short_intro']) ?></div>
-        <?php endif; ?>
-      </div>
-      <div class="pub-tour-card-side">
-        <div class="pub-tour-card-lizzardier">
-          <img src="<?= BASE_URL ?>/assets/img/ures_small.png" alt="Lizzardier">
-          <?php if ($t['lizzardier_points'] !== null): ?>
-            <span class="pub-tour-card-lizzardier-pts"><?= (int)$t['lizzardier_points'] ?></span>
-          <?php endif; ?>
-        </div>
-      </div>
-    </a>
-    <?php endforeach; ?>
+    <a href="<?= BASE_URL ?>/public/turanyptar.php" class="btn btn-ghost">Összes túra megjelenítése →</a>
   </div>
   <?php endif; ?>
 </div>

@@ -6,7 +6,7 @@ require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/tours-schema.php';
 requireAdminOrVezeto();
-$ro = isVezeto();
+$ro = !isAdmin();
 
 $pdo = getDb();
 ensureToursSchema($pdo);

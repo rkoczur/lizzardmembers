@@ -70,7 +70,7 @@ include __DIR__ . '/../includes/public-header.php';
   </div>
 
   <div class="pub-info-box">
-    <strong>A verseny szabályai:</strong> A pontok számlálása január 1-jétől december 31-ig tart. Csak részvételi pontok számítanak (szervezői bónuszok nem). Az előző év nyertese nem indul. Minden más tag az előző évi pontjainak 20%-át bónuszként megkapja az idei összegéhez.
+    <strong>A verseny szabályai:</strong> A pontok számlálása január 1-jétől december 31-ig tart. Csak részvételi pontok számítanak (szervezői bónuszok nem). Az előző év nyertesén kívl minden más tag az előző évi pontjainak 20%-át bónuszként megkapja az idei összegéhez.
   </div>
 
   <?php if (empty($byYearTop)): ?>
@@ -78,11 +78,11 @@ include __DIR__ . '/../includes/public-header.php';
   <?php else: ?>
   <div class="card">
     <div class="table-wrap">
-      <table>
+      <table class="pub-toplist-table">
         <thead>
           <tr>
             <th style="width:60px;">Év</th>
-            <th></th>
+            <th style="width:80px;"></th>
             <th>Nyertes</th>
             <th style="text-align:right;">Pontok</th>
           </tr>
@@ -91,20 +91,21 @@ include __DIR__ . '/../includes/public-header.php';
           <?php foreach ($byYearTop as $yr => $row): ?>
           <?php $img = getLevelImageFilename($row['level']); ?>
           <tr>
-            <td><strong><?= (int)$yr ?></strong></td>
-            <td class="td-rank-img">
+            <td class="tl-rank-num tl-yr"><?= (int)$yr ?></td>
+            <td class="td-rank-img tl-rank-img">
               <?php if ($img): ?>
-                <img src="<?= BASE_URL ?>/assets/img/<?= $img ?>" alt="<?= getLevelLabel($row['level']) ?>" style="height:60px;">
+                <img src="<?= BASE_URL ?>/assets/img/<?= $img ?>" alt="<?= getLevelLabel($row['level']) ?>">
               <?php endif; ?>
             </td>
-            <td>
-              <span style="font-weight:600;"><?= e($row['lastname'] . ' ' . $row['firstname']) ?></span>
-              <br><span class="level-badge <?= getLevelClass($row['level']) ?>"><?= getLevelLabel($row['level']) ?></span>
+            <td class="tl-info">
+              <span class="tl-yr-mobile"><?= (int)$yr ?></span>
+              <span class="tl-name"><?= e($row['lastname'] . ' ' . $row['firstname']) ?></span>
+              <span class="tl-badge"><span class="level-badge <?= getLevelClass($row['level']) ?>"><?= getLevelLabel($row['level']) ?></span></span>
             </td>
-            <td style="text-align:right;">
+            <td class="tl-pts">
               <strong><?= number_format($row['total_points'], 1) ?></strong>
               <?php if ($row['bonus'] > 0): ?>
-                <br><span style="font-size:11px;color:var(--warning);"><?= number_format($row['raw_points']) ?> + <?= number_format($row['bonus'], 1) ?> bónusz</span>
+                <span class="tl-pts-bonus"><?= number_format($row['raw_points']) ?> + <?= number_format($row['bonus'], 1) ?> bónusz</span>
               <?php endif; ?>
             </td>
           </tr>

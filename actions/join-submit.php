@@ -13,7 +13,7 @@ ensureJoinSchema($pdo);
 $tourId      = (int)($_POST['tour_id']    ?? 0);
 $joinEmbed   = !empty($_POST['join_embed']);
 $redirectBack = $tourId > 0
-    ? BASE_URL . '/user/future-tour-apply-public.php?id=' . $tourId . ($joinEmbed ? '&embed=1' : '')
+    ? BASE_URL . '/public/tour-apply.php?id=' . $tourId
     : BASE_URL . '/join.php';
 
 $lastname    = trim($_POST['lastname']    ?? '');

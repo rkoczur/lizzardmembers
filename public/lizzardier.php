@@ -77,7 +77,7 @@ include __DIR__ . '/../includes/public-header.php';
           <?php if ($img): ?><img src="<?= BASE_URL ?>/assets/img/<?= $img ?>" class="pub-rank-img" alt=""><?php endif; ?>
         </td>
         <td><span class="level-badge <?= getLevelClass($lvl) ?>"><?= getLevelLabel($lvl) ?></span></td>
-        <td><?= $pts > 0 ? $pts . ' pont' : 'Újonc' ?></td>
+        <td style="text-align:right;"><?= $pts > 0 ? $pts . ' pont' : 'Újonc' ?></td>
         <td><?= $disc ?></td>
       </tr>
       <?php endforeach; ?>

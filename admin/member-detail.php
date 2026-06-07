@@ -6,7 +6,7 @@ require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/user-schema.php';
 requireAdminOrVezeto();
-$ro = isVezeto();
+$ro = !isAdmin();
 
 $pdo = getDb();
 ensureUserSchema($pdo);
@@ -214,16 +214,16 @@ include __DIR__ . '/../includes/admin-header.php';
           <div class="form-group">
             <label>Szerepkör</label>
             <?php if ($isSelf): ?>
-              <input type="text" value="Admin (saját fiók)" readonly>
-              <input type="hidden" name="role" value="admin">
+              <input type="text" value="<?= e(getRoleLabel($member['role'])) ?> (saját fiók)" readonly>
+              <input type="hidden" name="role" value="<?= e($member['role']) ?>">
               <span class="form-hint">Saját szerepkörödet nem módosíthatod.</span>
             <?php elseif ($ro): ?>
-              <input type="text" value="<?= $member['role'] === 'admin' ? 'Admin' : ($member['role'] === 'vezeto' ? 'Vezető' : 'Tag') ?>" readonly>
+              <input type="text" value="<?= e(getRoleLabel($member['role'])) ?>" readonly>
             <?php else: ?>
               <select name="role">
-                <option value="user"   <?= $member['role'] === 'user'   ? 'selected' : '' ?>>Tag</option>
-                <option value="vezeto" <?= $member['role'] === 'vezeto' ? 'selected' : '' ?>>Vezető</option>
-                <option value="admin"  <?= $member['role'] === 'admin'  ? 'selected' : '' ?>>Admin</option>
+                <?php foreach (['user'=>'Tag','vezeto'=>'Szakszövetségi vezető','kommunikacios'=>'Kommunikációs vezető','jogi'=>'Jogi vezető','penzugyi'=>'Pénzügyi vezető','helyettes'=>'Egyesületvezető-helyettes','admin'=>'Egyesületvezető'] as $val => $lbl): ?>
+                  <option value="<?= $val ?>" <?= $member['role'] === $val ? 'selected' : '' ?>><?= $lbl ?></option>
+                <?php endforeach; ?>
               </select>
             <?php endif; ?>
           </div>

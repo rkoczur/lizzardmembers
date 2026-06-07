@@ -5,7 +5,8 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/public-schema.php';
-requireAdmin();
+requireLeader();
+$ro = !canManagePosts();
 
 $pdo = getDb();
 ensurePublicSchema($pdo);
@@ -35,7 +36,7 @@ include __DIR__ . '/../includes/admin-header.php';
 
 <div class="page-header">
   <h1>Posztok</h1>
-  <a href="<?= BASE_URL ?>/admin/post-detail.php?new=1" class="btn btn-primary">+ Új poszt</a>
+  <?php if (!$ro): ?><a href="<?= BASE_URL ?>/admin/post-detail.php?new=1" class="btn btn-primary">+ Új poszt</a><?php endif; ?>
 </div>
 
 <div class="card">
@@ -80,7 +81,9 @@ include __DIR__ . '/../includes/admin-header.php';
           <td><?= e(trim(($p['lastname'] ?? '') . ' ' . ($p['firstname'] ?? ''))) ?: '—' ?></td>
           <td style="white-space:nowrap;"><?= formatDate($p['created_at']) ?></td>
           <td class="td-actions" style="white-space:nowrap;">
-            <a href="<?= BASE_URL ?>/admin/post-detail.php?id=<?= (int)$p['id'] ?>" class="btn btn-ghost btn-sm">Szerkesztés</a>
+            <?php if (!$ro): ?>
+              <a href="<?= BASE_URL ?>/admin/post-detail.php?id=<?= (int)$p['id'] ?>" class="btn btn-ghost btn-sm">Szerkesztés</a>
+            <?php endif; ?>
             <?php if ($p['published']): ?>
               <a href="<?= BASE_URL ?>/public/post.php?slug=<?= urlencode($p['slug']) ?>" target="_blank" class="btn btn-ghost btn-sm">Megtekintés</a>
             <?php endif; ?>

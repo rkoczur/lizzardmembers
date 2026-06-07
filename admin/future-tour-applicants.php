@@ -27,7 +27,7 @@ if (!$tour) {
 }
 
 $applications = $pdo->prepare("
-    SELECT fta.*, u.firstname, u.lastname, u.email, u.phone, COALESCE(u.level, 1) AS user_level
+    SELECT fta.*, u.firstname, u.lastname, u.email, u.phone, COALESCE(u.level, 1) AS user_level, COALESCE(u.role, 'user') AS user_role
     FROM future_tour_applications fta
     LEFT JOIN users u ON u.id = fta.user_id
     WHERE fta.future_tour_id = ? AND fta.status IN ('confirmed','waitlist')
@@ -269,7 +269,7 @@ include __DIR__ . '/../includes/admin-header.php';
             <td style="padding:12px 12px;text-align:center;font-weight:600;">
               <?php if ($tour['participation_fee'] !== null): ?>
                 <?php
-                  $discount     = $app['user_id'] ? getTourFeeDiscount((int)$app['user_level']) : 0;
+                  $discount     = $app['user_id'] ? getTourFeeDiscount((int)$app['user_level'], (string)($app['user_role'] ?? 'user')) : 0;
                   $effectiveFee = (float)$tour['participation_fee'] * (1 - $discount / 100);
                   $feeColor     = $app['paid_at'] ? 'var(--success,#16a34a)' : 'var(--danger,#dc2626)';
                 ?>

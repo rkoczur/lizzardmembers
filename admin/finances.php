@@ -5,7 +5,8 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/public-schema.php';
-requireAdmin();
+requireLeader();
+$ro = !canManageFinances();
 
 $pdo = getDb();
 ensurePublicSchema($pdo);
@@ -72,12 +73,14 @@ include __DIR__ . '/../includes/admin-header.php';
                 <td style="text-align:right;font-weight:600;"><?= number_format((int)$row['amount'], 0, ',', ' ') ?> Ft</td>
                 <td><?= (int)$row['sort_order'] ?></td>
                 <td class="td-actions">
+                  <?php if (!$ro): ?>
                   <form method="post" action="<?= BASE_URL ?>/actions/finance-delete.php" style="margin:0;"
                         onsubmit="return confirm('Törlöd ezt a tételt?')">
                     <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
                     <input type="hidden" name="id" value="<?= (int)$row['id'] ?>">
                     <button type="submit" class="btn btn-danger btn-sm">Törlés</button>
                   </form>
+                  <?php endif; ?>
                 </td>
               </tr>
               <?php endforeach; ?>
@@ -93,6 +96,7 @@ include __DIR__ . '/../includes/admin-header.php';
   </div>
 
   <!-- Add row -->
+  <?php if (!$ro): ?>
   <div class="card" style="position:sticky;top:80px;">
     <div class="card-header"><h2>Tétel hozzáadása</h2></div>
     <div class="card-body">
@@ -125,6 +129,7 @@ include __DIR__ . '/../includes/admin-header.php';
       </form>
     </div>
   </div>
+  <?php endif; ?>
 
 </div>
 

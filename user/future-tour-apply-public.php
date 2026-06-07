@@ -246,6 +246,9 @@ $embed = !empty($_GET['embed']); // beágyazott mód (WP plugin iframe)
       <div style="background:#fffbeb;border:1px solid #f59e0b;border-radius:8px;padding:14px 16px;margin-bottom:16px;font-size:13.5px;color:#92400e;line-height:1.55;">
         <strong>Ez a túra csak az egyesület tagjai számára érhető el.</strong><br>
         <span style="color:#b45309;">Ha már tag vagy, lépj be. Ha még nem vagy tag, itt kérheted felvételedet az egyesületbe.</span>
+        <div style="margin-top:10px;padding-top:10px;border-top:1px solid #f59e0b;font-size:13px;">
+          ⚠ <strong>Fontos:</strong> A tagság csak az éves tagdíj befizetésével válik érvényessé. Az éves tagdíj összege: <strong>5 000 Ft</strong>.
+        </div>
       </div>
 
       <!-- Login panel -->
@@ -295,12 +298,6 @@ $embed = !empty($_GET['embed']); // beágyazott mód (WP plugin iframe)
         <input type="hidden" name="tour_id" value="<?= (int)$id ?>">
         <?php if ($embed): ?><input type="hidden" name="join_embed" value="1"><?php endif; ?>
 
-        <div style="margin-bottom:10px;font-size:12.5px;color:#555;line-height:1.65;background:var(--card,#f5efe4);border-radius:8px;padding:12px 14px;">
-          Jelen belépési nyilatkozat benyújtásával kérem a Leguán Osztag Természetjáró Egyesület (L.O.T.E. - 1041 Budapest, Rózsa u. 59.) elnökségét, hogy az Egyesület rendes tagjává szíveskedjen fogadni. Az Alapszabályt és a Részvételi feltételeket megismertem és elfogadom. A tagsági díjat és a fizetési módot ismerem és elfogadom. Hozzájárulok, hogy a megadott adataimat a L.O.T.E. tárolja, kezelje és a Magyar Természetjáró Szövetségnek továbbítsa.
-        </div>
-        <div style="background:#fef3c7;border:1px solid #f59e0b;border-radius:6px;padding:10px 14px;margin-bottom:16px;font-size:13px;color:#92400e;line-height:1.55;">
-          ⚠ <strong>Fontos:</strong> A tagság csak az éves tagdíj befizetésével válik érvényessé. Az éves tagdíj összege: <strong>5 000 Ft</strong>.
-        </div>
 
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;" class="guest-id-grid">
           <div class="form-group">

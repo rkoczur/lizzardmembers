@@ -5,7 +5,7 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/public-schema.php';
-requireAdmin();
+requireLeader();
 
 $pdo = getDb();
 ensurePublicSchema($pdo);
@@ -21,6 +21,9 @@ if ($editSlug) {
     $stmt->execute([$editSlug]);
     $editPage = $stmt->fetch();
 }
+$ro = $editPage ? !canManagePages($editSlug) : false;
+$tinyMceSlugs = ['rolunk', 'kapcsolat', 'klubelet', 'lizzardier', 'reszveteli-feltetelek', 'tagsag'];
+$useTinyMce   = $editSlug && in_array($editSlug, $tinyMceSlugs, true) && !$ro;
 
 $allPages = $pdo->query("SELECT * FROM pages ORDER BY slug ASC")->fetchAll();
 
@@ -81,6 +84,7 @@ include __DIR__ . '/../includes/admin-header.php';
                  style="max-width:100%;max-height:200px;object-fit:cover;border-radius:8px;display:block;">
           </div>
         <?php endif; ?>
+        <?php if (!$ro): ?>
         <form method="post" enctype="multipart/form-data" action="<?= BASE_URL ?>/actions/hero-image-save.php">
           <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
           <div class="form-group" style="margin-bottom:16px;">
@@ -98,8 +102,12 @@ include __DIR__ . '/../includes/admin-header.php';
           <?php endif; ?>
           <button type="submit" class="btn btn-primary">Mentés</button>
         </form>
+        <?php else: ?>
+          <p style="color:var(--text-muted);font-size:13px;">Nincs szerkesztési jogosultságod ehhez az oldalhoz.</p>
+        <?php endif; ?>
 
       <?php else: ?>
+        <?php if (!$ro): ?>
         <form method="post" action="<?= BASE_URL ?>/actions/page-save.php">
           <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
           <input type="hidden" name="slug" value="<?= e($editPage['slug']) ?>">
@@ -108,12 +116,17 @@ include __DIR__ . '/../includes/admin-header.php';
             <input type="text" name="title" value="<?= e($editPage['title']) ?>" required>
           </div>
           <div class="form-group" style="margin-bottom:20px;">
-            <label>Tartalom (HTML megengedett)</label>
-            <textarea name="body" rows="20" style="font-family:monospace;font-size:13px;"><?= e($editPage['body'] ?? '') ?></textarea>
+            <label>Tartalom <?= $useTinyMce ? '' : '(HTML megengedett)' ?></label>
+            <textarea name="body" id="page-body-editor" rows="20" style="<?= $useTinyMce ? '' : 'font-family:monospace;font-size:13px;' ?>"><?= e($editPage['body'] ?? '') ?></textarea>
+            <?php if (!$useTinyMce): ?>
             <small style="color:var(--text-muted);font-size:12px;">Formázáshoz használhatsz egyszerű HTML-t: &lt;h2&gt;, &lt;p&gt;, &lt;ul&gt;, &lt;li&gt;, &lt;strong&gt;, &lt;a href=""&gt;</small>
+            <?php endif; ?>
           </div>
           <button type="submit" class="btn btn-primary">Mentés</button>
         </form>
+        <?php else: ?>
+          <p style="color:var(--text-muted);font-size:13px;">Nincs szerkesztési jogosultságod ehhez az oldalhoz.</p>
+        <?php endif; ?>
       <?php endif; ?>
 
     </div>
@@ -127,5 +140,27 @@ include __DIR__ . '/../includes/admin-header.php';
   <?php endif; ?>
 
 </div>
+
+<?php if ($useTinyMce): ?>
+<script src="https://cdn.tiny.cloud/1/xrszxkdcc33rt9txt2b16unxeaz24r8985c8wdnq31zhaery/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+tinymce.init({
+  selector: '#page-body-editor',
+  language: 'hu_HU',
+  height: 520,
+  menubar: 'file edit view insert format tools',
+  plugins: 'advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table help wordcount',
+  toolbar: 'undo redo | blocks | bold italic underline forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | removeformat code | help',
+  content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 15px; line-height: 1.7; color: #1a2e2b; }',
+  image_advtab: true,
+  relative_urls: false,
+  remove_script_host: false,
+  convert_urls: false,
+  setup: function(editor) {
+    editor.on('change', function() { editor.save(); });
+  }
+});
+</script>
+<?php endif; ?>
 
 <?php include __DIR__ . '/../includes/admin-footer.php'; ?>

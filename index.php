@@ -16,12 +16,6 @@ if (!databaseExists()) {
     exit;
 }
 
-// Logged-in users go directly to their dashboard
-if (isLoggedIn()) {
-    header('Location: ' . BASE_URL . (isAdmin() ? '/admin/index.php' : '/user/index.php'));
-    exit;
-}
-
-// Guests see the public homepage
+// Always show the public homepage
 header('Location: ' . BASE_URL . '/public/index.php');
 exit;

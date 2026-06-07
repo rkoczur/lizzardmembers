@@ -5,13 +5,19 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/public-schema.php';
-requireAdmin();
+requireLeader();
+$ro = !canManagePosts();
 
 $pdo = getDb();
 ensurePublicSchema($pdo);
 
 $isNew = isset($_GET['new']);
 $id    = $isNew ? 0 : (int)($_GET['id'] ?? 0);
+
+if ($isNew && $ro) {
+    header('Location: ' . BASE_URL . '/admin/posts.php');
+    exit;
+}
 
 $post = null;
 if (!$isNew && $id) {
@@ -53,6 +59,7 @@ include __DIR__ . '/../includes/admin-header.php';
 
 <div class="card" style="max-width:900px;">
   <div class="card-body">
+    <?php if (!$ro): ?>
     <form method="post" enctype="multipart/form-data" action="<?= BASE_URL ?>/actions/post-save.php">
       <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
       <?php if (!$isNew): ?>
@@ -81,9 +88,8 @@ include __DIR__ . '/../includes/admin-header.php';
           <textarea name="excerpt" rows="2"><?= e($post['excerpt'] ?? '') ?></textarea>
         </div>
         <div class="form-group full">
-          <label>Tartalom (HTML megengedett) <span style="color:var(--danger)">*</span></label>
-          <textarea name="body" rows="22" style="font-family:monospace;font-size:13px;" required><?= e($post['body'] ?? '') ?></textarea>
-          <small style="color:var(--text-muted);font-size:12px;">Formázáshoz HTML: &lt;h2&gt;, &lt;p&gt;, &lt;ul&gt;, &lt;li&gt;, &lt;strong&gt;, &lt;img src=""&gt;, &lt;a href=""&gt;</small>
+          <label>Tartalom <span style="color:var(--danger)">*</span></label>
+          <textarea name="body" id="post-body-editor" rows="22" required><?= e($post['body'] ?? '') ?></textarea>
         </div>
         <div class="form-group">
           <label>Borítókép</label>
@@ -97,6 +103,16 @@ include __DIR__ . '/../includes/admin-header.php';
           <?php endif; ?>
           <input type="file" name="cover_img" accept="image/jpeg,image/png,image/webp">
           <small style="color:var(--text-muted);font-size:12px;">JPG, PNG vagy WebP; max. 4 MB.</small>
+        </div>
+        <div class="form-group">
+          <label>Dátum</label>
+          <?php
+            $dtVal = !empty($post['created_at'])
+              ? date('Y-m-d\TH:i', strtotime($post['created_at']))
+              : date('Y-m-d\TH:i');
+          ?>
+          <input type="datetime-local" name="created_at" value="<?= e($dtVal) ?>">
+          <small style="color:var(--text-muted);font-size:12px;">A poszt megjelenési dátuma.</small>
         </div>
         <div class="form-group">
           <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;text-transform:none;letter-spacing:0;font-weight:600;">
@@ -119,6 +135,16 @@ include __DIR__ . '/../includes/admin-header.php';
         <a href="<?= BASE_URL ?>/admin/posts.php" class="btn btn-ghost">Mégse</a>
       </div>
     </form>
+    <?php else: ?>
+    <div style="padding:8px 0;">
+      <div class="form-group full" style="margin-bottom:12px;"><label>Cím</label><p style="margin:4px 0;"><?= e($post['title'] ?? '—') ?></p></div>
+      <div class="form-group" style="margin-bottom:12px;"><label>Kategória</label><p style="margin:4px 0;"><?= $post['category'] === 'beszmolok' ? 'Élményblog' : 'Hírek' ?></p></div>
+      <div class="form-group full" style="margin-bottom:12px;"><label>Kivonat</label><p style="margin:4px 0;font-size:13px;"><?= e($post['excerpt'] ?? '—') ?></p></div>
+      <div class="form-group full"><label>Tartalom</label><div style="background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:12px;font-size:13px;max-height:300px;overflow:auto;font-family:monospace;"><?= e($post['body'] ?? '') ?></div></div>
+      <p style="margin-top:16px;color:var(--text-muted);font-size:12px;">Nincs szerkesztési jogosultságod ehhez a poszthoz.</p>
+      <a href="<?= BASE_URL ?>/admin/posts.php" class="btn btn-ghost" style="margin-top:8px;">← Vissza</a>
+    </div>
+    <?php endif; ?>
   </div>
 </div>
 
@@ -136,5 +162,27 @@ if (titleEl && slugEl && !slugEl.value) {
   });
 }
 </script>
+
+<?php if (!$ro): ?>
+<script src="https://cdn.tiny.cloud/1/xrszxkdcc33rt9txt2b16unxeaz24r8985c8wdnq31zhaery/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+tinymce.init({
+  selector: '#post-body-editor',
+  language: 'hu_HU',
+  height: 520,
+  menubar: 'file edit view insert format tools',
+  plugins: 'advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table help wordcount',
+  toolbar: 'undo redo | blocks | bold italic underline forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | removeformat code | help',
+  content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 15px; line-height: 1.7; color: #1a2e2b; }',
+  image_advtab: true,
+  relative_urls: false,
+  remove_script_host: false,
+  convert_urls: false,
+  setup: function(editor) {
+    editor.on('change', function() { editor.save(); });
+  }
+});
+</script>
+<?php endif; ?>
 
 <?php include __DIR__ . '/../includes/admin-footer.php'; ?>

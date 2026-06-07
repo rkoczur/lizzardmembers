@@ -5,8 +5,8 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/tours-schema.php';
-requireAdminOrVezeto();
-if (isVezeto()) {
+requireLeader();
+if (!canManageTours()) {
     flash('error', 'Nincs jogosultságod ehhez a művelethez.');
     header('Location: ' . BASE_URL . '/admin/tours.php');
     exit;

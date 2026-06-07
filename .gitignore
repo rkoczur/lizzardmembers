@@ -6,3 +6,4 @@ CLAUDE.md
 .htaccess
 gpx-debug.php
 gpx-maptest.php
+*.gpx

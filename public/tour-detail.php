@@ -53,11 +53,11 @@ include __DIR__ . '/../includes/public-header.php';
     <a href="<?= BASE_URL ?>/public/turanyptar.php" class="btn btn-secondary btn-sm">← Vissza a naptárhoz</a>
   </div>
 
-  <div style="display:grid;grid-template-columns:1fr 320px;gap:24px;align-items:start;">
+  <div class="tour-detail-grid">
 
-    <!-- Left: details -->
-    <div>
-      <div class="card" style="margin-bottom:16px;">
+    <!-- Fő adatok (bal oszlop, 1. sor) -->
+    <div class="tour-main-info">
+      <div class="card">
         <div class="card-body">
           <h1 style="font-size:clamp(20px,3.5vw,28px);font-weight:800;color:var(--sidebar-bg);margin-bottom:16px;"><?= e($tour['name']) ?></h1>
 
@@ -108,12 +108,52 @@ include __DIR__ . '/../includes/public-header.php';
           <?php endif; ?>
         </div>
       </div>
+    </div>
 
+    <!-- Jobb oldal: CTA + térképek (2. oszlop, mindkét sor) -->
+    <div class="tour-sidebar">
+      <div class="card">
+        <div class="card-body card-body-center" style="text-align:center;padding:28px 20px;">
+          <?php if ($tour['status'] !== 'open'): ?>
+            <div style="font-size:40px;margin-bottom:12px;">🔒</div>
+            <div style="font-weight:700;font-size:17px;margin-bottom:6px;color:var(--text-muted);">A jelentkezés lezárva</div>
+
+          <?php elseif ($spotsLeft > 0): ?>
+            <div style="font-size:40px;margin-bottom:12px;">🎒</div>
+            <div style="font-weight:700;font-size:17px;margin-bottom:4px;">Még <?= $spotsLeft ?> szabad hely</div>
+            <div style="color:var(--text-muted);font-size:13px;margin-bottom:20px;"><?= (int)$tour['max_attendees'] ?> főre tervezett túra</div>
+
+          <?php else: ?>
+            <div style="font-size:40px;margin-bottom:12px;">📋</div>
+            <div style="font-weight:700;font-size:17px;margin-bottom:4px;">A túra betelt</div>
+            <div style="color:var(--text-muted);font-size:13px;margin-bottom:20px;">Várólistás feliratkozás lehetséges</div>
+          <?php endif; ?>
+
+          <?php if ($tour['status'] === 'open'): ?>
+            <a href="<?= BASE_URL ?>/public/tour-apply.php?id=<?= (int)$id ?>" class="btn btn-primary" style="width:100%;padding:12px;font-size:15px;">
+              <?= $spotsLeft > 0 ? 'Jelentkezés' : 'Várólistára feliratkozás' ?>
+            </a>
+          <?php endif; ?>
+        </div>
+      </div>
+
+      <?php foreach ($gpxFiles as $gi => $gf): ?>
+      <div class="card" style="margin-top:16px;">
+        <div class="card-header">
+          <h2><?= !empty($gf['label']) ? e($gf['label']) : ('Térkép' . (count($gpxFiles) > 1 ? ' ' . ($gi + 1) . '.' : '')) ?></h2>
+        </div>
+        <div id="tour-map-<?= $gi ?>" style="height:320px;border-radius:0 0 var(--radius,8px) var(--radius,8px);overflow:hidden;position:relative;z-index:0;isolation:isolate;"></div>
+      </div>
+      <?php endforeach; ?>
+    </div>
+
+    <!-- Másodlagos infók (bal oszlop, 2. sor) -->
+    <div class="tour-secondary-info">
       <!-- Days -->
       <?php if (!empty($days)): ?>
       <div class="card" style="margin-bottom:16px;">
         <div class="card-header"><h2>Napok</h2></div>
-        <div class="card-body" style="padding:0;">
+        <div class="card-body" style="padding:0;overflow-x:auto;">
           <table style="width:100%;border-collapse:collapse;font-size:13.5px;">
             <thead>
               <tr style="background:var(--card);border-bottom:1px solid var(--border);">
@@ -148,52 +188,6 @@ include __DIR__ . '/../includes/public-header.php';
           <div class="card-body" style="white-space:pre-wrap;line-height:1.65;"><?= e($tour[$col]) ?></div>
         </div>
         <?php endif; ?>
-      <?php endforeach; ?>
-    </div>
-
-    <!-- Right: CTA panel -->
-    <div>
-      <div class="card">
-        <div class="card-body card-body-center" style="text-align:center;padding:28px 20px;">
-          <?php if ($tour['status'] !== 'open'): ?>
-            <div style="font-size:40px;margin-bottom:12px;">🔒</div>
-            <div style="font-weight:700;font-size:17px;margin-bottom:6px;color:var(--text-muted);">A jelentkezés lezárva</div>
-
-          <?php elseif ($spotsLeft > 0): ?>
-            <div style="font-size:40px;margin-bottom:12px;">🎒</div>
-            <div style="font-weight:700;font-size:17px;margin-bottom:4px;">Még <?= $spotsLeft ?> szabad hely</div>
-            <div style="color:var(--text-muted);font-size:13px;margin-bottom:20px;"><?= (int)$tour['max_attendees'] ?> főre tervezett túra</div>
-
-          <?php else: ?>
-            <div style="font-size:40px;margin-bottom:12px;">📋</div>
-            <div style="font-weight:700;font-size:17px;margin-bottom:4px;">A túra betelt</div>
-            <div style="color:var(--text-muted);font-size:13px;margin-bottom:20px;">Várólistás feliratkozás lehetséges</div>
-          <?php endif; ?>
-
-          <?php if ($tour['status'] === 'open'): ?>
-          <?php if (isLoggedIn()): ?>
-            <a href="<?= BASE_URL ?>/user/future-tour-detail.php?id=<?= (int)$id ?>" class="btn btn-primary" style="width:100%;padding:12px;font-size:15px;">
-              <?= $spotsLeft > 0 ? 'Jelentkezés' : 'Várólistára feliratkozás' ?>
-            </a>
-          <?php else: ?>
-            <a href="<?= BASE_URL ?>/user/future-tour-apply-public.php?id=<?= (int)$id ?>" class="btn btn-primary" style="width:100%;padding:12px;font-size:15px;">
-              <?= $spotsLeft > 0 ? 'Jelentkezés' : 'Várólistára feliratkozás' ?>
-            </a>
-            <div style="margin-top:10px;font-size:12px;color:var(--text-muted);">
-              Tagok: <a href="<?= BASE_URL ?>/login.php">jelentkezz be</a> a kedvezményekért
-            </div>
-          <?php endif; ?>
-          <?php endif; ?>
-        </div>
-      </div>
-
-      <?php foreach ($gpxFiles as $gi => $gf): ?>
-      <div class="card" style="margin-top:16px;">
-        <div class="card-header">
-          <h2><?= !empty($gf['label']) ? e($gf['label']) : ('Térkép' . (count($gpxFiles) > 1 ? ' ' . ($gi + 1) . '.' : '')) ?></h2>
-        </div>
-        <div id="tour-map-<?= $gi ?>" style="height:320px;border-radius:0 0 var(--radius,8px) var(--radius,8px);overflow:hidden;"></div>
-      </div>
       <?php endforeach; ?>
     </div>
 

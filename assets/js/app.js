@@ -331,6 +331,17 @@ function initResponsiveTables() {
   });
 }
 
+/* ===== Hero parallax ===== */
+function initHeroParallax() {
+  var heroBg = document.querySelector('.pub-hero-bg');
+  if (!heroBg) return;
+  function update() {
+    heroBg.style.transform = 'translateY(' + (window.pageYOffset * 0.35) + 'px)';
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   initMemberSearch();
   initMemberFilters();
@@ -344,4 +355,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initMobileMenu();
   initResponsiveTables();
   initDateYearLimit();
+  initHeroParallax();
 });

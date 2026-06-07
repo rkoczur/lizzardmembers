@@ -39,12 +39,23 @@ include __DIR__ . '/../includes/public-header.php';
     $totalExpense = array_sum(array_column($cats['expense'] ?? [], 'amount'));
     $result       = $totalIncome - $totalExpense;
     ?>
-    <details class="pub-finance-year" open>
+    <details class="pub-finance-year">
       <summary>
-        <span><?= (int)$yr ?>. év</span>
-        <span style="font-size:13px;font-weight:500;color:<?= $result >= 0 ? 'var(--success)' : 'var(--danger)' ?>;">
-          <?= $result >= 0 ? '+' : '' ?><?= number_format((int)$result, 0, ',', ' ') ?> Ft
-        </span>
+        <span class="pub-finance-yr-label"><?= (int)$yr ?></span>
+        <div class="pub-finance-summary-right">
+          <div class="pub-finance-result-block">
+            <span class="pub-finance-result-label">Eredmény</span>
+            <span class="pub-finance-result-value <?= $result >= 0 ? 'positive' : 'negative' ?>">
+              <?= $result >= 0 ? '+' : '' ?><?= number_format((int)$result, 0, ',', ' ') ?> Ft
+            </span>
+          </div>
+          <span class="pub-finance-toggle-btn">
+            <span class="pub-finance-toggle-text">Részletek</span>
+            <svg class="pub-finance-chevron" width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </div>
       </summary>
       <div class="pub-finance-grid">
         <div class="pub-finance-col">

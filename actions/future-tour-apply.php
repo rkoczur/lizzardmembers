@@ -191,7 +191,7 @@ if ($appStatus === 'confirmed') {
 
 // Ha publikus oldalról érkezett (pl. WP plugin iframe), visszairányítjuk a done állapotra
 if (!empty($_POST['public_redirect'])) {
-    header('Location: ' . BASE_URL . '/user/future-tour-apply-public.php?id=' . $tourId . '&done');
+    header('Location: ' . BASE_URL . '/public/tour-apply.php?id=' . $tourId . '&done');
 } else {
     header('Location: ' . BASE_URL . '/user/future-tour-detail.php?id=' . $tourId);
 }

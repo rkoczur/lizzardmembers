@@ -8,6 +8,9 @@ $allTime = $pdo->query("
     LEFT JOIN tour_members tm ON tm.user_id = u.id
     LEFT JOIN tours t ON t.id = tm.tour_id
     WHERE u.role != 'admin'
+      AND u.last_payment IS NOT NULL
+      AND u.last_payment != '0000-00-00'
+      AND YEAR(u.last_payment) >= YEAR(CURDATE()) - 1
     GROUP BY u.id, u.firstname, u.lastname, u.level, u.role
     HAVING total_points >= 3
     ORDER BY total_points DESC

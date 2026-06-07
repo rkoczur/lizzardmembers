@@ -33,11 +33,11 @@ if ($action === 'logout') {
 if ($action === 'status') {
     if (isLoggedIn()) {
         $pdo  = getDb();
-        $stmt = $pdo->prepare("SELECT firstname, lastname, email, level FROM users WHERE id = ? LIMIT 1");
+        $stmt = $pdo->prepare("SELECT firstname, lastname, email, level, role FROM users WHERE id = ? LIMIT 1");
         $stmt->execute([getCurrentUserId()]);
         $u        = $stmt->fetch();
         $level    = (int)($u['level'] ?? 1);
-        $discount = getTourFeeDiscount($level);
+        $discount = getTourFeeDiscount($level, (string)($u['role'] ?? 'user'));
         echo json_encode([
             'logged_in' => true,
             'firstname' => $u['firstname'] ?? '',
@@ -151,7 +151,7 @@ $pdo->prepare("UPDATE users SET login_attempts = 0, locked_at = NULL WHERE id = 
 $writeLog('success', (int)$user['id'], $user['lastname'] . ' ' . $user['firstname'], $user['username'], null);
 setUserSession($user);
 
-$discount = getTourFeeDiscount((int)($user['level'] ?? 1));
+$discount = getTourFeeDiscount((int)($user['level'] ?? 1), (string)($user['role'] ?? 'user'));
 echo json_encode([
     'success'   => true,
     'firstname' => $user['firstname'],

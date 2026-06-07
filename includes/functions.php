@@ -82,8 +82,10 @@ function getLevelClass(int $level): string
     };
 }
 
-function getTourFeeDiscount(int $level): int
+function getTourFeeDiscount(int $level, string $role = 'user'): int
 {
+    static $leaderRoles = ['admin', 'helyettes', 'penzugyi', 'jogi', 'kommunikacios', 'vezeto'];
+    if (in_array($role, $leaderRoles, true)) return 15;
     return match(true) {
         $level >= 9 => 15,
         $level >= 7 => 10,

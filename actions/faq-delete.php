@@ -4,8 +4,8 @@ require_once __DIR__ . '/../includes/config.php';
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
-requireAdmin();
-verifyCsrf();
+requireLeader(); verifyCsrf();
+if (!canManageFaq()) { flash('error', 'Nincs jogosultságod ehhez.'); header('Location: ' . BASE_URL . '/admin/index.php'); exit; }
 
 $pdo = getDb();
 $id  = (int)($_POST['id'] ?? 0);

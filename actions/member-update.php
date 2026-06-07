@@ -35,7 +35,7 @@ $lastPayment       = $_POST['last_payment']         ?? null;
 $newPassword = $_POST['new_password']    ?? '';
 $newPassword2= $_POST['new_password2']  ?? '';
 $roleInput   = $_POST['role'] ?? 'user';
-$role        = in_array($roleInput, ['admin', 'user', 'vezeto'], true) ? $roleInput : 'user';
+$role        = in_array($roleInput, ['admin', 'user', 'vezeto', 'helyettes', 'penzugyi', 'jogi', 'kommunikacios'], true) ? $roleInput : 'user';
 
 // Prevent self-demotion
 if ($memberId === getCurrentUserId() && $role !== 'admin') {

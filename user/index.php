@@ -22,7 +22,7 @@ $stmt   = $pdo->prepare("
 $stmt->execute([$userId]);
 $user = $stmt->fetch();
 
-$feeDiscount       = getTourFeeDiscount((int)($user['level'] ?? 1));
+$feeDiscount       = getTourFeeDiscount((int)($user['level'] ?? 1), (string)($user['role'] ?? 'user'));
 $memberStatus      = getMemberStatus($user['last_payment']);
 $memberStatusLabel = getMemberStatusLabel($memberStatus);
 $memberStatusClass = getMemberStatusClass($memberStatus);

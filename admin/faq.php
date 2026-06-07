@@ -5,7 +5,8 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/public-schema.php';
-requireAdmin();
+requireLeader();
+$ro = !canManageFaq();
 
 $pdo = getDb();
 ensurePublicSchema($pdo);
@@ -62,6 +63,7 @@ include __DIR__ . '/../includes/admin-header.php';
             <td style="font-size:13.5px;"><?= e(mb_strimwidth($row['question'], 0, 80, '…')) ?></td>
             <td><?= (int)$row['sort_order'] ?></td>
             <td class="td-actions" style="white-space:nowrap;">
+              <?php if (!$ro): ?>
               <a href="?edit=<?= (int)$row['id'] ?>" class="btn btn-ghost btn-sm">Szerkesztés</a>
               <form method="post" action="<?= BASE_URL ?>/actions/faq-delete.php" style="display:inline;margin:0;"
                     onsubmit="return confirm('Törlöd ezt a kérdést?')">
@@ -69,6 +71,7 @@ include __DIR__ . '/../includes/admin-header.php';
                 <input type="hidden" name="id" value="<?= (int)$row['id'] ?>">
                 <button type="submit" class="btn btn-danger btn-sm">Törlés</button>
               </form>
+              <?php endif; ?>
             </td>
           </tr>
           <?php endforeach; ?>
@@ -79,6 +82,7 @@ include __DIR__ . '/../includes/admin-header.php';
   </div>
 
   <!-- Add / edit form -->
+  <?php if (!$ro): ?>
   <div class="card" style="position:sticky;top:80px;">
     <div class="card-header"><h2><?= $editRow ? 'Szerkesztés' : 'Új kérdés' ?></h2></div>
     <div class="card-body">
@@ -108,6 +112,7 @@ include __DIR__ . '/../includes/admin-header.php';
       </form>
     </div>
   </div>
+  <?php endif; ?>
 
 </div>
 

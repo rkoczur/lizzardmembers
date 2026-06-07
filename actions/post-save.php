@@ -5,8 +5,8 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/public-schema.php';
-requireAdmin();
-verifyCsrf();
+requireLeader(); verifyCsrf();
+if (!canManagePosts()) { flash('error', 'Nincs jogosultságod ehhez.'); header('Location: ' . BASE_URL . '/admin/index.php'); exit; }
 
 $pdo = getDb();
 ensurePublicSchema($pdo);
@@ -19,6 +19,8 @@ $category = in_array($_POST['category'] ?? '', ['hirek','beszmolok']) ? $_POST['
 $excerpt  = trim($_POST['excerpt']  ?? '');
 $body     = trim($_POST['body']     ?? '');
 $published = !empty($_POST['published']) ? 1 : 0;
+$createdAtRaw = trim($_POST['created_at'] ?? '');
+$createdAt = $createdAtRaw ? date('Y-m-d H:i:s', strtotime($createdAtRaw)) : null;
 
 // Validate slug
 $slug = preg_replace('/[^a-z0-9\-]/', '', strtolower($slug));
@@ -67,8 +69,9 @@ if ($isNew) {
         flash('error', 'Ez a slug már foglalt, válassz másikat.');
         header('Location: ' . BASE_URL . '/admin/post-detail.php?new=1'); exit;
     }
-    $pdo->prepare("INSERT INTO posts (title, slug, category, excerpt, body, cover_img, published, created_by) VALUES (?,?,?,?,?,?,?,?)")
-        ->execute([$title, $slug, $category, $excerpt ?: null, $body, $coverImg, $published, getCurrentUserId()]);
+    $insertCreatedAt = $createdAt ?? date('Y-m-d H:i:s');
+    $pdo->prepare("INSERT INTO posts (title, slug, category, excerpt, body, cover_img, published, created_by, created_at) VALUES (?,?,?,?,?,?,?,?,?)")
+        ->execute([$title, $slug, $category, $excerpt ?: null, $body, $coverImg, $published, getCurrentUserId(), $insertCreatedAt]);
     $newId = (int)$pdo->lastInsertId();
     // Fix cover filename with real id
     if ($coverImg && strpos($coverImg, '_new_') !== false) {
@@ -79,8 +82,9 @@ if ($isNew) {
     flash('success', 'Poszt sikeresen létrehozva.');
     header('Location: ' . BASE_URL . '/admin/post-detail.php?id=' . $newId);
 } else {
-    $pdo->prepare("UPDATE posts SET title=?, slug=?, category=?, excerpt=?, body=?, cover_img=?, published=? WHERE id=?")
-        ->execute([$title, $slug, $category, $excerpt ?: null, $body, $coverImg, $published, $id]);
+    $updateCreatedAt = $createdAt ?? date('Y-m-d H:i:s');
+    $pdo->prepare("UPDATE posts SET title=?, slug=?, category=?, excerpt=?, body=?, cover_img=?, published=?, created_at=? WHERE id=?")
+        ->execute([$title, $slug, $category, $excerpt ?: null, $body, $coverImg, $published, $updateCreatedAt, $id]);
     flash('success', 'Poszt sikeresen mentve.');
     header('Location: ' . BASE_URL . '/admin/post-detail.php?id=' . $id);
 }

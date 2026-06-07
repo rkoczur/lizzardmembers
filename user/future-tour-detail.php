@@ -48,10 +48,11 @@ $cntStmt->execute([$id]);
 $confirmedCount = (int)$cntStmt->fetchColumn();
 $spotsLeft = max(0, (int)$tour['max_attendees'] - $confirmedCount);
 
-$userStmt = $pdo->prepare("SELECT level FROM users WHERE id = ? LIMIT 1");
+$userStmt = $pdo->prepare("SELECT level, role FROM users WHERE id = ? LIMIT 1");
 $userStmt->execute([$userId]);
-$userLevel = (int)($userStmt->fetchColumn() ?: 1);
-$feeDiscount = getTourFeeDiscount($userLevel);
+$userRow   = $userStmt->fetch() ?: [];
+$userLevel = (int)($userRow['level'] ?? 1);
+$feeDiscount = getTourFeeDiscount($userLevel, (string)($userRow['role'] ?? 'user'));
 
 $gpxFilesStmt = $pdo->prepare("SELECT * FROM future_tour_gpx_files WHERE future_tour_id = ? ORDER BY sort_order ASC, uploaded_at ASC");
 $gpxFilesStmt->execute([$id]);

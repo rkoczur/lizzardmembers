@@ -5,13 +5,13 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/public-schema.php';
-requireAdmin();
-verifyCsrf();
+requireLeader(); verifyCsrf();
 
 $pdo = getDb();
 ensurePublicSchema($pdo);
 
 $slug  = trim($_POST['slug']  ?? '');
+if (!canManagePages($slug)) { flash('error', 'Nincs jogosultságod ezt a lapot szerkeszteni.'); header('Location: ' . BASE_URL . '/admin/pages.php'); exit; }
 $title = trim($_POST['title'] ?? '');
 $body  = $_POST['body'] ?? '';
 

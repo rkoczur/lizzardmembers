@@ -5,8 +5,8 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/public-schema.php';
-requireAdmin();
-verifyCsrf();
+requireLeader(); verifyCsrf();
+if (!canManageDocuments()) { flash('error', 'Nincs jogosultságod ehhez.'); header('Location: ' . BASE_URL . '/admin/index.php'); exit; }
 
 $pdo = getDb();
 ensurePublicSchema($pdo);

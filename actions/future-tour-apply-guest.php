@@ -20,7 +20,7 @@ $guestEmail = trim($_POST['guest_email']  ?? '');
 $guestPhone = trim($_POST['guest_phone']  ?? '') ?: null;
 
 $embed    = !empty($_POST['embed']);
-$redirect = BASE_URL . '/user/future-tour-apply-public.php?id=' . $tourId . ($embed ? '&embed=1' : '');
+$redirect = BASE_URL . '/public/tour-apply.php?id=' . $tourId . ($embed ? '&embed=1' : '');
 
 $fail = function (string $msg) use ($embed, $redirect): void {
     if ($embed) {
