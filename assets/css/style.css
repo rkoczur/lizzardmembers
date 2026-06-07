@@ -3,7 +3,6 @@
   --primary:        #29776F;
   --primary-dark:   #1d5750;
   --primary-light:  #cce6e3;
-  --secondary:      #7a7269;
   --success:        #29776F;
   --warning:        #DD9933;
   --danger:         #c0392b;
@@ -196,13 +195,6 @@ ul { list-style: none; }
   overflow: hidden;
 }
 
-card-public-header {
-  background: #29776f;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  border: 1px solid var(--border);
-  overflow: hidden;
-}
 
 .card-header {
   padding: 16px 20px;

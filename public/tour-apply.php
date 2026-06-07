@@ -303,7 +303,7 @@ include __DIR__ . '/../includes/public-header.php';
       <!-- Vendég: bejelentkezés panel + guest form -->
       <div id="public-login-panel" style="background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:20px;">
         <div id="public-login-teaser" style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;">
-          <span style="font-size:13px;color:var(--text-muted);">Ha tag vagy, jelentkezz be a kedvezményekért:</span>
+          <span style="font-size:13px;color:var(--text-muted);">Ha tag vagy, jelentkezz be:</span>
           <button type="button" id="public-login-toggle" style="background:#29776f;color:#fff;border:none;border-radius:6px;padding:6px 14px;font-size:13px;cursor:pointer;font-weight:600;">Bejelentkezés</button>
         </div>
         <div id="public-login-form-wrap" style="display:none;margin-top:12px;">

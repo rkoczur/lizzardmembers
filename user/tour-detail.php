@@ -340,29 +340,64 @@ function detailRow(string $label, $value): void {
 </div>
 
 <?php if ($hasMap): ?>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.7.0/gpx.min.js"></script>
+<?php
+$_lazyMaps = [];
+foreach ($gpxFiles as $gi => $gf) {
+    $_lazyMaps[] = ['id' => 'tour-map-' . $gi, 'gpx' => GPX_URL . $gf['filename']];
+}
+?>
 <script>
-<?php foreach ($gpxFiles as $gi => $gf): ?>
-(function () {
-  var map = L.map('tour-map-<?= $gi ?>');
-  L.tileLayer('https://api.mapy.cz/v1/maptiles/outdoor/256/{z}/{x}/{y}?apikey=nS0JOXTt2SpKYOi_URYlCjoXhR5tUiXnXIDijo4MY0Q', {
-    maxZoom: 19,
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> &copy; <a href="https://mapy.cz/" target="_blank">Mapy.cz</a>'
-  }).addTo(map);
-  new L.GPX(<?= json_encode(GPX_URL . $gf['filename']) ?>, {
-    async: true,
-    polyline_options: { color: '#ff0000', weight: 7, opacity: 1 },
-    marker_options: { startIconUrl: null, endIconUrl: null, shadowUrl: null }
-  }).on('loaded', function (e) {
-    map.fitBounds(e.target.getBounds(), { padding: [20, 20] });
-  }).on('error', function () {
-    document.getElementById('tour-map-<?= $gi ?>').innerHTML =
-      '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--text-muted,#888);">Nem sikerült betölteni a GPX fájlt.</div>';
-  }).addTo(map);
+(function() {
+  var _maps = <?= json_encode($_lazyMaps) ?>;
+  var _loaded = false, _pending = [];
+
+  function _initMap(cfg) {
+    var map = L.map(cfg.id);
+    L.tileLayer('https://api.mapy.cz/v1/maptiles/outdoor/256/{z}/{x}/{y}?apikey=nS0JOXTt2SpKYOi_URYlCjoXhR5tUiXnXIDijo4MY0Q', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> &copy; <a href="https://mapy.cz/" target="_blank">Mapy.cz</a>'
+    }).addTo(map);
+    new L.GPX(cfg.gpx, {
+      async: true,
+      polyline_options: { color: '#ff0000', weight: 7, opacity: 1 },
+      marker_options: { startIconUrl: null, endIconUrl: null, shadowUrl: null }
+    }).on('loaded', function(e) {
+      map.fitBounds(e.target.getBounds(), { padding: [20, 20] });
+    }).on('error', function() {
+      document.getElementById(cfg.id).innerHTML =
+        '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--text-muted,#888);">Nem sikerült betölteni a GPX fájlt.</div>';
+    }).addTo(map);
+  }
+
+  function _load(cfg) {
+    if (_loaded) { _initMap(cfg); return; }
+    _pending.push(cfg);
+    if (_pending.length > 1) return;
+    var css = document.createElement('link'); css.rel = 'stylesheet';
+    css.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+    document.head.appendChild(css);
+    var js = document.createElement('script');
+    js.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+    js.onload = function() {
+      var gpxJs = document.createElement('script');
+      gpxJs.src = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.7.0/gpx.min.js';
+      gpxJs.onload = function() { _loaded = true; _pending.forEach(_initMap); _pending = []; };
+      document.head.appendChild(gpxJs);
+    };
+    document.head.appendChild(js);
+  }
+
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (!e.isIntersecting) return;
+      obs.unobserve(e.target);
+      var cfg = _maps.find(function(m) { return m.id === e.target.id; });
+      if (cfg) _load(cfg);
+    });
+  }, { rootMargin: '200px 0px' });
+
+  _maps.forEach(function(m) { var el = document.getElementById(m.id); if (el) obs.observe(el); });
 })();
-<?php endforeach; ?>
 </script>
 <?php endif; ?>
 

@@ -760,27 +760,52 @@ $jsOriginalMemberIds = json_encode(array_column($assignedMembers, 'id'));
   <div class="card-header"><h2>GPX térkép</h2></div>
   <div id="tour-map" style="height:480px;border-radius:0 0 var(--radius,8px) var(--radius,8px);overflow:hidden;"></div>
 </div>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.7.0/gpx.min.js"></script>
 <script>
-(function () {
-  var map = L.map('tour-map');
-  L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-    maxZoom: 17,
-    attribution: 'Adatok: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> közreműködők, <a href="http://viewfinderpanoramas.org">SRTM</a> | Térkép: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
-  }).addTo(map);
+(function() {
+  var _gpxUrl = <?= json_encode(GPX_URL . $tour['gpx_file']) ?>;
+  var _loaded = false;
 
-  new L.GPX(<?= json_encode(GPX_URL . $tour['gpx_file']) ?>, {
-    async: true,
-    polyline_options: { color: '#e03030', weight: 3, opacity: 0.85 },
-    marker_options: { startIconUrl: null, endIconUrl: null, shadowUrl: null }
-  }).on('loaded', function (e) {
-    map.fitBounds(e.target.getBounds(), { padding: [20, 20] });
-  }).on('error', function () {
-    document.getElementById('tour-map').innerHTML =
-      '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--text-muted,#888);">Nem sikerült betölteni a GPX fájlt.</div>';
-  }).addTo(map);
+  function _initMap() {
+    var map = L.map('tour-map');
+    L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+      maxZoom: 17,
+      attribution: 'Adatok: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> közreműködők, <a href="http://viewfinderpanoramas.org">SRTM</a> | Térkép: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+    }).addTo(map);
+    new L.GPX(_gpxUrl, {
+      async: true,
+      polyline_options: { color: '#e03030', weight: 3, opacity: 0.85 },
+      marker_options: { startIconUrl: null, endIconUrl: null, shadowUrl: null }
+    }).on('loaded', function(e) {
+      map.fitBounds(e.target.getBounds(), { padding: [20, 20] });
+    }).on('error', function() {
+      document.getElementById('tour-map').innerHTML =
+        '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--text-muted,#888);">Nem sikerült betölteni a GPX fájlt.</div>';
+    }).addTo(map);
+  }
+
+  function _load() {
+    if (_loaded) return;
+    _loaded = true;
+    var css = document.createElement('link'); css.rel = 'stylesheet';
+    css.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+    document.head.appendChild(css);
+    var js = document.createElement('script');
+    js.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+    js.onload = function() {
+      var gpxJs = document.createElement('script');
+      gpxJs.src = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.7.0/gpx.min.js';
+      gpxJs.onload = _initMap;
+      document.head.appendChild(gpxJs);
+    };
+    document.head.appendChild(js);
+  }
+
+  var obs = new IntersectionObserver(function(entries) {
+    if (entries[0].isIntersecting) { obs.disconnect(); _load(); }
+  }, { rootMargin: '200px 0px' });
+
+  var el = document.getElementById('tour-map');
+  if (el) obs.observe(el);
 })();
 </script>
 <?php endif; ?>

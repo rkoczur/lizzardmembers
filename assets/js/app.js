@@ -1,3 +1,15 @@
+/* ===== Shared filter-menu closer (prevents double listener when both tables on same page) ===== */
+let _filterCloseListenerAdded = false;
+function _closeAllFilterMenus() {
+  document.querySelectorAll('.col-filter-menu.open').forEach(m => m.classList.remove('open'));
+}
+function _ensureFilterCloseListener() {
+  if (_filterCloseListenerAdded) return;
+  document.addEventListener('click', _closeAllFilterMenus);
+  window.addEventListener('scroll', _closeAllFilterMenus, true);
+  _filterCloseListenerAdded = true;
+}
+
 /* ===== Member list search + column filters ===== */
 const _memberFilters = {};
 
@@ -23,20 +35,14 @@ function initMemberSearch() {
 
 function initMemberFilters() {
   if (!document.querySelector('#member-table')) return;
-
-  function closeAll() {
-    document.querySelectorAll('.col-filter-menu.open').forEach(m => m.classList.remove('open'));
-  }
-
-  document.addEventListener('click', closeAll);
-  window.addEventListener('scroll', closeAll, true);
+  _ensureFilterCloseListener();
 
   document.querySelectorAll('.col-filter-btn').forEach(btn => {
     btn.addEventListener('click', e => {
       e.stopPropagation();
       const menu = btn.nextElementSibling;
       const isOpen = menu.classList.contains('open');
-      closeAll();
+      _closeAllFilterMenus();
       if (!isOpen) {
         const rect = btn.getBoundingClientRect();
         menu.style.top  = (rect.bottom + 4) + 'px';
@@ -57,7 +63,7 @@ function initMemberFilters() {
       menu.querySelectorAll('li').forEach(li => li.classList.remove('selected'));
       item.closest('li').classList.add('selected');
       btn.classList.toggle('active', !!value);
-      closeAll();
+      _closeAllFilterMenus();
       filterMemberRows();
     });
   });
@@ -224,20 +230,14 @@ function initTourMineFilter() {
 
 function initTourAdminFilters() {
   if (!document.querySelector('#tour-table .col-filter-btn')) return;
-
-  function closeAll() {
-    document.querySelectorAll('.col-filter-menu.open').forEach(m => m.classList.remove('open'));
-  }
-
-  document.addEventListener('click', closeAll);
-  window.addEventListener('scroll', closeAll, true);
+  _ensureFilterCloseListener();
 
   document.querySelectorAll('#tour-table .col-filter-btn').forEach(btn => {
     btn.addEventListener('click', e => {
       e.stopPropagation();
       const menu = btn.nextElementSibling;
       const isOpen = menu.classList.contains('open');
-      closeAll();
+      _closeAllFilterMenus();
       if (!isOpen) {
         const rect = btn.getBoundingClientRect();
         menu.style.top  = (rect.bottom + 4) + 'px';
@@ -258,7 +258,7 @@ function initTourAdminFilters() {
       menu.querySelectorAll('li').forEach(li => li.classList.remove('selected'));
       item.closest('li').classList.add('selected');
       btn.classList.toggle('active', !!value);
-      closeAll();
+      _closeAllFilterMenus();
       filterTourRows();
     });
   });

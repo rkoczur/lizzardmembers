@@ -11,10 +11,10 @@
       <h4>Kapcsolat</h4>
       <a href="mailto:info@lizzard.hu">info@lizzard.hu</a>
       <a href="tel:+36203961021">+36 (20) 396-1021</a>
-      <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
-        <a href="https://www.facebook.com/lizzardoutdoor/" target="_blank" rel="noopener" style="background:#1877F2;color:#fff;padding:6px 10px;border-radius:5px;font-size:12px;font-weight:700;text-decoration:none;">Facebook</a>
-        <a href="https://www.instagram.com/lizzardoutdoor/" target="_blank" rel="noopener" style="background:#E4405F;color:#fff;padding:6px 10px;border-radius:5px;font-size:12px;font-weight:700;text-decoration:none;">Instagram</a>
-        <a href="https://www.youtube.com/@lizzardhu" target="_blank" rel="noopener" style="background:#FF0000;color:#fff;padding:6px 10px;border-radius:5px;font-size:12px;font-weight:700;text-decoration:none;">YouTube</a>
+      <div class="pub-social-links">
+        <a href="https://www.facebook.com/lizzardoutdoor/" target="_blank" rel="noopener" class="pub-social-btn pub-social-fb">Facebook</a>
+        <a href="https://www.instagram.com/lizzardoutdoor/" target="_blank" rel="noopener" class="pub-social-btn pub-social-ig">Instagram</a>
+        <a href="https://www.youtube.com/@lizzardhu" target="_blank" rel="noopener" class="pub-social-btn pub-social-yt">YouTube</a>
       </div>
     </div>
   </div>
@@ -23,6 +23,6 @@
     <span>v<?= APP_VERSION ?> · Copyright © Koczur Richárd</span>
   </div>
 </footer>
-<script src="<?= BASE_URL ?>/assets/js/app.js"></script>
+<script src="<?= BASE_URL ?>/assets/js/app.js" defer></script>
 </body>
 </html>

@@ -23,7 +23,7 @@ include __DIR__ . '/../includes/public-header.php';
   </div>
 
   <?php if (empty($posts)): ?>
-    <div style="text-align:center;padding:60px 20px;color:var(--text-muted);">
+    <div class="pub-empty-state">
       <div style="font-size:48px;margin-bottom:12px;">🎒</div>
       <p>Hamarosan érkeznek az első élménybeszámolók!</p>
     </div>

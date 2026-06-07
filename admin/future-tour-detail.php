@@ -497,8 +497,6 @@ function removeField() {
   }
 }
 
-function confirmDelete(msg) { return confirm(msg); }
-
 // Copy public link to clipboard
 document.getElementById('copy-public-link-btn')?.addEventListener('click', function() {
   const url = this.dataset.url;

@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(dir \"c:\\\\xampp\\\\htdocs\\\\lizzardmembers\\\\admin\" /s /b)",
-      "Bash(findstr /i import)"
+      "Bash(findstr /i import)",
+      "Bash(\"C:\\\\Program Files \\(x86\\)\\\\Microsoft\\\\Edge\\\\Application\\\\msedge.exe\" --headless --screenshot=\"C:\\\\Users\\\\User\\\\AppData\\\\Local\\\\Temp\\\\turanyptar-desktop.png\" --window-size=1280,900 \"http://localhost/lizzardmembers/public/turanyptar.php\")"
     ]
   }
 }

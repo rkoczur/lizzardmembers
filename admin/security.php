@@ -49,6 +49,13 @@ include __DIR__ . '/../includes/admin-header.php';
   <div class="alert alert-error" data-auto-dismiss><?= e($flash_error) ?></div>
 <?php endif; ?>
 
+<div class="tab-nav">
+  <a href="<?= BASE_URL ?>/admin/security.php" class="tab-link<?= $activePage === 'security' ? ' active' : '' ?>">Biztonság</a>
+  <a href="<?= BASE_URL ?>/admin/logs.php" class="tab-link<?= $activePage === 'logs' ? ' active' : '' ?>">Naplók</a>
+  <a href="<?= BASE_URL ?>/admin/settings.php" class="tab-link<?= $activePage === 'settings' ? ' active' : '' ?>">Beállítások</a>
+  <a href="<?= BASE_URL ?>/admin/orphaned-assets.php" class="tab-link<?= $activePage === 'tools' ? ' active' : '' ?>">Felesleges fájlok</a>
+</div>
+
 <div class="page-header">
   <h1>Biztonság</h1>
 </div>

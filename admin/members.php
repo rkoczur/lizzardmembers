@@ -77,6 +77,7 @@ include __DIR__ . '/../includes/admin-header.php';
     <?php endif; ?>
   </a>
   <?php endif; ?>
+  <a href="<?= BASE_URL ?>/admin/toplist.php" class="tab-link">Toplista</a>
 </div>
 
 <?php if ($tab === 'members'): ?>

@@ -28,7 +28,7 @@ include __DIR__ . '/../includes/public-header.php';
   </div>
 
   <?php if (empty($grouped)): ?>
-    <div style="text-align:center;padding:60px 20px;color:var(--text-muted);">
+    <div class="pub-empty-state">
       <div style="font-size:48px;margin-bottom:12px;">📊</div>
       <p>Hamarosan elérhetők lesznek a pénzügyi adatok.</p>
     </div>
@@ -68,7 +68,7 @@ include __DIR__ . '/../includes/public-header.php';
           <?php endforeach; ?>
           <div class="pub-finance-total">
             <span>Összesen</span>
-            <span style="color:var(--success);"><?= number_format((int)$totalIncome, 0, ',', ' ') ?> Ft</span>
+            <span class="text-success"><?= number_format((int)$totalIncome, 0, ',', ' ') ?> Ft</span>
           </div>
         </div>
         <div class="pub-finance-col">
@@ -81,7 +81,7 @@ include __DIR__ . '/../includes/public-header.php';
           <?php endforeach; ?>
           <div class="pub-finance-total">
             <span>Összesen</span>
-            <span style="color:var(--danger);"><?= number_format((int)$totalExpense, 0, ',', ' ') ?> Ft</span>
+            <span class="text-danger"><?= number_format((int)$totalExpense, 0, ',', ' ') ?> Ft</span>
           </div>
         </div>
       </div>

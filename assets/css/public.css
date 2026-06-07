@@ -765,11 +765,11 @@
 .pub-social-btn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 9px 16px;
-  border-radius: var(--radius-sm);
-  font-size: 13px;
-  font-weight: 600;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 700;
   text-decoration: none;
   transition: opacity .18s;
 }
@@ -852,19 +852,22 @@
   min-height: 160px;
 }
 .pub-tour-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); text-decoration: none; color: inherit; }
-.pub-tour-card-img {
+.pub-tour-card-img-wrap {
   width: 300px;
   min-width: 300px;
-  height: 200px;
-  object-fit: cover;
   flex-shrink: 0;
-  display: block;
+  position: relative;
 }
+.pub-tour-card-img-wrap .pub-tour-card-img,
+.pub-tour-card-img-wrap .pub-tour-card-img-placeholder {
+  width: 100%;
+  min-width: 0;
+}
+.pub-tour-card-rank-overlay { display: none; }
+.pub-tour-card-img,
+.pub-tour-card-img-placeholder { width: 300px; min-width: 300px; height: 200px; flex-shrink: 0; }
+.pub-tour-card-img { object-fit: cover; display: block; }
 .pub-tour-card-img-placeholder {
-  width: 300px;
-  min-width: 300px;
-  height: 200px;
-  flex-shrink: 0;
   background: var(--sidebar-bg);
   display: flex;
   align-items: center;
@@ -874,22 +877,23 @@
 .pub-tour-card-body {
   flex: 1;
   padding: 18px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+  display: grid;
+  grid-template-areas: "title spots" "dates spots" "intro intro";
+  grid-template-columns: 1fr auto;
+  align-content: start;
+  gap: 4px 12px;
   min-width: 0;
 }
-.pub-tour-card-title-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
-.pub-tour-card-title  { font-size: 20px; font-weight: 800; color: var(--text); line-height: 1.25; display: flex; align-items: center; gap: 8px; flex: 1; min-width: 0; }
+.pub-tour-card-title  { grid-area: title; font-size: 20px; font-weight: 800; color: var(--text); line-height: 1.25; display: flex; align-items: center; gap: 8px; min-width: 0; }
 .pub-tour-card-title img {
     height: 18px;
     flex-shrink: 0;
     margin-top: 5px;
     border: 1px solid #AAAAAA;
 }
-.pub-tour-card-spots  { flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-end; gap: 3px; padding-top: 2px; }
-.pub-tour-card-dates  { font-size: 16px; color: var(--text); font-weight: 600; }
-.pub-tour-card-intro  { font-size: 13px; color: var(--text-muted); line-height: 1.55; margin-top: 2px; }
+.pub-tour-card-spots  { grid-area: spots; align-self: start; display: flex; flex-direction: column; align-items: flex-end; gap: 3px; padding-top: 2px; }
+.pub-tour-card-dates  { grid-area: dates; font-size: 16px; color: var(--text); font-weight: 600; }
+.pub-tour-card-intro  { grid-area: intro; font-size: 13px; color: var(--text-muted); line-height: 1.55; margin-top: 2px; }
 .pub-tour-card-side {
   width: 110px;
   min-width: 110px;
@@ -959,6 +963,11 @@
 .tour-sidebar        { grid-area: sidebar; }
 .tour-secondary-info { grid-area: extra; }
 
+/* ── Utility ── */
+.pub-empty-state { text-align: center; padding: 60px 20px; color: var(--text-muted); }
+.text-success { color: var(--success); }
+.text-danger  { color: var(--danger); }
+
 /* ── Responsive ── */
 @media (max-width: 1024px) {
   .pub-nav-menu    { display: none; }
@@ -969,9 +978,23 @@
   .pub-finance-grid { grid-template-columns: 1fr; }
   .pub-post-grid { grid-template-columns: 1fr; }
   .pub-tour-card { flex-direction: column; }
+  .pub-tour-card-img-wrap { width: 100%; min-width: 0; position: relative; }
   .pub-tour-card-img,
   .pub-tour-card-img-placeholder { width: 100%; min-width: 0; height: 180px; }
-  .pub-tour-card-side { width: 100%; min-width: 0; border-left: none; border-top: 1px solid var(--border); padding: 12px 16px; justify-content: flex-start; gap: 12px; }
+  .pub-tour-card-side { display: none; }
+  .pub-tour-card-rank-overlay {
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    margin-right: 20px;
+  }
+  .pub-tour-card-rank-overlay .pub-tour-card-lizzardier img { width: 64px; }
+  .pub-tour-card-rank-overlay .pub-tour-card-lizzardier-pts { font-size: 34px; }
+  .pub-tour-card-body { display: flex; flex-direction: column; gap: 4px; }
+  .pub-tour-card-spots { align-items: flex-start; }
   .pub-contact-grid { grid-template-columns: 1fr; }
   .pub-footer-inner { grid-template-columns: 1fr 1fr; }
   /* Toplista mobilon — override style.css .table-wrap card format */

@@ -7,6 +7,7 @@
   <title><?= e($pageTitle ?? 'Lizzard Outdoor') ?> — <?= APP_NAME ?></title>
   <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/style.css">
   <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/public.css">
+  <link rel="icon" href="<?= BASE_URL ?>/assets/img/lizzard_logo.png" type="image/png">
 </head>
 <body class="pub-page">
 
