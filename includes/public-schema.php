@@ -69,9 +69,11 @@ function ensurePublicSchema(PDO $pdo): void
         ['rolunk',                 'Rólunk',                    ''],
         ['tagsag',                 'Tagság',                    ''],
         ['lizzardier',             'Lizzardier pontverseny',    ''],
+        ['mtsz-turanaplo',         'MTSZ túranapló',            ''],
         ['kapcsolat',              'Kapcsolat',                 ''],
         ['reszveteli-feltetelek',  'Részvételi feltételek',     ''],
         ['ado1',                   'Adó 1%',                    ''],
+        ['penzugyek',              'Pénzügyek',                 ''],
         ['klubelet',               'Klubélet – események',      ''],
         ['hero-image',             'Hero háttérkép',            ''],
     ];

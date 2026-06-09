@@ -38,7 +38,7 @@
       </li>
 
       <!-- Tagság -->
-      <li class="pub-nav-item<?= in_array($activePubPage ?? '', ['tagsag','lizzardier','toplista']) ? ' active' : '' ?>">
+      <li class="pub-nav-item<?= in_array($activePubPage ?? '', ['tagsag','lizzardier','toplista','mtsz-turanaplo']) ? ' active' : '' ?>">
         <span>
           Tagság
           <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
@@ -46,6 +46,7 @@
         <div class="pub-nav-dropdown">
           <a href="<?= BASE_URL ?>/public/tagsag.php">Tagság információk</a>
           <a href="<?= BASE_URL ?>/public/lizzardier.php">Lizzardier pontverseny</a>
+          <a href="<?= BASE_URL ?>/public/mtsz-turanaplo.php">MTSZ túranapló</a>
           <a href="<?= BASE_URL ?>/public/toplista.php">Tagok / Toplista</a>
           <a href="<?= BASE_URL ?>/join.php">Belépés az egyesületbe</a>
         </div>
@@ -132,6 +133,7 @@
       <div class="pub-mobile-sub">
         <a href="<?= BASE_URL ?>/public/tagsag.php">Tagság információk</a>
         <a href="<?= BASE_URL ?>/public/lizzardier.php">Lizzardier pontverseny</a>
+        <a href="<?= BASE_URL ?>/public/mtsz-turanaplo.php">MTSZ túranapló</a>
         <a href="<?= BASE_URL ?>/public/toplista.php">Tagok / Toplista</a>
         <a href="<?= BASE_URL ?>/join.php">Belépés az egyesületbe</a>
       </div>

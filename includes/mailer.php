@@ -20,7 +20,12 @@ class SmtpMailer
         $this->fromName  = $cfg['from_name']  ?? '';
     }
 
-    public function send(string $toEmail, string $toName, string $subject, string $htmlBody, string $textBody = ''): void
+    /**
+     * Elküldi az e-mailt. Visszaadja a szerver utolsó (DATA utáni) válaszát,
+     * hogy naplózható legyen. Hiba esetén RuntimeException-t dob, amelynek
+     * üzenete tartalmazza az SMTP hibakódot és a szerver válaszát.
+     */
+    public function send(string $toEmail, string $toName, string $subject, string $htmlBody, string $textBody = '', string $replyTo = ''): string
     {
         if (!$this->host) {
             throw new RuntimeException('Az SMTP szerver nincs beállítva.');
@@ -69,11 +74,13 @@ class SmtpMailer
         $this->cmd($sock, "RCPT TO:<{$toEmail}>", [250, 251]);
         $this->cmd($sock, 'DATA', 354);
 
-        fwrite($sock, $this->buildMessage($toEmail, $toName, $subject, $htmlBody, $textBody) . "\r\n.\r\n");
-        $this->expect($sock, 250);
+        fwrite($sock, $this->buildMessage($toEmail, $toName, $subject, $htmlBody, $textBody, $replyTo) . "\r\n.\r\n");
+        $response = $this->expect($sock, 250);
 
         @$this->cmd($sock, 'QUIT', 221);
         fclose($sock);
+
+        return trim($response);
     }
 
     // ----------------------------------------------------------------
@@ -98,7 +105,7 @@ class SmtpMailer
         return $resp;
     }
 
-    private function buildMessage(string $toEmail, string $toName, string $subject, string $htmlBody, string $textBody): string
+    private function buildMessage(string $toEmail, string $toName, string $subject, string $htmlBody, string $textBody, string $replyTo = ''): string
     {
         $boundary = '====LZMB_' . bin2hex(random_bytes(8)) . '====';
 
@@ -121,6 +128,9 @@ class SmtpMailer
 
         $m  = "From: $from\r\n";
         $m .= "To: $to\r\n";
+        if ($replyTo !== '' && filter_var($replyTo, FILTER_VALIDATE_EMAIL)) {
+            $m .= "Reply-To: $replyTo\r\n";
+        }
         $m .= 'Subject: =?UTF-8?B?' . base64_encode($subject) . "?=\r\n";
         $m .= "Message-ID: $messageId\r\n";
         $m .= 'Date: ' . date('r') . "\r\n";

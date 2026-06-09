@@ -71,7 +71,7 @@ include __DIR__ . '/../includes/public-header.php';
 <section class="pub-strip">
   <div style="max-width:700px;margin:0 auto;">
     <h2>Kik vagyunk mi?</h2>
-    <p>A Leguán Osztag Természetjáró Egyesület egy 2017-ben bejegyzett outdoor közösség. Gyalogtúráktól a vízitúrán és kerékpározáson át a sziklamászásig sokféle programot szervezünk – mindig barátságos légkörben, egyenlő feltételek mellett.</p>
+    <p>Fiatalok vagyunk (bármit is jelentsen ez), akik szeretnének minél nagyobb szeletet felfedezni a világból. Ezt nagyobb közösségben a legjobb művelni, ezért szeretnénk ha Te is csatlakoznál hozzánk. Ha velünk tartasz, akkor egy baráti társaságba csöppenhetsz, ahol a kalandok és a természet szeretete a fő hajtóerő.</p>
     <a href="<?= BASE_URL ?>/public/rolunk.php" class="btn-hero-ghost" style="display:inline-flex;align-items:center;gap:8px;">Tudj meg többet →</a>
   </div>
 </section>

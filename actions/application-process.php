@@ -219,10 +219,12 @@ if ($sendWelcome) {
             $proto    = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
             $loginUrl = $proto . '://' . $_SERVER['HTTP_HOST'] . BASE_URL . '/login.php';
             $html     = buildWelcomeEmailHtml($app['firstname'], $username, $password, $loginUrl, APP_NAME);
+            // A naplóba kimaszkolt jelszóval kerül — plaintext jelszó sose kerüljön az email_log-ba
+            $logHtml  = buildWelcomeEmailHtml($app['firstname'], $username, '••••••••', $loginUrl, APP_NAME);
             $subject  = 'Üdvözlünk a ' . APP_NAME . '-ban!';
             $mailer   = new SmtpMailer($smtp);
             $mailer->send($app['email'], $app['lastname'] . ' ' . $app['firstname'], $subject, $html);
-            logEmailEntry($pdo, $newUserId, $app['email'], $app['lastname'] . ' ' . $app['firstname'], $subject, $html, 'welcome', 'sent');
+            logEmailEntry($pdo, $newUserId, $app['email'], $app['lastname'] . ' ' . $app['firstname'], $subject, $logHtml, 'welcome', 'sent');
             flash('success', $baseMsg . ' Az üdvözlő e-mail elküldve.');
         } else {
             flash('success', $baseMsg . ' (SMTP nincs beállítva, e-mail nem lett elküldve.)');

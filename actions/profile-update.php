@@ -105,7 +105,7 @@ if (!empty($_FILES['avatar']['name'])) {
 }
 
 // Notification preferences — defined keys, opt-out model (missing = enabled)
-$notifKeys    = ['tour_added'];
+$notifKeys    = ['tour_added', 'tour_announcement'];
 $notifRaw     = $_POST['notif'] ?? [];
 $notifPrefs   = [];
 foreach ($notifKeys as $key) {

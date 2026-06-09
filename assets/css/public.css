@@ -729,31 +729,111 @@
 .pub-rank-img { height: 50px; width: 50px; object-fit: contain; }
 
 /* ── Contact block ── */
+/* Bal oszlop (cím, bankszámla) nagyobb, jobb oszlop (telefon, e-mail) kisebb */
 .pub-contact-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 24px;
-  margin-bottom: 32px;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 20px;
+  margin-bottom: 36px;
 }
 .pub-contact-item {
+  position: relative;
   display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  padding: 18px 20px;
-  background: var(--card);
+  align-items: center;
+  gap: 18px;
+  padding: 24px 26px;
+  background: linear-gradient(155deg, var(--card) 0%, rgba(0,0,0,.025) 100%);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+/* Bal oldali színes akcentus-csík */
+.pub-contact-item::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, var(--primary), var(--sidebar-bg));
+}
+.pub-contact-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px rgba(26,61,57,.14);
+  border-color: var(--primary);
 }
 .pub-contact-icon {
-  width: 40px; height: 40px;
-  background: var(--primary);
-  color: #fff;
-  border-radius: 8px;
+  width: 50px; height: 50px;
+  background: linear-gradient(135deg, var(--primary), var(--sidebar-bg));
+  color: #F4E7CF;
+  border-radius: 14px;
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
+  box-shadow: 0 5px 14px rgba(41,119,111,.32);
 }
-.pub-contact-item h4 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--text-muted); margin-bottom: 4px; }
-.pub-contact-item p, .pub-contact-item a { font-size: 14px; color: var(--text); line-height: 1.5; }
+.pub-contact-item h4 {
+  font-size: 11px; font-weight: 800; text-transform: uppercase;
+  letter-spacing: .1em; color: var(--primary); margin-bottom: 6px;
+}
+.pub-contact-item p, .pub-contact-item a { font-size: 14.5px; color: var(--text); line-height: 1.5; margin: 0; }
+.pub-contact-item p + p { margin-top: 5px; }
+.pub-contact-item a { text-decoration: none; transition: color .15s; }
+.pub-contact-item a:hover { color: var(--primary); text-decoration: underline; }
+/* Egy adathoz tartozó (rövid) érték soha ne törjön több sorba */
+.pub-contact-data { white-space: nowrap; font-weight: 600; }
+.pub-contact-name { font-weight: 600; }
+.pub-contact-sub  { font-size: 12px; color: var(--text-muted); white-space: nowrap; }
+/* E-mail: egyetlen szóként kezeljük — normál esetben egy sorban fér el, szűk
+   helyen inkább törik, mint hogy kilógjon és levágódjon */
+.pub-contact-mail { font-weight: 600; overflow-wrap: anywhere; }
+
+/* ── Contact form ── */
+.pub-contact-form-section { margin-top: 40px; }
+.pub-contact-form {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px;
+  margin-top: 4px;
+}
+.pub-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 18px;
+  margin-bottom: 18px;
+}
+.pub-form-group { display: flex; flex-direction: column; }
+.pub-form-full { grid-column: 1 / -1; }
+.pub-form-group label {
+  font-size: 12px; font-weight: 700; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: .04em; margin-bottom: 6px;
+}
+.pub-form-group input,
+.pub-form-group textarea {
+  font: inherit;
+  font-size: 14.5px;
+  color: var(--text);
+  background: var(--bg, #fff);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 11px 14px;
+  width: 100%;
+  transition: border-color .15s, box-shadow .15s;
+}
+.pub-form-group input:focus,
+.pub-form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(41,119,111,.15);
+}
+.pub-form-group textarea { resize: vertical; min-height: 120px; }
+/* Spam-csapda — vizuálisan rejtett, de nem display:none (botok kitöltik) */
+.pub-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+/* Az aszimmetrikus 2 oszlopos elrendezés csak elég széles képernyőn; alatta
+   egy oszlop, hogy a kisebb kártyák tartalma is kényelmesen elférjen */
+@media (max-width: 920px) {
+  .pub-contact-grid { grid-template-columns: 1fr; }
+}
 
 /* ── Social links ── */
 .pub-social-list {
@@ -996,6 +1076,7 @@
   .pub-tour-card-body { display: flex; flex-direction: column; gap: 4px; }
   .pub-tour-card-spots { align-items: flex-start; }
   .pub-contact-grid { grid-template-columns: 1fr; }
+  .pub-form-grid { grid-template-columns: 1fr; }
   .pub-footer-inner { grid-template-columns: 1fr 1fr; }
   /* Toplista mobilon — override style.css .table-wrap card format */
   .pub-toplist-table thead { display: none !important; }

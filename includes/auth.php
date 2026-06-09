@@ -134,10 +134,13 @@ function canManagePages(?string $slug = null): bool
     if (isAdmin()) return true;
     $role = currentRole();
     if ($role === 'kommunikacios') {
-        return $slug === null || in_array($slug, ['ado1', 'klubelet', 'rolunk', 'tagsag'], true);
+        return $slug === null || in_array($slug, ['ado1', 'klubelet', 'rolunk', 'tagsag', 'mtsz-turanaplo'], true);
     }
     if ($role === 'jogi') {
         return $slug === null || $slug === 'reszveteli-feltetelek';
+    }
+    if ($role === 'penzugyi') {
+        return $slug === null || $slug === 'penzugyek';
     }
     return false;
 }

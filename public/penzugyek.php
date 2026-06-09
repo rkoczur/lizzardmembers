@@ -27,6 +27,15 @@ include __DIR__ . '/../includes/public-header.php';
     <p>Az egyesület éves pénzügyi összesítői.</p>
   </div>
 
+  <?php
+  $pgBodyStmt = $pdo->prepare("SELECT body FROM pages WHERE slug = 'penzugyek' LIMIT 1");
+  $pgBodyStmt->execute();
+  $pgBody = (string)$pgBodyStmt->fetchColumn();
+  ?>
+  <?php if (trim($pgBody) !== ''): ?>
+    <div class="pub-prose pub-finance-intro"><?= $pgBody ?></div>
+  <?php endif; ?>
+
   <?php if (empty($grouped)): ?>
     <div class="pub-empty-state">
       <div style="font-size:48px;margin-bottom:12px;">📊</div>

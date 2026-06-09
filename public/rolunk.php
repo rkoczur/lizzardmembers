@@ -29,7 +29,7 @@ include __DIR__ . '/../includes/public-header.php';
 <div class="pub-wrap-narrow">
   <div class="pub-page-header">
     <h1><?= e($page['title'] ?? 'Rólunk') ?></h1>
-    <p>Ismerd meg a Leguán Osztag Természetjáró Egyesületet!</p>
+    <p>Ismerj meg minket!</p>
   </div>
 
   <?php if (!empty($page['body'])): ?>

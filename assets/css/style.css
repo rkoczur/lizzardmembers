@@ -936,3 +936,131 @@ body.embed-mode .card-body { padding-top: 12px !important; }
 .notif-info { flex: 1; min-width: 0; }
 .notif-info strong { display: block; font-size: 14px; color: var(--text); font-weight: 600; }
 .notif-info small { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+/* ── Mass-email send progress (AJAX) ── */
+.send-progress {
+  margin-top: 18px;
+  padding: 16px 18px;
+  background: var(--bg-subtle, #f5f5f5);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.send-progress-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.send-progress-label { font-size: 13px; font-weight: 600; color: var(--text); }
+.send-progress-count {
+  font-size: 13px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+}
+.send-progress-track {
+  height: 10px;
+  background: var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.send-progress-fill {
+  height: 100%;
+  width: 0;
+  background: var(--primary);
+  border-radius: 999px;
+  transition: width .25s ease;
+}
+.send-progress-fill.is-done { background: var(--success, #2e9e5b); }
+.send-progress-fill.is-warn { background: var(--warning, #d9920a); }
+.send-progress-note { margin-top: 8px; font-size: 12.5px; color: var(--text-muted); }
+.send-failed-list {
+  margin: 10px 0 0;
+  padding: 8px 12px 8px 28px;
+  max-height: 160px;
+  overflow-y: auto;
+  list-style: disc;
+  background: var(--danger-bg, #fff1f0);
+  border-radius: 8px;
+  font-size: 12.5px;
+  color: var(--danger, #c0392b);
+}
+.send-failed-list li { margin: 2px 0; }
+
+/* Pénzügyek oldal — admin által szerkeszthető bevezető szöveg */
+.pub-finance-intro { margin-bottom: 28px; }
+
+/* Értesítő kiküldése modal */
+.ft-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 1000;
+}
+.ft-modal-overlay[hidden] { display: none; }
+.ft-modal {
+  background: var(--card, #fff);
+  border-radius: 12px;
+  box-shadow: 0 24px 64px rgba(0,0,0,.35);
+  width: 100%;
+  max-width: 460px;
+  overflow: hidden;
+}
+.ft-modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.ft-modal-head h2 { font-size: 16px; font-weight: 700; margin: 0; }
+.ft-modal-close {
+  background: none;
+  border: none;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--text-muted);
+  padding: 4px;
+}
+.ft-modal-close:hover { color: var(--text); }
+.ft-modal-body { padding: 20px; }
+.ft-modal-intro { font-size: 14px; color: var(--text); line-height: 1.6; margin: 0; }
+.ft-modal-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  padding: 14px 20px;
+  border-top: 1px solid var(--border);
+}
+
+/* Admin: új jelszó generálása + kiküldése gomb sora */
+.genpass-row {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--border);
+}
+.genpass-row small {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* Szerver-válasz / hibaüzenet az e-mail naplóban */
+.log-srv-resp {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

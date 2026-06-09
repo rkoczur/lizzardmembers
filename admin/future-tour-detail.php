@@ -77,6 +77,11 @@ include __DIR__ . '/../includes/admin-header.php';
             data-url="<?= e(((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http') . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . BASE_URL . '/user/future-tour-apply-public.php?id=' . (int)$id) ?>">
       Publikus link másolása
     </button>
+    <?php if (canManageTours()): ?>
+    <button type="button" class="btn btn-primary btn-sm" id="announce-btn" data-tour-id="<?= (int)$id ?>">
+      📣 Értesítő kiküldése
+    </button>
+    <?php endif; ?>
     <?php endif; ?>
     <?php if (!$isNew && isAdmin() && $tour['start_date'] < date('Y-m-d') && $tour['status'] !== 'cancelled'): ?>
     <a href="<?= BASE_URL ?>/admin/future-tour-convert.php?id=<?= (int)$id ?>" class="btn btn-primary btn-sm">
@@ -384,7 +389,7 @@ include __DIR__ . '/../includes/admin-header.php';
         <?php if (!$ro): ?>
           <div>
             <input type="file" name="gpx_files[]" accept=".gpx" multiple>
-            <small style="display:block;margin-top:5px;color:var(--text-muted);font-size:12px;">Több .gpx fájl is kijelölhető egyszerre. Max. 5 MB/fájl.</small>
+            <small style="display:block;margin-top:5px;color:var(--text-muted);font-size:12px;">Több .gpx fájl is kijelölhető egyszerre. Max. 1 MB/fájl.</small>
           </div>
         <?php endif; ?>
         <?php endif; ?>
@@ -507,5 +512,166 @@ document.getElementById('copy-public-link-btn')?.addEventListener('click', funct
   });
 });
 </script>
+
+<?php if (!$isNew): ?>
+<!-- Értesítő kiküldése modal -->
+<div id="announce-overlay" class="ft-modal-overlay" hidden>
+  <div class="ft-modal" role="dialog" aria-modal="true" aria-labelledby="announce-title">
+    <div class="ft-modal-head">
+      <h2 id="announce-title">📣 Értesítő kiküldése</h2>
+      <button type="button" class="ft-modal-close" id="announce-close" aria-label="Bezárás">✕</button>
+    </div>
+    <div class="ft-modal-body">
+      <p id="announce-intro" class="ft-modal-intro">Címzettek betöltése…</p>
+      <div id="announce-progress" class="send-progress" hidden>
+        <div class="send-progress-head">
+          <span id="announce-progress-label" class="send-progress-label">Küldés folyamatban…</span>
+          <span id="announce-progress-count" class="send-progress-count">0/0</span>
+        </div>
+        <div class="send-progress-track">
+          <div id="announce-progress-fill" class="send-progress-fill"></div>
+        </div>
+        <div id="announce-progress-note" class="send-progress-note"></div>
+        <ul id="announce-failed-list" class="send-failed-list" hidden></ul>
+      </div>
+    </div>
+    <div class="ft-modal-actions">
+      <button type="button" class="btn btn-primary" id="announce-send" disabled>Küldés most</button>
+      <button type="button" class="btn btn-secondary" id="announce-cancel">Bezárás</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var BASE = <?= json_encode(BASE_URL) ?>;
+  var CSRF = <?= json_encode(csrfToken()) ?>;
+  var TOUR_ID = <?= (int)$id ?>;
+  var BATCH_SIZE = 3, RETRY_WAIT = 30;
+
+  var btn      = document.getElementById('announce-btn');
+  var overlay  = document.getElementById('announce-overlay');
+  var closeBtn = document.getElementById('announce-close');
+  var cancelBtn= document.getElementById('announce-cancel');
+  var sendBtn  = document.getElementById('announce-send');
+  var intro    = document.getElementById('announce-intro');
+  var panel    = document.getElementById('announce-progress');
+  var label    = document.getElementById('announce-progress-label');
+  var count    = document.getElementById('announce-progress-count');
+  var fill     = document.getElementById('announce-progress-fill');
+  var note     = document.getElementById('announce-progress-note');
+  var failUl   = document.getElementById('announce-failed-list');
+  if (!btn) return;
+
+  var token = null, ids = [], total = 0, processed = 0, sentOk = 0, failedItems = [], sending = false;
+
+  function postJson(url, params) {
+    var fd = new FormData();
+    fd.append('csrf_token', CSRF);
+    Object.keys(params).forEach(function (k) {
+      var v = params[k];
+      if (Array.isArray(v)) v.forEach(function (x) { fd.append(k + '[]', x); });
+      else fd.append(k, v);
+    });
+    return fetch(url, { method: 'POST', body: fd, credentials: 'same-origin' }).then(function (r) { return r.json(); });
+  }
+
+  function setProgress() {
+    count.textContent = processed + '/' + total;
+    fill.style.width = (total ? Math.round(processed / total * 100) : 0) + '%';
+  }
+
+  function renderFailures() {
+    if (!failedItems.length) { failUl.hidden = true; return; }
+    failUl.hidden = false; failUl.innerHTML = '';
+    failedItems.forEach(function (f) {
+      var li = document.createElement('li');
+      li.textContent = (f.name || ('#' + f.id)) + ' — ' + (f.error || 'sikertelen');
+      failUl.appendChild(li);
+    });
+  }
+
+  function sendBatches(list, countProgress) {
+    var i = 0;
+    function next() {
+      if (i >= list.length) return Promise.resolve();
+      var slice = list.slice(i, i + BATCH_SIZE); i += BATCH_SIZE;
+      return postJson(BASE + '/actions/future-tour-announce-batch.php', { token: token, batch_ids: slice }).then(function (res) {
+        if (!res.ok) throw new Error(res.error || 'Ismeretlen szerverhiba.');
+        res.results.forEach(function (r) { if (countProgress) processed++; if (r.ok) sentOk++; else failedItems.push(r); });
+        if (countProgress) setProgress();
+        return next();
+      });
+    }
+    return next();
+  }
+
+  function retryAfterWait() {
+    return new Promise(function (resolve) {
+      var retryIds = failedItems.map(function (f) { return f.id; });
+      failedItems = []; renderFailures();
+      var left = RETRY_WAIT;
+      label.textContent = 'Szerverhiba — a sikertelen címzettek újraküldése';
+      note.textContent = 'Újrapróbálkozás ' + left + ' mp múlva…';
+      var t = setInterval(function () {
+        left--;
+        if (left > 0) { note.textContent = 'Újrapróbálkozás ' + left + ' mp múlva…'; return; }
+        clearInterval(t); note.textContent = 'Újraküldés folyamatban…';
+        sendBatches(retryIds, false).then(resolve);
+      }, 1000);
+    });
+  }
+
+  function openModal() {
+    overlay.hidden = false;
+    sending = false; sendBtn.disabled = true; panel.hidden = true;
+    fill.classList.remove('is-done', 'is-warn'); failUl.hidden = true;
+    intro.textContent = 'Címzettek betöltése…';
+    token = null; ids = []; total = 0; processed = 0; sentOk = 0; failedItems = [];
+    cancelBtn.textContent = 'Mégse';
+
+    postJson(BASE + '/actions/future-tour-announce-prepare.php', { tour_id: TOUR_ID }).then(function (res) {
+      if (!res.ok) { intro.textContent = res.error || 'Hiba történt.'; return; }
+      token = res.token; ids = res.ids; total = res.total;
+      intro.textContent = 'Az értesítőt ' + total + ' feliratkozott tagnak küldjük ki.';
+      sendBtn.disabled = false;
+    }).catch(function () { intro.textContent = 'Hiba történt a címzettek betöltésekor.'; });
+  }
+
+  function closeModal() {
+    if (sending) return; // küldés közben nem zárható
+    overlay.hidden = true;
+  }
+
+  btn.addEventListener('click', openModal);
+  closeBtn.addEventListener('click', closeModal);
+  cancelBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', function (e) { if (e.target === overlay) closeModal(); });
+
+  sendBtn.addEventListener('click', function () {
+    if (!token || sending) return;
+    sending = true; sendBtn.disabled = true; panel.hidden = false;
+    processed = 0; sentOk = 0; failedItems = [];
+    label.textContent = 'Küldés folyamatban…'; note.textContent = '';
+    setProgress();
+    sendBatches(ids, true).then(function () {
+      if (failedItems.length) return retryAfterWait();
+    }).then(function () {
+      renderFailures();
+      sending = false;
+      label.textContent = 'Kész';
+      fill.classList.add(failedItems.length ? 'is-warn' : 'is-done');
+      note.textContent = sentOk + ' sikeres küldés' + (failedItems.length ? (', ' + failedItems.length + ' sikertelen.') : '.');
+      cancelBtn.textContent = 'Bezárás';
+    }).catch(function (err) {
+      sending = false;
+      label.textContent = 'Hiba';
+      note.textContent = err.message || 'Váratlan hiba történt.';
+      sendBtn.disabled = false;
+    });
+  });
+})();
+</script>
+<?php endif; ?>
 
 <?php include __DIR__ . '/../includes/admin-footer.php'; ?>

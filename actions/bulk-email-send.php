@@ -6,11 +6,14 @@ require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/app-settings-schema.php';
 require_once __DIR__ . '/../includes/mailer.php';
+require_once __DIR__ . '/../includes/email-log-schema.php';
+require_once __DIR__ . '/../includes/bulk-email-template.php';
 requireAdmin();
 verifyCsrf();
 
 $pdo = getDb();
 ensureAppSettingsSchema($pdo);
+ensureEmailLogSchema($pdo);
 
 $ids     = array_values(array_filter(array_map('intval', $_POST['member_ids'] ?? [])));
 $subject = trim($_POST['subject'] ?? '');
@@ -43,76 +46,19 @@ $sent    = 0;
 $failed  = [];
 
 foreach ($members as $m) {
-    $name       = trim($m['lastname'] . ' ' . $m['firstname']);
-    $mergeMap   = [
-        '{{nev}}'           => $name,
-        '{{vezeteknev}}'    => $m['lastname'],
-        '{{keresztnev}}'   => $m['firstname'],
-        '{{email}}'         => $m['email'],
-        '{{felhasznalonev}}' => $m['username'],
-        '{{szint}}'         => getLevelLabel((int)$m['level']),
-        '{{pontok}}'        => number_format((int)$m['points']),
-        '{{varos}}'         => $m['city'] ?? '',
-        '{{tagsag_kezdete}}' => formatDate($m['member_since']),
-    ];
-
-    $subj    = str_replace(array_keys($mergeMap), array_values($mergeMap), $subject);
-    $content = str_replace(array_keys($mergeMap), array_values($mergeMap), $body);
-
-    // If plain text, convert newlines and escape; if HTML, use as-is
-    if (!preg_match('/<[a-z][\s\S]*>/i', $content)) {
-        $inner = '<p style="font-size:14px;color:#555555;line-height:1.75;margin:0;">'
-               . nl2br(htmlspecialchars($content, ENT_QUOTES, 'UTF-8'))
-               . '</p>';
-    } else {
-        $inner = '<div style="font-size:14px;color:#555555;line-height:1.75;">' . $content . '</div>';
-    }
-
-    $appEsc = htmlspecialchars(APP_NAME, ENT_QUOTES, 'UTF-8');
-    $subjEsc = htmlspecialchars($subj, ENT_QUOTES, 'UTF-8');
-    $html = <<<MAIL
-<!DOCTYPE html>
-<html lang="hu">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>{$subjEsc}</title>
-</head>
-<body style="margin:0;padding:0;background:#f0ebe0;font-family:system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;">
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f0ebe0;padding:32px 16px;">
-  <tr><td align="center">
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.12);">
-    <tr>
-      <td style="background:#1a3d39;padding:32px 40px;text-align:center;">
-        <div style="font-size:26px;font-weight:800;color:#F4E7CF;letter-spacing:.05em;">Lizzard Outdoor</div>
-      </td>
-    </tr>
-    <tr>
-      <td style="padding:36px 40px 32px;">
-        {$inner}
-      </td>
-    </tr>
-    <tr>
-      <td style="background:#f5efe4;border-top:1px solid #ddd5c5;padding:20px 40px;text-align:center;">
-        <p style="font-size:12px;color:#7a7269;margin:0;line-height:1.6;">
-          Üdvözlettel,<br>
-          <strong style="color:#1a3d39;">{$appEsc} Vezetősége</strong>
-        </p>
-      </td>
-    </tr>
-  </table>
-  </td></tr>
-</table>
-</body>
-</html>
-MAIL;
+    $name = trim($m['lastname'] . ' ' . $m['firstname']);
+    $subj = applyBulkEmailMerge($subject, $m);
+    $html = buildBulkEmailHtml($subj, applyBulkEmailMerge($body, $m));
 
     try {
-        $mailer->send($m['email'], $name, $subj, $html);
+        $response = $mailer->send($m['email'], $name, $subj, $html);
+        logEmailEntry($pdo, (int)$m['id'], $m['email'], $name, $subj, $html, 'bulk', 'sent', '', $response);
         $sent++;
     } catch (Throwable $e) {
-        $failed[] = $name . ' (' . $m['email'] . '): ' . $e->getMessage();
-        error_log('Bulk email error to ' . $m['email'] . ': ' . $e->getMessage());
+        $err = $e->getMessage();
+        logEmailEntry($pdo, (int)$m['id'], $m['email'], $name, $subj, $html, 'bulk', 'failed', $err, $err);
+        $failed[] = $name . ' (' . $m['email'] . '): ' . $err;
+        error_log('Bulk email error to ' . $m['email'] . ': ' . $err);
     }
 }
 

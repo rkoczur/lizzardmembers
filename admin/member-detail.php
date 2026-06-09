@@ -30,6 +30,18 @@ $tcStmt = $pdo->prepare("SELECT COUNT(*) FROM tour_members WHERE user_id = ?");
 $tcStmt->execute([$id]);
 $tourCount = (int)$tcStmt->fetchColumn();
 
+// Utolsó sikeres bejelentkezés ideje (a login_log alapján)
+$lastLogin = null;
+try {
+    require_once __DIR__ . '/../includes/login-log-schema.php';
+    ensureLoginLogSchema($pdo);
+    $llStmt = $pdo->prepare("SELECT MAX(created_at) FROM login_log WHERE user_id = ? AND status = 'success' AND event_type = 'login'");
+    $llStmt->execute([$id]);
+    $lastLogin = $llStmt->fetchColumn() ?: null;
+} catch (Throwable $e) {
+    $lastLogin = null;
+}
+
 $flash_success = getFlash('success');
 $flash_error   = getFlash('error');
 
@@ -106,6 +118,7 @@ include __DIR__ . '/../includes/admin-header.php';
     <div class="divider"></div>
     <small class="text-muted">Tag azóta: <?= formatDate($member['member_since']) ?></small>
     <small class="text-muted">Utolsó fizetés: <?= formatDate($member['last_payment']) ?></small>
+    <small class="text-muted">Utolsó belépés: <?= $lastLogin ? e((new DateTime($lastLogin))->format('Y.m.d H:i')) : 'N/A' ?></small>
     <small class="text-muted">Részt vett túrákon: <strong><?= $tourCount ?></strong></small>
     <?php if (!empty($member['locked_at'])): ?>
       <div style="margin-top:10px;padding:8px 12px;background:var(--danger-bg,#fff1f0);border-radius:8px;text-align:center;">
@@ -242,6 +255,14 @@ include __DIR__ . '/../includes/admin-header.php';
               <input type="password" name="new_password2">
             </div>
           </div>
+
+          <div class="genpass-row">
+            <button type="submit" form="genpass-form" class="btn btn-secondary btn-sm"
+                    onclick="return confirm('Biztosan új jelszót generálsz, és kiküldöd a tag e-mail címére a belépési adatokkal?');">
+              🔑 Új jelszó generálása és kiküldése
+            </button>
+            <small>Új, véletlenszerű jelszót állít be, és e-mailben elküldi a tagnak a felhasználónevével és a belépési linkkel együtt.</small>
+          </div>
         </div>
 
         <div class="flex gap-2" style="margin-top:20px;">
@@ -254,6 +275,14 @@ include __DIR__ . '/../includes/admin-header.php';
         </div>
         <?php endif; ?>
       </form>
+
+      <?php if (!$ro): ?>
+      <!-- Külön űrlap az új jelszó generálásához (a fő űrlapba nem ágyazható) -->
+      <form id="genpass-form" method="post" action="<?= BASE_URL ?>/actions/member-generate-password.php">
+        <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
+        <input type="hidden" name="id" value="<?= (int)$member['id'] ?>">
+      </form>
+      <?php endif; ?>
     </div>
   </div>
 </div>

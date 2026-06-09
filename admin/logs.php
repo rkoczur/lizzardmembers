@@ -146,7 +146,7 @@ if ($eSearch !== '') {
 }
 $eWhereClause = implode(' AND ', $eWhere);
 
-$eStmt = $pdo->prepare("SELECT id, user_id, recipient_email, recipient_name, subject, email_type, status, error_message, sent_at FROM email_log WHERE $eWhereClause ORDER BY sent_at DESC LIMIT 500");
+$eStmt = $pdo->prepare("SELECT id, user_id, recipient_email, recipient_name, subject, email_type, status, error_message, smtp_response, sent_at FROM email_log WHERE $eWhereClause ORDER BY sent_at DESC LIMIT 500");
 $eStmt->execute($eParams);
 $emailLogs = $eStmt->fetchAll();
 
@@ -486,9 +486,10 @@ include __DIR__ . '/../includes/admin-header.php';
           <td>
             <?php if ($log['status'] === 'sent'): ?>
               <span class="badge badge-active">Elküldve</span>
+              <?php if (!empty($log['smtp_response'])): ?><div class="log-srv-resp" title="<?= e($log['smtp_response']) ?>"><?= e($log['smtp_response']) ?></div><?php endif; ?>
             <?php else: ?>
               <span class="badge badge-inactive">Sikertelen</span>
-              <?php if ($log['error_message']): ?><div style="font-size:11px;color:var(--text-muted);margin-top:2px;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="<?= e($log['error_message']) ?>"><?= e($log['error_message']) ?></div><?php endif; ?>
+              <?php if ($log['error_message']): ?><div class="log-srv-resp" title="<?= e($log['error_message']) ?>"><?= e($log['error_message']) ?></div><?php endif; ?>
             <?php endif; ?>
           </td>
           <td>

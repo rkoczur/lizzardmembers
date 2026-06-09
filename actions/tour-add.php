@@ -129,8 +129,8 @@ if (isset($_FILES['gpx_file']) && $_FILES['gpx_file']['error'] === UPLOAD_ERR_OK
         header('Location: ' . BASE_URL . '/admin/tour-detail.php?id=' . $newId);
         exit;
     }
-    if ($gpxSize > 5 * 1024 * 1024) {
-        flash('error', 'A GPX fájl mérete nem haladhatja meg az 5 MB-ot.');
+    if ($gpxSize > 1 * 1024 * 1024) {
+        flash('error', 'A GPX fájl mérete nem haladhatja meg az 1 MB-ot.');
         header('Location: ' . BASE_URL . '/admin/tour-detail.php?id=' . $newId);
         exit;
     }

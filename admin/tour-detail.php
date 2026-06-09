@@ -275,7 +275,7 @@ include __DIR__ . '/../includes/admin-header.php';
       <?php if (!$ro): ?>
       <div>
         <input type="file" name="gpx_files[]" accept=".gpx" multiple>
-        <small style="display:block;margin-top:5px;color:var(--text-muted);font-size:12px;">Több .gpx fájl is kijelölhető egyszerre. Max. 5 MB/fájl.</small>
+        <small style="display:block;margin-top:5px;color:var(--text-muted);font-size:12px;">Több .gpx fájl is kijelölhető egyszerre. Max. 1 MB/fájl.</small>
       </div>
       <?php endif; ?>
 

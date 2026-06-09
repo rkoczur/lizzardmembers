@@ -132,7 +132,19 @@ include __DIR__ . '/../includes/admin-header.php';
             Küldés <?= count($members) ?> főnek
           </button>
           <a href="<?= BASE_URL ?>/admin/members.php" class="btn btn-secondary">Mégse</a>
-          <span id="send-status" style="font-size:13px;color:var(--text-muted);display:none;">Küldés folyamatban…</span>
+        </div>
+
+        <!-- Küldési folyamatjelző (AJAX) -->
+        <div id="send-progress" class="send-progress" hidden>
+          <div class="send-progress-head">
+            <span id="send-progress-label" class="send-progress-label">Küldés folyamatban…</span>
+            <span id="send-progress-count" class="send-progress-count">0/0</span>
+          </div>
+          <div class="send-progress-track">
+            <div id="send-progress-fill" class="send-progress-fill"></div>
+          </div>
+          <div id="send-progress-note" class="send-progress-note"></div>
+          <ul id="send-failed-list" class="send-failed-list" hidden></ul>
         </div>
       </form>
     </div>
@@ -142,22 +154,140 @@ include __DIR__ . '/../includes/admin-header.php';
 
 <script>
 (function () {
-  // Insert merge field at cursor in textarea
+  var BASE = <?= json_encode(BASE_URL) ?>;
+  var CSRF = <?= json_encode(csrfToken()) ?>;
+  var BATCH_SIZE = 3;
+  var RETRY_WAIT = 30; // mp
+
+  // Beilleszthető mező a kurzorhoz
   document.querySelectorAll('.merge-field-btn').forEach(function (btn) {
     btn.addEventListener('click', function () {
       var ta  = document.getElementById('body');
       var tag = btn.getAttribute('data-tag');
-      var s   = ta.selectionStart, e = ta.selectionEnd;
+      var s = ta.selectionStart, e = ta.selectionEnd;
       ta.value = ta.value.substring(0, s) + tag + ta.value.substring(e);
       ta.selectionStart = ta.selectionEnd = s + tag.length;
       ta.focus();
     });
   });
 
-  // Disable send button while submitting
-  document.getElementById('compose-form').addEventListener('submit', function () {
-    document.getElementById('send-btn').disabled = true;
-    document.getElementById('send-status').style.display = '';
+  var form    = document.getElementById('compose-form');
+  var sendBtn = document.getElementById('send-btn');
+  var panel   = document.getElementById('send-progress');
+  var label   = document.getElementById('send-progress-label');
+  var count   = document.getElementById('send-progress-count');
+  var fill    = document.getElementById('send-progress-fill');
+  var note    = document.getElementById('send-progress-note');
+  var failUl  = document.getElementById('send-failed-list');
+
+  var total = 0, processed = 0, sentOk = 0, failedItems = [];
+
+  function setProgress() {
+    count.textContent = processed + '/' + total;
+    fill.style.width = (total ? Math.round(processed / total * 100) : 0) + '%';
+  }
+
+  function postJson(url, params) {
+    var fd = new FormData();
+    fd.append('csrf_token', CSRF);
+    Object.keys(params).forEach(function (k) {
+      var v = params[k];
+      if (Array.isArray(v)) v.forEach(function (x) { fd.append(k + '[]', x); });
+      else fd.append(k, v);
+    });
+    return fetch(url, { method: 'POST', body: fd, credentials: 'same-origin' })
+      .then(function (r) { return r.json(); });
+  }
+
+  // countProgress=false a 30 mp utáni újraküldési körben (a sáv már 100%)
+  function sendBatches(token, ids, countProgress) {
+    var i = 0;
+    function next() {
+      if (i >= ids.length) return Promise.resolve();
+      var slice = ids.slice(i, i + BATCH_SIZE);
+      i += BATCH_SIZE;
+      return postJson(BASE + '/actions/bulk-email-batch.php', { token: token, batch_ids: slice })
+        .then(function (res) {
+          if (!res.ok) throw new Error(res.error || 'Ismeretlen szerverhiba.');
+          res.results.forEach(function (r) {
+            if (countProgress) processed++;
+            if (r.ok) sentOk++; else failedItems.push(r);
+          });
+          if (countProgress) setProgress();
+          return next();
+        });
+    }
+    return next();
+  }
+
+  function renderFailures() {
+    if (!failedItems.length) { failUl.hidden = true; return; }
+    failUl.hidden = false;
+    failUl.innerHTML = '';
+    failedItems.forEach(function (f) {
+      var li = document.createElement('li');
+      li.textContent = (f.name || ('#' + f.id)) + ' — ' + (f.error || 'sikertelen');
+      failUl.appendChild(li);
+    });
+  }
+
+  function retryAfterWait(token) {
+    return new Promise(function (resolve) {
+      var retryIds = failedItems.map(function (f) { return f.id; });
+      failedItems = [];                 // a kör új hibákat gyűjt
+      renderFailures();
+      var left = RETRY_WAIT;
+      label.textContent = 'Szerverhiba — a sikertelen címzettek újraküldése';
+      note.textContent = 'Újrapróbálkozás ' + left + ' mp múlva…';
+      var t = setInterval(function () {
+        left--;
+        if (left > 0) { note.textContent = 'Újrapróbálkozás ' + left + ' mp múlva…'; return; }
+        clearInterval(t);
+        note.textContent = 'Újraküldés folyamatban…';
+        sendBatches(token, retryIds, false).then(resolve);
+      }, 1000);
+    });
+  }
+
+  form.addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var subject = document.getElementById('subject').value.trim();
+    var body    = document.getElementById('body').value.trim();
+    if (!subject || !body) { alert('Töltse ki a tárgyat és a szöveget is.'); return; }
+
+    sendBtn.disabled = true;
+    panel.hidden = false;
+    fill.classList.remove('is-done', 'is-warn');
+    label.textContent = 'Küldés előkészítése…';
+    note.textContent = '';
+    failUl.hidden = true;
+
+    var ids = Array.prototype.map.call(
+      form.querySelectorAll('input[name="member_ids[]"]'),
+      function (el) { return el.value; }
+    );
+
+    postJson(BASE + '/actions/bulk-email-prepare.php', { member_ids: ids, subject: subject, body: body })
+      .then(function (res) {
+        if (!res.ok) throw new Error(res.error || 'Az előkészítés sikertelen.');
+        total = res.total; processed = 0; sentOk = 0; failedItems = [];
+        label.textContent = 'Küldés folyamatban…';
+        setProgress();
+        return sendBatches(res.token, res.ids, true).then(function () {
+          if (failedItems.length) return retryAfterWait(res.token);
+        });
+      })
+      .then(function () {
+        renderFailures();
+        label.textContent = 'Kész';
+        fill.classList.add(failedItems.length ? 'is-warn' : 'is-done');
+        note.textContent = sentOk + ' sikeres küldés' + (failedItems.length ? (', ' + failedItems.length + ' sikertelen.') : '.');
+      })
+      .catch(function (err) {
+        label.textContent = 'Hiba';
+        note.textContent = err.message || 'Váratlan hiba történt.';
+        sendBtn.disabled = false;
+      });
   });
 })();
 </script>

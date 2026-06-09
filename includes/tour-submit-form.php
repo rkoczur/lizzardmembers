@@ -1,53 +1,25 @@
 <?php
-session_start();
-require_once __DIR__ . '/../includes/config.php';
-require_once __DIR__ . '/../includes/db.php';
-require_once __DIR__ . '/../includes/auth.php';
-require_once __DIR__ . '/../includes/functions.php';
-require_once __DIR__ . '/../includes/tours-schema.php';
-requireLeader();
-if (!canManageTours()) {
-    flash('error', 'Nincs jogosultságod ehhez a művelethez.');
-    header('Location: ' . BASE_URL . '/admin/tours.php');
-    exit;
-}
-
-$pdo = getDb();
-ensureToursSchema($pdo);
-
-$allMembers = $pdo->query("SELECT id, firstname, lastname, email, role FROM users ORDER BY lastname, firstname")->fetchAll();
-$countries  = getCountries($pdo);
-
-$flash_error = getFlash('error');
-$old = $_SESSION['form_old'] ?? [];
-unset($_SESSION['form_old']);
-
-$pageTitle  = 'Új túra hozzáadása';
-$activePage = 'tours';
-include __DIR__ . '/../includes/admin-header.php';
+/**
+ * Megosztott "Túra beküldése" űrlap (MTSZ túranapló).
+ *
+ * Várt változók a beillesztő oldalon:
+ *   $old        — korábbi (hibás) beküldés visszatöltendő mezői (array, lehet üres)
+ *   $countries  — getCountries($pdo) eredménye
+ *   $allMembers — a beküldőn kívüli tagok listája (id, firstname, lastname)
+ *
+ * Használja: BASE_URL, e(), csrfToken(), getFlagUrl()
+ */
 ?>
-
-<?php if ($flash_error): ?>
-  <div class="alert alert-error" data-auto-dismiss><?= e($flash_error) ?></div>
-<?php endif; ?>
-
-<div class="page-header">
-  <div class="flex items-center gap-2">
-    <a href="<?= BASE_URL ?>/admin/tours.php" class="btn btn-secondary btn-sm">← Vissza</a>
-    <h1>Új túra hozzáadása</h1>
-  </div>
-</div>
-
 <div class="card" style="max-width:760px;">
   <div class="card-body">
-    <form method="post" action="<?= BASE_URL ?>/actions/tour-add.php" id="tour-form" enctype="multipart/form-data">
+    <form method="post" action="<?= BASE_URL ?>/actions/tour-submit.php" id="tour-form">
       <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
 
       <div class="form-section-title">Általános adatok</div>
       <div class="form-grid">
         <div class="form-group full">
           <label>Elnevezés</label>
-          <input type="text" name="name" value="<?= e($old['name'] ?? '') ?>" placeholder="pl. Mátra körüljáró túra" autofocus>
+          <input type="text" name="name" value="<?= e($old['name'] ?? '') ?>" placeholder="pl. Mátra körüljáró túra" autofocus required>
         </div>
         <div class="form-group">
           <label>Ország <span style="color:var(--danger)">*</span></label>
@@ -67,12 +39,12 @@ include __DIR__ . '/../includes/admin-header.php';
           </div>
         </div>
         <div class="form-group">
-          <label>Tájegység</label>
-          <input type="text" name="region" value="<?= e($old['region'] ?? '') ?>">
+          <label>Tájegység <span style="color:var(--danger)">*</span></label>
+          <input type="text" name="region" value="<?= e($old['region'] ?? '') ?>" required>
         </div>
         <div class="form-group">
-          <label>Dátum</label>
-          <input type="date" name="tour_date" id="tour_date" value="<?= e($old['tour_date'] ?? '') ?>">
+          <label>Dátum <span style="color:var(--danger)">*</span></label>
+          <input type="date" name="tour_date" id="tour_date" value="<?= e($old['tour_date'] ?? '') ?>" required>
         </div>
         <div class="form-group">
           <label>Napok száma <span style="color:var(--danger)">*</span></label>
@@ -87,10 +59,6 @@ include __DIR__ . '/../includes/admin-header.php';
             <option value="apartman"   <?= ($old['accommodation'] ?? '') === 'apartman'   ? 'selected' : '' ?>>Apartman</option>
             <option value="hotel"      <?= ($old['accommodation'] ?? '') === 'hotel'      ? 'selected' : '' ?>>Hotel</option>
           </select>
-        </div>
-        <div class="form-group">
-          <label>Vendég résztvevők</label>
-          <input type="number" name="guest_count" min="0" value="<?= (int)($old['guest_count'] ?? 0) ?>" placeholder="0">
         </div>
         <div class="form-group full">
           <label>Túra útvonala</label>
@@ -178,31 +146,13 @@ include __DIR__ . '/../includes/admin-header.php';
         </div>
       </div>
 
-      <div class="form-section-title">GPX térkép</div>
-      <div class="form-grid">
-        <div class="form-group full">
-          <label>GPX fájl (opcionális)</label>
-          <input type="file" name="gpx_file" accept=".gpx">
-          <small style="color:var(--text-muted);">Csak .gpx formátum, max. 1 MB. A térkép a túra mentése után jelenik meg.</small>
-        </div>
-      </div>
-
-      <div class="form-section-title">Pontszámok</div>
-      <div class="form-grid">
-        <div class="form-group">
-          <label>Lizzardier pont <span style="color:var(--danger)">*</span></label>
-          <input type="number" name="points" value="<?= (int)($old['points'] ?? 0) ?>" min="0" required>
-          <small style="color:var(--text-muted,#888);">A klub belső rangsorához használt pont (kézzel adható meg).</small>
-        </div>
-      </div>
-
-      <div class="form-section-title">Hozzárendelt tagok</div>
+      <div class="form-section-title">További tagok hozzáadása <small style="font-weight:normal;color:var(--text-muted);">(rajtad kívül)</small></div>
       <div class="member-picker">
         <div class="member-picker-controls">
           <select id="member-picker-select">
             <option value="">— Válasszon tagot —</option>
             <?php foreach ($allMembers as $m): ?>
-              <option value="<?= $m['id'] ?>"><?= e($m['lastname'] . ' ' . $m['firstname']) ?><?= $m['role'] === 'admin' ? ' [Admin]' : '' ?> — <?= e($m['email']) ?></option>
+              <option value="<?= $m['id'] ?>"><?= e($m['lastname'] . ' ' . $m['firstname']) ?></option>
             <?php endforeach; ?>
           </select>
           <button type="button" id="member-picker-add" class="btn btn-secondary btn-sm">Hozzáad</button>
@@ -214,21 +164,33 @@ include __DIR__ . '/../includes/admin-header.php';
             if (!in_array((int)$m['id'], $preIds)) continue;
           ?>
           <div class="member-picker-item" data-member-id="<?= $m['id'] ?>">
-            <span><?= e($m['lastname'] . ' ' . $m['firstname']) ?><?= $m['role'] === 'admin' ? ' [Admin]' : '' ?> — <?= e($m['email']) ?></span>
+            <span><?= e($m['lastname'] . ' ' . $m['firstname']) ?></span>
             <input type="hidden" name="member_ids[]" value="<?= $m['id'] ?>">
             <button type="button" class="btn btn-danger btn-sm">Eltávolít</button>
           </div>
           <?php endforeach; ?>
         </div>
         <p id="member-picker-empty" class="member-picker-empty"
-           <?= !empty($preIds) ? 'style="display:none"' : '' ?>>Még nincs hozzárendelt tag.</p>
+           <?= !empty($preIds) ? 'style="display:none"' : '' ?>>Még nincs további tag hozzáadva.</p>
+      </div>
+      <div class="form-grid" style="margin-top:12px;">
+        <div class="form-group">
+          <label>Vendég résztvevők</label>
+          <input type="number" name="guest_count" min="0" value="<?= (int)($old['guest_count'] ?? 0) ?>" placeholder="0">
+          <small style="color:var(--text-muted);">Nem regisztrált kísérők száma</small>
+        </div>
       </div>
 
-      <input type="hidden" name="send_tour_notification" id="send_tour_notification" value="">
+      <div class="form-section-title">Egyéb megjegyzés</div>
+      <div class="form-grid">
+        <div class="form-group full">
+          <textarea name="submission_notes" rows="4" placeholder="Pl. egyéb körülmények, különleges információk..."><?= e($old['submission_notes'] ?? '') ?></textarea>
+        </div>
+      </div>
 
       <div class="flex gap-2" style="margin-top:24px;">
-        <button type="button" id="btn-submit-tour" class="btn btn-primary">Túra hozzáadása</button>
-        <a href="<?= BASE_URL ?>/admin/tours.php" class="btn btn-secondary">Mégse</a>
+        <button type="submit" class="btn btn-primary">Túra beküldése jóváhagyásra</button>
+        <a href="<?= BASE_URL ?>/user/tours.php" class="btn btn-secondary">Mégse</a>
       </div>
     </form>
   </div>
@@ -420,203 +382,45 @@ $jsInitAccom     = json_encode($old['accommodation'] ?? '');
   })();
   updateTypeUI();
   updateAccomUI();
-})();
-</script>
 
-<!-- Tour notification preview modal -->
-<div class="modal-backdrop" id="tour-notification-modal">
-  <div class="modal" style="max-width:660px;">
-    <div class="modal-header">
-      <h2>E-mail értesítő előnézete</h2>
-      <button class="modal-close" type="button" data-modal-close aria-label="Bezárás">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-        </svg>
-      </button>
-    </div>
-    <div class="modal-body" style="padding:0;">
-      <div id="tour-notification-recipients-wrap" style="padding:12px 20px;background:var(--card);border-bottom:1px solid var(--border);font-size:13px;">
-        <strong>Értesítést kapnak:</strong>
-        <ul id="tour-notification-recipients" style="margin:6px 0 0 0;padding-left:20px;line-height:1.8;"></ul>
-      </div>
-      <div id="tour-email-preview-body" style="max-height:440px;overflow-y:auto;"></div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" type="button" data-modal-close>Mégse</button>
-      <button class="btn btn-secondary" type="button" id="btn-tour-no-email">Hozzáadás értesítő nélkül</button>
-      <button class="btn btn-primary" type="button" id="btn-tour-send-email">Értesítők küldése és hozzáadás</button>
-    </div>
-  </div>
-</div>
+  // Member picker
+  (function() {
+    var sel    = document.getElementById('member-picker-select');
+    var addBtn = document.getElementById('member-picker-add');
+    var list   = document.getElementById('member-picker-list');
+    var empty  = document.getElementById('member-picker-empty');
 
-<script>
-(function () {
-  var TOUR_TYPE_LABELS = {
-    gyalogos: 'Gyalogos', kerekparos: 'Kerékpáros', vizi: 'Vízitúra',
-    si: 'Síelés', barlangi: 'Barlangi', munka: 'Munkatúra'
-  };
-
-  function esc(s) {
-    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-  }
-
-  function buildTourNotificationPreview(firstname, tourName, countryName, tourDate, typeLabel, kmText, elevText, lizzardPts, mtszPts, tourCode) {
-    return '<div style="background:#f0ebe0;padding:20px;">'
-      + '<div style="background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 3px 16px rgba(0,0,0,.1);">'
-        + '<div style="background:#1a3d39;padding:24px 32px;text-align:center;">'
-          + '<div style="font-size:22px;font-weight:800;color:#F4E7CF;letter-spacing:.05em;">LIZZARD</div>'
-          + '<div style="font-size:11px;color:#8fb5b2;margin-top:4px;letter-spacing:.14em;text-transform:uppercase;">Természetjáró Egyesület</div>'
-        + '</div>'
-        + '<div style="padding:28px 32px 20px;">'
-          + '<p style="font-size:15px;color:#333;margin:0 0 8px 0;">Kedves <strong>' + esc(firstname) + '</strong>!</p>'
-          + '<p style="font-size:13px;color:#555;line-height:1.7;margin:0 0 16px;">Új túrához adtak hozzá a Lizzard rendszerében!</p>'
-          + '<div style="background:#f5efe4;border:1px solid #ddd5c5;border-radius:7px;padding:16px 20px;margin:0 0 14px;">'
-            + '<div style="font-size:13px;font-weight:700;color:#1a3d39;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid #ddd5c5;">' + esc(tourName) + '</div>'
-            + '<table style="font-size:12px;width:100%;border-collapse:collapse;">'
-              + '<tr><td style="color:#7a7269;padding:0 12px 6px 0;white-space:nowrap;">Ország</td><td style="color:#333;font-weight:600;padding-bottom:6px;">' + esc(countryName) + '</td></tr>'
-              + '<tr><td style="color:#7a7269;padding:0 12px 6px 0;white-space:nowrap;">Dátum</td><td style="color:#333;font-weight:600;padding-bottom:6px;">' + esc(tourDate) + '</td></tr>'
-              + '<tr><td style="color:#7a7269;padding:0 12px 6px 0;white-space:nowrap;">Típus</td><td style="color:#333;font-weight:600;padding-bottom:6px;">' + esc(typeLabel) + '</td></tr>'
-              + '<tr><td style="color:#7a7269;padding:0 12px 6px 0;white-space:nowrap;">Távolság</td><td style="color:#333;font-weight:600;padding-bottom:6px;">' + esc(kmText) + '</td></tr>'
-              + '<tr><td style="color:#7a7269;padding:0 12px 6px 0;white-space:nowrap;">Szintemelkedés</td><td style="color:#333;font-weight:600;padding-bottom:6px;">' + esc(elevText) + '</td></tr>'
-              + '<tr><td style="color:#7a7269;padding:0 12px 0 0;white-space:nowrap;">Azonosító</td><td style="color:#333;font-family:monospace;font-weight:700;">' + esc(tourCode) + '</td></tr>'
-            + '</table>'
-          + '</div>'
-          + '<table style="width:100%;border-collapse:collapse;margin:0 0 14px;"><tr>'
-            + (lizzardPts > 0
-                ? '<td style="width:50%;padding-right:5px;vertical-align:top;">'
-                    + '<div style="background:#eaf3f2;border:1px solid #b8d8d5;border-radius:7px;padding:13px 16px;text-align:center;">'
-                      + '<div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:#5a8a87;margin-bottom:8px;">Lizzardier pont</div>'
-                      + '<div style="font-size:26px;font-weight:800;color:#29776F;line-height:1;">' + lizzardPts + '</div>'
-                      + '<div style="font-size:11px;font-weight:600;color:#29776F;margin-top:3px;">pont</div>'
-                    + '</div>'
-                  + '</td>'
-                    + '<td style="width:50%;padding-left:5px;vertical-align:top;">'
-                : '<td style="padding:0 70px;vertical-align:top;">'
-              )
-            + '<div style="background:#fef3e2;border:1px solid #fcd99a;border-radius:7px;padding:13px 16px;text-align:center;">'
-              + '<div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:#d97706;margin-bottom:8px;">MTSZ pont</div>'
-              + '<div style="font-size:26px;font-weight:800;color:#d97706;line-height:1;">' + mtszPts + '</div>'
-              + '<div style="font-size:11px;font-weight:600;color:#d97706;margin-top:3px;">pont</div>'
-            + '</div>'
-            + '</td>'
-          + '</tr></table>'
-          + '<div style="font-size:11px;color:#8a7a69;font-style:italic;margin:0 0 14px;padding:8px 12px;background:#fefcf5;border-radius:5px;border-left:3px solid #f0d060;">'
-            + '&#127894; Szintlépés esetén a tag erről is értesítést kap.'
-          + '</div>'
-          + '<div style="text-align:center;">'
-            + '<span style="display:inline-block;background:#29776F;color:#fff;font-size:12px;font-weight:700;padding:10px 24px;border-radius:7px;">Túra megtekintése a rendszerben</span>'
-          + '</div>'
-        + '</div>'
-        + '<div style="background:#f5efe4;border-top:1px solid #ddd5c5;padding:14px 32px;text-align:center;">'
-          + '<p style="font-size:11px;color:#7a7269;margin:0;">Üdvözlettel,<br><strong style="color:#1a3d39;">Lizzard Outdoor Vezetősége</strong></p>'
-        + '</div>'
-      + '</div>'
-    + '</div>';
-  }
-
-  function getKmText(tourType) {
-    if (tourType === 'vizi') {
-      var km = parseFloat(document.getElementById('vizi_total_km') ? document.getElementById('vizi_total_km').value : 0) || 0;
-      return km > 0 ? km.toFixed(1).replace('.', ',') + ' km' : '—';
-    } else if (tourType === 'si' || tourType === 'barlangi' || tourType === 'munka') {
-      var h = parseFloat(document.getElementById('tour_hours') ? document.getElementById('tour_hours').value : 0) || 0;
-      return h > 0 ? h.toFixed(1).replace('.', ',') + ' óra' : '—';
-    } else {
-      var t = parseFloat(document.getElementById('total_km') ? document.getElementById('total_km').value : 0) || 0;
-      var al = parseFloat(document.getElementById('alpine_km') ? document.getElementById('alpine_km').value : 0) || 0;
-      var sum = t + al;
-      return sum > 0 ? sum.toFixed(1).replace('.', ',') + ' km' : '—';
-    }
-  }
-
-  function getElevText(tourType) {
-    if (['si','barlangi','munka','vizi'].indexOf(tourType) !== -1) return '—';
-    var e1 = parseInt(document.getElementById('total_elevation') ? document.getElementById('total_elevation').value : 0) || 0;
-    var e2 = parseInt(document.getElementById('alpine_elevation') ? document.getElementById('alpine_elevation').value : 0) || 0;
-    var s = e1 + e2;
-    return s > 0 ? s.toLocaleString('hu-HU') + ' m' : '—';
-  }
-
-  var form       = document.getElementById('tour-form');
-  var submitBtn  = document.getElementById('btn-submit-tour');
-  var modal      = document.getElementById('tour-notification-modal');
-  var flagInput  = document.getElementById('send_tour_notification');
-  var recList    = document.getElementById('tour-notification-recipients');
-  var prevBody   = document.getElementById('tour-email-preview-body');
-
-  submitBtn.addEventListener('click', function () {
-    if (!form.checkValidity()) { form.reportValidity(); return; }
-
-    var items = document.querySelectorAll('#member-picker-list .member-picker-item');
-    if (items.length === 0) {
-      flagInput.value = '0';
-      form.submit();
-      return;
+    function updateEmpty() {
+      if (empty) empty.style.display = list.querySelectorAll('.member-picker-item').length === 0 ? '' : 'none';
     }
 
-    // Collect recipients
-    var recipients = [];
-    items.forEach(function (item) {
-      var span = item.querySelector('span');
-      var raw  = span ? span.textContent : '';
-      var name = raw.split(' — ')[0].trim();
-      recipients.push(name);
+    addBtn.addEventListener('click', function() {
+      var id   = sel.value;
+      var name = sel.options[sel.selectedIndex] ? sel.options[sel.selectedIndex].text : '';
+      if (!id) return;
+      if (list.querySelector('[data-member-id="' + id + '"]')) return;
+
+      var div = document.createElement('div');
+      div.className = 'member-picker-item';
+      div.setAttribute('data-member-id', id);
+      div.innerHTML = '<span>' + name.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</span>'
+        + '<input type="hidden" name="member_ids[]" value="' + id + '">'
+        + '<button type="button" class="btn btn-danger btn-sm">Eltávolít</button>';
+      div.querySelector('button').addEventListener('click', function() {
+        div.remove(); updateEmpty();
+      });
+      list.appendChild(div);
+      updateEmpty();
+      sel.value = '';
     });
 
-    // Get first member's firstname for preview greeting
-    var firstFullName = recipients[0] || 'Tag';
-    var nameParts = firstFullName.split(' ');
-    var firstname = nameParts.length > 1 ? nameParts[nameParts.length - 1] : nameParts[0];
-
-    // Collect tour data for preview
-    var tourName = (form.querySelector('[name="name"]').value || '').trim();
-    var countryEl = document.getElementById('country_select');
-    var countryText = countryEl ? (countryEl.options[countryEl.selectedIndex] ? countryEl.options[countryEl.selectedIndex].text : '') : '';
-    var countryName = countryText.replace(/\s*\([A-Z]+\)\s*$/, '').trim() || '—';
-    if (!tourName) tourName = countryName;
-
-    var rawDate = (form.querySelector('[name="tour_date"]').value || '').trim();
-    var tourDate = rawDate ? rawDate.split('-').reverse().join('.') : '—';
-
-    var tourTypeEl = form.querySelector('[name="tour_type"]');
-    var tourType = tourTypeEl ? tourTypeEl.value : 'gyalogos';
-    var typeLabel = TOUR_TYPE_LABELS[tourType] || tourType;
-
-    var kmText   = getKmText(tourType);
-    var elevText = getElevText(tourType);
-
-    var lizzardPts = parseInt(form.querySelector('[name="points"]') ? form.querySelector('[name="points"]').value : 0) || 0;
-    var ptsDom = document.getElementById('points-display');
-    var mtszPts = ptsDom ? (parseInt(ptsDom.textContent) || 0) : 0;
-
-    // Build recipient list in modal
-    recList.innerHTML = '';
-    recipients.forEach(function (name) {
-      var li = document.createElement('li');
-      li.textContent = name;
-      recList.appendChild(li);
+    list.querySelectorAll('.member-picker-item button').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        btn.closest('.member-picker-item').remove(); updateEmpty();
+      });
     });
 
-    prevBody.innerHTML = buildTourNotificationPreview(
-      firstname, tourName, countryName, tourDate, typeLabel,
-      kmText, elevText, lizzardPts, mtszPts, '—'
-    );
-
-    modal.classList.add('open');
-  });
-
-  document.getElementById('btn-tour-send-email').addEventListener('click', function () {
-    flagInput.value = '1';
-    modal.classList.remove('open');
-    form.submit();
-  });
-
-  document.getElementById('btn-tour-no-email').addEventListener('click', function () {
-    flagInput.value = '0';
-    modal.classList.remove('open');
-    form.submit();
-  });
+    updateEmpty();
+  })();
 })();
 </script>
-
-<?php include __DIR__ . '/../includes/admin-footer.php'; ?>

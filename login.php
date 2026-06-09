@@ -14,101 +14,18 @@ if (isLoggedIn()) {
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $identifier = trim($_POST['identifier'] ?? '');
-    $password   = $_POST['password'] ?? '';
-
-    if ($identifier === '' || $password === '') {
-        $error = 'Kérjük, adja meg felhasználónevét és jelszavát.';
+    $pdo = getDb();
+    if (!$pdo) {
+        $error = 'Nem sikerült csatlakozni az adatbázishoz. Kérjük, ellenőrizze a beállításokat.';
     } else {
-        $pdo = getDb();
-        if (!$pdo) {
-            $error = 'Nem sikerült csatlakozni az adatbázishoz. Kérjük, ellenőrizze a beállításokat.';
-        } else {
-            require_once __DIR__ . '/includes/user-schema.php';
-            require_once __DIR__ . '/includes/ip-block-schema.php';
-            require_once __DIR__ . '/includes/login-log-schema.php';
-            ensureUserSchema($pdo);
-            ensureIpBlockSchema($pdo);
-            ensureLoginLogSchema($pdo);
-
-            $ip        = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
-            $userAgent = substr($_SERVER['HTTP_USER_AGENT'] ?? '', 0, 500);
-
-            $writeLog = function (string $status, ?int $userId, string $name, string $uname, ?string $reason) use ($pdo, $ip, $userAgent): void {
-                $pdo->prepare("INSERT INTO login_log (user_id, name, username, ip, user_agent, status, fail_reason) VALUES (?,?,?,?,?,?,?)")
-                    ->execute([$userId ?: null, $name, $uname, $ip, $userAgent, $status, $reason]);
-            };
-
-            // 1. Check if this IP is already blocked
-            $ipRow = $pdo->prepare("SELECT attempts, blocked FROM ip_blocks WHERE ip = ?");
-            $ipRow->execute([$ip]);
-            $ipBlock = $ipRow->fetch();
-
-            if ($ipBlock && $ipBlock['blocked']) {
-                $writeLog('failed', null, '', $identifier, 'ip_blocked');
-                $error = 'Az Ön IP-címe zárolva lett ismételt sikertelen bejelentkezési kísérlet miatt. Kérje az adminisztrátor segítségét.';
-            } else {
-                // 2. Find user (no active filter — we check states explicitly)
-                $stmt = $pdo->prepare("SELECT * FROM users WHERE (username = ? OR email = ?) LIMIT 1");
-                $stmt->execute([$identifier, $identifier]);
-                $user = $stmt->fetch();
-
-                if (!$user) {
-                    $writeLog('failed', null, '', $identifier, 'unknown_user');
-                    // Unknown identifier → track IP attempts
-                    if ($ipBlock) {
-                        $newIpAttempts = (int)$ipBlock['attempts'] + 1;
-                        $nowBlocked    = $newIpAttempts >= 3 ? 1 : 0;
-                        $pdo->prepare("UPDATE ip_blocks SET attempts = ?, blocked = ? WHERE ip = ?")
-                            ->execute([$newIpAttempts, $nowBlocked, $ip]);
-                    } else {
-                        $pdo->prepare("INSERT INTO ip_blocks (ip, attempts, blocked) VALUES (?, 1, 0)")
-                            ->execute([$ip]);
-                        $newIpAttempts = 1;
-                    }
-                    if ($newIpAttempts >= 3) {
-                        $error = 'Az Ön IP-címe zárolva lett ismételt sikertelen bejelentkezési kísérlet miatt. Kérje az adminisztrátor segítségét.';
-                    } else {
-                        $error = 'Érvénytelen felhasználónév vagy jelszó. (' . $newIpAttempts . '/3 IP-kísérlet)';
-                    }
-
-                } elseif (!$user['active']) {
-                    $writeLog('failed', (int)$user['id'], $user['lastname'] . ' ' . $user['firstname'], $user['username'], 'account_inactive');
-                    // Deactivated account — generic message to avoid enumeration
-                    $error = 'Érvénytelen felhasználónév vagy jelszó.';
-
-                } elseif (!empty($user['locked_at'])) {
-                    $writeLog('failed', (int)$user['id'], $user['lastname'] . ' ' . $user['firstname'], $user['username'], 'account_locked');
-                    // Account locked by failed attempts
-                    $error = 'A fiókja zárolva lett ismételt hibás bejelentkezési kísérlet miatt. Kérje az adminisztrátor segítségét.';
-
-                } elseif (!password_verify($password, $user['password'])) {
-                    $writeLog('failed', (int)$user['id'], $user['lastname'] . ' ' . $user['firstname'], $user['username'], 'wrong_password');
-                    // Wrong password → track per-user attempts
-                    $newAttempts = (int)($user['login_attempts'] ?? 0) + 1;
-                    if ($newAttempts >= 3) {
-                        $pdo->prepare("UPDATE users SET login_attempts = ?, locked_at = NOW() WHERE id = ?")
-                            ->execute([$newAttempts, $user['id']]);
-                        $error = 'A fiókja zárolva lett ismételt hibás bejelentkezési kísérlet miatt. Kérje az adminisztrátor segítségét.';
-                    } else {
-                        $pdo->prepare("UPDATE users SET login_attempts = ? WHERE id = ?")
-                            ->execute([$newAttempts, $user['id']]);
-                        $remaining = 3 - $newAttempts;
-                        $error = 'Érvénytelen jelszó. Még ' . $remaining . ' kísérlet a fiók zárolása előtt.';
-                    }
-
-                } else {
-                    // Successful login — reset counter
-                    $pdo->prepare("UPDATE users SET login_attempts = 0, locked_at = NULL WHERE id = ?")
-                        ->execute([$user['id']]);
-                    $writeLog('success', (int)$user['id'], $user['lastname'] . ' ' . $user['firstname'], $user['username'], null);
-                    setUserSession($user);
-                    $_SESSION['user_avatar'] = $user['profile_picture'];
-                    header('Location: ' . BASE_URL . (in_array($user['role'], ['admin', 'vezeto'], true) ? '/admin/index.php' : '/user/index.php'));
-                    exit;
-                }
-            }
+        require_once __DIR__ . '/includes/login-handler.php';
+        $result = attemptLogin($pdo, $_POST['identifier'] ?? '', $_POST['password'] ?? '');
+        if ($result['ok']) {
+            $user = $result['user'];
+            header('Location: ' . BASE_URL . (in_array($user['role'], ['admin', 'vezeto'], true) ? '/admin/index.php' : '/user/index.php'));
+            exit;
         }
+        $error = $result['error'];
     }
 }
 ?>

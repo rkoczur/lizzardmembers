@@ -144,7 +144,7 @@ if (!empty($_FILES['gpx_files']['tmp_name'])) {
         $ext  = strtolower(pathinfo($_FILES['gpx_files']['name'][$i] ?? '', PATHINFO_EXTENSION));
         $size = (int)($_FILES['gpx_files']['size'][$i] ?? 0);
         $mime = (new finfo(FILEINFO_MIME_TYPE))->file($tmp);
-        if ($ext !== 'gpx' || $size > 5 * 1024 * 1024 || !in_array($mime, $allowedMimes, true)) continue;
+        if ($ext !== 'gpx' || $size > 1 * 1024 * 1024 || !in_array($mime, $allowedMimes, true)) continue;
         $newFile = 'gpx_' . $id . '_' . time() . '_' . $i . '.gpx';
         if (move_uploaded_file($tmp, GPX_DIR . $newFile)) {
             $insGpx->execute([$id, $newFile, $sortBase + $i + 1]);
