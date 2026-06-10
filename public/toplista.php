@@ -4,8 +4,10 @@ require_once __DIR__ . '/../includes/config.php';
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
+require_once __DIR__ . '/../includes/user-schema.php';
 
 $pdo = getDb();
+ensureUserSchema($pdo);
 
 $allTime = $pdo->query("
     SELECT u.firstname, u.lastname, u.level, u.role, COALESCE(SUM(t.points), 0) AS total_points
@@ -13,6 +15,7 @@ $allTime = $pdo->query("
     LEFT JOIN tour_members tm ON tm.user_id = u.id
     LEFT JOIN tours t ON t.id = tm.tour_id
     WHERE u.role != 'admin'
+      AND COALESCE(u.is_candidate, 0) = 0
       AND u.last_payment IS NOT NULL
       AND u.last_payment != '0000-00-00'
       AND YEAR(u.last_payment) >= YEAR(CURDATE()) - 1

@@ -4,8 +4,10 @@ require_once __DIR__ . '/../includes/config.php';
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
+require_once __DIR__ . '/../includes/user-schema.php';
 
 $pdo = getDb();
+ensureUserSchema($pdo);
 
 // Compute year-winner list (same logic as toplist-content.php byYearTop)
 $allYearRows = $pdo->query("
@@ -15,6 +17,7 @@ $allYearRows = $pdo->query("
     JOIN tours t ON t.id = tm.tour_id
     JOIN users u ON u.id = tm.user_id
     WHERE t.tour_date IS NOT NULL AND u.role != 'admin'
+          AND COALESCE(u.is_candidate, 0) = 0
           AND YEAR(t.tour_date) < YEAR(CURDATE())
     GROUP BY YEAR(t.tour_date), u.id, u.firstname, u.lastname, u.role
     ORDER BY yr ASC

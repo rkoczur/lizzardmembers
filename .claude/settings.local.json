@@ -11,7 +11,12 @@
       "Bash(php -l user/index.php)",
       "Bash(php -l actions/future-tour-announce-preview.php)",
       "Bash(php -l admin/future-tour-detail.php)",
-      "Bash(php -l includes/future-tour-announcement-email.php)"
+      "Bash(php -l includes/future-tour-announcement-email.php)",
+      "Bash(php -l includes/toplist-content.php)",
+      "Bash(php -l admin/toplist.php)",
+      "Bash(php -l user/toplist.php)",
+      "Bash(php -l admin/members.php)",
+      "Bash(php -l actions/tour-submit.php)"
     ]
   }
 }

@@ -321,6 +321,7 @@ tbody tr:hover { background: #faf5ec; }
 .badge-admin    { background: rgba(221,153,51,.18); color: #7a5000; }
 .badge-vezeto   { background: rgba(99,102,241,.15); color: #3730a3; }
 .badge-user     { background: #f0ebe2; color: #6b6259; }
+.badge-candidate{ background: rgba(124,58,237,.16); color: #6d28d9; }
 
 .level-badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 99px; font-size: 11.5px; font-weight: 700; }
 .level-1 { background: rgba(26,61,57,.10); color: rgb(15,45,42); }

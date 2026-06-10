@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../includes/config.php';
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/functions.php';
+require_once __DIR__ . '/../includes/user-schema.php';
 
 $requestKey = $_SERVER['HTTP_X_LOTE_KEY'] ?? '';
 if (!API_KEY || !hash_equals(API_KEY, $requestKey)) {
@@ -28,6 +29,7 @@ function toplistLevelImagePath(int $level): ?string
 
 try {
     $pdo = getDb();
+    ensureUserSchema($pdo);
 
     // 1. Örökös toplista
     $allTime = $pdo->query("
@@ -37,6 +39,7 @@ try {
         LEFT JOIN tour_members tm ON tm.user_id = u.id
         LEFT JOIN tours t ON t.id = tm.tour_id
         WHERE u.role != 'admin'
+          AND COALESCE(u.is_candidate, 0) = 0
           AND " . LOTE_STATUS_FILTER . "
         GROUP BY u.id, u.firstname, u.lastname, u.level
         HAVING total_points >= 3
@@ -59,6 +62,7 @@ try {
         JOIN tours t ON t.id = tm.tour_id AND YEAR(t.tour_date) = :yr
         JOIN users u ON u.id = tm.user_id
         WHERE u.role != 'admin'
+          AND COALESCE(u.is_candidate, 0) = 0
           AND " . LOTE_STATUS_FILTER . "
         GROUP BY u.id, u.firstname, u.lastname, u.level
         ORDER BY total_points DESC

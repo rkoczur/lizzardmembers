@@ -30,5 +30,6 @@ include __DIR__ . '/../includes/admin-header.php';
 </div>
 
 <?php
+$hideCandidates = false; // admin nézetben a jelölt tagok is látszanak
 include __DIR__ . '/../includes/toplist-content.php';
 include __DIR__ . '/../includes/admin-footer.php';

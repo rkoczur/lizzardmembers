@@ -1,5 +1,11 @@
 <?php
+require_once __DIR__ . '/user-schema.php';
 $pdo = getDb();
+ensureUserSchema($pdo);
+
+// "Jelölt" tagok elrejtése — alapból igen (tag/nyilvános nézet); admin nézetben $hideCandidates=false.
+$hideCandidates = $hideCandidates ?? true;
+$candFilter = $hideCandidates ? "AND COALESCE(u.is_candidate, 0) = 0" : "";
 
 // 1. All-time toplist
 $allTime = $pdo->query("
@@ -7,7 +13,7 @@ $allTime = $pdo->query("
     FROM users u
     LEFT JOIN tour_members tm ON tm.user_id = u.id
     LEFT JOIN tours t ON t.id = tm.tour_id
-    WHERE u.role != 'admin'
+    WHERE u.role != 'admin' $candFilter
       AND u.last_payment IS NOT NULL
       AND u.last_payment != '0000-00-00'
       AND YEAR(u.last_payment) >= YEAR(CURDATE()) - 1
@@ -22,7 +28,7 @@ $stmtYear = $pdo->prepare("
     FROM tour_members tm
     JOIN tours t ON t.id = tm.tour_id AND YEAR(t.tour_date) = :yr
     JOIN users u ON u.id = tm.user_id
-    WHERE u.role != 'admin'
+    WHERE u.role != 'admin' $candFilter
     GROUP BY u.id, u.firstname, u.lastname, u.role, u.level
     ORDER BY total_points DESC
     LIMIT 20
@@ -38,7 +44,7 @@ $allYearRows = $pdo->query("
     FROM tour_members tm
     JOIN tours t ON t.id = tm.tour_id
     JOIN users u ON u.id = tm.user_id
-    WHERE t.tour_date IS NOT NULL AND u.role != 'admin'
+    WHERE t.tour_date IS NOT NULL AND u.role != 'admin' $candFilter
           AND YEAR(t.tour_date) < YEAR(CURDATE())
     GROUP BY YEAR(t.tour_date), u.id, u.firstname, u.lastname, u.role
     ORDER BY yr ASC

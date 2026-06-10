@@ -181,6 +181,7 @@ include __DIR__ . '/../includes/admin-header.php';
   <a href="<?= BASE_URL ?>/admin/logs.php" class="tab-link<?= $activePage === 'logs' ? ' active' : '' ?>">Naplók</a>
   <a href="<?= BASE_URL ?>/admin/settings.php" class="tab-link<?= $activePage === 'settings' ? ' active' : '' ?>">Beállítások</a>
   <a href="<?= BASE_URL ?>/admin/orphaned-assets.php" class="tab-link<?= $activePage === 'tools' ? ' active' : '' ?>">Felesleges fájlok</a>
+  <?php if (isRootAdmin()): ?><a href="<?= BASE_URL ?>/admin/backup.php" class="tab-link<?= $activePage === 'backup' ? ' active' : '' ?>">Mentés</a><?php endif; ?>
 </div>
 
 <div class="page-header">

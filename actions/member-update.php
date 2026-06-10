@@ -108,7 +108,7 @@ if (!empty($_FILES['avatar']['name'])) {
     }
 }
 
-$beforeStmt = $pdo->prepare("SELECT firstname, lastname, username, email, dateofbirth, zipcode, city, address, phone, tshirt_size, emergency_name, emergency_relation, emergency_phone, member_since, last_payment, role FROM users WHERE id = ?");
+$beforeStmt = $pdo->prepare("SELECT firstname, lastname, username, email, dateofbirth, zipcode, city, address, phone, tshirt_size, emergency_name, emergency_relation, emergency_phone, member_since, last_payment, role, is_candidate FROM users WHERE id = ?");
 $beforeStmt->execute([$memberId]);
 $before = $beforeStmt->fetch();
 
@@ -131,6 +131,11 @@ if ($newPassword !== '') {
     $fields[] = 'password=?';
     $params[]  = password_hash($newPassword, PASSWORD_DEFAULT);
 }
+
+// Jelölt: a szerepkör jogosultságait megtartja, de a nyilvános oldalon nem jelenik meg
+$isCandidate = isset($_POST['is_candidate']) ? 1 : 0;
+$fields[] = 'is_candidate=?';
+$params[]  = $isCandidate;
 
 // Túraértesítő (új meghirdetett túrák) értesítés — a többi értesítési beállítást megőrizzük
 $prefsStmt = $pdo->prepare("SELECT notification_prefs FROM users WHERE id = ?");
@@ -174,6 +179,8 @@ foreach ($auditFieldLabels as $field => $label) {
 if ($avatarFilename)  $auditChanges[] = ['k' => 'Profilkép', 'f' => '—', 't' => 'frissítve'];
 if ($newPassword !== '') $auditChanges[] = ['k' => 'Jelszó',    'f' => '—', 't' => 'megváltoztatva'];
 if ($oldAnnounce !== $newAnnounce) $auditChanges[] = ['k' => 'Túraértesítő', 'f' => $oldAnnounce ? 'be' : 'ki', 't' => $newAnnounce ? 'be' : 'ki'];
+$oldCandidate = (int)($before['is_candidate'] ?? 0);
+if ($oldCandidate !== $isCandidate) $auditChanges[] = ['k' => 'Jelölt', 'f' => $oldCandidate ? 'igen' : 'nem', 't' => $isCandidate ? 'igen' : 'nem'];
 logAudit($pdo, 'update', 'member', $memberId, $lastname . ' ' . $firstname, $auditChanges ?: null);
 
 flash('success', 'A tag sikeresen frissítve.');

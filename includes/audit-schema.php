@@ -15,4 +15,9 @@ function ensureAuditSchema(PDO $pdo): void
         KEY `idx_created_at` (`created_at`),
         KEY `idx_entity` (`entity_type`, `entity_id`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+
+    // Migráció: 'backup' entitástípus engedélyezése (mentés/visszaállítás naplózásához)
+    try {
+        $pdo->exec("ALTER TABLE `audit_log` MODIFY COLUMN `entity_type` ENUM('member','tour','backup') NOT NULL");
+    } catch (PDOException) { /* már megvan — kihagyás */ }
 }

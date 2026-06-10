@@ -5,9 +5,11 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/public-schema.php';
+require_once __DIR__ . '/../includes/user-schema.php';
 
 $pdo = getDb();
 ensurePublicSchema($pdo);
+ensureUserSchema($pdo);
 
 $stmt = $pdo->prepare("SELECT * FROM pages WHERE slug = 'rolunk' LIMIT 1");
 $stmt->execute();
@@ -18,6 +20,7 @@ $leaders = $pdo->query("
     FROM users
     WHERE role IN ('admin','helyettes','penzugyi','jogi','kommunikacios','vezeto')
       AND active = 1
+      AND COALESCE(is_candidate, 0) = 0
     ORDER BY FIELD(role,'admin','helyettes','penzugyi','jogi','kommunikacios','vezeto'), lastname ASC
 ")->fetchAll();
 

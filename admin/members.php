@@ -20,7 +20,7 @@ if ($tab === 'applications' && !isAdmin()) {
 }
 
 // Members list
-$members = $pdo->query("SELECT id, firstname, lastname, email, city, member_since, last_payment, level, points, profile_picture, active, role, locked_at FROM users ORDER BY role DESC, lastname, firstname")->fetchAll();
+$members = $pdo->query("SELECT id, firstname, lastname, email, city, member_since, last_payment, level, points, profile_picture, active, role, is_candidate, locked_at FROM users ORDER BY role DESC, lastname, firstname")->fetchAll();
 
 // Pending count (always needed for tab badge)
 $pendingCount = 0;
@@ -178,7 +178,11 @@ include __DIR__ . '/../includes/admin-header.php';
             </div>
           </td>
           <td>
-            <span class="badge <?= $m['role'] === 'admin' ? 'badge-admin' : ($m['role'] === 'vezeto' ? 'badge-vezeto' : 'badge-user') ?>"><?= $m['role'] === 'admin' ? 'Admin' : ($m['role'] === 'vezeto' ? 'Vezető' : 'Tag') ?></span>
+            <?php $roleClass = $m['role'] === 'user' ? 'badge-user' : ($m['role'] === 'admin' ? 'badge-admin' : 'badge-vezeto'); ?>
+            <span class="badge <?= $roleClass ?>"><?= e(getRoleLabel($m['role'])) ?></span>
+            <?php if (!empty($m['is_candidate'])): ?>
+              <span class="badge badge-candidate" style="margin-left:4px;" title="Jelölt — a nyilvános oldalon nem jelenik meg">Jelölt</span>
+            <?php endif; ?>
             <?php if (!empty($m['locked_at'])): ?>
               <span class="badge badge-inactive" style="margin-left:4px;" title="Zárolva: <?= e((new DateTime($m['locked_at']))->format('Y.m.d H:i')) ?>">🔒 Zárolt</span>
             <?php endif; ?>

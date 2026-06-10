@@ -244,6 +244,15 @@ include __DIR__ . '/../includes/admin-header.php';
               </select>
             <?php endif; ?>
           </div>
+          <div class="form-group full">
+            <label style="display:flex;align-items:flex-start;gap:8px;cursor:pointer;font-size:13px;text-transform:none;letter-spacing:0;font-weight:600;">
+              <input type="checkbox" name="is_candidate" value="1" style="margin-top:2px;" <?= !empty($member['is_candidate']) ? 'checked' : '' ?> <?= $ro ? 'disabled' : '' ?>>
+              <span>
+                Jelölt (rejtett a nyilvános oldalon)
+                <small style="display:block;font-weight:normal;color:var(--text-muted);font-size:12px;margin-top:2px;">A tag a szerepköréhez tartozó jogosultságokkal rendelkezik, de a nyilvános weboldalon sehol nem jelenik meg — sem a toplistán, sem a vezetőknél, sem az év túratársánál.</small>
+              </span>
+            </label>
+          </div>
         </div>
 
         <h3 style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin:24px 0 14px;padding-top:20px;border-top:1px solid var(--border);">Értesítések</h3>

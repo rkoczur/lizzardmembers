@@ -142,7 +142,7 @@ try {
     $smtp = getSmtpConfig($pdo);
 
     if ($smtp['host'] !== '') {
-        $admins = $pdo->query("SELECT id, firstname, lastname, email FROM users WHERE role = 'admin' AND active = 1")->fetchAll();
+        $admins = $pdo->query("SELECT id, firstname, lastname, email FROM users WHERE role IN ('admin','vezeto') AND active = 1")->fetchAll();
 
         if ($admins) {
             $submitterStmt = $pdo->prepare("SELECT firstname, lastname FROM users WHERE id = ? LIMIT 1");

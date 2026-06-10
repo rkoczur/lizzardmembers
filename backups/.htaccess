@@ -1,0 +1,6 @@
+Options -Indexes
+
+# A mentési archívumok nem érhetők el közvetlenül a weben — csak PHP-n keresztül (admin/backup-download).
+Order Allow,Deny
+Deny from all
+Require all denied

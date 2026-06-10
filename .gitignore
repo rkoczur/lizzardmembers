@@ -4,6 +4,10 @@ assets/uploads/gpx/gpx_ft_1_1780336316_0.gpx
 assets/uploads/gpx/gpx_ft_1_1780336316_1.gpx
 CLAUDE.md
 .htaccess
+
+# Mentési archívumok (nem kerülnek verziókövetésbe; a .htaccess marad)
+/backups/*
+!/backups/.htaccess
 gpx-debug.php
 gpx-maptest.php
 *.gpx
