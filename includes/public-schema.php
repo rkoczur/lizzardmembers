@@ -64,6 +64,16 @@ function ensurePublicSchema(PDO $pdo): void
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
     ");
 
+    // SEO mezők migrációja meglévő telepítésekhez
+    foreach ([
+        "ALTER TABLE posts ADD COLUMN cover_alt VARCHAR(255) DEFAULT NULL AFTER cover_img",
+        "ALTER TABLE posts ADD COLUMN meta_keywords VARCHAR(500) DEFAULT NULL AFTER excerpt",
+        "ALTER TABLE pages ADD COLUMN meta_description VARCHAR(500) DEFAULT NULL AFTER body",
+        "ALTER TABLE pages ADD COLUMN meta_keywords VARCHAR(500) DEFAULT NULL AFTER meta_description",
+    ] as $sql) {
+        try { $pdo->exec($sql); } catch (PDOException) {}
+    }
+
     // Seed default pages if not present
     $defaultPages = [
         ['rolunk',                 'Rólunk',                    ''],

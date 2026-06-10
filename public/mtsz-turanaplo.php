@@ -47,6 +47,8 @@ if ($loggedIn) {
     unset($_SESSION['tour_submit_old']);
 }
 
+$metaDescription = $page['meta_description'] ?? '';
+$metaKeywords    = $page['meta_keywords'] ?? '';
 include __DIR__ . '/../includes/public-header.php';
 ?>
 
@@ -66,8 +68,9 @@ include __DIR__ . '/../includes/public-header.php';
     <?php if (!empty($flash_error)): ?>
       <div class="alert alert-error" data-auto-dismiss><?= e($flash_error) ?></div>
     <?php endif; ?>
-
+    <div class="card-centered">
     <?php include __DIR__ . '/../includes/tour-submit-form.php'; ?>
+    </div>
 
   <?php else: ?>
 

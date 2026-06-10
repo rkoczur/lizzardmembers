@@ -102,9 +102,11 @@ $fullName   = ($user['lastname'] ?? '') . ' ' . ($user['firstname'] ?? '');
 if ($appStatus === 'confirmed') {
     $subject     = 'Sikeres jelentkezés – ' . $tour['name'];
     $statusText  = '<strong style="color:#29776F;">Státusz: Megerősített</strong>';
-    $paymentText = '<div style="background:#fffbeb;border:1px solid #f59e0b;border-radius:6px;padding:12px 16px;margin-top:16px;font-size:13.5px;color:#b45309;">
+    $paymentText = (float)($tour['participation_fee'] ?? 0) > 0
+      ? '<div style="background:#fffbeb;border:1px solid #f59e0b;border-radius:6px;padding:12px 16px;margin-top:16px;font-size:13.5px;color:#b45309;">
         ⚠ Kérjük, a részvételi díjat <strong>14 napon belül</strong> utald el. Ha ez nem történik meg, a rendszer automatikusan feloldja a foglalásodat, és amennyiben van várólistán lévő, annak adja tovább.
-      </div>';
+      </div>'
+      : '';
 } else {
     $subject     = 'Várólistára kerültél – ' . $tour['name'];
     $statusText  = '<strong style="color:#b45309;">Státusz: Várólistán</strong>';

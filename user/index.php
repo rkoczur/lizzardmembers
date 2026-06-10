@@ -54,7 +54,7 @@ $myToursStmt = $pdo->prepare("
 ");
 $myToursStmt->execute([$userId]);
 $myFutureTours  = $myToursStmt->fetchAll();
-$hasUnpaidTours = array_filter($myFutureTours, fn($t) => $t['status'] === 'confirmed' && !$t['paid_at']);
+$hasUnpaidTours = array_filter($myFutureTours, fn($t) => $t['status'] === 'confirmed' && (float)$t['participation_fee'] > 0 && !$t['paid_at']);
 
 // Tartozások: éves tagdíj (ha elmaradás/inaktív) + megerősített, ki nem fizetett túra-részvételi díjak
 $MEMBERSHIP_FEE = 5000; // Ft/év — fix összeg (lásd public/tagsag.php)
@@ -215,7 +215,7 @@ include __DIR__ . '/../includes/user-header.php';
     <table style="width:100%;border-collapse:collapse;font-size:13.5px;">
       <tbody>
         <?php foreach ($myFutureTours as $mt): ?>
-        <?php $unpaid = $mt['status'] === 'confirmed' && !$mt['paid_at']; ?>
+        <?php $unpaid = $mt['status'] === 'confirmed' && (float)$mt['participation_fee'] > 0 && !$mt['paid_at']; ?>
         <tr style="border-bottom:1px solid var(--border);<?= $unpaid ? 'background:var(--danger-bg,#fef2f2);' : '' ?>">
           <td style="padding:11px 16px;">
             <div style="font-weight:600;"><?= e($mt['name']) ?></div>
@@ -232,7 +232,7 @@ include __DIR__ . '/../includes/user-header.php';
             <?php endif; ?>
           </td>
           <td style="padding:11px 16px;white-space:nowrap;">
-            <?php if ($mt['status'] === 'confirmed' && $mt['participation_fee'] !== null && !$mt['paid_at']):
+            <?php if ($mt['status'] === 'confirmed' && (float)$mt['participation_fee'] > 0 && !$mt['paid_at']):
               $baseFee  = (float)$mt['participation_fee'];
               $dispFee  = $feeDiscount > 0 ? $baseFee * (1 - $feeDiscount / 100) : $baseFee;
             ?>
@@ -245,7 +245,7 @@ include __DIR__ . '/../includes/user-header.php';
                   </span>
                 <?php endif; ?>
               </div>
-            <?php elseif ($mt['status'] === 'confirmed' && $mt['participation_fee'] !== null && $mt['paid_at']): ?>
+            <?php elseif ($mt['status'] === 'confirmed' && (float)$mt['participation_fee'] > 0 && $mt['paid_at']): ?>
               <span style="display:inline-flex;align-items:center;gap:5px;color:var(--success,#16a34a);font-size:12.5px;font-weight:600;">✓ Részvételi díj rendezve</span>
             <?php elseif ($mt['status'] === 'confirmed'): ?>
               <span class="badge badge-active">Megerősített</span>

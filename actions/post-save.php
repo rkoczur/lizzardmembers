@@ -17,6 +17,8 @@ $title    = trim($_POST['title']    ?? '');
 $slug     = trim($_POST['slug']     ?? '');
 $category = in_array($_POST['category'] ?? '', ['hirek','beszmolok']) ? $_POST['category'] : 'hirek';
 $excerpt  = trim($_POST['excerpt']  ?? '');
+$metaKeywords = trim($_POST['meta_keywords'] ?? '');
+$coverAlt = trim($_POST['cover_alt'] ?? '');
 $body     = trim($_POST['body']     ?? '');
 $published = !empty($_POST['published']) ? 1 : 0;
 $createdAtRaw = trim($_POST['created_at'] ?? '');
@@ -70,8 +72,8 @@ if ($isNew) {
         header('Location: ' . BASE_URL . '/admin/post-detail.php?new=1'); exit;
     }
     $insertCreatedAt = $createdAt ?? date('Y-m-d H:i:s');
-    $pdo->prepare("INSERT INTO posts (title, slug, category, excerpt, body, cover_img, published, created_by, created_at) VALUES (?,?,?,?,?,?,?,?,?)")
-        ->execute([$title, $slug, $category, $excerpt ?: null, $body, $coverImg, $published, getCurrentUserId(), $insertCreatedAt]);
+    $pdo->prepare("INSERT INTO posts (title, slug, category, excerpt, meta_keywords, body, cover_img, cover_alt, published, created_by, created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?)")
+        ->execute([$title, $slug, $category, $excerpt ?: null, $metaKeywords ?: null, $body, $coverImg, $coverAlt ?: null, $published, getCurrentUserId(), $insertCreatedAt]);
     $newId = (int)$pdo->lastInsertId();
     // Fix cover filename with real id
     if ($coverImg && strpos($coverImg, '_new_') !== false) {
@@ -83,8 +85,8 @@ if ($isNew) {
     header('Location: ' . BASE_URL . '/admin/post-detail.php?id=' . $newId);
 } else {
     $updateCreatedAt = $createdAt ?? date('Y-m-d H:i:s');
-    $pdo->prepare("UPDATE posts SET title=?, slug=?, category=?, excerpt=?, body=?, cover_img=?, published=?, created_at=? WHERE id=?")
-        ->execute([$title, $slug, $category, $excerpt ?: null, $body, $coverImg, $published, $updateCreatedAt, $id]);
+    $pdo->prepare("UPDATE posts SET title=?, slug=?, category=?, excerpt=?, meta_keywords=?, body=?, cover_img=?, cover_alt=?, published=?, created_at=? WHERE id=?")
+        ->execute([$title, $slug, $category, $excerpt ?: null, $metaKeywords ?: null, $body, $coverImg, $coverAlt ?: null, $published, $updateCreatedAt, $id]);
     flash('success', 'Poszt sikeresen mentve.');
     header('Location: ' . BASE_URL . '/admin/post-detail.php?id=' . $id);
 }

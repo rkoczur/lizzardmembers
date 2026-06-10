@@ -14,6 +14,8 @@ $slug  = trim($_POST['slug']  ?? '');
 if (!canManagePages($slug)) { flash('error', 'Nincs jogosultságod ezt a lapot szerkeszteni.'); header('Location: ' . BASE_URL . '/admin/pages.php'); exit; }
 $title = trim($_POST['title'] ?? '');
 $body  = $_POST['body'] ?? '';
+$metaDescription = trim($_POST['meta_description'] ?? '');
+$metaKeywords    = trim($_POST['meta_keywords'] ?? '');
 
 if (!$slug || !$title) {
     flash('error', 'Hiányzó adatok.');
@@ -21,8 +23,8 @@ if (!$slug || !$title) {
     exit;
 }
 
-$pdo->prepare("UPDATE pages SET title = ?, body = ? WHERE slug = ?")
-    ->execute([$title, $body, $slug]);
+$pdo->prepare("UPDATE pages SET title = ?, body = ?, meta_description = ?, meta_keywords = ? WHERE slug = ?")
+    ->execute([$title, $body, $metaDescription ?: null, $metaKeywords ?: null, $slug]);
 
 flash('success', 'Lap sikeresen mentve.');
 header('Location: ' . BASE_URL . '/admin/pages.php?slug=' . urlencode($slug));

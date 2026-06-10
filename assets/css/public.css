@@ -1,5 +1,13 @@
 /* ===== Public Website Layout ===== */
 
+/* ── Manualy added ── */
+
+.card-centered {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /* ── Navbar ── */
 .pub-nav {
   background: var(--sidebar-bg);
@@ -272,8 +280,9 @@
   font-size: clamp(26px, 5vw, 48px);
   font-weight: 800;
   letter-spacing: -.5px;
-  color: #234f4a;
+  color: #dd9933;
   margin-bottom: 16px;
+  text-shadow: -2px -2px 0 #000, 2px -2px 0 hwb(0 0% 100%), -2px 2px 0 #000, 2px 2px 0 #000;
 }
 .pub-hero p {
     font-weight: 700;
@@ -1013,8 +1022,45 @@
 .pub-prose h2 { font-size: 20px; font-weight: 700; margin: 28px 0 12px; color: var(--sidebar-bg); }
 .pub-prose h3 { font-size: 17px; font-weight: 700; margin: 22px 0 10px; }
 .pub-prose p  { margin-bottom: 16px; }
-.pub-prose ul, .pub-prose ol { margin: 0 0 16px 22px; }
-.pub-prose li { margin-bottom: 6px; }
+/* Listák — egységes, professzionális megjelenés (egyedi márkaszínű jelölők) */
+.pub-prose ul, .pub-prose ol { margin: 0 0 18px; padding: 0; list-style: none; }
+.pub-prose ol { counter-reset: pub-ol; }
+.pub-prose li { position: relative; padding-left: 30px; margin-bottom: 11px; }
+.pub-prose li:last-child { margin-bottom: 0; }
+
+/* Pontozott lista: lekerekített, márkaszínű jelölő */
+.pub-prose ul > li::before {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 0.62em;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--primary);
+}
+
+/* Számozott lista: márkaszínű, körös sorszám-jelvény */
+.pub-prose ol > li { padding-left: 40px; counter-increment: pub-ol; }
+.pub-prose ol > li::before {
+  content: counter(pub-ol);
+  position: absolute;
+  left: 0;
+  top: 1px;
+  width: 25px;
+  height: 25px;
+  background: var(--primary);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 25px;
+  text-align: center;
+}
+
+/* Beágyazott listák térköze */
+.pub-prose li > ul, .pub-prose li > ol { margin: 9px 0 0; }
+
 .pub-prose strong { font-weight: 700; }
 .pub-prose a { color: var(--primary); }
 

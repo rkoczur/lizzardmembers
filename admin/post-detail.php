@@ -84,8 +84,12 @@ include __DIR__ . '/../includes/admin-header.php';
           </select>
         </div>
         <div class="form-group full">
-          <label>Kivonat (rövid leírás a kártyán)</label>
-          <textarea name="excerpt" rows="2"><?= e($post['excerpt'] ?? '') ?></textarea>
+          <label>Kivonat / összefoglaló <span style="font-weight:normal;text-transform:none;letter-spacing:0;color:var(--text-muted);font-size:12px;">(a kártyán és SEO meta-leírásként is megjelenik)</span></label>
+          <textarea name="excerpt" rows="2" maxlength="500"><?= e($post['excerpt'] ?? '') ?></textarea>
+        </div>
+        <div class="form-group full">
+          <label>SEO kulcsszavak <span style="font-weight:normal;text-transform:none;letter-spacing:0;color:var(--text-muted);font-size:12px;">(vesszővel elválasztva)</span></label>
+          <input type="text" name="meta_keywords" value="<?= e($post['meta_keywords'] ?? '') ?>" maxlength="500" placeholder="pl. túra, Mátra, természetjárás, hegymászás">
         </div>
         <div class="form-group full">
           <label>Tartalom <span style="color:var(--danger)">*</span></label>
@@ -103,6 +107,9 @@ include __DIR__ . '/../includes/admin-header.php';
           <?php endif; ?>
           <input type="file" name="cover_img" accept="image/jpeg,image/png,image/webp">
           <small style="color:var(--text-muted);font-size:12px;">JPG, PNG vagy WebP; max. 4 MB.</small>
+          <label style="margin-top:10px;">Borítókép alt szövege (SEO)</label>
+          <input type="text" name="cover_alt" value="<?= e($post['cover_alt'] ?? '') ?>" maxlength="255" placeholder="A kép tartalmának rövid leírása">
+          <small style="color:var(--text-muted);font-size:12px;">Képleírás keresőknek és képernyőolvasóknak. Üresen a poszt címe lesz.</small>
         </div>
         <div class="form-group">
           <label>Dátum</label>

@@ -128,7 +128,9 @@ include __DIR__ . '/../includes/user-header.php';
           <?php if ($tour['participation_fee'] !== null): ?>
           <div class="tour-stat-cell">
             <div class="tour-stat-label">Részvételi díj</div>
-            <?php if ($feeDiscount > 0): ?>
+            <?php if ((float)$tour['participation_fee'] <= 0): ?>
+              <div class="tour-stat-value">Ingyenes</div>
+            <?php elseif ($feeDiscount > 0): ?>
               <div style="font-size:12px;color:var(--text-muted);text-decoration:line-through;line-height:1.3;"><?= number_format((float)$tour['participation_fee'], 0, ',', ' ') ?> Ft</div>
               <div class="tour-stat-value" style="color:var(--primary);">
                 <?= number_format((float)$tour['participation_fee'] * (1 - $feeDiscount / 100), 0, ',', ' ') ?> Ft
@@ -210,12 +212,14 @@ include __DIR__ . '/../includes/user-header.php';
         <div style="font-size:40px;margin-bottom:12px;">✅</div>
         <div style="font-weight:700;font-size:17px;margin-bottom:6px;color:var(--primary);">Sikeresen jelentkeztél!</div>
         <div style="color:var(--text-muted);font-size:13px;margin-bottom:6px;">Jelentkezés ideje: <?= date('Y.m.d H:i', strtotime($myApp['applied_at'])) ?></div>
-        <?php if ($myApp['paid_at']): ?>
-          <div style="color:var(--primary);font-size:13px;font-weight:600;margin-bottom:16px;">✓ Részvételi díj befizetve</div>
-        <?php else: ?>
-          <div class="alert-warning-box" style="margin-bottom:16px;text-align:left;">
-            ⚠ Részvételi díjad még nem érkezett meg. Kérjük, 14 napon belül utalj!
-          </div>
+        <?php if ($tour['participation_fee'] !== null && (float)$tour['participation_fee'] > 0): ?>
+          <?php if ($myApp['paid_at']): ?>
+            <div style="color:var(--primary);font-size:13px;font-weight:600;margin-bottom:16px;">✓ Részvételi díj befizetve</div>
+          <?php else: ?>
+            <div class="alert-warning-box" style="margin-bottom:16px;text-align:left;">
+              ⚠ Részvételi díjad még nem érkezett meg. Kérjük, 14 napon belül utalj!
+            </div>
+          <?php endif; ?>
         <?php endif; ?>
         <form method="post" action="<?= BASE_URL ?>/actions/future-tour-cancel.php"
               onsubmit="return confirm('Biztosan lemondod a jelentkezésedet?')">

@@ -15,7 +15,7 @@ $tours = $pdo->query("
            c.name_hu AS country_name, c.flag_filename AS country_flag,
            (SELECT COUNT(*) FROM future_tour_applications fta WHERE fta.future_tour_id = ft.id AND fta.status = 'confirmed') AS confirmed_count,
            (SELECT COUNT(*) FROM future_tour_applications fta WHERE fta.future_tour_id = ft.id AND fta.status = 'waitlist')  AS waitlist_count,
-           (SELECT COUNT(*) FROM future_tour_applications fta WHERE fta.future_tour_id = ft.id AND fta.status != 'cancelled' AND fta.paid_at IS NULL) AS unpaid_count,
+           (SELECT COUNT(*) FROM future_tour_applications fta WHERE fta.future_tour_id = ft.id AND fta.status != 'cancelled' AND fta.paid_at IS NULL AND ft.participation_fee > 0) AS unpaid_count,
            (SELECT COUNT(*) FROM future_tour_applications fta WHERE fta.future_tour_id = ft.id AND fta.status = 'pending') AS pending_count
     FROM future_tours ft
     LEFT JOIN countries c ON c.code = ft.country
@@ -25,7 +25,7 @@ $tours = $pdo->query("
 $flash_success = getFlash('success');
 $flash_error   = getFlash('error');
 
-$newAppsCount = (int)$pdo->query("SELECT COUNT(*) FROM future_tour_applications WHERE status != 'cancelled' AND paid_at IS NULL")->fetchColumn();
+$newAppsCount = (int)$pdo->query("SELECT COUNT(*) FROM future_tour_applications fta JOIN future_tours ft ON ft.id = fta.future_tour_id WHERE fta.status != 'cancelled' AND fta.paid_at IS NULL AND ft.participation_fee > 0")->fetchColumn();
 
 $pageTitle  = 'Túrák';
 $activePage = 'tours';

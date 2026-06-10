@@ -52,7 +52,7 @@ $flash_error   = getFlash('error');
 try {
     require_once __DIR__ . '/../includes/future-tours-schema.php';
     ensureFutureToursSchema($pdo);
-    $newAppsCount = (int)$pdo->query("SELECT COUNT(*) FROM future_tour_applications WHERE status != 'cancelled' AND paid_at IS NULL")->fetchColumn();
+    $newAppsCount = (int)$pdo->query("SELECT COUNT(*) FROM future_tour_applications fta JOIN future_tours ft ON ft.id = fta.future_tour_id WHERE fta.status != 'cancelled' AND fta.paid_at IS NULL AND ft.participation_fee > 0")->fetchColumn();
 } catch (Throwable) { $newAppsCount = 0; }
 
 $pageTitle  = 'Túrák';

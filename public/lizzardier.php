@@ -15,6 +15,8 @@ $page = $stmt->fetch();
 
 $pageTitle     = $page['title'] ?? 'Lizzardier pontverseny';
 $activePubPage = 'lizzardier';
+$metaDescription = $page['meta_description'] ?? '';
+$metaKeywords    = $page['meta_keywords'] ?? '';
 include __DIR__ . '/../includes/public-header.php';
 ?>
 

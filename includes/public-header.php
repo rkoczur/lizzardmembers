@@ -1,10 +1,45 @@
-<?php require_once __DIR__ . '/version.php'; ?>
+<?php
+require_once __DIR__ . '/version.php';
+
+// ── SEO meta — oldalanként felülírható: $metaDescription, $metaKeywords, $ogImage, $ogType ──
+$seoScheme    = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+$seoRoot      = $seoScheme . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost');
+$seoCanonical = $seoRoot . ($_SERVER['REQUEST_URI'] ?? (BASE_URL . '/'));
+$seoTitle     = trim(($pageTitle ?? 'Lizzard Outdoor') . ' — ' . APP_NAME);
+$seoDesc      = trim((string)($metaDescription ?? ''));
+if ($seoDesc === '') {
+    $seoDesc = 'A Leguán Osztag Természetjáró Egyesület (Lizzard Outdoor) hivatalos oldala — túrák, élménybeszámolók, tagság és túraközösség.';
+}
+$seoKeywords  = trim((string)($metaKeywords ?? ''));
+$seoType      = $ogType ?? 'website';
+$seoImgRaw    = $ogImage ?? (BASE_URL . '/assets/img/lizzard_logo.png');
+$seoImg       = preg_match('#^https?://#', $seoImgRaw) ? $seoImgRaw : $seoRoot . $seoImgRaw;
+?>
 <!DOCTYPE html>
 <html lang="hu">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><?= e($pageTitle ?? 'Lizzard Outdoor') ?> — <?= APP_NAME ?></title>
+  <title><?= e($seoTitle) ?></title>
+  <meta name="description" content="<?= e($seoDesc) ?>">
+  <?php if ($seoKeywords !== ''): ?><meta name="keywords" content="<?= e($seoKeywords) ?>">
+  <?php endif; ?>
+  <link rel="canonical" href="<?= e($seoCanonical) ?>">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="<?= e(APP_NAME) ?>">
+  <meta property="og:type" content="<?= e($seoType) ?>">
+  <meta property="og:title" content="<?= e($seoTitle) ?>">
+  <meta property="og:description" content="<?= e($seoDesc) ?>">
+  <meta property="og:url" content="<?= e($seoCanonical) ?>">
+  <meta property="og:image" content="<?= e($seoImg) ?>">
+  <meta property="og:locale" content="hu_HU">
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="<?= e($seoTitle) ?>">
+  <meta name="twitter:description" content="<?= e($seoDesc) ?>">
+  <meta name="twitter:image" content="<?= e($seoImg) ?>">
+
   <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/style.css">
   <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/public.css">
   <link rel="icon" href="<?= BASE_URL ?>/assets/img/lizzard_logo.png" type="image/png">

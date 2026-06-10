@@ -49,9 +49,15 @@ if ($wasConfirmed) {
         // Notify promoted member
         try {
             $smtp    = getSmtpConfig($pdo);
-            $tourRow = $pdo->prepare("SELECT name FROM future_tours WHERE id = ? LIMIT 1");
+            $tourRow = $pdo->prepare("SELECT name, participation_fee FROM future_tours WHERE id = ? LIMIT 1");
             $tourRow->execute([$tourId]);
-            $tourName = $tourRow->fetchColumn() ?: '';
+            $tourData = $tourRow->fetch() ?: [];
+            $tourName = $tourData['name'] ?? '';
+            $payBlock = (float)($tourData['participation_fee'] ?? 0) > 0
+              ? '<div style="background:#fffbeb;border:1px solid #f59e0b;border-radius:6px;padding:12px 16px;margin:16px 0;font-size:13.5px;color:#b45309;">
+      ⚠ Kérjük, a részvételi díjat <strong>14 napon belül</strong> utald el, különben a foglalásod automatikusan feloldásra kerül.
+    </div>'
+              : '';
             $fullName = $next['lastname'] . ' ' . $next['firstname'];
             $subject  = 'Hely felszabadult – ' . $tourName;
             $proto    = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
@@ -66,9 +72,7 @@ if ($wasConfirmed) {
   <tr><td style="padding:28px 32px;">
     <p>Kedves ' . htmlspecialchars($fullName, ENT_QUOTES) . '!</p>
     <p>Felszabadult egy hely a <strong>' . htmlspecialchars($tourName, ENT_QUOTES) . '</strong> túrán. Jelentkezésed megerősítésre került.</p>
-    <div style="background:#fffbeb;border:1px solid #f59e0b;border-radius:6px;padding:12px 16px;margin:16px 0;font-size:13.5px;color:#b45309;">
-      ⚠ Kérjük, a részvételi díjat <strong>14 napon belül</strong> utald el, különben a foglalásod automatikusan feloldásra kerül.
-    </div>
+    ' . $payBlock . '
     <div style="text-align:center;margin-top:24px;">
       <a href="' . $tourUrl . '" style="background:#29776F;color:#fff;text-decoration:none;padding:12px 28px;border-radius:6px;font-size:14px;font-weight:600;">Túra megtekintése</a>
     </div>

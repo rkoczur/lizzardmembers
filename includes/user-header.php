@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
   <title><?= e($pageTitle ?? 'Fiókom') ?> — <?= APP_NAME ?></title>
   <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/style.css">
   <link rel="icon" href="<?= BASE_URL ?>/assets/img/lizzard_logo.png" type="image/png">

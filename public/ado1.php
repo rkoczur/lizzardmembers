@@ -15,6 +15,8 @@ $page = $stmt->fetch();
 
 $pageTitle     = 'Adó 1%';
 $activePubPage = 'ado1';
+$metaDescription = $page['meta_description'] ?? '';
+$metaKeywords    = $page['meta_keywords'] ?? '';
 include __DIR__ . '/../includes/public-header.php';
 ?>
 

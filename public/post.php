@@ -30,6 +30,18 @@ $backLabel     = $post['category'] === 'beszmolok' ? 'Élményblog' : 'Hírek';
 
 $pageTitle     = $post['title'];
 $activePubPage = $post['category'] === 'beszmolok' ? 'beszmolok' : 'hirek';
+
+// SEO meta a poszthoz
+$metaDescription = trim((string)($post['excerpt'] ?? ''));
+if ($metaDescription === '') {
+    $metaDescription = mb_substr(trim(preg_replace('/\s+/', ' ', strip_tags($post['body'] ?? ''))), 0, 160);
+}
+$metaKeywords = trim((string)($post['meta_keywords'] ?? ''));
+$ogType       = 'article';
+if (!empty($post['cover_img'])) {
+    $ogImage = BASE_URL . '/assets/uploads/posts/' . $post['cover_img'];
+}
+
 include __DIR__ . '/../includes/public-header.php';
 ?>
 
@@ -41,7 +53,7 @@ include __DIR__ . '/../includes/public-header.php';
   <?php if (!empty($post['cover_img'])): ?>
     <img src="<?= BASE_URL ?>/assets/uploads/posts/<?= e($post['cover_img']) ?>"
          style="width:100%;max-height:420px;object-fit:cover;border-radius:var(--radius);margin-bottom:28px;display:block;"
-         alt="<?= e($post['title']) ?>">
+         alt="<?= e($post['cover_alt'] ?: $post['title']) ?>">
   <?php endif; ?>
 
   <div class="pub-post-meta" style="margin-bottom:12px;">

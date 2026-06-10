@@ -122,6 +122,14 @@ include __DIR__ . '/../includes/admin-header.php';
             <small style="color:var(--text-muted);font-size:12px;">Formázáshoz használhatsz egyszerű HTML-t: &lt;h2&gt;, &lt;p&gt;, &lt;ul&gt;, &lt;li&gt;, &lt;strong&gt;, &lt;a href=""&gt;</small>
             <?php endif; ?>
           </div>
+          <div class="form-group" style="margin-bottom:14px;">
+            <label>SEO meta-leírás <span style="font-weight:normal;text-transform:none;letter-spacing:0;color:var(--text-muted);font-size:12px;">(a keresőkben megjelenő rövid összefoglaló, ~160 karakter)</span></label>
+            <textarea name="meta_description" rows="2" maxlength="500"><?= e($editPage['meta_description'] ?? '') ?></textarea>
+          </div>
+          <div class="form-group" style="margin-bottom:20px;">
+            <label>SEO kulcsszavak <span style="font-weight:normal;text-transform:none;letter-spacing:0;color:var(--text-muted);font-size:12px;">(vesszővel elválasztva)</span></label>
+            <input type="text" name="meta_keywords" value="<?= e($editPage['meta_keywords'] ?? '') ?>" maxlength="500" placeholder="pl. tagság, természetjárás, egyesület">
+          </div>
           <button type="submit" class="btn btn-primary">Mentés</button>
         </form>
         <?php else: ?>

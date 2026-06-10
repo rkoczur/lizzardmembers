@@ -26,7 +26,7 @@ if (!$appId || !$tourId) {
 }
 
 $appStmt = $pdo->prepare("
-    SELECT fta.*, ft.name AS tour_name, ft.start_date, ft.num_days, ft.max_attendees
+    SELECT fta.*, ft.name AS tour_name, ft.start_date, ft.num_days, ft.max_attendees, ft.participation_fee
     FROM future_tour_applications fta
     JOIN future_tours ft ON ft.id = fta.future_tour_id
     WHERE fta.id = ? AND fta.future_tour_id = ? AND fta.status = 'pending' AND fta.user_id IS NULL
@@ -61,9 +61,11 @@ $guestEmail = $app['guest_email'];
 if ($newStatus === 'confirmed') {
     $subject    = 'Részvételed megerősítve – ' . $app['tour_name'];
     $statusHtml = '<strong style="color:#29776F;">Státusz: Megerősített</strong>';
-    $noteHtml   = '<div style="background:#fffbeb;border:1px solid #f59e0b;border-radius:6px;padding:12px 16px;margin-top:16px;font-size:13.5px;color:#b45309;">
+    $noteHtml   = (float)($app['participation_fee'] ?? 0) > 0
+      ? '<div style="background:#fffbeb;border:1px solid #f59e0b;border-radius:6px;padding:12px 16px;margin-top:16px;font-size:13.5px;color:#b45309;">
         ⚠ Kérjük, a részvételi díjat <strong>14 napon belül</strong> utald el. Ellenkező esetben a rendszer automatikusan törli a foglalásodat.
-      </div>';
+      </div>'
+      : '';
 } else {
     $subject    = 'Várólistán vagy – ' . $app['tour_name'];
     $statusHtml = '<strong style="color:#b45309;">Státusz: Várólistán</strong>';

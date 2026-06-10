@@ -69,6 +69,11 @@ function promoteFirstWaitlist(PDO $pdo, int $tourId): void
         $subject   = 'Hely felszabadult – ' . $tour['name'];
         $proto     = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
         $tourUrl   = $proto . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . BASE_URL . '/user/future-tour-detail.php?id=' . $tourId;
+        $payBlock  = (float)($tour['participation_fee'] ?? 0) > 0
+          ? '<div style="background:#fffbeb;border:1px solid #f59e0b;border-radius:6px;padding:12px 16px;margin:16px 0;font-size:13.5px;color:#b45309;">
+      ⚠ Kérjük, a részvételi díjat <strong>14 napon belül</strong> utald el, különben a foglalásod automatikusan feloldásra kerül.
+    </div>'
+          : '';
         $html = '<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body style="margin:0;padding:0;background:#f5efe4;font-family:Arial,sans-serif;">
 <table width="100%" cellpadding="0" cellspacing="0"><tr><td align="center" style="padding:32px 16px;">
 <table width="560" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:10px;overflow:hidden;">
@@ -79,9 +84,7 @@ function promoteFirstWaitlist(PDO $pdo, int $tourId): void
   <tr><td style="padding:28px 32px;">
     <p>Kedves ' . htmlspecialchars($fullName, ENT_QUOTES) . '!</p>
     <p>Felszabadult egy hely a <strong>' . htmlspecialchars($tour['name'], ENT_QUOTES) . '</strong> túrán. Jelentkezésed megerősítésre került.</p>
-    <div style="background:#fffbeb;border:1px solid #f59e0b;border-radius:6px;padding:12px 16px;margin:16px 0;font-size:13.5px;color:#b45309;">
-      ⚠ Kérjük, a részvételi díjat <strong>14 napon belül</strong> utald el, különben a foglalásod automatikusan feloldásra kerül.
-    </div>
+    ' . $payBlock . '
     <div style="text-align:center;margin-top:24px;">
       <a href="' . $tourUrl . '" style="background:#29776F;color:#fff;text-decoration:none;padding:12px 28px;border-radius:6px;font-size:14px;font-weight:600;">Túra megtekintése</a>
     </div>

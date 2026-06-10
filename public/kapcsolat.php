@@ -21,6 +21,8 @@ unset($_SESSION['contact_old']);
 
 $pageTitle     = 'Kapcsolat';
 $activePubPage = 'kapcsolat';
+$metaDescription = $page['meta_description'] ?? '';
+$metaKeywords    = $page['meta_keywords'] ?? '';
 include __DIR__ . '/../includes/public-header.php';
 ?>
 

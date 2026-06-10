@@ -116,8 +116,10 @@ include __DIR__ . '/../includes/admin-header.php';
   <div class="info-bar-item">
     <div>Részvételi díj</div>
     <div>
-      <?php if ($tour['participation_fee'] !== null): ?>
+      <?php if ($tour['participation_fee'] !== null && (float)$tour['participation_fee'] > 0): ?>
         <?= number_format((float)$tour['participation_fee'], 0, ',', '&nbsp;') ?> Ft
+      <?php elseif ($tour['participation_fee'] !== null): ?>
+        <span class="text-muted">Ingyenes</span>
       <?php else: ?>
         <span class="text-muted">—</span>
       <?php endif; ?>
@@ -267,7 +269,7 @@ include __DIR__ . '/../includes/admin-header.php';
               <?php endif; ?>
             </td>
             <td style="padding:12px 12px;text-align:center;font-weight:600;">
-              <?php if ($tour['participation_fee'] !== null): ?>
+              <?php if ($tour['participation_fee'] !== null && (float)$tour['participation_fee'] > 0): ?>
                 <?php
                   $discount     = $app['user_id'] ? getTourFeeDiscount((int)$app['user_level'], (string)($app['user_role'] ?? 'user')) : 0;
                   $effectiveFee = (float)$tour['participation_fee'] * (1 - $discount / 100);
@@ -280,11 +282,14 @@ include __DIR__ . '/../includes/admin-header.php';
                   <div style="font-size:10.5px;color:var(--text-muted);text-decoration:line-through;line-height:1.2;"><?= number_format((float)$tour['participation_fee'], 0, ',', '&nbsp;') ?> Ft</div>
                   <div><span class="badge-discount">-<?= $discount ?>%</span></div>
                 <?php endif; ?>
+              <?php elseif ($tour['participation_fee'] !== null): ?>
+                <span style="color:var(--text-muted);font-size:12.5px;">Ingyenes</span>
               <?php else: ?>
                 <span style="color:var(--text-muted);font-size:12.5px;">—</span>
               <?php endif; ?>
             </td>
             <td style="padding:12px 12px;text-align:center;">
+              <?php if ($tour['participation_fee'] !== null && (float)$tour['participation_fee'] > 0): ?>
               <form method="post" action="<?= BASE_URL ?>/actions/future-tour-mark-paid.php" style="display:inline;">
                 <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
                 <input type="hidden" name="application_id" value="<?= (int)$app['id'] ?>">
@@ -301,6 +306,7 @@ include __DIR__ . '/../includes/admin-header.php';
                   </button>
                 <?php endif; ?>
               </form>
+              <?php endif; ?>
             </td>
             <?php if (isAdmin()): ?>
             <td style="padding:12px 12px;text-align:right;">
