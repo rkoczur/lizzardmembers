@@ -80,12 +80,18 @@ $tourData = [
 ];
 $mtszPoints = calculateTourPoints($tourData);
 
+// Admin kézi felülírás az MTSZ pontra: ha be van kapcsolva és van érték, az kerül mentésre
+$overrideEnabled = !empty($_POST['mtsz_override_enabled']);
+$overrideRaw     = trim($_POST['mtsz_points_override'] ?? '');
+$mtszOverride    = ($overrideEnabled && $overrideRaw !== '') ? max(0, (int)$overrideRaw) : null;
+$mtszPoints      = $mtszOverride ?? $mtszPoints; // a tárolt (megjelenített) érték a felülírt, ha van
+
 $pdo->prepare("UPDATE tours SET
     name=?, route=?, country=?, region=?, tour_date=?, days=?, accommodation=?,
     total_km=?, alpine_km=?, total_elevation=?, alpine_elevation=?,
     tour_type=?, sub_type=?, is_alpine=?, multi_day_type=?,
     camping_nights_fixed=?, camping_nights_mobile=?, tour_hours=?, boat_portages=?,
-    guest_count=?, points=?, mtsz_points=?
+    guest_count=?, points=?, mtsz_points=?, mtsz_points_override=?
     WHERE id=?")->execute([
     $name ?: null,
     $route ?: null,
@@ -109,6 +115,7 @@ $pdo->prepare("UPDATE tours SET
     $guestCount,
     $lizzardPoints,
     $mtszPoints,
+    $mtszOverride,
     $id,
 ]);
 

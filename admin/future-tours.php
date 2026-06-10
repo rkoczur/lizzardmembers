@@ -27,6 +27,25 @@ $flash_error   = getFlash('error');
 
 $newAppsCount = (int)$pdo->query("SELECT COUNT(*) FROM future_tour_applications fta JOIN future_tours ft ON ft.id = fta.future_tour_id WHERE fta.status != 'cancelled' AND fta.paid_at IS NULL AND ft.participation_fee > 0")->fetchColumn();
 
+// Kintlévőségek: megerősített, még ki nem fizetett részvételi díjak összege (tagi kedvezménnyel)
+$outstandingTotal = 0.0;
+$outstandingCount = 0;
+$outRows = $pdo->query("
+    SELECT fta.user_id, ft.participation_fee, u.level AS user_level, u.role AS user_role
+    FROM future_tour_applications fta
+    JOIN future_tours ft ON ft.id = fta.future_tour_id
+    LEFT JOIN users u ON u.id = fta.user_id
+    WHERE fta.status = 'confirmed'
+      AND fta.paid_at IS NULL
+      AND ft.status != 'cancelled'
+      AND ft.participation_fee > 0
+")->fetchAll();
+foreach ($outRows as $r) {
+    $discount = $r['user_id'] ? getTourFeeDiscount((int)$r['user_level'], (string)($r['user_role'] ?? 'user')) : 0;
+    $fee = (float)$r['participation_fee'] * (1 - $discount / 100);
+    if ($fee > 0) { $outstandingTotal += $fee; $outstandingCount++; }
+}
+
 $pageTitle  = 'Túrák';
 $activePage = 'tours';
 include __DIR__ . '/../includes/admin-header.php';
@@ -60,6 +79,25 @@ include __DIR__ . '/../includes/admin-header.php';
       <span class="badge-counter badge-counter-danger"><?= $newAppsCount ?></span>
     <?php endif; ?>
   </a>
+</div>
+
+<!-- Kintlévőségek összesítő -->
+<div class="card" style="margin-bottom:20px;">
+  <div class="card-body" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+    <div style="display:flex;align-items:center;gap:14px;">
+      <div style="font-size:1.9rem;line-height:1;">💸</div>
+      <div>
+        <div class="stat-label">Kintlévőségek (be nem fizetett részvételi díjak)</div>
+        <div style="font-size:24px;font-weight:800;color:<?= $outstandingTotal > 0 ? 'var(--danger)' : 'var(--success)' ?>;margin-top:4px;">
+          <?= number_format($outstandingTotal, 0, ',', ' ') ?> Ft
+        </div>
+      </div>
+    </div>
+    <div style="font-size:13px;color:var(--text-muted);text-align:right;line-height:1.5;">
+      <?= (int)$outstandingCount ?> megerősített, rendezetlen jelentkezés<br>
+      <span style="font-size:12px;">(a tagi szint/szerep szerinti kedvezménnyel számolva)</span>
+    </div>
+  </div>
 </div>
 
 <div class="card">

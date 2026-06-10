@@ -342,8 +342,19 @@ function initHeroParallax() {
   update();
 }
 
+/* ===== MTSZ pont felülírás kapcsoló ===== */
+function initMtszOverride() {
+  const cb = document.getElementById('mtsz_override_enabled');
+  const input = document.getElementById('mtsz_points_override');
+  if (!cb || !input) return;
+  const sync = () => { input.disabled = !cb.checked; };
+  cb.addEventListener('change', sync);
+  sync();
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   initMemberSearch();
+  initMtszOverride();
   initMemberFilters();
   initAvatarUpload();
   initAutoDismissAlerts();

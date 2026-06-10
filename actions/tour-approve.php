@@ -47,6 +47,11 @@ $tourData = [
     'tour_date'            => $tour['tour_date'],
 ];
 $mtszPoints = calculateTourPoints($tourData);
+// Admin kézi MTSZ-felülírás megőrzése jóváhagyáskor is
+$mtszOverrideVal = $tour['mtsz_points_override'] ?? null;
+if ($mtszOverrideVal !== null && $mtszOverrideVal !== '') {
+    $mtszPoints = (int)$mtszOverrideVal;
+}
 
 $pdo->prepare("UPDATE tours SET status = 'approved', tour_code = ?, mtsz_points = ? WHERE id = ?")
     ->execute([$tourCode, $mtszPoints, $tourId]);

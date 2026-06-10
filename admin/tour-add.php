@@ -169,12 +169,21 @@ include __DIR__ . '/../includes/admin-header.php';
         </div>
       </div>
 
-      <div id="points-preview" style="background:var(--bg-subtle,#f5f5f5);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin:16px 0;display:flex;align-items:center;gap:12px;">
+      <div id="points-preview" style="background:var(--bg-subtle,#f5f5f5);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin:16px 0;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
         <span style="font-size:1.5rem;">🧮</span>
         <div>
           <div style="font-size:.75rem;color:var(--text-muted,#888);text-transform:uppercase;letter-spacing:.05em;">Számított MTSZ pontszám (tájékoztató)</div>
           <div id="points-display" style="font-size:1.5rem;font-weight:700;color:var(--primary,#2563eb);">0 pont</div>
           <div id="points-note" style="font-size:.75rem;color:var(--text-muted,#888);margin-top:2px;"></div>
+        </div>
+        <div class="mtsz-override-box">
+          <label class="mtsz-toggle">
+            <input type="checkbox" name="mtsz_override_enabled" id="mtsz_override_enabled" value="1" <?= !empty($old['mtsz_override_enabled']) ? 'checked' : '' ?>>
+            <span>Számított érték felülírása</span>
+          </label>
+          <input type="number" name="mtsz_points_override" id="mtsz_points_override" class="mtsz-value" min="0"
+                 value="<?= (isset($old['mtsz_points_override']) && $old['mtsz_points_override'] !== '') ? (int)$old['mtsz_points_override'] : '' ?>"
+                 placeholder="Számított érték">
         </div>
       </div>
 

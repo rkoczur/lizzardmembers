@@ -80,13 +80,19 @@ $tourData = [
 $mtszPoints = calculateTourPoints($tourData);
 $tourCode   = generateTourCode($pdo, $tourType);
 
+// Admin kézi felülírás az MTSZ pontra
+$overrideEnabled = !empty($_POST['mtsz_override_enabled']);
+$overrideRaw     = trim($_POST['mtsz_points_override'] ?? '');
+$mtszOverride    = ($overrideEnabled && $overrideRaw !== '') ? max(0, (int)$overrideRaw) : null;
+$mtszPoints      = $mtszOverride ?? $mtszPoints;
+
 $stmt = $pdo->prepare("INSERT INTO tours
     (tour_code, name, route, country, region, tour_date, days, accommodation,
      total_km, alpine_km, total_elevation, alpine_elevation,
      tour_type, sub_type, is_alpine, multi_day_type,
      camping_nights_fixed, camping_nights_mobile, tour_hours, boat_portages,
-     guest_count, points, mtsz_points)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+     guest_count, points, mtsz_points, mtsz_points_override)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 $stmt->execute([
     $tourCode,
@@ -112,6 +118,7 @@ $stmt->execute([
     $guestCount,
     $lizzardPoints,
     $mtszPoints,
+    $mtszOverride,
 ]);
 
 $newId = (int)$pdo->lastInsertId();

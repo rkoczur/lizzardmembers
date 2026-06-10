@@ -45,6 +45,8 @@ function ensureToursSchema(PDO $pdo): void
         "ALTER TABLE `tours` ADD COLUMN `alpine_elevation` INT UNSIGNED DEFAULT NULL AFTER `total_elevation`",
         // Kétféle pontrendszer: MTSZ (auto-számított) és Lizzardier (kézzel megadott)
         "ALTER TABLE `tours` ADD COLUMN `mtsz_points` INT UNSIGNED NOT NULL DEFAULT 0 AFTER `points`",
+        // Admin kézi felülírás az MTSZ pontra (NULL = nincs felülírás, a számított érték él)
+        "ALTER TABLE `tours` ADD COLUMN `mtsz_points_override` INT NULL DEFAULT NULL AFTER `mtsz_points`",
         // Egyedi túrasorszám (pl. 12GY, 5K)
         "ALTER TABLE `tours` ADD COLUMN `tour_code` VARCHAR(20) DEFAULT NULL AFTER `id`",
         // Vendég résztvevők száma
