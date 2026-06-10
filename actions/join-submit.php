@@ -4,6 +4,7 @@ require_once __DIR__ . '/../includes/config.php';
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/join-schema.php';
+require_once __DIR__ . '/../includes/captcha.php';
 
 verifyCsrf();
 
@@ -15,6 +16,13 @@ $joinEmbed   = !empty($_POST['join_embed']);
 $redirectBack = $tourId > 0
     ? BASE_URL . '/public/tour-apply.php?id=' . $tourId
     : BASE_URL . '/join.php';
+
+if (recaptchaEnabled($pdo) && !verifyRecaptcha($pdo, $_POST['g-recaptcha-response'] ?? '', $_SERVER['REMOTE_ADDR'] ?? null)) {
+    flash('error', 'Kérjük, igazold, hogy nem vagy robot.');
+    $_SESSION['join_old'] = $_POST;
+    header('Location: ' . $redirectBack);
+    exit;
+}
 
 $lastname    = trim($_POST['lastname']    ?? '');
 $firstname   = trim($_POST['firstname']  ?? '');

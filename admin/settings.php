@@ -13,6 +13,9 @@ ensureToursSchema($pdo);
 ensureAppSettingsSchema($pdo);
 $smtp = getSmtpConfig($pdo);
 
+$recaptchaSiteKey  = getSetting($pdo, 'recaptcha_site_key', '');
+$recaptchaHasSecret = getSetting($pdo, 'recaptcha_secret', '') !== '';
+
 $countries = getCountries($pdo, false);
 
 $flash_success = getFlash('success');
@@ -110,8 +113,9 @@ include __DIR__ . '/../includes/admin-header.php';
     </div>
   </div>
 
-  <!-- SMTP beállítások -->
+  <!-- SMTP + reCAPTCHA beállítások (jobb oszlop, egymás alatt) -->
   <?php if (isAdmin()): ?>
+  <div class="settings-stack">
   <div class="card">
     <div class="card-header"><h2>SMTP beállítások</h2></div>
     <div class="card-body">
@@ -168,6 +172,42 @@ include __DIR__ . '/../includes/admin-header.php';
       </form>
     </div>
   </div>
+
+  <!-- reCAPTCHA (spam-védelem) -->
+  <div class="card">
+    <div class="card-header"><h2>reCAPTCHA (spam-védelem)</h2></div>
+    <div class="card-body">
+      <p style="color:var(--text-muted);font-size:13px;margin-bottom:16px;">
+        Google reCAPTCHA v2 („Nem vagyok robot") a nyilvános űrlapokhoz (kapcsolat, belépési kérelem, vendég túrajelentkezés, jelszó-visszaállítás).
+        A kulcsokat a <a href="https://www.google.com/recaptcha/admin" target="_blank" rel="noopener">Google reCAPTCHA admin</a> oldalon hozhatod létre (típus: <strong>reCAPTCHA v2 → „I'm not a robot" Checkbox</strong>).
+        Ha üresen hagyod, a reCAPTCHA kikapcsolt marad.
+      </p>
+      <form method="post" action="<?= BASE_URL ?>/actions/settings-captcha-save.php">
+        <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Site key (publikus)</label>
+            <input type="text" name="recaptcha_site_key" value="<?= e($recaptchaSiteKey) ?>" placeholder="6Lxxxxxxxxxxxxxxxxxxxxxxxxx" autocomplete="off">
+          </div>
+          <div class="form-group">
+            <label>Secret key (titkos)</label>
+            <input type="password" name="recaptcha_secret" placeholder="<?= $recaptchaHasSecret ? '••••••••' : 'Titkos kulcs megadása' ?>" autocomplete="new-password">
+            <small style="color:var(--text-muted);">Üresen hagyva a meglévő titkos kulcs megmarad.</small>
+          </div>
+        </div>
+        <?php if ($recaptchaHasSecret): ?>
+        <label style="display:flex;align-items:center;gap:8px;margin-top:12px;font-size:13px;cursor:pointer;">
+          <input type="checkbox" name="recaptcha_clear_secret" value="1">
+          Titkos kulcs törlése (reCAPTCHA kikapcsolása)
+        </label>
+        <?php endif; ?>
+        <div style="margin-top:16px;">
+          <button type="submit" class="btn btn-primary">reCAPTCHA beállítások mentése</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  </div><!-- /.settings-stack -->
   <?php endif; ?>
 
 </div>

@@ -8,12 +8,19 @@ require_once __DIR__ . '/../includes/app-settings-schema.php';
 require_once __DIR__ . '/../includes/mailer.php';
 require_once __DIR__ . '/../includes/user-schema.php';
 require_once __DIR__ . '/../includes/login-log-schema.php';
+require_once __DIR__ . '/../includes/captcha.php';
 
 verifyCsrf();
 
 $pdo = getDb();
 ensureUserSchema($pdo);
 ensureAppSettingsSchema($pdo);
+
+if (recaptchaEnabled($pdo) && !verifyRecaptcha($pdo, $_POST['g-recaptcha-response'] ?? '', $_SERVER['REMOTE_ADDR'] ?? null)) {
+    flash('reset_err', 'Kérjük, igazold, hogy nem vagy robot.');
+    header('Location: ' . BASE_URL . '/password-reset.php');
+    exit;
+}
 
 $email = trim($_POST['email'] ?? '');
 

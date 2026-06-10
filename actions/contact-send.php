@@ -12,6 +12,7 @@ require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/app-settings-schema.php';
 require_once __DIR__ . '/../includes/mailer.php';
 require_once __DIR__ . '/../includes/email-log-schema.php';
+require_once __DIR__ . '/../includes/captcha.php';
 verifyCsrf();
 
 $backUrl = BASE_URL . '/public/kapcsolat.php#kapcsolat-form';
@@ -33,6 +34,14 @@ $rememberOld = function () use ($name, $email, $subject, $message) {
     $_SESSION['contact_old'] = ['name' => $name, 'email' => $email, 'subject' => $subject, 'message' => $message];
 };
 
+$pdo = getDb();
+if (recaptchaEnabled($pdo) && !verifyRecaptcha($pdo, $_POST['g-recaptcha-response'] ?? '', $_SERVER['REMOTE_ADDR'] ?? null)) {
+    flash('contact_error', 'Kérjük, igazold, hogy nem vagy robot.');
+    $rememberOld();
+    header('Location: ' . $backUrl);
+    exit;
+}
+
 if ($name === '' || $email === '' || $message === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
     flash('contact_error', 'Kérjük, töltsd ki helyesen a kötelező mezőket: név, érvényes e-mail cím és üzenet.');
     $rememberOld();
@@ -47,7 +56,6 @@ if (mb_strlen($message) > 5000 || mb_strlen($name) > 150 || mb_strlen($subject) 
     exit;
 }
 
-$pdo = getDb();
 ensureAppSettingsSchema($pdo);
 ensureEmailLogSchema($pdo);
 $smtp = getSmtpConfig($pdo);

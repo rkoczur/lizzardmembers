@@ -523,6 +523,9 @@ document.getElementById('copy-public-link-btn')?.addEventListener('click', funct
     </div>
     <div class="ft-modal-body">
       <p id="announce-intro" class="ft-modal-intro">Címzettek betöltése…</p>
+      <p style="margin:12px 0 0;font-size:13px;">
+        <a href="<?= BASE_URL ?>/actions/future-tour-announce-preview.php?tour_id=<?= (int)$id ?>" target="_blank" rel="noopener">📄 Minta e-mail megtekintése új lapon</a>
+      </p>
       <div id="announce-progress" class="send-progress" hidden>
         <div class="send-progress-head">
           <span id="announce-progress-label" class="send-progress-label">Küldés folyamatban…</span>

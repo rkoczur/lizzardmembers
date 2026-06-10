@@ -13,6 +13,7 @@ function buildFutureTourAnnouncementEmailHtml(
     int $numDays,
     string $feeText,
     string $applyUrl,
+    string $unsubscribeUrl,
     string $appName = 'Lizzard Egyesület'
 ): string {
     $f     = htmlspecialchars($firstname,     ENT_QUOTES, 'UTF-8');
@@ -22,6 +23,7 @@ function buildFutureTourAnnouncementEmailHtml(
     $dt    = htmlspecialchars($formattedDate, ENT_QUOTES, 'UTF-8');
     $fee   = htmlspecialchars($feeText,       ENT_QUOTES, 'UTF-8');
     $url   = htmlspecialchars($applyUrl,      ENT_QUOTES, 'UTF-8');
+    $unsub = htmlspecialchars($unsubscribeUrl, ENT_QUOTES, 'UTF-8');
     $a     = htmlspecialchars($appName,       ENT_QUOTES, 'UTF-8');
     $days  = max(1, $numDays);
     $place = $cn . ($rg !== '' ? ' – ' . $rg : '');
@@ -102,9 +104,20 @@ function buildFutureTourAnnouncementEmailHtml(
           </tr>
         </table>
 
-        <p style="font-size:12px;color:#7a7269;line-height:1.75;margin:0;">
-          <strong><span style="color:#29776F;">Ha nem szeretnél több ilyen értesítőt kapni, lépj be a rendszerbe, és a Saját Profilom menüpontban kapcsold ki az „Új meghirdetett túrák” értesítést.</span></strong>
-        </p>
+        <!-- Leiratkozás — kiemelt, jól látható -->
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0"
+               style="background:#fdf6e3;border:1px solid #f0d060;border-radius:8px;margin:8px 0 0;">
+          <tr>
+            <td style="padding:16px 20px;text-align:center;">
+              <p style="font-size:12.5px;color:#7a5800;line-height:1.65;margin:0 0 14px;">
+                Korábban vagy jelenleg a Lizzard Outdoor egyesület tagja vagy/voltál, ezt az értesítőt ezért kapod. Ha nem szeretnél több ilyen e-mailt kapni, kattints a lenti gombra a leiratkozáshoz.
+              </p>
+              <a href="{$unsub}" style="display:inline-block;background:#d97706;color:#ffffff;text-decoration:none;font-size:13px;font-weight:700;padding:11px 26px;border-radius:7px;box-shadow:0 2px 5px rgba(180,83,9,.35);">
+                Leiratkozás a túraértesítőkről
+              </a>
+            </td>
+          </tr>
+        </table>
       </td>
     </tr>
 

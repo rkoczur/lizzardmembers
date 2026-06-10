@@ -24,6 +24,10 @@
   --transition:     .18s ease;
 }
 
+.g-recaptcha {
+  margin-bottom: 20px
+}
+
 /* ===== Reset ===== */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { height: 100%; overflow-x: hidden; }
@@ -1064,3 +1068,28 @@ body.embed-mode .card-body { padding-top: 12px !important; }
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+/* Google reCAPTCHA widget — térköz a küldés gomb előtt (minden nyilvános űrlapon) */
+.g-recaptcha { margin: 0 0 16px; }
+
+/* Beállítások oldal — kártyák egymás alatt egy rács-oszlopban (SMTP + reCAPTCHA) */
+.settings-stack { display: flex; flex-direction: column; gap: 20px; }
+
+/* ===== Tag vezérlőpult elrendezés ===== */
+/* Bal hasáb a kis kártyák szélességével, jobb hasáb a maradék helyen */
+.dash-grid { display: grid; grid-template-columns: 260px 1fr; gap: 20px; align-items: start; }
+/* min-width:0 — különben a széles táblázat szétfeszíti az oszlopot (mobilon kilóg) */
+.dash-col-left  { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.dash-col-right { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+@media (max-width: 760px) { .dash-grid { grid-template-columns: 1fr; } }
+
+/* Széles táblázat vízszintesen görgethető a kártyán belül (nem lóg ki) */
+.table-scroll-x { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+/* Tartozásaim kártya táblázata */
+.debt-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.debt-table td { padding: 11px 16px; }
+.debt-table tbody tr { border-bottom: 1px solid var(--border); }
+.debt-amount { text-align: right; white-space: nowrap; font-weight: 600; color: var(--danger); }
+.debt-total td { border-top: 2px solid var(--border); font-weight: 700; }
+.debt-total .debt-amount { font-weight: 800; font-size: 15px; }

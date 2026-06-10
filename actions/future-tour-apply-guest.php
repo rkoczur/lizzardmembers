@@ -7,6 +7,7 @@ require_once __DIR__ . '/../includes/future-tours-schema.php';
 require_once __DIR__ . '/../includes/mailer.php';
 require_once __DIR__ . '/../includes/app-settings-schema.php';
 require_once __DIR__ . '/../includes/email-log-schema.php';
+require_once __DIR__ . '/../includes/captcha.php';
 verifyCsrf();
 
 $pdo = getDb();
@@ -32,6 +33,10 @@ $fail = function (string $msg) use ($embed, $redirect): void {
     header('Location: ' . $redirect);
     exit;
 };
+
+if (recaptchaEnabled($pdo) && !verifyRecaptcha($pdo, $_POST['g-recaptcha-response'] ?? '', $_SERVER['REMOTE_ADDR'] ?? null)) {
+    $fail('Kérjük, igazold, hogy nem vagy robot.');
+}
 
 if (!$tourId) {
     header('Location: ' . BASE_URL . '/login.php');

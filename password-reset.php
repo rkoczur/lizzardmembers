@@ -6,6 +6,7 @@ require_once __DIR__ . '/includes/auth.php';
 require_once __DIR__ . '/includes/functions.php';
 require_once __DIR__ . '/includes/app-settings-schema.php';
 require_once __DIR__ . '/includes/user-schema.php';
+require_once __DIR__ . '/includes/captcha.php';
 
 if (isLoggedIn()) {
     header('Location: ' . BASE_URL . (isAdminOrVezeto() ? '/admin/index.php' : '/user/index.php'));
@@ -21,6 +22,7 @@ $resetRow  = null;
 $tokenErr  = '';
 $pwError   = getFlash('pw_error');
 $resetMsg  = getFlash('reset_msg');
+$resetErr  = getFlash('reset_err');
 
 if ($token !== '') {
     $tokenHash = hash('sha256', $token);
@@ -92,6 +94,9 @@ $showReset = $token !== '' && $resetRow && !$tokenErr;
       <?php if ($resetMsg): ?>
         <div class="alert alert-success"><?= e($resetMsg) ?></div>
       <?php endif; ?>
+      <?php if ($resetErr): ?>
+        <div class="alert alert-error"><?= e($resetErr) ?></div>
+      <?php endif; ?>
       <p style="color:var(--text-muted);font-size:13px;margin-bottom:16px;">
         Add meg a regisztrált e-mail címed. Ha megtaláljuk, küldünk egy visszaállítási linket.
       </p>
@@ -101,6 +106,7 @@ $showReset = $token !== '' && $resetRow && !$tokenErr;
           <label for="email">E-mail cím</label>
           <input type="email" id="email" name="email" required autofocus placeholder="pelda@email.hu">
         </div>
+        <?= recaptchaField($pdo) ?>
         <button type="submit" class="btn btn-primary" style="width:100%;margin-top:8px;">Visszaállítási link küldése</button>
       </form>
     <?php endif; ?>
@@ -110,6 +116,7 @@ $showReset = $token !== '' && $resetRow && !$tokenErr;
     </p>
   </div>
 </div>
+<?= recaptchaScript($pdo) ?>
 <script src="<?= BASE_URL ?>/assets/js/app.js"></script>
 </body>
 </html>

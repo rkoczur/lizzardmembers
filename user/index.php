@@ -56,6 +56,25 @@ $myToursStmt->execute([$userId]);
 $myFutureTours  = $myToursStmt->fetchAll();
 $hasUnpaidTours = array_filter($myFutureTours, fn($t) => $t['status'] === 'confirmed' && !$t['paid_at']);
 
+// Tartozások: éves tagdíj (ha elmaradás/inaktív) + megerősített, ki nem fizetett túra-részvételi díjak
+$MEMBERSHIP_FEE = 5000; // Ft/év — fix összeg (lásd public/tagsag.php)
+$debts     = [];
+$debtTotal = 0.0;
+if ($memberStatus === 'overdue' || $memberStatus === 'inactive') {
+    $debts[]    = ['label' => 'Éves tagdíj (' . date('Y') . ')', 'amount' => (float)$MEMBERSHIP_FEE];
+    $debtTotal += $MEMBERSHIP_FEE;
+}
+foreach ($myFutureTours as $mt) {
+    if ($mt['status'] === 'confirmed' && $mt['participation_fee'] !== null && !$mt['paid_at']) {
+        $baseFee = (float)$mt['participation_fee'];
+        $fee     = $feeDiscount > 0 ? $baseFee * (1 - $feeDiscount / 100) : $baseFee;
+        if ($fee > 0) {
+            $debts[]    = ['label' => 'Részvételi díj – ' . $mt['name'], 'amount' => $fee, 'tour_id' => (int)$mt['tour_id']];
+            $debtTotal += $fee;
+        }
+    }
+}
+
 $pageTitle  = 'Vezérlőpult';
 $activePage = 'dashboard';
 include __DIR__ . '/../includes/user-header.php';
@@ -66,47 +85,57 @@ include __DIR__ . '/../includes/user-header.php';
   <p class="text-muted" style="margin-top:4px;">Íme a tagság áttekintése.</p>
 </div>
 
-<div class="stats-grid" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr));margin-bottom:24px;">
-  <div class="stat-card">
-    <div class="stat-icon">⭐</div>
-    <div class="stat-label">Pontok</div>
-    <div class="stat-value" style="color:var(--primary)"><?= number_format($currentPoints) ?></div>
-  </div>
-  <?php $lvlImg = getLevelImageFilename($currentLevel); ?>
-  <div class="stat-card" style="display:flex;align-items:stretch;padding:0;overflow:hidden;">
-    <div style="flex:1;min-width:0;padding:20px;">
-      <div class="stat-icon">🏅</div>
-      <div class="stat-label">Fokozat</div>
-      <div class="stat-value" style="font-size:19px;margin-top:6px;"><?= getLevelLabel($currentLevel) ?></div>
-    </div>
-    <?php if ($lvlImg): ?>
-      <div class="stat-level-img-wrap">
-        <img src="<?= BASE_URL ?>/assets/img/<?= e($lvlImg) ?>"
-             alt="<?= e(getLevelLabel($currentLevel)) ?>">
+<div class="dash-grid">
+  <!-- Bal hasáb: kis kártyák egymás alatt -->
+  <div class="dash-col-left">
+
+    <!-- Fokozat + pontok -->
+    <?php $lvlImg = getLevelImageFilename($currentLevel); ?>
+    <div class="stat-card" style="display:flex;align-items:stretch;padding:0;overflow:hidden;">
+      <div style="flex:1;min-width:0;padding:20px;">
+        <div class="stat-icon">🏅</div>
+        <div class="stat-label">Fokozat</div>
+        <div class="stat-value" style="font-size:19px;margin-top:6px;"><?= getLevelLabel($currentLevel) ?></div>
+        <div style="font-size:13px;color:var(--text-muted);margin-top:4px;"><?= number_format($currentPoints) ?> pont</div>
       </div>
-    <?php endif; ?>
-  </div>
-  <div class="stat-card">
-    <div class="stat-icon">📅</div>
-    <div class="stat-label">Tagság kezdete</div>
-    <div class="stat-value" style="font-size:16px;"><?= formatDate($user['member_since']) ?></div>
-  </div>
-  <div class="stat-card">
-    <div class="stat-icon">💳</div>
-    <div class="stat-label">Utolsó fizetés</div>
-    <div class="stat-value" style="font-size:16px;"><?= formatDate($user['last_payment']) ?></div>
-  </div>
-  <div class="stat-card">
-    <div class="stat-icon"><?= $memberStatus === 'active' ? '✅' : ($memberStatus === 'overdue' ? '⚠️' : '❌') ?></div>
-    <div class="stat-label">Tagság státusza</div>
-    <div class="stat-value" style="font-size:14px;">
-      <span class="badge <?= $memberStatusClass ?>" style="font-size:13px;padding:4px 12px;"><?= $memberStatusLabel ?></span>
+      <?php if ($lvlImg): ?>
+        <div class="stat-level-img-wrap">
+          <img src="<?= BASE_URL ?>/assets/img/<?= e($lvlImg) ?>"
+               alt="<?= e(getLevelLabel($currentLevel)) ?>">
+        </div>
+      <?php endif; ?>
     </div>
+
+    <!-- Utolsó fizetés -->
+    <div class="stat-card">
+      <div class="stat-icon">💳</div>
+      <div class="stat-label">Utolsó fizetés</div>
+      <div class="stat-value" style="font-size:16px;"><?= formatDate($user['last_payment']) ?></div>
+    </div>
+
+    <!-- Tagság státusza -->
+    <div class="stat-card">
+      <div class="stat-icon"><?= $memberStatus === 'active' ? '✅' : ($memberStatus === 'overdue' ? '⚠️' : '❌') ?></div>
+      <div class="stat-label">Tagság státusza</div>
+      <div class="stat-value" style="font-size:14px;">
+        <span class="badge <?= $memberStatusClass ?>" style="font-size:13px;padding:4px 12px;"><?= $memberStatusLabel ?></span>
+      </div>
+    </div>
+
+    <!-- Tagság kezdete -->
+    <div class="stat-card">
+      <div class="stat-icon">📅</div>
+      <div class="stat-label">Tagság kezdete</div>
+      <div class="stat-value" style="font-size:16px;"><?= formatDate($user['member_since']) ?></div>
+    </div>
+
   </div>
-</div>
+
+  <!-- Jobb hasáb -->
+  <div class="dash-col-right">
 
 <!-- Level Progress -->
-<div class="card mb-6">
+<div class="card">
   <div class="card-header">
     <h2>Szint előrehaladás</h2>
     <span class="level-badge <?= getLevelClass($currentLevel) ?>"><?= getLevelLabel($currentLevel) ?> — <?= $currentLevel ?>. szint</span>
@@ -172,7 +201,7 @@ include __DIR__ . '/../includes/user-header.php';
 
 <!-- Applied future tours tile -->
 <?php if (!empty($myFutureTours)): ?>
-<div class="card" style="margin-bottom:20px;">
+<div class="card">
   <div class="card-header" style="display:flex;justify-content:space-between;align-items:center;">
     <h2>
       Jelentkezéseim a meghirdetett túrákra
@@ -182,7 +211,7 @@ include __DIR__ . '/../includes/user-header.php';
     </h2>
     <a href="<?= BASE_URL ?>/user/future-tours.php" class="btn btn-ghost btn-sm">Összes túra</a>
   </div>
-  <div class="card-body" style="padding:0;">
+  <div class="card-body table-scroll-x" style="padding:0;">
     <table style="width:100%;border-collapse:collapse;font-size:13.5px;">
       <tbody>
         <?php foreach ($myFutureTours as $mt): ?>
@@ -235,32 +264,41 @@ include __DIR__ . '/../includes/user-header.php';
 </div>
 <?php endif; ?>
 
-<!-- Profile summary -->
-<div class="card">
-  <div class="card-header">
-    <h2>Adataim</h2>
-    <a href="<?= BASE_URL ?>/user/profile.php" class="btn btn-ghost btn-sm">Profil szerkesztése</a>
-  </div>
-  <div class="card-body">
-    <div id="profile-info-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-      <div>
-        <div class="text-muted" style="font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;">Teljes név</div>
-        <div><?= e($user['lastname'] . ' ' . $user['firstname']) ?></div>
-      </div>
-      <div>
-        <div class="text-muted" style="font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;">E-mail</div>
-        <div><?= e($user['email']) ?></div>
-      </div>
-      <div>
-        <div class="text-muted" style="font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;">Város</div>
-        <div><?= e($user['city'] ?? '—') ?></div>
-      </div>
-      <div>
-        <div class="text-muted" style="font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;">Pólóméret</div>
-        <div><?= e($user['tshirt_size'] ?? '—') ?></div>
+    <!-- Tartozásaim -->
+    <div class="card">
+      <div class="card-header"><h2>Tartozásaim</h2></div>
+      <div class="card-body" style="padding:0;">
+        <?php if (empty($debts)): ?>
+          <div style="padding:20px;color:var(--text-muted);display:flex;align-items:center;gap:8px;">
+            <span style="font-size:18px;">✅</span> Nincs rendezetlen tartozásod.
+          </div>
+        <?php else: ?>
+          <table class="debt-table">
+            <tbody>
+              <?php foreach ($debts as $d): ?>
+              <tr>
+                <td>
+                  <?= e($d['label']) ?>
+                  <?php if (!empty($d['tour_id'])): ?>
+                    <a href="<?= BASE_URL ?>/user/future-tour-detail.php?id=<?= (int)$d['tour_id'] ?>" style="font-size:12px;margin-left:6px;">részletek</a>
+                  <?php endif; ?>
+                </td>
+                <td class="debt-amount"><?= number_format($d['amount'], 0, ',', ' ') ?> Ft</td>
+              </tr>
+              <?php endforeach; ?>
+            </tbody>
+            <tfoot>
+              <tr class="debt-total">
+                <td>Összesen</td>
+                <td class="debt-amount"><?= number_format($debtTotal, 0, ',', ' ') ?> Ft</td>
+              </tr>
+            </tfoot>
+          </table>
+        <?php endif; ?>
       </div>
     </div>
-  </div>
-</div>
+
+  </div><!-- /.dash-col-right -->
+</div><!-- /.dash-grid -->
 
 <?php include __DIR__ . '/../includes/user-footer.php'; ?>

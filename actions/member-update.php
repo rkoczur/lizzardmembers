@@ -132,6 +132,16 @@ if ($newPassword !== '') {
     $params[]  = password_hash($newPassword, PASSWORD_DEFAULT);
 }
 
+// Túraértesítő (új meghirdetett túrák) értesítés — a többi értesítési beállítást megőrizzük
+$prefsStmt = $pdo->prepare("SELECT notification_prefs FROM users WHERE id = ?");
+$prefsStmt->execute([$memberId]);
+$notifPrefs  = json_decode($prefsStmt->fetchColumn() ?: '{}', true) ?: [];
+$oldAnnounce = ($notifPrefs['tour_announcement'] ?? 1) != 0;
+$newAnnounce = isset($_POST['notif_tour_announcement']);
+$notifPrefs['tour_announcement'] = $newAnnounce ? 1 : 0;
+$fields[] = 'notification_prefs=?';
+$params[]  = json_encode($notifPrefs, JSON_UNESCAPED_UNICODE);
+
 $params[] = $memberId;
 $pdo->prepare("UPDATE users SET " . implode(',', $fields) . " WHERE id=?")->execute($params);
 
@@ -163,6 +173,7 @@ foreach ($auditFieldLabels as $field => $label) {
 }
 if ($avatarFilename)  $auditChanges[] = ['k' => 'Profilkép', 'f' => '—', 't' => 'frissítve'];
 if ($newPassword !== '') $auditChanges[] = ['k' => 'Jelszó',    'f' => '—', 't' => 'megváltoztatva'];
+if ($oldAnnounce !== $newAnnounce) $auditChanges[] = ['k' => 'Túraértesítő', 'f' => $oldAnnounce ? 'be' : 'ki', 't' => $newAnnounce ? 'be' : 'ki'];
 logAudit($pdo, 'update', 'member', $memberId, $lastname . ' ' . $firstname, $auditChanges ?: null);
 
 flash('success', 'A tag sikeresen frissítve.');

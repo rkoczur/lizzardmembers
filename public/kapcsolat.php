@@ -5,6 +5,7 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/public-schema.php';
+require_once __DIR__ . '/../includes/captcha.php';
 
 $pdo = getDb();
 ensurePublicSchema($pdo);
@@ -115,6 +116,7 @@ include __DIR__ . '/../includes/public-header.php';
           <textarea id="cf-message" name="message" rows="6" maxlength="5000" required><?= e($cOld['message'] ?? '') ?></textarea>
         </div>
       </div>
+      <?= recaptchaField($pdo) ?>
       <button type="submit" class="btn btn-primary">Üzenet küldése</button>
     </form>
   </div>
@@ -133,5 +135,7 @@ include __DIR__ . '/../includes/public-header.php';
     </a>
   </div>
 </div>
+
+<?= recaptchaScript($pdo) ?>
 
 <?php include __DIR__ . '/../includes/public-footer.php'; ?>

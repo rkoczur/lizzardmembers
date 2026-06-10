@@ -66,7 +66,7 @@ include __DIR__ . '/../includes/public-header.php';
 <div class="pub-wrap-narrow">
   <div class="pub-page-header">
     <h1>Az év túratársa</h1>
-    <p>A naptári évben legtöbb Lizzardier pontot gyűjtő tag nyeri az „Év túratársa" díjat, amellyel ingyenes szállást nyer egy általa választott túrán.</p>
+    <p>A legelkötelezetteb tagjaink</p>
   </div>
 
   <div class="pub-info-box">

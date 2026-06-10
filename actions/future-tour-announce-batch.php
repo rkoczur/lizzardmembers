@@ -84,7 +84,8 @@ foreach ($members as $m) {
     if (!$first) usleep(400000); // 0,4 mp késleltetés
     $first = false;
 
-    $name = trim($m['lastname'] . ' ' . $m['firstname']);
+    $name     = trim($m['lastname'] . ' ' . $m['firstname']);
+    $unsubUrl = $absBaseUrl . '/unsubscribe.php?uid=' . (int)$m['id'] . '&t=' . makeUnsubscribeToken($pdo, (int)$m['id']);
     $html = buildFutureTourAnnouncementEmailHtml(
         $m['firstname'] ?? '',
         $tour['name'] ?? '',
@@ -95,6 +96,7 @@ foreach ($members as $m) {
         (int)($tour['num_days'] ?? 1),
         $feeText,
         $applyUrl,
+        $unsubUrl,
         APP_NAME
     );
 

@@ -51,3 +51,31 @@ function getSmtpConfig(PDO $pdo): array
         'encryption' => getSetting($pdo, 'smtp_encryption', 'tls'),
     ];
 }
+
+/**
+ * Állandó, szerveroldali titok (HMAC-aláírásokhoz, pl. leiratkozási linkek).
+ * Egyszer generálódik és a settings táblában tárolódik.
+ */
+function getAppSecret(PDO $pdo): string
+{
+    static $cached = null;
+    if ($cached !== null) return $cached;
+    $secret = getSetting($pdo, 'app_secret', '');
+    if ($secret === '') {
+        $secret = bin2hex(random_bytes(32));
+        saveSetting($pdo, 'app_secret', $secret);
+    }
+    return $cached = $secret;
+}
+
+/** Bejelentkezés nélküli leiratkozási token a túraértesítőkhöz (HMAC). */
+function makeUnsubscribeToken(PDO $pdo, int $userId): string
+{
+    return hash_hmac('sha256', 'unsub:tour_announcement:' . $userId, getAppSecret($pdo));
+}
+
+function verifyUnsubscribeToken(PDO $pdo, int $userId, string $token): bool
+{
+    if ($userId <= 0 || $token === '') return false;
+    return hash_equals(makeUnsubscribeToken($pdo, $userId), $token);
+}

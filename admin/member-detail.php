@@ -26,6 +26,10 @@ if (!$member) {
 
 $isSelf = (getCurrentUserId() === (int)$member['id']);
 
+// Túraértesítő (új meghirdetett túrák) értesítési beállítás — opt-out modell (hiányzó = bekapcsolva)
+$memberNotif = json_decode($member['notification_prefs'] ?? '{}', true) ?: [];
+$notifTourAnnouncement = ($memberNotif['tour_announcement'] ?? 1) != 0;
+
 $tcStmt = $pdo->prepare("SELECT COUNT(*) FROM tour_members WHERE user_id = ?");
 $tcStmt->execute([$id]);
 $tourCount = (int)$tcStmt->fetchColumn();
@@ -240,6 +244,18 @@ include __DIR__ . '/../includes/admin-header.php';
               </select>
             <?php endif; ?>
           </div>
+        </div>
+
+        <h3 style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin:24px 0 14px;padding-top:20px;border-top:1px solid var(--border);">Értesítések</h3>
+        <div class="notif-list">
+          <label class="notif-row">
+            <input type="checkbox" name="notif_tour_announcement" value="1" <?= $notifTourAnnouncement ? 'checked' : '' ?> <?= $ro ? 'disabled' : '' ?>>
+            <span class="notif-slider"></span>
+            <span class="notif-info">
+              <strong>Túraértesítő</strong>
+              <small>Ha be van kapcsolva, a tag e-mailes értesítőt kap az új meghirdetett túrákról. A tag a saját profilján is módosíthatja.</small>
+            </span>
+          </label>
         </div>
 
         <?php if (!$ro): ?>

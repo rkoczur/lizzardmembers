@@ -5,6 +5,7 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/future-tours-schema.php';
+require_once __DIR__ . '/../includes/captcha.php';
 
 $pdo = getDb();
 ensureFutureToursSchema($pdo);
@@ -338,18 +339,18 @@ $embed = !empty($_GET['embed']); // beágyazott mód (WP plugin iframe)
           <textarea name="message" rows="2" style="margin-top:6px;resize:vertical;"><?= e($joinOld['message'] ?? '') ?></textarea>
         </div>
 
-        <div style="margin-bottom:20px;">
-          <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;cursor:pointer;margin-bottom:8px;font-weight:normal;">
-            <input type="checkbox" name="consent_email" value="1" style="margin-top:2px;" <?= !empty($joinOld) && isset($joinOld['consent_email']) ? 'checked' : '' ?>>
-            <span>Hozzájárulok, hogy e-mail-címem az események szervezésekor a levelezésekben nyilvánosan megjelenjen.</span>
+        <div class="consent-list" style="margin-bottom:20px;">
+          <label class="consent-row">
+            <input type="checkbox" name="consent_email" value="1" <?= !empty($joinOld) && isset($joinOld['consent_email']) ? 'checked' : '' ?>>
+            <span class="consent-row-text">Hozzájárulok, hogy e-mail-címem az események szervezésekor a levelezésekben nyilvánosan megjelenjen.</span>
           </label>
-          <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;cursor:pointer;margin-bottom:8px;font-weight:normal;">
-            <input type="checkbox" name="consent_photo" value="1" style="margin-top:2px;" <?= !empty($joinOld) && isset($joinOld['consent_photo']) ? 'checked' : '' ?>>
-            <span>Hozzájárulok, hogy az egyesület eseményein rólam készült fotók a L.O.T.E. weboldalán és social-media felületeken megjelenjenek.</span>
+          <label class="consent-row">
+            <input type="checkbox" name="consent_photo" value="1" <?= !empty($joinOld) && isset($joinOld['consent_photo']) ? 'checked' : '' ?>>
+            <span class="consent-row-text">Hozzájárulok, hogy az egyesület eseményein rólam készült fotók a L.O.T.E. weboldalán és social-media felületeken megjelenjenek.</span>
           </label>
-          <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;cursor:pointer;font-weight:normal;">
-            <input type="checkbox" name="consent_rules" value="1" required style="margin-top:2px;" <?= !empty($joinOld) && isset($joinOld['consent_rules']) ? 'checked' : '' ?>>
-            <span>Elolvastam és elfogadom az <a href="https://www.lizzard.hu/wp-content/uploads/2018/05/gdpr_adatvedelem_lote_20150521.pdf" target="_blank" rel="noopener noreferrer">Adatvédelmi Tájékoztatóban</a>, az Alapszabályban és a Részvételi feltételekben foglaltakat. <strong style="color:#d97706;">— Kötelező</strong></span>
+          <label class="consent-row consent-row-required">
+            <input type="checkbox" name="consent_rules" value="1" required <?= !empty($joinOld) && isset($joinOld['consent_rules']) ? 'checked' : '' ?>>
+            <span class="consent-row-text">Elolvastam és elfogadom az <a href="https://www.lizzard.hu/wp-content/uploads/2018/05/gdpr_adatvedelem_lote_20150521.pdf" target="_blank" rel="noopener noreferrer">Adatvédelmi Tájékoztatóban</a>, az Alapszabályban és a Részvételi feltételekben foglaltakat. <strong style="color:#d97706;display:inline-block;margin-left:4px;">— Kötelező</strong></span>
           </label>
         </div>
 
@@ -429,6 +430,7 @@ $embed = !empty($_GET['embed']); // beágyazott mód (WP plugin iframe)
         <?php endforeach; ?>
 
         <div style="margin-top:24px;">
+          <?= recaptchaField($pdo) ?>
           <button type="submit" class="btn btn-primary" style="width:100%;padding:13px;font-size:15px;">Tagságra jelentkezés elküldése</button>
         </div>
       </form>
@@ -568,6 +570,7 @@ $embed = !empty($_GET['embed']); // beágyazott mód (WP plugin iframe)
         <?php endforeach; ?>
 
         <div style="margin-top:24px;">
+          <?= recaptchaField($pdo) ?>
           <button type="submit" class="btn btn-primary" style="width:100%;padding:13px;font-size:15px;">Jelentkezés elküldése</button>
         </div>
       </form>
@@ -726,12 +729,14 @@ document.querySelectorAll('input[name="car_available"]').forEach(r => {
           submitBtn.disabled    = false;
           submitBtn.textContent = 'Jelentkezés elküldése';
           showInlineErr(d.error || 'Hiba történt. Kérjük próbáld újra.', submitBtn);
+          if (window.grecaptcha) grecaptcha.reset();
         }
       })
       .catch(function () {
         submitBtn.disabled    = false;
         submitBtn.textContent = 'Jelentkezés elküldése';
         showInlineErr('Hálózati hiba. Kérjük próbáld újra.', submitBtn);
+        if (window.grecaptcha) grecaptcha.reset();
       });
   }
 
@@ -772,5 +777,6 @@ new MutationObserver(loteNotifyHeight).observe(document.body, { childList: true,
 window.addEventListener('load', loteNotifyHeight);
 </script>
 <?php endif; ?>
+<?= recaptchaScript($pdo) ?>
 </body>
 </html>

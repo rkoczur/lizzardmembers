@@ -5,6 +5,7 @@ require_once __DIR__ . '/includes/db.php';
 require_once __DIR__ . '/includes/auth.php';
 require_once __DIR__ . '/includes/functions.php';
 require_once __DIR__ . '/includes/join-schema.php';
+require_once __DIR__ . '/includes/captcha.php';
 
 $pdo = getDb();
 ensureJoinSchema($pdo);
@@ -128,6 +129,7 @@ include __DIR__ . '/includes/public-header.php';
           </div>
 
           <div style="margin-top:24px;">
+            <?= recaptchaField($pdo) ?>
             <button type="submit" class="btn btn-primary" style="width:100%;padding:13px;font-size:15px;font-weight:700;">
               Jelentkezés elküldése
             </button>
@@ -142,6 +144,7 @@ include __DIR__ . '/includes/public-header.php';
   </div>
 </div>
 
+<?= recaptchaScript($pdo) ?>
 <?php include __DIR__ . '/includes/public-footer.php'; ?>
 <script>
 (function () {

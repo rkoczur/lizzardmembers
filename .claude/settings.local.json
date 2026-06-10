@@ -3,7 +3,15 @@
     "allow": [
       "Bash(dir \"c:\\\\xampp\\\\htdocs\\\\lizzardmembers\\\\admin\" /s /b)",
       "Bash(findstr /i import)",
-      "Bash(\"C:\\\\Program Files \\(x86\\)\\\\Microsoft\\\\Edge\\\\Application\\\\msedge.exe\" --headless --screenshot=\"C:\\\\Users\\\\User\\\\AppData\\\\Local\\\\Temp\\\\turanyptar-desktop.png\" --window-size=1280,900 \"http://localhost/lizzardmembers/public/turanyptar.php\")"
+      "Bash(\"C:\\\\Program Files \\(x86\\)\\\\Microsoft\\\\Edge\\\\Application\\\\msedge.exe\" --headless --screenshot=\"C:\\\\Users\\\\User\\\\AppData\\\\Local\\\\Temp\\\\turanyptar-desktop.png\" --window-size=1280,900 \"http://localhost/lizzardmembers/public/turanyptar.php\")",
+      "Bash(php -l public/tour-apply.php)",
+      "Bash(php -l user/future-tour-apply-public.php)",
+      "Bash(php -l admin/settings.php)",
+      "Bash(php -l includes/version.php)",
+      "Bash(php -l user/index.php)",
+      "Bash(php -l actions/future-tour-announce-preview.php)",
+      "Bash(php -l admin/future-tour-detail.php)",
+      "Bash(php -l includes/future-tour-announcement-email.php)"
     ]
   }
 }
