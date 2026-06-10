@@ -1135,3 +1135,173 @@ body.embed-mode .card-body { padding-top: 12px !important; }
 .debt-amount { text-align: right; white-space: nowrap; font-weight: 600; color: var(--danger); }
 .debt-total td { border-top: 2px solid var(--border); font-weight: 700; }
 .debt-total .debt-amount { font-weight: 800; font-size: 15px; }
+
+/* Túra-jelentkezések: asztali táblázat / mobil kártyák */
+.dash-tours-cards { display: none; }
+@media (max-width: 640px) {
+  .dash-tours-table { display: none; }
+  .dash-tours-cards { display: block; }
+}
+.dash-tour-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+}
+.dash-tour-card:last-child { border-bottom: none; }
+.dash-tour-card.is-unpaid { background: var(--danger-bg, #fef2f2); }
+.dash-tour-card .dtc-main { flex: 1 1 auto; min-width: 0; }
+.dash-tour-card .dtc-action { flex: 0 0 auto; white-space: nowrap; }
+.dash-tour-card .dtc-title { font-weight: 700; font-size: 14.5px; line-height: 1.35; color: var(--text); }
+.dash-tour-card .dtc-meta {
+  display: flex; align-items: center; gap: 7px;
+  margin-top: 6px; font-size: 13px; color: var(--text-muted);
+}
+.dash-tour-card .dtc-meta img {
+  width: 22px; height: 15px; object-fit: cover;
+  border: 1px solid var(--border); border-radius: 2px; flex-shrink: 0;
+}
+.dash-tour-card .dtc-pay { margin-top: 8px; }
+
+/* ===== Túra részletek oldal — mobil túlnyúlás javítások ===== */
+/* A grid-oszlopok zsugorodhatnak, így a széles tartalom (táblázat) nem feszíti ki az oldalt */
+.future-detail-grid > * { min-width: 0; }
+
+/* Hosszú szöveges blokkok (leírás, Szállás/Utazás stb.) töréskezelése */
+.tour-text-block {
+  color: var(--text); line-height: 1.65;
+  white-space: pre-wrap; overflow-wrap: anywhere;
+}
+
+/* Fejléc: a hosszú túranév tördelődjön, ne lógjon ki */
+.tour-detail-titlebar { min-width: 0; flex-wrap: wrap; }
+.tour-detail-titlebar h1 { min-width: 0; overflow-wrap: anywhere; }
+
+/* Napok: asztali táblázat / mobil kártyák */
+.tour-days-cards { display: none; }
+@media (max-width: 640px) {
+  .tour-days-table { display: none; }
+  .tour-days-cards { display: block; }
+}
+.tour-day-card { padding: 12px 16px; border-bottom: 1px solid var(--border); }
+.tour-day-card:last-child { border-bottom: none; }
+.tour-day-card .tdc-head {
+  display: flex; align-items: center; gap: 10px;
+  flex-wrap: wrap; margin-bottom: 7px;
+}
+.tour-day-card .tdc-day { font-weight: 700; font-size: 14px; }
+.tour-day-card .tdc-type {
+  font-size: 12px; color: var(--text-muted);
+  background: var(--card, #f5efe4); border-radius: 4px; padding: 2px 8px;
+}
+.tour-day-card .tdc-metrics {
+  display: flex; gap: 18px; flex-wrap: wrap;
+  font-size: 13px; color: var(--text);
+}
+.tour-day-card .tdc-mlabel { color: var(--text-muted); font-weight: 600; }
+.tour-day-card .tdc-desc {
+  font-size: 12.5px; color: var(--text-muted); line-height: 1.5;
+  margin-top: 6px; overflow-wrap: anywhere;
+}
+
+/* Jobb oszlop: jelentkezés kártya (CTA) + térképek */
+.fdg-right { display: flex; flex-direction: column; gap: 16px; }
+.fdg-maps  { display: flex; flex-direction: column; gap: 16px; }
+
+/* Mobilon a jelentkezés kártya legyen legfelül (sorrend: CTA → részletek → térképek) */
+@media (max-width: 768px) {
+  .fdg-right { display: contents; }            /* a CTA és a térképek a grid közvetlen elemeivé válnak */
+  .fdg-cta  { order: 1; position: static; top: auto; min-width: 0; }
+  .fdg-left { order: 2; }
+  .fdg-maps { order: 3; min-width: 0; }
+}
+
+/* ===== Toplista táblázat — egységes a publikus "Örökös toplista" kinézettel ===== */
+/* (a publikus oldal public.css-éből portolva, hogy a bejelentkezett oldalon is működjön) */
+.pub-toplist-table thead th {
+  padding: 10px 16px;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  border-bottom: 2px solid var(--border);
+}
+.pub-toplist-table tbody td { padding: 16px; vertical-align: middle; border-bottom: none; }
+/* A sor-elválasztó egyetlen folytonos vonal a soron (nem cellánként), így a cellahatároknál nem törik meg */
+.pub-toplist-table tbody tr { border-bottom: 1px solid var(--border); }
+.pub-toplist-table tbody tr:last-child { border-bottom: none; }
+.pub-toplist-table tbody tr:hover { background: #f8fffe; }
+.pub-toplist-table .tl-rank-num {
+  width: 36px; font-size: 15px; font-weight: 700;
+  color: var(--text-muted); text-align: center;
+}
+.pub-toplist-table tbody tr:nth-child(1) .tl-rank-num { color: #f59e0b; font-size: 18px; }
+.pub-toplist-table tbody tr:nth-child(2) .tl-rank-num { color: #9ca3af; font-size: 17px; }
+.pub-toplist-table tbody tr:nth-child(3) .tl-rank-num { color: #b45309; font-size: 16px; }
+.pub-toplist-table .td-rank-img { width: 80px; text-align: center; padding: 10px 12px; }
+.pub-toplist-table .td-rank-img img { height: 60px; width: 60px; object-fit: contain; display: block; margin: 0 auto; }
+.pub-toplist-table .tl-info { display: flex; flex-direction: column; gap: 5px; }
+.pub-toplist-table .tl-info .tl-name { font-weight: 700; font-size: 15px; color: var(--text); line-height: 1.2; }
+.pub-toplist-table .tl-pts { text-align: right; white-space: nowrap; }
+.pub-toplist-table .tl-pts strong { font-size: 26px; font-weight: 800; color: var(--primary); line-height: 1; display: block; }
+.pub-toplist-table .tl-yr { font-size: 15px; font-weight: 700; color: var(--sidebar-bg); width: 60px; }
+.pub-toplist-table .tl-pts-bonus { display: block; font-size: 11px; color: var(--warning, #f59e0b); margin-top: 3px; white-space: nowrap; }
+.pub-toplist-table .tl-yr-mobile { display: none; }
+
+/* Toplista mobilon — felülírja a style.css általános .table-wrap kártya-formázását */
+@media (max-width: 768px) {
+  .pub-toplist-table thead { display: none !important; }
+  .pub-toplist-table,
+  .pub-toplist-table tbody { display: block !important; }
+  .pub-toplist-table tbody tr {
+    display: grid !important;
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: 1fr;
+    grid-template-areas: "img info pts";
+    align-items: center;
+    column-gap: 14px;
+    padding: 12px 16px !important;
+    border: none !important;
+    border-bottom: 1px solid var(--border) !important;
+    border-radius: 0 !important;
+    margin-bottom: 0 !important;
+    background: transparent !important;
+    overflow: visible !important;
+  }
+  .pub-toplist-table tbody tr td {
+    display: block !important;
+    padding: 0 !important;
+    border: none !important;
+    text-align: left !important;
+  }
+  .pub-toplist-table tbody tr td::before { display: none !important; }
+  .pub-toplist-table tbody tr td.tl-rank-img {
+    display: block !important;
+    grid-area: img;
+    justify-content: unset !important;
+    padding: 0 !important;
+  }
+  .pub-toplist-table tbody tr td.tl-rank-img img { height: 56px !important; width: 56px !important; object-fit: contain; display: block; }
+  .pub-toplist-table tbody tr td.tl-rank-num { display: none !important; }
+  .pub-toplist-table tbody tr td.tl-info {
+    grid-area: info;
+    display: flex !important;
+    flex-direction: column;
+    gap: 4px;
+    justify-content: center;
+  }
+  .pub-toplist-table tbody tr td.tl-pts { grid-area: pts; text-align: right !important; align-self: center; }
+  .pub-toplist-table tbody tr td.tl-pts strong { font-size: 30px; font-weight: 800; color: var(--primary); line-height: 1; display: block; }
+  .pub-toplist-table .tl-yr-mobile {
+    display: block !important;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--text-muted);
+  }
+}

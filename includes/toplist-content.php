@@ -121,37 +121,33 @@ krsort($byYearTop); // újabb évek elöl
       <span class="badge badge-active" style="font-size:11px;">Összes pont</span>
     </div>
     <div class="table-wrap">
-      <table>
+      <table class="pub-toplist-table">
         <thead>
           <tr>
-            <th style="width:32px;">#</th>
-            <th></th>
-            <th>Név</th>
-            <th>Rang</th>
+            <th style="width:36px;">#</th>
+            <th style="width:80px;"></th>
+            <th>Név / Rang</th>
             <th style="text-align:right;">Pontok</th>
           </tr>
         </thead>
         <tbody>
           <?php if (empty($allTime)): ?>
-            <tr><td colspan="5" class="empty-state"><p>Még nincs adat.</p></td></tr>
+            <tr><td colspan="4" class="empty-state"><p>Még nincs adat.</p></td></tr>
           <?php else: ?>
             <?php foreach ($allTime as $i => $row): ?>
-            <?php $lvl = (int)$row['level']; ?>
+            <?php $lvl = (int)$row['level']; $lvlImg = getLevelImageFilename($lvl); ?>
             <tr>
-              <td style="color:var(--text-muted);font-size:13px;"><?= $i + 1 ?></td>
-              <td class="td-rank-img">
-                <?php $lvlImg = getLevelImageFilename($lvl); if ($lvlImg): ?>
-                <img src="<?= BASE_URL ?>/assets/img/<?= $lvlImg ?>" alt="<?= getLevelLabel($lvl) ?>" style="height:70px">
+              <td class="tl-rank-num"><?= $i + 1 ?></td>
+              <td class="td-rank-img tl-rank-img">
+                <?php if ($lvlImg): ?>
+                <img src="<?= BASE_URL ?>/assets/img/<?= $lvlImg ?>" alt="<?= e(getLevelLabel($lvl)) ?>">
                 <?php endif; ?>
               </td>
-              <td>
-                <?= e($row['lastname'] . ' ' . $row['firstname']) ?>
-                <?php if (($row['role'] ?? '') === 'admin'): ?>
-                  <span class="badge badge-admin" style="font-size:10px;padding:2px 6px;vertical-align:middle;margin-left:4px;">Admin</span>
-                <?php endif; ?>
+              <td class="tl-info">
+                <span class="tl-name"><?= e($row['lastname'] . ' ' . $row['firstname']) ?></span>
+                <span class="tl-badge"><span class="level-badge <?= getLevelClass($lvl) ?>"><?= getLevelLabel($lvl) ?></span></span>
               </td>
-              <td><span class="level-badge <?= getLevelClass($lvl) ?>"><?= getLevelLabel($lvl) ?></span></td>
-              <td style="text-align:right;"><strong><?= number_format((int)$row['total_points']) ?></strong></td>
+              <td class="tl-pts"><strong><?= number_format((int)$row['total_points']) ?></strong></td>
             </tr>
             <?php endforeach; ?>
           <?php endif; ?>
@@ -167,12 +163,12 @@ krsort($byYearTop); // újabb évek elöl
       <span class="badge badge-active" style="font-size:11px;">Idei pont</span>
     </div>
     <div class="table-wrap">
-      <table>
+      <table class="pub-toplist-table">
         <thead>
           <tr>
-            <th style="width:32px;">#</th>
-            <th></th>
-            <th>Név</th>
+            <th style="width:36px;">#</th>
+            <th style="width:80px;"></th>
+            <th>Név / Rang</th>
             <th style="text-align:right;">Pontok</th>
           </tr>
         </thead>
@@ -181,21 +177,19 @@ krsort($byYearTop); // újabb évek elöl
             <tr><td colspan="4" class="empty-state"><p>Még nincs idei túra.</p></td></tr>
           <?php else: ?>
             <?php foreach ($currentYearList as $i => $row): ?>
-            <?php $lvl = (int)($row['level'] ?? 1); ?>
+            <?php $lvl = (int)($row['level'] ?? 1); $lvlImg = getLevelImageFilename($lvl); ?>
             <tr>
-              <td style="color:var(--text-muted);font-size:13px;"><?= $i + 1 ?></td>
-              <td class="td-rank-img">
-                <?php $lvlImg = getLevelImageFilename($lvl); if ($lvlImg): ?>
-                <img src="<?= BASE_URL ?>/assets/img/<?= $lvlImg ?>" alt="<?= getLevelLabel($lvl) ?>" style="height:70px">
+              <td class="tl-rank-num"><?= $i + 1 ?></td>
+              <td class="td-rank-img tl-rank-img">
+                <?php if ($lvlImg): ?>
+                <img src="<?= BASE_URL ?>/assets/img/<?= $lvlImg ?>" alt="<?= e(getLevelLabel($lvl)) ?>">
                 <?php endif; ?>
               </td>
-              <td>
-                <?= e($row['lastname'] . ' ' . $row['firstname']) ?>
-                <?php if (($row['role'] ?? '') === 'admin'): ?>
-                  <span class="badge badge-admin" style="font-size:10px;padding:2px 6px;vertical-align:middle;margin-left:4px;">Admin</span>
-                <?php endif; ?>
+              <td class="tl-info">
+                <span class="tl-name"><?= e($row['lastname'] . ' ' . $row['firstname']) ?></span>
+                <span class="tl-badge"><span class="level-badge <?= getLevelClass($lvl) ?>"><?= getLevelLabel($lvl) ?></span></span>
               </td>
-              <td style="text-align:right;"><strong><?= number_format((int)$row['total_points']) ?></strong></td>
+              <td class="tl-pts"><strong><?= number_format((int)$row['total_points']) ?></strong></td>
             </tr>
             <?php endforeach; ?>
           <?php endif; ?>
@@ -211,12 +205,12 @@ krsort($byYearTop); // újabb évek elöl
       <span class="badge badge-active" style="font-size:11px;">Korrigált pont</span>
     </div>
     <div class="table-wrap">
-      <table>
+      <table class="pub-toplist-table">
         <thead>
           <tr>
-            <th style="width:48px;">Év</th>
-            <th></th>
-            <th>Név</th>
+            <th style="width:60px;">Év</th>
+            <th style="width:80px;"></th>
+            <th>Név / Rang</th>
             <th style="text-align:right;">Pontok</th>
           </tr>
         </thead>
@@ -225,26 +219,23 @@ krsort($byYearTop); // újabb évek elöl
             <tr><td colspan="4" class="empty-state"><p>Még nincs adat.</p></td></tr>
           <?php else: ?>
             <?php foreach ($byYearTop as $yr => $row): ?>
-            <?php $lvl = (int)($row['level'] ?? 1); ?>
+            <?php $lvl = (int)($row['level'] ?? 1); $lvlImg = getLevelImageFilename($lvl); ?>
             <tr>
-              <td><strong><?= (int)$yr ?></strong></td>
-              <td class="td-rank-img">
-                <?php $lvlImg = getLevelImageFilename($lvl); if ($lvlImg): ?>
-                <img src="<?= BASE_URL ?>/assets/img/<?= $lvlImg ?>" alt="<?= getLevelLabel($lvl) ?>" style="height:70px">
+              <td class="tl-rank-num tl-yr"><?= (int)$yr ?></td>
+              <td class="td-rank-img tl-rank-img">
+                <?php if ($lvlImg): ?>
+                <img src="<?= BASE_URL ?>/assets/img/<?= $lvlImg ?>" alt="<?= e(getLevelLabel($lvl)) ?>">
                 <?php endif; ?>
               </td>
-              <td>
-                <?= e($row['lastname'] . ' ' . $row['firstname']) ?>
-                <?php if (($row['role'] ?? '') === 'admin'): ?>
-                  <span class="badge badge-admin" style="font-size:10px;padding:2px 6px;vertical-align:middle;margin-left:4px;">Admin</span>
-                <?php endif; ?>
+              <td class="tl-info">
+                <span class="tl-yr-mobile"><?= (int)$yr ?></span>
+                <span class="tl-name"><?= e($row['lastname'] . ' ' . $row['firstname']) ?></span>
+                <span class="tl-badge"><span class="level-badge <?= getLevelClass($lvl) ?>"><?= getLevelLabel($lvl) ?></span></span>
               </td>
-              <td style="text-align:right;">
+              <td class="tl-pts">
                 <strong><?= number_format($row['total_points'], 1) ?></strong>
                 <?php if ($row['bonus'] > 0): ?>
-                  <br><span style="font-size:11px;color:var(--warning);white-space:nowrap;">
-                    <?= number_format($row['raw_points'], 0) ?> + <?= number_format($row['bonus'], 1) ?> bónusz
-                  </span>
+                  <span class="tl-pts-bonus"><?= number_format($row['raw_points'], 0) ?> + <?= number_format($row['bonus'], 1) ?> bónusz</span>
                 <?php endif; ?>
               </td>
             </tr>

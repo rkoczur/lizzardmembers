@@ -211,8 +211,35 @@ include __DIR__ . '/../includes/user-header.php';
     </h2>
     <a href="<?= BASE_URL ?>/user/future-tours.php" class="btn btn-ghost btn-sm">Összes túra</a>
   </div>
-  <div class="card-body table-scroll-x" style="padding:0;">
-    <table style="width:100%;border-collapse:collapse;font-size:13.5px;">
+  <div class="card-body" style="padding:0;">
+    <?php
+    // Fizetési állapot renderelő — az asztali táblázat és a mobil kártya is ezt használja
+    $renderPaymentStatus = function (array $mt) use ($feeDiscount) {
+        ob_start();
+        if ($mt['status'] === 'confirmed' && (float)$mt['participation_fee'] > 0 && !$mt['paid_at']) {
+            $baseFee = (float)$mt['participation_fee'];
+            $dispFee = $feeDiscount > 0 ? $baseFee * (1 - $feeDiscount / 100) : $baseFee;
+            ?>
+            <div style="display:flex;flex-direction:column;gap:2px;">
+              <span style="color:var(--danger,#c0392b);font-size:13px;font-weight:700;">⚠ Fizetendő: <?= number_format($dispFee, 0, ',', ' ') ?> Ft</span>
+              <?php if ($feeDiscount > 0): ?>
+                <span style="font-size:11px;color:var(--text-muted);"><s><?= number_format($baseFee, 0, ',', ' ') ?> Ft</s>&nbsp;–&nbsp;<?= $feeDiscount ?>% tag kedvezmény</span>
+              <?php endif; ?>
+            </div>
+            <?php
+        } elseif ($mt['status'] === 'confirmed' && (float)$mt['participation_fee'] > 0 && $mt['paid_at']) {
+            ?><span style="display:inline-flex;align-items:center;gap:5px;color:var(--success,#16a34a);font-size:12.5px;font-weight:600;">✓ Részvételi díj rendezve</span><?php
+        } elseif ($mt['status'] === 'confirmed') {
+            ?><span class="badge badge-active">Megerősített</span><?php
+        } else {
+            ?><span class="badge-waitlist">Várólistán</span><?php
+        }
+        return ob_get_clean();
+    };
+    ?>
+
+    <!-- Asztali nézet: táblázat -->
+    <table class="dash-tours-table" style="width:100%;border-collapse:collapse;font-size:13.5px;">
       <tbody>
         <?php foreach ($myFutureTours as $mt): ?>
         <?php $unpaid = $mt['status'] === 'confirmed' && (float)$mt['participation_fee'] > 0 && !$mt['paid_at']; ?>
@@ -231,28 +258,7 @@ include __DIR__ . '/../includes/user-header.php';
               <div style="font-size:11px;color:var(--text-muted);margin-top:2px;"><?= e($mt['region']) ?></div>
             <?php endif; ?>
           </td>
-          <td style="padding:11px 16px;white-space:nowrap;">
-            <?php if ($mt['status'] === 'confirmed' && (float)$mt['participation_fee'] > 0 && !$mt['paid_at']):
-              $baseFee  = (float)$mt['participation_fee'];
-              $dispFee  = $feeDiscount > 0 ? $baseFee * (1 - $feeDiscount / 100) : $baseFee;
-            ?>
-              <div style="display:flex;flex-direction:column;gap:2px;">
-                <span style="color:var(--danger,#c0392b);font-size:13px;font-weight:700;">⚠ Fizetendő: <?= number_format($dispFee, 0, ',', ' ') ?> Ft</span>
-                <?php if ($feeDiscount > 0): ?>
-                  <span style="font-size:11px;color:var(--text-muted);">
-                    <s><?= number_format($baseFee, 0, ',', ' ') ?> Ft</s>
-                    &nbsp;–&nbsp;<?= $feeDiscount ?>% tag kedvezmény
-                  </span>
-                <?php endif; ?>
-              </div>
-            <?php elseif ($mt['status'] === 'confirmed' && (float)$mt['participation_fee'] > 0 && $mt['paid_at']): ?>
-              <span style="display:inline-flex;align-items:center;gap:5px;color:var(--success,#16a34a);font-size:12.5px;font-weight:600;">✓ Részvételi díj rendezve</span>
-            <?php elseif ($mt['status'] === 'confirmed'): ?>
-              <span class="badge badge-active">Megerősített</span>
-            <?php else: ?>
-              <span class="badge-waitlist">Várólistán</span>
-            <?php endif; ?>
-          </td>
+          <td style="padding:11px 16px;white-space:nowrap;"><?= $renderPaymentStatus($mt) ?></td>
           <td style="padding:11px 16px;text-align:right;">
             <a href="<?= BASE_URL ?>/user/future-tour-detail.php?id=<?= (int)$mt['tour_id'] ?>" class="btn btn-ghost btn-sm">Részletek</a>
           </td>
@@ -260,6 +266,26 @@ include __DIR__ . '/../includes/user-header.php';
         <?php endforeach; ?>
       </tbody>
     </table>
+
+    <!-- Mobil nézet: kártyák -->
+    <div class="dash-tours-cards">
+      <?php foreach ($myFutureTours as $mt): ?>
+      <?php $unpaid = $mt['status'] === 'confirmed' && (float)$mt['participation_fee'] > 0 && !$mt['paid_at']; ?>
+      <div class="dash-tour-card<?= $unpaid ? ' is-unpaid' : '' ?>">
+        <div class="dtc-main">
+          <div class="dtc-title"><?= e($mt['name']) ?></div>
+          <div class="dtc-meta">
+            <?php if ($mt['country_flag']): ?>
+              <img src="<?= e(getFlagUrl($mt['country_flag'])) ?>" alt="">
+            <?php endif; ?>
+            <span><?= $mt['start_date'] ? formatDate($mt['start_date']) : '—' ?></span>
+          </div>
+          <div class="dtc-pay"><?= $renderPaymentStatus($mt) ?></div>
+        </div>
+        <a href="<?= BASE_URL ?>/user/future-tour-detail.php?id=<?= (int)$mt['tour_id'] ?>" class="btn btn-ghost btn-sm dtc-action">Részletek</a>
+      </div>
+      <?php endforeach; ?>
+    </div>
   </div>
 </div>
 <?php endif; ?>

@@ -75,7 +75,7 @@ include __DIR__ . '/../includes/user-header.php';
 <?php endif; ?>
 
 <div class="page-header">
-  <div class="flex items-center gap-2">
+  <div class="flex items-center gap-2 tour-detail-titlebar">
     <a href="<?= BASE_URL ?>/user/future-tours.php" class="btn btn-secondary btn-sm">← Vissza</a>
     <h1><?= e($tour['name']) ?></h1>
   </div>
@@ -84,7 +84,7 @@ include __DIR__ . '/../includes/user-header.php';
 <div class="future-detail-grid">
 
   <!-- LEFT: Tour details -->
-  <div>
+  <div class="fdg-left">
 
     <!-- Header card -->
     <div class="card" style="margin-bottom:16px;">
@@ -145,7 +145,7 @@ include __DIR__ . '/../includes/user-header.php';
 
         <!-- Description -->
         <?php if (!empty($tour['description'])): ?>
-          <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);color:var(--text);line-height:1.65;white-space:pre-wrap;"><?= e($tour['description']) ?></div>
+          <div class="tour-text-block" style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);"><?= e($tour['description']) ?></div>
         <?php endif; ?>
 
       </div>
@@ -156,7 +156,8 @@ include __DIR__ . '/../includes/user-header.php';
     <div class="card" style="margin-bottom:16px;">
       <div class="card-header"><h2>Napok</h2></div>
       <div class="card-body" style="padding:0;">
-        <table style="width:100%;border-collapse:collapse;font-size:13.5px;">
+        <!-- Asztali nézet: táblázat -->
+        <table class="tour-days-table" style="width:100%;border-collapse:collapse;font-size:13.5px;">
           <thead>
             <tr style="background:var(--card);border-bottom:1px solid var(--border);">
               <th style="padding:8px 16px;text-align:left;color:var(--text-muted);font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;font-weight:600;">Nap</th>
@@ -178,6 +179,27 @@ include __DIR__ . '/../includes/user-header.php';
             <?php endforeach; ?>
           </tbody>
         </table>
+
+        <!-- Mobil nézet: kártyák -->
+        <div class="tour-days-cards">
+          <?php foreach ($days as $day): ?>
+          <div class="tour-day-card">
+            <div class="tdc-head">
+              <span class="tdc-day"><?= (int)$day['day_number'] ?>. nap</span>
+              <?php if (!empty($day['tour_type'])): ?>
+                <span class="tdc-type"><?= e($day['tour_type']) ?></span>
+              <?php endif; ?>
+            </div>
+            <div class="tdc-metrics">
+              <span><span class="tdc-mlabel">Táv:</span> <?= $day['km'] !== null ? number_format((float)$day['km'], 1, ',', ' ') . ' km' : '—' ?></span>
+              <span><span class="tdc-mlabel">Szint:</span> <?= $day['elevation'] !== null ? number_format((int)$day['elevation']) . ' m' : '—' ?></span>
+            </div>
+            <?php if (!empty($day['description'])): ?>
+              <div class="tdc-desc"><?= e($day['description']) ?></div>
+            <?php endif; ?>
+          </div>
+          <?php endforeach; ?>
+        </div>
       </div>
     </div>
     <?php endif; ?>
@@ -196,7 +218,7 @@ include __DIR__ . '/../includes/user-header.php';
     <div class="card" style="margin-bottom:16px;">
       <div class="card-header"><h2><?= $label ?></h2></div>
       <div class="card-body">
-        <div style="color:var(--text);line-height:1.65;white-space:pre-wrap;"><?= e($tour[$col]) ?></div>
+        <div class="tour-text-block"><?= e($tour[$col]) ?></div>
       </div>
     </div>
     <?php endforeach; ?>
@@ -205,8 +227,8 @@ include __DIR__ . '/../includes/user-header.php';
   </div>
 
   <!-- RIGHT: Application status / CTA + Térképek -->
-  <div style="display:flex;flex-direction:column;gap:16px;">
-    <div class="card sticky-panel">
+  <div class="fdg-right">
+    <div class="card sticky-panel fdg-cta">
     <div class="card-body card-body-center">
       <?php if ($myApp && $myApp['status'] === 'confirmed'): ?>
         <div style="font-size:40px;margin-bottom:12px;">✅</div>
@@ -259,14 +281,18 @@ include __DIR__ . '/../includes/user-header.php';
     </div>
     </div><!-- /sticky-panel -->
 
-    <?php foreach ($gpxFiles as $gi => $gf): ?>
-    <div class="card">
-      <div class="card-header">
-        <h2><?= !empty($gf['label']) ? e($gf['label']) : ('Térkép' . (count($gpxFiles) > 1 ? ' ' . ($gi + 1) . '.' : '')) ?></h2>
+    <?php if (!empty($gpxFiles)): ?>
+    <div class="fdg-maps">
+      <?php foreach ($gpxFiles as $gi => $gf): ?>
+      <div class="card">
+        <div class="card-header">
+          <h2><?= !empty($gf['label']) ? e($gf['label']) : ('Térkép' . (count($gpxFiles) > 1 ? ' ' . ($gi + 1) . '.' : '')) ?></h2>
+        </div>
+        <div id="tour-map-<?= $gi ?>" style="height:400px;border-radius:0 0 var(--radius,8px) var(--radius,8px);overflow:hidden;"></div>
       </div>
-      <div id="tour-map-<?= $gi ?>" style="height:400px;border-radius:0 0 var(--radius,8px) var(--radius,8px);overflow:hidden;"></div>
+      <?php endforeach; ?>
     </div>
-    <?php endforeach; ?>
+    <?php endif; ?>
 
   </div><!-- /right col -->
 
