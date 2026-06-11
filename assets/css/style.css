@@ -1259,7 +1259,7 @@ body.embed-mode .card-body { padding-top: 12px !important; }
   .pub-toplist-table tbody { display: block !important; }
   .pub-toplist-table tbody tr {
     display: grid !important;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: 56px 1fr auto;   /* fix rangkép-oszlop: kép nélküli (1. szintű) soroknál is igazítva marad a név */
     grid-template-rows: 1fr;
     grid-template-areas: "img info pts";
     align-items: center;
@@ -1291,8 +1291,10 @@ body.embed-mode .card-body { padding-top: 12px !important; }
     grid-area: info;
     display: flex !important;
     flex-direction: column;
+    align-items: flex-start;   /* a név balra igazítva — a pontszám hosszától függetlenül egy vonalban marad */
     gap: 4px;
     justify-content: center;
+    min-width: 0;
   }
   .pub-toplist-table tbody tr td.tl-pts { grid-area: pts; text-align: right !important; align-self: center; }
   .pub-toplist-table tbody tr td.tl-pts strong { font-size: 30px; font-weight: 800; color: var(--primary); line-height: 1; display: block; }
