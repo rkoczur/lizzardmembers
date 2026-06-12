@@ -9,7 +9,12 @@ require_once __DIR__ . '/../includes/app-settings-schema.php';
 require_once __DIR__ . '/../includes/mailer.php';
 require_once __DIR__ . '/../includes/tour-notification-email.php';
 require_once __DIR__ . '/../includes/email-log-schema.php';
-requireAdmin();
+requireLeader();
+if (!canManageTours()) {
+    flash('error', 'Nincs jogosultságod ehhez a művelethez.');
+    header('Location: ' . BASE_URL . '/admin/tours.php');
+    exit;
+}
 
 verifyCsrf();
 

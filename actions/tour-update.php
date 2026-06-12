@@ -4,7 +4,12 @@ require_once __DIR__ . '/../includes/config.php';
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
-requireAdmin();
+requireLeader();
+if (!canManageTours()) {
+    flash('error', 'Nincs jogosultságod ehhez a művelethez.');
+    header('Location: ' . BASE_URL . '/admin/tours.php');
+    exit;
+}
 
 verifyCsrf();
 

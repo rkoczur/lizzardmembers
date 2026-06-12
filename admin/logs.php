@@ -186,15 +186,34 @@ include __DIR__ . '/../includes/admin-header.php';
 
 <div class="page-header">
   <h1>Naplók</h1>
-  <?php if ($activeTab === 'audit'): ?>
-  <a href="<?= BASE_URL ?>/actions/audit-export.php<?= $filterType || $filterAction || $aSearch !== '' ? '?'.http_build_query(array_filter(['type'=>$filterType,'action'=>$filterAction,'q'=>$aSearch])) : '' ?>" class="btn btn-ghost btn-sm">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="14" height="14">
-      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-      <polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
-    </svg>
-    Exportálás (CSV)
-  </a>
-  <?php endif; ?>
+  <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+    <?php if ($activeTab === 'audit'): ?>
+    <a href="<?= BASE_URL ?>/actions/audit-export.php<?= $filterType || $filterAction || $aSearch !== '' ? '?'.http_build_query(array_filter(['type'=>$filterType,'action'=>$filterAction,'q'=>$aSearch])) : '' ?>" class="btn btn-ghost btn-sm">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="14" height="14">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+        <polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+      </svg>
+      Exportálás (CSV)
+    </a>
+    <?php endif; ?>
+    <?php if (isAdmin()): ?>
+    <form method="post" action="<?= BASE_URL ?>/actions/log-purge.php" style="display:flex;gap:6px;align-items:center;margin:0;"
+          onsubmit="return confirm('Biztosan törlöd a kiválasztott naplóbejegyzéseket? A művelet nem visszavonható.')">
+      <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
+      <input type="hidden" name="log" value="<?= e($activeTab) ?>">
+      <select name="range" class="form-control" style="width:auto;min-width:160px;">
+        <option value="month">1 hónapnál régebbi</option>
+        <option value="year">1 évnél régebbi</option>
+      </select>
+      <button type="submit" class="btn btn-danger btn-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="14" height="14">
+          <polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+        </svg>
+        Bejegyzések törlése
+      </button>
+    </form>
+    <?php endif; ?>
+  </div>
 </div>
 
 <!-- Tabsáv -->

@@ -34,7 +34,9 @@
       "Bash(php finance/_explore2.php)",
       "Bash(php finance/_build.php)",
       "Bash(sed -n '1,6p')",
-      "Bash(sed -n '2,6p' finance/konyveles_import.csv)"
+      "Bash(sed -n '2,6p' finance/konyveles_import.csv)",
+      "Bash(php -l actions/log-purge.php)",
+      "Bash(php -l admin/logs.php)"
     ]
   }
 }

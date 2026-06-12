@@ -75,7 +75,7 @@ include __DIR__ . '/../includes/admin-header.php';
       </svg>
       Importálás
     </a>
-    <a href="<?= BASE_URL ?>/public/reszletes-penzugyek.php" target="_blank" class="btn btn-ghost btn-sm">Részletes pénzügyek (nyilvános) →</a>
+    <a href="<?= BASE_URL ?>/public/penzugyek.php" target="_blank" class="btn btn-ghost btn-sm">Pénzügyek (nyilvános) →</a>
   </div>
 </div>
 

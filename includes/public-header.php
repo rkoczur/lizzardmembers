@@ -56,7 +56,7 @@ $seoImg       = preg_match('#^https?://#', $seoImgRaw) ? $seoImgRaw : $seoRoot .
     <ul class="pub-nav-menu">
 
       <!-- Rólunk -->
-      <li class="pub-nav-item<?= in_array($activePubPage ?? '', ['rolunk','kapcsolat','gyik','reszveteli-feltetelek','ado1','irattar','penzugyek','reszletes-penzugyek']) ? ' active' : '' ?>">
+      <li class="pub-nav-item<?= in_array($activePubPage ?? '', ['rolunk','kapcsolat','gyik','reszveteli-feltetelek','ado1','irattar','penzugyek']) ? ' active' : '' ?>">
         <span>
           Rólunk
           <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
@@ -69,7 +69,6 @@ $seoImg       = preg_match('#^https?://#', $seoImgRaw) ? $seoImgRaw : $seoRoot .
           <a href="<?= BASE_URL ?>/public/ado1.php">Adó 1%</a>
           <a href="<?= BASE_URL ?>/public/irattar.php">Dokumentumtár</a>
           <a href="<?= BASE_URL ?>/public/penzugyek.php">Pénzügyek</a>
-          <a href="<?= BASE_URL ?>/public/reszletes-penzugyek.php">Részletes pénzügyek</a>
         </div>
       </li>
 
@@ -157,7 +156,6 @@ $seoImg       = preg_match('#^https?://#', $seoImgRaw) ? $seoImgRaw : $seoRoot .
         <a href="<?= BASE_URL ?>/public/reszveteli-feltetelek.php">Részvételi feltételek</a>
         <a href="<?= BASE_URL ?>/public/irattar.php">Dokumentumtár</a>
         <a href="<?= BASE_URL ?>/public/penzugyek.php">Pénzügyek</a>
-        <a href="<?= BASE_URL ?>/public/reszletes-penzugyek.php">Részletes pénzügyek</a>
       </div>
     </div>
 

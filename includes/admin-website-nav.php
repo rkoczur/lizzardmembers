@@ -2,7 +2,6 @@
 $_websitePages = [
     'posts'     => [BASE_URL . '/admin/posts.php',     'Posztok'],
     'documents' => [BASE_URL . '/admin/documents.php', 'Dokumentumtár'],
-    'finances'  => [BASE_URL . '/admin/finances.php',  'Pénzügyek'],
     'faq'       => [BASE_URL . '/admin/faq.php',       'GYIK'],
     'pages'     => [BASE_URL . '/admin/pages.php',     'Lapok'],
 ];
@@ -10,7 +9,6 @@ $_currentFile = basename($_SERVER['PHP_SELF'], '.php');
 $_activeTab   = match($_currentFile) {
     'posts','post-detail' => 'posts',
     'documents'           => 'documents',
-    'finances'            => 'finances',
     'faq'                 => 'faq',
     'pages'               => 'pages',
     default               => '',

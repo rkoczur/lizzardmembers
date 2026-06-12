@@ -5,14 +5,25 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/public-schema.php';
+require_once __DIR__ . '/../includes/bookkeeping-schema.php';
 
 $pdo = getDb();
 ensurePublicSchema($pdo);
+ensureBookkeepingSchema($pdo);
 
-$rows = $pdo->query("SELECT * FROM finances ORDER BY year DESC, category ASC, sort_order ASC, id ASC")->fetchAll();
+// Évenként, típusonként és kategóriánként összesítve a tranzakciós naplóból.
+// Az aktuális (még folyamatban lévő) év nem jelenik meg a nyilvános oldalon.
+$rows = $pdo->query("
+    SELECT YEAR(tx_date) AS yr, tx_type, category, SUM(amount) AS total
+    FROM transactions
+    WHERE YEAR(tx_date) < YEAR(CURDATE())
+    GROUP BY YEAR(tx_date), tx_type, category
+    ORDER BY yr DESC, tx_type ASC, total DESC
+")->fetchAll();
+
 $grouped = [];
 foreach ($rows as $r) {
-    $grouped[(int)$r['year']][$r['category']][] = $r;
+    $grouped[(int)$r['yr']][$r['tx_type']][] = ['label' => $r['category'], 'amount' => (float)$r['total']];
 }
 krsort($grouped);
 
@@ -24,7 +35,7 @@ include __DIR__ . '/../includes/public-header.php';
 <div class="pub-wrap-narrow">
   <div class="pub-page-header">
     <h1>Pénzügyek</h1>
-    <p>Az egyesület éves pénzügyi összesítői.</p>
+    <p>Az egyesület éves bevételei és kiadásai kategóriánkénti bontásban.</p>
   </div>
 
   <?php
