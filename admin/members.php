@@ -12,6 +12,9 @@ require_once __DIR__ . '/../includes/user-schema.php';
 ensureUserSchema($pdo);
 ensureJoinSchema($pdo);
 
+// Az utolsó tagdíj fizetés dátuma a tranzakciós naplóból származtatott — frissítés megjelenítés előtt
+recalcMembershipPayments($pdo);
+
 // Determine active tab; non-admins cannot access applications
 $tab = ($_GET['tab'] ?? '') === 'applications' ? 'applications' : 'members';
 if ($tab === 'applications' && !isAdmin()) {

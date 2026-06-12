@@ -386,8 +386,9 @@ $jsInitTourType = json_encode($detectedType);
       var winter = hasAlpine ? [11,12,1,2,3] : [12,1,2];
       if (winter.indexOf(m) !== -1) { bonus += days * 3; notes.push('Téli +' + (days * 3) + ' pt'); }
     }
-    if (campNights > 0 && multiDay === 'csillag') { bonus += campNights; notes.push('Csillagtúra +' + campNights + ' pt'); }
-    else if (campNights > 0 && multiDay === 'vandor') { bonus += campNights * 3; notes.push('Vándortúra +' + (campNights * 3) + ' pt'); }
+    var campMult = (v('accommodation').value === 'sator') ? 2 : 1;
+    if (campNights > 0 && multiDay === 'csillag') { bonus += campNights*campMult; notes.push('Csillagtúra +' + (campNights*campMult) + ' pt'); }
+    else if (campNights > 0 && multiDay === 'vandor') { bonus += campNights*3*campMult; notes.push('Vándortúra +' + (campNights*3*campMult) + ' pt'); }
     if (type === 'vizi' && port > 0) { bonus += port * 3; notes.push('Hajóátemelés +' + (port * 3) + ' pt'); }
 
     var bonusMult = (hasAlpine && (type === 'gyalogos' || type === 'kerekparos') && alpineBase >= normalBase) ? 2 : 1;

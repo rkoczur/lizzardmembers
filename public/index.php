@@ -18,8 +18,8 @@ $heroImgStmt = $pdo->prepare("SELECT body FROM pages WHERE slug = 'hero-image' L
 $heroImgStmt->execute();
 $heroImgFile = $heroImgStmt->fetchColumn() ?: null;
 
-// Latest 3 news posts
-$latestPosts = $pdo->query("SELECT * FROM posts WHERE published = 1 ORDER BY created_at DESC LIMIT 3")->fetchAll();
+// Latest 2 news posts
+$latestPosts = $pdo->query("SELECT * FROM posts WHERE published = 1 ORDER BY created_at DESC LIMIT 2")->fetchAll();
 
 
 $HU_MONTHS = ['január','február','március','április','május','június','július','augusztus','szeptember','október','november','december'];

@@ -1,0 +1,197 @@
+﻿"Dátum (ÉÉÉÉ-HH-NN)";"Típus (bevetel/kiadas)";Kategória;Leírás;Esemény;Partner;Összeg;Számla;Számlaszám
+2022-01-03;bevetel;Tagdíj;"Tagdíj 2022";;"Szvoboda Péter";5000;Folyószámla;2022-4
+2022-01-03;bevetel;Tagdíj;"Tagdíj 2022";;"Szögi Balázs";5000;Folyószámla;2022-5
+2022-01-03;bevetel;Tagdíj;"Tagdíj 2022";;"Laki Dávid";5000;Folyószámla;2022-6
+2022-01-03;bevetel;Tagdíj;"Tagdíj 2022";;"Duhay Dániel";5000;Paypal;2022-3
+2022-01-03;kiadas;"Banki költségek";"Paypal jutalék";;Paypal;260;Paypal;"1/1/2022 - 1/31/2022"
+2022-01-04;bevetel;"Egyéb bevétel";Kamat;;MagnetBank;18;Folyószámla;2022/0010/40603161
+2022-01-04;kiadas;"Banki költségek";Költségelszámolás;;MagnetBank;111;Folyószámla;2022/0010/40603161
+2022-01-04;bevetel;Tagdíj;"Tagdíj 2022";;"Vass Petra";5000;Folyószámla;2022-7
+2022-01-04;bevetel;Tagdíj;"Tagdíj 2022";;"Komjáthyné Krisztina";5000;Folyószámla;2022-8
+2022-01-04;bevetel;Tagdíj;"Tagdíj 2022";;"Komjáthy János";5000;Folyószámla;2022-8
+2022-01-05;bevetel;Tagdíj;"Tagdíj 2022";;"Csorba Dániel";5000;Folyószámla;2022-9
+2022-01-05;bevetel;Tagdíj;"Tagdíj 2022";;"Kuti Judit";5000;Folyószámla;2022-10
+2022-01-05;bevetel;Tagdíj;"Tagdíj 2022";;"Kancsulik Ákos";5000;Folyószámla;2022-11
+2022-01-06;bevetel;Tagdíj;"Tagdíj 2022";;"Nagy Zoltán";5000;Folyószámla;2022-12
+2022-01-06;bevetel;Tagdíj;"Tagdíj 2022";;"Arnold Fanni";5000;Folyószámla;2022-13
+2022-01-07;bevetel;Tagdíj;"Tagdíj 2022";;"Csontos Bernadett";5000;Folyószámla;2022-14
+2022-01-07;bevetel;Tagdíj;"Tagdíj 2022";;"Taska István";5000;Folyószámla;2022-15
+2022-01-08;bevetel;Értékesítés;"Egyesületi póló";;"Arnold Fanni";8000;Folyószámla;2022-16
+2022-01-10;bevetel;Tagdíj;"Tagdíj 2022";;"Foki Károly";5000;Folyószámla;2022-17
+2022-01-10;bevetel;Tagdíj;"Tagdíj 2022";;"Bodó Miklós";5000;Folyószámla;2022-18
+2022-01-10;bevetel;"Részvételi díj";"Csokloniva, Burok völgy";"Szilvásvárad - Szalajka-völgy";"Bodó Miklós";47880;Folyószámla;2022-18
+2022-01-10;bevetel;Tagdíj;"Tagdíj 2022";;"Dr. Kerényi Edmond";5000;Folyószámla;2022-19
+2022-01-11;bevetel;Tagdíj;"Tagdíj 2022";;"Hizsnyik Gabriella";5000;Folyószámla;2022-20
+2022-01-11;bevetel;Tagdíj;"Tagdíj 2022";;"Pogány Viktor";5000;Folyószámla;2022-21
+2022-01-13;bevetel;Tagdíj;"Tagdíj 2022";;"Eszter Barbara Borbála";5000;Folyószámla;2022-22
+2022-01-18;bevetel;Tagdíj;"Tagdíj 2022";;"Bojtor Gergely";5000;Folyószámla;2022-23
+2022-01-20;bevetel;Tagdíj;"Tagdíj 2022";;"Hodossy Vivien";5000;Folyószámla;2022-24
+2022-01-21;bevetel;Tagdíj;"Tagdíj 2022";;"Takács Olga";5000;Folyószámla;2022-25
+2022-01-21;bevetel;Tagdíj;"Tagdíj 2022";;"Molnár Péter";5000;Folyószámla;2022-26
+2022-01-24;bevetel;Tagdíj;"Tagdíj 2022";;"Vári Erika";5000;Folyószámla;2022-27
+2022-01-24;bevetel;Tagdíj;"Tagdíj 2022";;"Nacsa Nóra";5000;Folyószámla;2022-28
+2022-01-27;bevetel;"Részvételi díj";Burok-völgy;"Burok völgy";"Szvoboda Péter";18900;Folyószámla;2022-29
+2022-01-30;bevetel;Tagdíj;"Tagdíj 2022";;"Pál Szilvia";5000;Folyószámla;2022-30
+2022-02-01;bevetel;Tagdíj;"Tagdíj 2022";;"Kiskó Alíz";5000;Folyószámla;2022-31
+2022-02-01;bevetel;"Egyéb bevétel";Kamat;;MagnetBank;30;Folyószámla;2022/0010/41110325
+2022-02-02;kiadas;"Banki költségek";"Bankkártya díj";;MagnetBank;541;Folyószámla;2022/0010/41110325
+2022-02-03;bevetel;"Részvételi díj";Csoklovina;"Erdély felfedezetlen ösvényein: Csoklovina";"Vass Petra";31500;Folyószámla;2022-32
+2022-02-05;bevetel;Tagdíj;"Tagdíj 2022";;"Jakus Zsuzsanna";5000;Folyószámla;2022-33
+2022-02-07;bevetel;"Részvételi díj";Burok-völgy;"Burok völgy";"Mészáros Kinga, Barta Gergő";37800;Folyószámla;2022-34
+2022-02-07;bevetel;Tagdíj;"Tagdíj 2022";;"Mészáros Kinga, Barta Gergő";10000;Folyószámla;2022-34
+2022-02-08;bevetel;"Részvételi díj";Csoklovina;"Erdély felfedezetlen ösvényein: Csoklovina";"Szvoboda Péter";31500;Folyószámla;2022-35
+2022-02-08;bevetel;"Részvételi díj";Burok-völgy;"Burok völgy";"Molnár Péter";18900;Folyószámla;2022-36
+2022-02-08;bevetel;"Részvételi díj";Burok-völgy;"Burok völgy";"Szögi Balázs";18900;Folyószámla;2022-37
+2022-02-09;kiadas;Szolgáltatások;"MTSZ tagdíj";;MTSZ;10000;Folyószámla;2022/183
+2022-02-09;kiadas;Szolgáltatások;"BTSSZ tagdíj";;BTSSZ;5000;Folyószámla;BDPST-2022-25
+2022-02-09;bevetel;"Részvételi díj";Burok-völgy;"Burok völgy";"Takács Olga";18900;Folyószámla;2022-38
+2022-02-10;bevetel;"Részvételi díj";Burok-völgy;"Burok völgy";"Bojtor Gergely";17010;Folyószámla;2022-39
+2022-02-08;kiadas;Szolgáltatások;"Hírlevél plugin éves díja";;"(Ninja Forms) Saturday Drive Inc";10877;Folyószámla;2C88858291285433V
+2022-02-08;kiadas;Szolgáltatások;"Hírlevél plugin éves díja";;"(Ninja Forms) Saturday Drive Inc";4740;Paypal;2C88858291285433V
+2022-02-10;bevetel;Tagdíj;"Tagdíj 2022";;"Koczur Richárd";5000;Folyószámla;2022-40
+2022-02-17;bevetel;Tagdíj;"Tagdíj 2022";;"Bokody Katalin";5000;Folyószámla;2022-41
+2022-02-22;kiadas;Szállás;"Burok-völgy szállás";;"Nagy Magyarország Park";95700;Folyószámla;HA00034/2022
+2022-02-22;kiadas;Étkezés;"Burok-völgy étkezés";;"Nagy Magyarország Park";45910;Folyószámla;NMP-2022-41
+2022-03-02;bevetel;"Egyéb bevétel";Kamat;;MagnetBank;41;Folyószámla;2022/0010/41655542
+2022-03-02;kiadas;"Banki költségek";Költségelszámolás;;MagnetBank;271;Folyószámla;2022/0010/41655542
+2022-03-02;kiadas;"Banki költségek";"Bankkártya díj";;MagnetBank;541;Folyószámla;2022/0010/41655542
+2022-03-04;bevetel;Tagdíj;"Tagdíj 2022";;"Botlik Dániel";5000;Folyószámla;2022-42
+2022-03-16;bevetel;"Részvételi díj";Csoklovina;"Erdély felfedezetlen ösvényein: Csoklovina";"Szögi Balázs";31500;Folyószámla;2022-43
+2022-03-16;bevetel;Tagdíj;"Tagdíj 2022";;"Bajkay Zoltán";3750;Folyószámla;2022-44
+2022-03-16;bevetel;"Részvételi díj";Csoklovina;"Erdély felfedezetlen ösvényein: Csoklovina";"Bajkay Zoltán";31500;Folyószámla;2022-44
+2022-03-16;bevetel;Tagdíj;"Tagdíj 2022";;"Oláh Enikő";5000;Folyószámla;2022-45
+2022-03-16;bevetel;Tagdíj;"Tagdíj 2022";;"Boros Anita";5000;Folyószámla;2022-46
+2022-03-16;bevetel;Tagdíj;"Tagdíj 2022";;"Tisza Orsolya";5000;Folyószámla;2022-47
+2022-03-19;bevetel;Tagdíj;"Tagdíj 2022";;"Spiegel Kornélia";5000;Paypal;2022-48
+2022-03-19;kiadas;"Banki költségek";"Paypal jutalék";;Paypal;260;Paypal;"3/1/2022 - 3/31/2022"
+2022-03-25;bevetel;Tagdíj;"Tagdíj 2022";;"Kunert-Tim György";5000;Folyószámla;2022-49
+2022-03-31;bevetel;"Részvételi díj";Csoklovina;"Erdély felfedezetlen ösvényein: Csoklovina";"Nacsa Nóra";31500;Folyószámla;2022-50
+2022-04-01;bevetel;Tagdíj;"Tagdíj 2022";;"Kerényi Gábor, Gál Anikó";10000;Folyószámla;2022-51
+2022-04-01;bevetel;"Egyéb bevétel";Kamat;;MagnetBank;43;Folyószámla;2022/0010/42164107
+2022-04-01;bevetel;Tagdíj;"Tagdíj 2022";;"Lukács János";3750;Folyószámla;2022-52
+2022-04-01;bevetel;"Részvételi díj";Csoklovina;"Erdély felfedezetlen ösvényein: Csoklovina";"Lukács János";31500;Folyószámla;2022-52
+2022-04-02;kiadas;"Banki költségek";"Bankkártya díj";;MagnetBank;541;Folyószámla;2022/0010/42164107
+2022-04-07;kiadas;Könyvelő;"Könyvelői díj";;"Láng Tamás";45000;Folyószámla;180/2022
+2022-04-07;bevetel;Tagdíj;"Tagdíj 2022";;"Páll Ágnes";3750;Folyószámla;2022-53
+2022-04-07;bevetel;"Részvételi díj";Csoklovina;"Erdély felfedezetlen ösvényein: Csoklovina";"Páll Ágnes";31500;Folyószámla;2022-53
+2022-04-07;bevetel;Tagdíj;"Tagdíj 2022";;"Burzuk Dániel";3750;Folyószámla;2022-54
+2022-04-07;bevetel;"Részvételi díj";Csoklovina;"Erdély felfedezetlen ösvényein: Csoklovina";"Burzuk Dániel";31500;Folyószámla;2022-54
+2022-04-11;bevetel;"Részvételi díj";Zemplén;"A Zemplén bércein";"Bajkay Zoltán";18000;Folyószámla;2022-55
+2022-04-11;bevetel;Tagdíj;"Tagdíj 2022";;"Madarász Lilla";3750;Folyószámla;2022-56
+2022-04-11;bevetel;"Részvételi díj";Csoklovina;"Erdély felfedezetlen ösvényein: Csoklovina";"Madarász Lilla";31500;Folyószámla;2022-56
+2022-04-14;kiadas;Felszerelés;"Elsősegély készlet";;Decathlon;6990;Folyószámla;24700109/0493/00013
+2022-04-15;kiadas;"Banki költségek";"Tranzakciós illeték";;MagnetBank;5054;Folyószámla;2022/0010/42164107
+2022-04-15;kiadas;"Banki költségek";"Tranzakciós illeték";;MagnetBank;3148;Folyószámla;2022/0010/42164107
+2022-04-18;kiadas;Szállás;"CSOKLOVINA - Szállás - 4245 RON";;"Vi La Ski Petrosani";367078;Valuta;64
+2022-04-18;kiadas;Étkezés;"CSOKLOVINA - vacsorák -  1505 RON";;"Vi La Ski Petrosani";130142;Valuta;64
+2022-04-19;bevetel;"Részvételi díj";ZEMPLÉN;"A Zemplén bércein";"Páll Ágnes";18000;Folyószámla;2022-57
+2022-04-19;bevetel;Tagdíj;"Tagdíj 2022";;"Csendes Aurél";3750;Folyószámla;2022-58
+2022-04-19;bevetel;"Részvételi díj";ZEMPLÉN;"A Zemplén bércein";"Csendes Aurél";18000;Folyószámla;2022-58
+2022-04-21;bevetel;Tagdíj;"Tagdíj 2022 - Bodó Réka";;"Bodó Réka";5000;Folyószámla;2022-59
+2022-04-21;bevetel;"Részvételi díj";IPOLY;"Ipoly 2022";"Bodó Réka";14500;Folyószámla;2022-59
+2022-04-21;bevetel;"Részvételi díj";IPOLY;"Ipoly 2022";"Bodó Miklós";13775;Folyószámla;2022-60
+2022-04-25;bevetel;"Részvételi díj";IPOLY;"Ipoly 2022";"Nacsa Nóra";14500;Folyószámla;2022-61
+2022-04-25;bevetel;"Részvételi díj";ZEMPLÉN;"A Zemplén bércein";"Hizsnyik Gabriella";18000;Folyószámla;2022-62
+2022-04-25;bevetel;"Részvételi díj";ZEMPLÉN;"A Zemplén bércein";"Szvoboda Péter";18000;Folyószámla;2022-63
+2022-05-02;kiadas;Felszerelés;"Kenu/kajak bérlés  + szállítás";;Kenumánia;102480;Folyószámla;KNMN-2022-3
+2022-05-02;bevetel;"Egyéb bevétel";Kamat;;MagnetBank;43;Folyószámla;-
+2022-05-02;kiadas;"Banki költségek";"Bankkártya díj";;MagnetBank;568;Folyószámla;-
+2022-05-02;kiadas;"Banki költségek";Költségelszámolás;;MagnetBank;328;Folyószámla;-
+2022-05-03;bevetel;"Részvételi díj";ZEMPLÉN;"A Zemplén bércein";"Oláh Enikő";18000;Folyószámla;2022-64
+2022-05-03;bevetel;"Részvételi díj";IPOLY;"Ipoly 2022";"Takács Olga";12325;Folyószámla;2022-65
+2022-05-03;bevetel;"Részvételi díj";IPOLY;"Ipoly 2022";"Kiskó Alíz";12325;Folyószámla;2022-66
+2022-05-04;bevetel;"Részvételi díj";"IPOLY - Barta Gergő, Mészáros Kinga";"Ipoly 2022";"Barta Gergő";29000;Folyószámla;2022-67
+2022-05-04;kiadas;Szolgáltatások;"Ultrabalton képek";;Futófotó;4890;Folyószámla;FFB/2022-000255
+2022-05-10;bevetel;"Részvételi díj";ZEMPLÉN;"A Zemplén bércein";"Nacsa Nóra";18000;Folyószámla;2022-68
+2022-05-11;bevetel;"Részvételi díj";IPOLY;"Ipoly 2022";"Kuti Judit";14500;Folyószámla;2022-69
+2022-05-12;bevetel;"Részvételi díj";IPOLY;"Ipoly 2022";"Madarász Lilla";14500;Folyószámla;2022-70
+2022-05-12;bevetel;"Részvételi díj";Zemplén;"A Zemplén bércein";"Lukács János";18000;Folyószámla;2022-71
+2022-05-13;bevetel;"Részvételi díj";IPOLY;"Ipoly 2022";"Szabó Zita";14500;Folyószámla;2022-72
+2022-05-17;bevetel;"Részvételi díj";Zemplén;"A Zemplén bércein";"Bojtor Gergely";16200;Folyószámla;2022-73
+2022-05-20;kiadas;Szállás;"Zemplén - szállás";;"Búzavirág Alapítvány";120000;Folyószámla;BZVRG-2022-12
+2022-05-20;kiadas;Étkezés;"Zemplén - étkezés";;"Búzavirág Alapítvány";30000;Folyószámla;BZVRG-2022-12
+2022-05-23;bevetel;Tagdíj;"Tagdíj 2022";;"Szabó Zita";5000;Folyószámla;2022-72
+2022-05-31;bevetel;"Felszerelés bérlés";"Ferrata szettek";;"Wanderwell Zrt";22000;Folyószámla;E-2022-1
+2022-06-02;kiadas;Étkezés;"Ipoly - Kaja 1";;Auchan;20344;Folyószámla;AI09/0083904
+2022-06-03;kiadas;Étkezés;"Ipoly - Kaja 2";;"Milaton Kft.";1780;Készpénz;"NL6EA 6879122"
+2022-06-02;bevetel;"Egyéb bevétel";Kamat;;MagnetBank;22;Folyószámla;2022/0010/43354611
+2022-06-02;kiadas;"Banki költségek";Költségelszámolás;;MagnetBank;1462;Folyószámla;2022/0010/43354611
+2022-06-02;kiadas;"Banki költségek";"Bankkártya díj";;MagnetBank;568;Folyószámla;2022/0010/43354611
+2022-06-10;bevetel;"Felszerelés bérlés";"Ferrata szettek";;"Csörnyei Ádám";13500;Folyószámla;2022-74
+2022-06-24;bevetel;"Részvételi díj";TÁTRA;"Tátra - Bélai havasok";"Bajkay Zoltán";21500;Folyószámla;2022-76
+2022-07-04;bevetel;"Felszerelés bérlés";"Ferrata szettek";;"Wanderwell Zrt";22000;Folyószámla;E-2022-2
+2022-07-04;bevetel;"Részvételi díj";TÁTRA;"Tátra - Bélai havasok";"Lukács János";21500;Folyószámla;2022-78
+2022-07-04;kiadas;"Banki költségek";"Bankkártya díj";;MagnetBank;568;Folyószámla;2022/0010/43893925
+2022-07-05;bevetel;"Egyéb bevétel";Kamat;;MagnetBank;18;Folyószámla;2022/0010/43893925
+2022-07-05;bevetel;Tagdíj;"Tagdíj 2022";;"Rumeau Juliette";2500;Folyószámla;2022-79
+2022-07-08;bevetel;"Részvételi díj";TÁTRA;"Tátra - Bélai havasok";"Arnold Fanni";21500;Folyószámla;2022-80
+2022-07-11;bevetel;"Részvételi díj";"Soroksári kajakozás";"Soroksári evezés";"Taska István";5000;Folyószámla;2022-81
+2022-07-11;kiadas;Szállás;"TÁTRA - szállás";;Booking;141918;Folyószámla;"email lementve"
+2022-07-18;bevetel;"Részvételi díj";"Soroksári kajakozás és TÁTRA";"Tátra - Bélai havasok";"Takács Olga";22525;Folyószámla;2022-82
+2022-07-18;bevetel;"Részvételi díj";"Soroksári kajakozás és TÁTRA";"Tátra - Bélai havasok";"Bojtor Gergely";26500;Folyószámla;2022-83
+2022-07-22;bevetel;"Részvételi díj";TÁTRA;"Tátra - Bélai havasok";"Szögi Balázs";21500;Folyószámla;2022-84
+2022-07-24;bevetel;"Részvételi díj";"Soroksári kajakozás";"Soroksári evezés";"Erdős János";5000;Folyószámla;2022-85
+2022-07-24;bevetel;Tagdíj;"Tagdíj 2022";;"Erdős János";5000;Folyószámla;2022-85
+2022-08-02;bevetel;"Egyéb bevétel";Kamat;;MagnetBank;24;Folyószámla;2022/0010/45031529
+2022-08-02;kiadas;"Banki költségek";"Bankkártya díj";;MagnetBank;568;Folyószámla;2022/0010/45031529
+2022-08-08;bevetel;"Részvételi díj";"Soroksári kajakozás";"Soroksári evezés";"Bodó Miklós";5000;Folyószámla;2022-88
+2022-08-09;bevetel;"Részvételi díj";"Soroksári kajakozás";"Soroksári evezés";"Lukács János";5000;Folyószámla;2022-89
+2022-08-16;bevetel;Tagdíj;"Tagdíj 2022";;"Brezanóczy Beáta";5000;Folyószámla;2022-90
+2022-08-27;kiadas;Felszerelés;Kajakbérlés;;"Canoe Kft.";10000;Folyószámla;BIZX0114/2022
+2022-08-27;kiadas;Felszerelés;Kajakbérlés;;"Canoe Kft.";28000;Folyószámla;BIZX0115/2022
+2022-09-01;bevetel;"Egyéb bevétel";Kamat;;MagnetBank;21;Folyószámla;2022/0010/45686782
+2022-09-01;kiadas;"Banki költségek";Költségelszámolás;;MagnetBank;415;Folyószámla;2022/0010/45686782
+2022-09-01;kiadas;"Banki költségek";"Bankkártya díj";;MagnetBank;568;Folyószámla;2022/0010/45686782
+2022-09-03;bevetel;"Részvételi díj";Gesause;"Gesause #4 - végre Buchstein";"Páll Ágnes";68000;Folyószámla;2022-92
+2022-09-03;bevetel;"Felszerelés bérlés";"Ferrata szettek";;"Wanderwell Zrt";22000;Folyószámla;2022-91
+2022-09-05;bevetel;"Részvételi díj";Gesause;"Gesause #4 - végre Buchstein";"Lukács János";68000;Folyószámla;2022-96
+2022-09-05;bevetel;"Részvételi díj";Gesause;"Gesause #4 - végre Buchstein";"Bodó Miklós";64600;Folyószámla;2022-97
+2022-09-08;kiadas;Felszerelés;"Derékalj javító készlet";;Mountex;5990;Folyószámla;222210069
+2022-09-12;kiadas;"Banki költségek";Költségelszámolás;;MagnetBank;785;Folyószámla;2022/0010/45686782
+2022-09-12;kiadas;Szállás;"Gesause - szállás előleg  (240 EUR)";;"Hotel Banhof";96126;Folyószámla;241301f
+2022-09-20;kiadas;"Tárgyi eszköz";"Éves poló mintadarab rendelése";;Printful;19007;Folyószámla;#82292811-35778680
+2022-09-20;bevetel;"Részvételi díj";Gesause;"Gesause #4 - végre Buchstein";"Vass Petra";68000;Folyószámla;2022-93
+2022-09-26;bevetel;Támogatás/Pályázat;"SZJA 1% felajánlások";;NAV;325532;Folyószámla;2022/0010/45686782
+2022-09-28;bevetel;"Részvételi díj";Évzáró;"Évzáró 2022";"Bajkay Zoltán";1500;Folyószámla;2022-94
+2022-09-29;bevetel;"Részvételi díj";Évzáró;"Évzáró 2022";"Lukács János";1500;Folyószámla;2022-95
+2022-10-03;bevetel;"Felszerelés bérlés";"Ferrata szettek";;"Wanderwell Zrt";16500;Folyószámla;E-2022-3
+2022-10-04;bevetel;"Egyéb bevétel";Kamat;;MagnetBank;33;Folyószámla;2022/0010/46493846
+2022-10-04;kiadas;"Banki költségek";"Bankkártya díj";;MagnetBank;568;Folyószámla;2022/0010/46493846
+2022-10-07;kiadas;Szolgáltatások;"Számlázó program előfizetése";;Ismeretlen;25273;Folyószámla;E-KBOSS-2022-466615
+2022-10-07;bevetel;"Részvételi díj";Évzáró;"Évzáró 2022";"Taska István";1500;Folyószámla;2022-98
+2022-10-08;kiadas;"Banki költségek";"Készpénzfelvétel jutaléka";;MagnetBank;1737;Folyószámla;2022/0010/46493846
+2022-10-08;kiadas;"Banki költségek";"Készpénzfelvétel jutaléka";;MagnetBank;1051;Folyószámla;2022/0010/46493846
+2022-10-08;kiadas;Szállás;"Gesause szállás maradék (265 EUR)";;"Hotel Banhof";115275;Valuta;241301f
+2022-10-08;kiadas;"Egyéb szervezés";"Rafting (275 EUR)";;"AOS Rafting";119625;Valuta;13992
+2022-10-11;kiadas;Szállás;"Évzáró - szállásköltség";;"Ipolyerdő Zrt.";110000;Folyószámla;1821/V01/2022
+2022-10-11;bevetel;Tagdíj;"Tagdíj 2022";;"Máté Péter";5000;Folyószámla;2022-99
+2022-10-12;kiadas;"Tárgyi eszköz";"Év túratársa pólók";;Printful;105019;Folyószámla;#82292811-36021965
+2022-10-14;bevetel;Tagdíj;"Tagdíj 2022";;"Farkas Líviusz";5000;Folyószámla;2022-100
+2022-10-26;bevetel;Tagdíj;"Tagdíj 2022";;"Kremlicza Levente";5000;Folyószámla;2022-101
+2022-10-28;bevetel;Tagdíj;"Tagdíj 2022";;"Makai Evetke";5000;Folyószámla;2022-102
+2022-11-03;bevetel;"Egyéb bevétel";Kamat;;MagnetBank;40;Folyószámla;2022/0010/46493846
+2022-11-03;kiadas;"Banki költségek";Költségelszámolás;;MagnetBank;650;Folyószámla;2022/0010/46493846
+2022-11-03;kiadas;"Banki költségek";"Bankkártya díj";;MagnetBank;568;Folyószámla;2022/0010/46493846
+2022-11-09;bevetel;Tagdíj;"Tagdíj 2022";;"Jánosi Nikolett";5000;Folyószámla;2022-103
+2022-11-09;bevetel;Tagdíj;"Tagdíj 2022";;"Für Anikó";5000;Folyószámla;2022-104
+2022-11-11;kiadas;Szolgáltatások;"Tárhely és domain";;"Rackhost Zrt.";2286;Folyószámla;120145ESZ
+2022-11-15;bevetel;Tagdíj;"Tagdíj 2022";;"Kispál Dóra, Dr. Farkas Szilvia";10000;Folyószámla;2022-105
+2022-11-15;bevetel;"Részvételi díj";Évzáró;"Évzáró 2022";"Kispál Dóra, Dr. Farkas Szilvia";6000;Folyószámla;2022-105
+2022-08-25;kiadas;Szállás;"IFA (12,8 EUR)";;"Eva Silonova";5248;Valuta;2022039
+2022-11-21;bevetel;"Részvételi díj";Évzáró;"Évzáró 2022";"Vass Petra";1500;Folyószámla;2022-106
+2022-11-29;bevetel;"Részvételi díj";Évzáró;"Évzáró 2022";"Molnár Péter";1500;Folyószámla;2022-107
+2022-11-29;bevetel;"Részvételi díj";Évzáró;"Évzáró 2022";"Szvoboda Péter";1500;Folyószámla;2022-108
+2022-11-29;bevetel;"Részvételi díj";"Évzáró Bogi + Zoli (1500+3000)";"Évzáró 2022";"Nagy Zoltán";4500;Folyószámla;2022-109
+2022-11-29;bevetel;Tagdíj;"Tagdíj 2022 Bogi (egybe utalta ezt meg az évzárót Zoli)";;"Nagy Zoltán";5000;Folyószámla;2022-109
+2022-12-02;bevetel;"Egyéb bevétel";Kamat;;MagnetBank;27;Folyószámla;
+2022-12-02;kiadas;"Banki költségek";Költségelszámolás;;MagnetBank;117;Folyószámla;
+2022-12-02;kiadas;"Banki költségek";"Bankkártya díj";;MagnetBank;568;Folyószámla;
+2022-12-02;kiadas;Étkezés;"Évzáró kaja";;Kifli.hu;25278;Folyószámla;4976969
+2022-12-05;bevetel;"Részvételi díj";Évzáró;"Évzáró 2022";"Szögi Balázs";1500;Folyószámla;2022-110
+2022-12-12;bevetel;Értékesítés;Póló;;"Kiskó Alíz";8000;Folyószámla;2022-111
+2022-12-13;bevetel;Értékesítés;Póló;;"Nacsa Nóra";8000;Folyószámla;2022-112
+2022-12-14;bevetel;Értékesítés;Póló;;"Molnár Péter";8000;Folyószámla;2022-113
+2022-12-14;bevetel;Értékesítés;Póló;;"Lukács János";8000;Folyószámla;2022-114
+2022-12-16;bevetel;Értékesítés;"Póló (+szállítási díj) - külön tételbe menjen";;"Máté Péter";9078;Folyószámla;2022-115
+2022-12-24;kiadas;Felszerelés;"Gyógyszerek EÜ csomagba";;"UP MedPharma";11499;Folyószámla;A19800139/1293/0002
+2022-12-19;kiadas;"Tárgyi eszköz";Pólók;;Printful;88275;Folyószámla;

@@ -21,6 +21,8 @@ if ($tx) {
     $pdo->prepare("DELETE FROM transactions WHERE id = ?")->execute([$id]);
     logAudit($pdo, 'delete', 'transaction', $id,
         transactionAuditLabel($tx['tx_date'], $tx['tx_type'], $tx['category'], $tx['amount']));
+    // Tagdíj befizetés törlődhetett → tagok utolsó fizetés dátumának frissítése
+    recalcMembershipPayments($pdo);
     flash('success', 'Tranzakció törölve.');
 } else {
     flash('error', 'A tranzakció nem található.');

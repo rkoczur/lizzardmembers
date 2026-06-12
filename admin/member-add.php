@@ -123,8 +123,9 @@ include __DIR__ . '/../includes/admin-header.php';
           <input type="date" name="member_since" value="<?= e($_SESSION['form_old']['member_since'] ?? '') ?>">
         </div>
         <div class="form-group">
-          <label>Utolsó fizetés</label>
-          <input type="date" name="last_payment" value="<?= e($_SESSION['form_old']['last_payment'] ?? '') ?>">
+          <label>Utolsó tagdíj fizetés</label>
+          <input type="date" value="" readonly disabled>
+          <small class="text-muted">A tranzakciós napló „Tagdíj” befizetései alapján automatikusan számolt — nem adható meg kézzel.</small>
         </div>
       </div>
 

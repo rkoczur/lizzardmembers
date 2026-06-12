@@ -73,6 +73,9 @@ if ($changes) {
     logAudit($pdo, 'update', 'transaction', $id, transactionAuditLabel($txDate, $txType, $category, $amount), $changes);
 }
 
+// Tagdíj befizetés módosulhatott → tagok utolsó fizetés dátumának frissítése
+recalcMembershipPayments($pdo);
+
 flash('success', 'Tranzakció módosítva.');
 header('Location: ' . BASE_URL . '/admin/bookkeeping.php');
 exit;

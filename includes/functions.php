@@ -116,6 +116,33 @@ function recalcUserStats(PDO $pdo): void
     END");
 }
 
+/**
+ * Az utolsó tagdíj fizetés dátumának származtatása a tranzakciós naplóból.
+ * Minden taghoz a legutóbbi „Tagdíj” kategóriájú befizetés (income) dátumát veszi,
+ * ahol a tranzakció partnere a tag teljes neve (vezetéknév + keresztnév).
+ * Csak akkor fut, ha már van tagdíj-tranzakció, hogy ne törölje a meglévő adatokat.
+ */
+function recalcMembershipPayments(PDO $pdo): void
+{
+    try {
+        $has = (int)$pdo->query("SELECT COUNT(*) FROM transactions WHERE tx_type = 'income' AND category = 'Tagdíj'")->fetchColumn();
+    } catch (Throwable) {
+        return; // a transactions tábla még nem létezik
+    }
+    if ($has === 0) return; // nincs tagdíj-tranzakció — ne írjuk felül a meglévő értékeket
+
+    $pdo->exec("
+        UPDATE users u
+        LEFT JOIN (
+            SELECT partner, MAX(tx_date) AS last_pay
+            FROM transactions
+            WHERE tx_type = 'income' AND category = 'Tagdíj'
+            GROUP BY partner
+        ) t ON t.partner = TRIM(CONCAT(COALESCE(u.lastname,''), ' ', COALESCE(u.firstname,''))) COLLATE utf8mb4_unicode_ci
+        SET u.last_payment = t.last_pay
+    ");
+}
+
 function getMemberStatus(?string $lastPayment): string
 {
     if (!$lastPayment || $lastPayment === '0000-00-00') return 'inactive';
@@ -267,9 +294,11 @@ function calculateTourPoints(array $t): int
         }
     }
 
-    // Többnapos: eltöltött éjszakák alapján
-    if ($multiDay === 'csillag')    $bonus += $campNights * 1;
-    elseif ($multiDay === 'vandor') $bonus += $campNights * 3;
+    // Többnapos: eltöltött éjszakák alapján; sátras szállásnál a tábor pontjai duplázódnak
+    // (pl. 2 éj sátor vándortábor: 2 × 3 × 2 = 12 pont)
+    $campMult = ($accom === 'sator') ? 2 : 1;
+    if ($multiDay === 'csillag')    $bonus += $campNights * 1 * $campMult;
+    elseif ($multiDay === 'vandor') $bonus += $campNights * 3 * $campMult;
 
     // Hajóátemelés
     if ($type === 'vizi') $bonus += $portages * 3;

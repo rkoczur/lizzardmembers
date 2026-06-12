@@ -434,7 +434,7 @@
   letter-spacing: .04em;
 }
 .pub-post-category-badge.hirek    { background: #e0f0ee; color: var(--primary); }
-.pub-post-category-badge.beszmolok { background: #fef3e2; color: var(--warning); }
+.pub-post-category-badge.beszmolok { background: #f59e0b3d; color: var(--warning); }
 
 /* ── Post detail ── */
 .pub-post-body {
@@ -448,7 +448,7 @@
 .pub-post-body p  { margin-bottom: 16px; }
 .pub-post-body ul, .pub-post-body ol { margin: 0 0 16px 24px; }
 .pub-post-body li { margin-bottom: 6px; }
-.pub-post-body img { max-width: 100%; border-radius: var(--radius-sm); margin: 16px 0; }
+.pub-post-body img { max-width: 100%; height: auto !important; border-radius: var(--radius-sm); margin: 16px 0; }
 .pub-post-body a { color: var(--primary); }
 
 /* ── Document list ── */

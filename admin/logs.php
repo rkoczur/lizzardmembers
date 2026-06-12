@@ -16,6 +16,20 @@ ensureEmailLogSchema($pdo);
 
 $activeTab = in_array($_GET['tab'] ?? '', ['audit', 'email'], true) ? $_GET['tab'] : 'login';
 
+// Törléshez: hány sor esik a kiválasztott időtartamokba (csak teljes adminnak)
+$purgeCounts = ['month' => 0, 'year' => 0];
+if (isAdmin()) {
+    $purgeMap = [
+        'login' => ['login_log', 'created_at'],
+        'audit' => ['audit_log', 'created_at'],
+        'email' => ['email_log', 'sent_at'],
+    ];
+    [$pTable, $pCol] = $purgeMap[$activeTab];
+    foreach (['month' => '1 MONTH', 'year' => '1 YEAR'] as $pk => $pInterval) {
+        $purgeCounts[$pk] = (int)$pdo->query("SELECT COUNT(*) FROM `$pTable` WHERE `$pCol` < DATE_SUB(NOW(), INTERVAL $pInterval)")->fetchColumn();
+    }
+}
+
 // ── Belépési napló adatok ───────────────────────────────────────────
 $filterStatus = $_GET['status'] ?? '';
 $filterEvent  = $_GET['etype']  ?? '';
@@ -187,26 +201,33 @@ include __DIR__ . '/../includes/admin-header.php';
 <div class="page-header">
   <h1>Naplók</h1>
   <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
-    <?php if ($activeTab === 'audit'): ?>
-    <a href="<?= BASE_URL ?>/actions/audit-export.php<?= $filterType || $filterAction || $aSearch !== '' ? '?'.http_build_query(array_filter(['type'=>$filterType,'action'=>$filterAction,'q'=>$aSearch])) : '' ?>" class="btn btn-ghost btn-sm">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="14" height="14">
+    <?php
+      if ($activeTab === 'audit') {
+          $exportUrl = BASE_URL . '/actions/audit-export.php' . ($filterType || $filterAction || $aSearch !== '' ? '?' . http_build_query(array_filter(['type'=>$filterType,'action'=>$filterAction,'q'=>$aSearch])) : '');
+      } elseif ($activeTab === 'login') {
+          $exportUrl = BASE_URL . '/actions/log-export.php?' . http_build_query(array_filter(['log'=>'login','q'=>$search,'etype'=>$filterEvent,'status'=>$filterStatus,'days'=>$days]));
+      } else { // email
+          $exportUrl = BASE_URL . '/actions/log-export.php?' . http_build_query(array_filter(['log'=>'email','eq'=>$eSearch,'etype2'=>$eType,'estatus'=>$eStatus,'edays'=>$eDays]));
+      }
+    ?>
+    <a href="<?= $exportUrl ?>" class="btn btn-ghost">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="16" height="16">
         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
         <polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
       </svg>
       Exportálás (CSV)
     </a>
-    <?php endif; ?>
     <?php if (isAdmin()): ?>
     <form method="post" action="<?= BASE_URL ?>/actions/log-purge.php" style="display:flex;gap:6px;align-items:center;margin:0;"
-          onsubmit="return confirm('Biztosan törlöd a kiválasztott naplóbejegyzéseket? A művelet nem visszavonható.')">
+          onsubmit="var o=this.range.options[this.range.selectedIndex]; return confirm('Biztosan törölsz ' + o.dataset.count + ' naplóbejegyzést (' + o.text.replace(/\s*\(.*$/, '') + ')? A művelet nem visszavonható.');">
       <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
       <input type="hidden" name="log" value="<?= e($activeTab) ?>">
-      <select name="range" class="form-control" style="width:auto;min-width:160px;">
-        <option value="month">1 hónapnál régebbi</option>
-        <option value="year">1 évnél régebbi</option>
+      <select name="range" class="form-control" style="width:auto;min-width:200px;">
+        <option value="month" data-count="<?= (int)$purgeCounts['month'] ?>">1 hónapnál régebbi (<?= (int)$purgeCounts['month'] ?> sor)</option>
+        <option value="year" data-count="<?= (int)$purgeCounts['year'] ?>">1 évnél régebbi (<?= (int)$purgeCounts['year'] ?> sor)</option>
       </select>
-      <button type="submit" class="btn btn-danger btn-sm">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="14" height="14">
+      <button type="submit" class="btn btn-danger">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="16" height="16">
           <polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
         </svg>
         Bejegyzések törlése

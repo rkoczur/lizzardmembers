@@ -40,6 +40,17 @@ $futureTours = $pdo->query("SELECT id, name, start_date FROM future_tours ORDER 
 
 $currentEvent = $tx['event_type'] ? ($tx['event_type'] . ':' . (int)$tx['event_id']) : '';
 
+// Importált tételeknél csak az esemény NEVE van eltárolva (event_id nélkül) — próbáljuk
+// feloldani a túra nevére, hogy a legördülőben előre ki legyen választva (mentéskor véglegesül).
+$eventResolvedByName = false;
+if ($currentEvent === '' && !empty($tx['event_label'])) {
+    $rv = resolveEventByLabel($pdo, $tx['event_label']);
+    if ($rv['type'] !== null) {
+        $currentEvent = $rv['type'] . ':' . $rv['id'];
+        $eventResolvedByName = true;
+    }
+}
+
 $pageTitle  = 'Tranzakció szerkesztése';
 $activePage = 'bookkeeping';
 include __DIR__ . '/../includes/admin-header.php';
@@ -136,8 +147,10 @@ function presetSelect(string $name, array $presets, string $current): void
             </optgroup>
             <?php endif; ?>
           </select>
-          <?php if ($currentEvent === '' && $tx['event_label']): ?>
-            <small style="color:var(--text-muted);">Korábbi esemény: <?= e($tx['event_label']) ?> (a forrás törölve)</small>
+          <?php if ($eventResolvedByName): ?>
+            <small style="color:var(--text-muted);">Esemény a neve alapján összerendelve („<?= e($tx['event_label']) ?>”) — mentéskor véglegesül.</small>
+          <?php elseif ($currentEvent === '' && $tx['event_label']): ?>
+            <small style="color:var(--text-muted);">Importált esemény neve: „<?= e($tx['event_label']) ?>” — ehhez nincs egyértelmű túra a listában. Válassz a fentiek közül az összerendeléshez.</small>
           <?php endif; ?>
         </div>
         <div class="form-group">

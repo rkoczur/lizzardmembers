@@ -26,7 +26,7 @@ $emergencyName     = trim($_POST['emergency_name']  ?? '');
 $emergencyRelation = $_POST['emergency_relation']   ?? null;
 $emergencyPhone    = trim($_POST['emergency_phone'] ?? '');
 $memberSince       = $_POST['member_since']         ?? null;
-$lastPayment       = $_POST['last_payment']         ?? null;
+// Az utolsó tagdíj fizetés a tranzakciós naplóból származtatott — nem adható meg felvételkor.
 
 $redirectBack = BASE_URL . '/admin/member-add.php';
 
@@ -42,7 +42,7 @@ $old = ['firstname' => $firstname, 'lastname' => $lastname, 'username' => $usern
         'city' => $city, 'address' => $address, 'phone' => $phone,
         'tshirt_size' => $tshirtSize ?? '', 'emergency_name' => $emergencyName,
         'emergency_relation' => $emergencyRelation ?? '', 'emergency_phone' => $emergencyPhone,
-        'member_since' => $memberSince ?? '', 'last_payment' => $lastPayment ?? ''];
+        'member_since' => $memberSince ?? ''];
 
 if (!$firstname || !$lastname || !$username || !$email || !$password) {
     redirectWithError('A keresztnév, a vezetéknév, a felhasználónév, az e-mail és a jelszó megadása kötelező.', $redirectBack, $old);
@@ -67,8 +67,8 @@ $stmt = $pdo->prepare("INSERT INTO users
     (username, email, password, role, firstname, lastname, dateofbirth,
      zipcode, city, address, phone, tshirt_size,
      emergency_name, emergency_relation, emergency_phone,
-     member_since, last_payment)
-    VALUES (?, ?, ?, 'user', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+     member_since)
+    VALUES (?, ?, ?, 'user', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 $stmt->execute([
     $username, $email, password_hash($password, PASSWORD_DEFAULT),
@@ -76,7 +76,7 @@ $stmt->execute([
     $dateofbirth ?: null, $zipcode ?: null, $city ?: null,
     $address ?: null, $phone ?: null, $tshirtSize ?: null,
     $emergencyName ?: null, $emergencyRelation ?: null, $emergencyPhone ?: null,
-    $memberSince ?: null, $lastPayment ?: null,
+    $memberSince ?: null,
 ]);
 
 $newId = (int)$pdo->lastInsertId();

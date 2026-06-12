@@ -5,7 +5,7 @@ function ensurePublicSchema(PDO $pdo): void
     $pdo->exec("
         CREATE TABLE IF NOT EXISTS posts (
             id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-            category    ENUM('hirek','beszamolok') NOT NULL DEFAULT 'hirek',
+            category    ENUM('hirek','beszmolok') NOT NULL DEFAULT 'hirek',
             title       VARCHAR(255) NOT NULL,
             slug        VARCHAR(255) NOT NULL UNIQUE,
             excerpt     TEXT,
@@ -73,6 +73,18 @@ function ensurePublicSchema(PDO $pdo): void
     ] as $sql) {
         try { $pdo->exec($sql); } catch (PDOException) {}
     }
+
+    // Poszt-kategória ENUM elgépelés javítása ('beszamolok' -> 'beszmolok') + elromlott sorok helyreállítása.
+    // A hibás ENUM miatt a beszmolok mentések korábban üres értékként tárolódtak — ezeket élményblogra állítjuk.
+    try {
+        $colType = $pdo->query("SELECT COLUMN_TYPE FROM information_schema.COLUMNS
+            WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'posts' AND COLUMN_NAME = 'category'")->fetchColumn();
+        if ($colType && stripos($colType, "'beszmolok'") === false) {
+            $pdo->exec("ALTER TABLE posts MODIFY COLUMN category VARCHAR(20) NOT NULL DEFAULT 'hirek'");
+            $pdo->exec("UPDATE posts SET category = 'beszmolok' WHERE category NOT IN ('hirek','beszmolok')");
+            $pdo->exec("ALTER TABLE posts MODIFY COLUMN category ENUM('hirek','beszmolok') NOT NULL DEFAULT 'hirek'");
+        }
+    } catch (PDOException) {}
 
     // Seed default pages if not present
     $defaultPages = [

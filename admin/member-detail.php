@@ -10,6 +10,7 @@ $ro = !isAdmin();
 
 $pdo = getDb();
 ensureUserSchema($pdo);
+recalcMembershipPayments($pdo); // utolsó tagdíj fizetés a tranzakciókból
 $id  = (int)($_GET['id'] ?? 0);
 if (!$id) {
     header('Location: ' . BASE_URL . '/admin/members.php');
@@ -225,8 +226,9 @@ include __DIR__ . '/../includes/admin-header.php';
             <input type="date" name="member_since" value="<?= e($member['member_since'] ?? '') ?>" <?= $ro ? 'readonly' : '' ?>>
           </div>
           <div class="form-group">
-            <label>Utolsó fizetés</label>
-            <input type="date" name="last_payment" value="<?= e($member['last_payment'] ?? '') ?>" <?= $ro ? 'readonly' : '' ?>>
+            <label>Utolsó tagdíj fizetés</label>
+            <input type="date" value="<?= e($member['last_payment'] ?? '') ?>" readonly disabled>
+            <small class="text-muted">A tranzakciós napló alapján automatikusan számolt (legutóbbi „Tagdíj” befizetés) — nem szerkeszthető.</small>
           </div>
           <div class="form-group">
             <label>Szerepkör</label>

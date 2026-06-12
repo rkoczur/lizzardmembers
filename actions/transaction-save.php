@@ -43,6 +43,9 @@ $pdo->prepare("INSERT INTO transactions
 $id = (int)$pdo->lastInsertId();
 logAudit($pdo, 'create', 'transaction', $id, transactionAuditLabel($txDate, $txType, $category, $amount));
 
+// Tagdíj befizetés → tagok utolsó fizetés dátumának frissítése
+recalcMembershipPayments($pdo);
+
 flash('success', 'Tranzakció rögzítve.');
 header('Location: ' . BASE_URL . '/admin/bookkeeping.php');
 exit;

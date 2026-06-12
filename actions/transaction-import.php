@@ -81,6 +81,9 @@ if ($step === 'confirm') {
         $imported++;
     }
 
+    // Tagdíj befizetések importálása után a tagok utolsó fizetés dátumának frissítése
+    recalcMembershipPayments($pdo);
+
     unset($_SESSION['tx_import_preview']);
     $_SESSION['tx_import_results'] = ['imported' => $imported, 'errors' => $preview['errors']];
 

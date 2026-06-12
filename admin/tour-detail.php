@@ -433,8 +433,9 @@ $jsInitAccom    = json_encode($tour['accommodation'] ?? '');
       if (winter.indexOf(m) !== -1) { bonus += days * 3; notes.push('Téli +' + (days*3) + ' pt'); }
     }
     // Többnapos: eltöltött éjszakák alapján
-    if (campNights > 0 && multiDay === 'csillag') { bonus += campNights*1; notes.push('Csillagtúra +' + campNights + ' pt'); }
-    else if (campNights > 0 && multiDay === 'vandor') { bonus += campNights*3; notes.push('Vándortúra +' + (campNights*3) + ' pt'); }
+    var campMult = (accom === 'sator') ? 2 : 1;
+    if (campNights > 0 && multiDay === 'csillag') { bonus += campNights*campMult; notes.push('Csillagtúra +' + (campNights*campMult) + ' pt'); }
+    else if (campNights > 0 && multiDay === 'vandor') { bonus += campNights*3*campMult; notes.push('Vándortúra +' + (campNights*3*campMult) + ' pt'); }
     if (type === 'vizi' && port > 0) { bonus += port*3; notes.push('Hajóátemelés +' + (port*3) + ' pt'); }
 
     var bonusMult = (hasAlpine && (type === 'gyalogos' || type === 'kerekparos') && alpineBase >= normalBase) ? 2 : 1;

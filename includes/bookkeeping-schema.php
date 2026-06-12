@@ -86,6 +86,31 @@ function resolveTransactionEvent(PDO $pdo, string $raw): array
     return $none;
 }
 
+/**
+ * Esemény-címke (event_label) feloldása konkrét túrára a NÉV alapján.
+ * Az importált tételeknél csak a túra neve van eltárolva (event_id nélkül) — ez összeköti őket
+ * a tényleges túra-rekorddal, ha a név egyértelműen egyezik.
+ * @return array{type: ?string, id: ?int}
+ */
+function resolveEventByLabel(PDO $pdo, string $label): array
+{
+    $none = ['type' => null, 'id' => null];
+    $label = trim($label);
+    if ($label === '') return $none;
+
+    $s = $pdo->prepare("SELECT id FROM tours WHERE name = ? LIMIT 2");
+    $s->execute([$label]);
+    $ids = $s->fetchAll(PDO::FETCH_COLUMN);
+    if (count($ids) === 1) return ['type' => 'tour', 'id' => (int)$ids[0]];
+
+    $s = $pdo->prepare("SELECT id FROM future_tours WHERE name = ? LIMIT 2");
+    $s->execute([$label]);
+    $ids = $s->fetchAll(PDO::FETCH_COLUMN);
+    if (count($ids) === 1) return ['type' => 'future_tour', 'id' => (int)$ids[0]];
+
+    return $none; // nincs egyértelmű egyezés (0 vagy több találat)
+}
+
 /** Audit-naplóhoz olvasható címke egy tranzakcióhoz. */
 function transactionAuditLabel(string $date, string $type, string $category, $amount): string
 {

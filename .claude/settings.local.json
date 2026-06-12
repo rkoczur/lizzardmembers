@@ -36,7 +36,20 @@
       "Bash(sed -n '1,6p')",
       "Bash(sed -n '2,6p' finance/konyveles_import.csv)",
       "Bash(php -l actions/log-purge.php)",
-      "Bash(php -l admin/logs.php)"
+      "Bash(php -l admin/logs.php)",
+      "Bash(php -l actions/log-export.php)",
+      "Bash(php -l includes/functions.php)",
+      "Bash(php finance/_build_book4.php)",
+      "Bash(sed -n '2,7p' finance/book4_import.csv)",
+      "Bash(awk -F';' 'NR>1 && $5!=\"\" {print $1\" | \"$4\" => \"$5}' finance/book4_import.csv)",
+      "Bash(php -l includes/public-schema.php)",
+      "Bash(php -l admin/post-detail.php)",
+      "Bash(php -l actions/post-image-upload.php)",
+      "Bash(grep -n 'pub-prose\\\\|pub-post-body\\\\|post-body\\\\|class=.*body\\\\|<?= $post\\\\['\\\\''body'\\\\''\\\\]\\\\|article\\\\|pub-article' public/post.php)",
+      "Bash(php -l includes/bookkeeping-schema.php)",
+      "Bash(php -l admin/transaction-detail.php)",
+      "Bash(php -l actions/transaction-link-events.php)",
+      "Bash(php -l admin/bookkeeping.php)"
     ]
   }
 }

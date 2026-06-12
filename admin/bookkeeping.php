@@ -14,7 +14,7 @@ ensureBookkeepingSchema($pdo);
 $flash_success = getFlash('success');
 $flash_error   = getFlash('error');
 
-$activeTab = in_array($_GET['tab'] ?? '', ['presets', 'export'], true) ? $_GET['tab'] : 'transactions';
+$activeTab = in_array($_GET['tab'] ?? '', ['presets', 'export', 'report', 'links'], true) ? $_GET['tab'] : 'transactions';
 
 // Előre definiált értékek
 $catPresets     = getTransactionPresets($pdo, 'category');
@@ -33,6 +33,9 @@ $memberNames = $pdo->query("
 // Esemény-választó forrásai
 $pastTours   = $pdo->query("SELECT id, COALESCE(NULLIF(name,''), CONCAT(country,' túra')) AS label, tour_date FROM tours ORDER BY tour_date DESC, id DESC")->fetchAll();
 $futureTours = $pdo->query("SELECT id, name, start_date FROM future_tours ORDER BY start_date DESC, id DESC")->fetchAll();
+
+// Összerendeletlen tételek száma (esemény-név van, de túra-azonosító nincs) — a tab jelzőjéhez
+$unlinkedCount = (int)$pdo->query("SELECT COUNT(*) FROM transactions WHERE event_label IS NOT NULL AND event_label <> '' AND event_id IS NULL")->fetchColumn();
 
 // ── Tranzakciók szűrése ────────────────────────────────────────────
 $fYear     = (int)($_GET['year'] ?? 0);
@@ -81,6 +84,8 @@ include __DIR__ . '/../includes/admin-header.php';
 
 <div class="tab-nav tab-nav-flush">
   <a href="?tab=transactions" class="tab-link<?= $activeTab === 'transactions' ? ' active' : '' ?>">Tranzakciók</a>
+  <a href="?tab=report" class="tab-link<?= $activeTab === 'report' ? ' active' : '' ?>">Kimutatás</a>
+  <a href="?tab=links" class="tab-link<?= $activeTab === 'links' ? ' active' : '' ?>">Összerendelések<?php if ($unlinkedCount > 0): ?> <span class="badge badge-overdue" style="font-size:10px;"><?= (int)$unlinkedCount ?></span><?php endif; ?></a>
   <a href="?tab=export" class="tab-link<?= $activeTab === 'export' ? ' active' : '' ?>">Exportálás</a>
   <a href="?tab=presets" class="tab-link<?= $activeTab === 'presets' ? ' active' : '' ?>">Előre definiált értékek</a>
 </div>
@@ -256,6 +261,287 @@ include __DIR__ . '/../includes/admin-header.php';
     <?= count($transactions) ?> tranzakció látható <?= $hasFilter ? '(szűrve)' : '' ?>
   </div>
   <?php endif; ?>
+</div>
+
+<?php elseif ($activeTab === 'report'): ?>
+<!-- ══════════════════ KIMUTATÁS ══════════════════ -->
+<?php
+// A Kimutatás az ESEMÉNY-AZONOSÍTÓ (event_type + event_id) szerint csoportosít, a nevet/dátumot a
+// túrából kérdezve le — így az importált és a kézzel kiválasztott (eltérő event_label) tételek is
+// EGY eseményként számolódnak. Az össze nem rendelt (event_id nélküli) tételek kényszerűségből még
+// a név (event_label) alapján csoportosulnak.
+$selectedEvent = trim($_GET['event'] ?? '');  // gkey: "tour:ID" / "future_tour:ID" / "L:<név>"
+
+// Túra-nevek és -dátumok azonosító szerint
+$tourById = [];
+foreach ($pdo->query("SELECT id, COALESCE(NULLIF(name,''), CONCAT(country, COALESCE(CONCAT(' – ', region), ''))) AS nm, tour_date FROM tours") as $r) {
+    $tourById[(int)$r['id']] = ['name' => $r['nm'], 'date' => $r['tour_date']];
+}
+$futById = [];
+foreach ($pdo->query("SELECT id, name AS nm, start_date AS dt FROM future_tours") as $r) {
+    $futById[(int)$r['id']] = ['name' => $r['nm'], 'date' => $r['dt']];
+}
+
+// Csoportosítás: ha van event_id → "type:id"; különben "L:<label>"
+$groups = $pdo->query("
+    SELECT
+        CASE WHEN event_id IS NOT NULL THEN CONCAT(event_type, ':', event_id)
+             ELSE CONCAT('L:', COALESCE(event_label, '')) END AS gkey,
+        MAX(event_type) AS event_type, MAX(event_id) AS event_id, MAX(event_label) AS any_label,
+        SUM(CASE WHEN tx_type='income'  THEN amount ELSE 0 END) AS income,
+        SUM(CASE WHEN tx_type='expense' THEN amount ELSE 0 END) AS expense,
+        COUNT(*) AS cnt, MIN(tx_date) AS first_tx
+    FROM transactions
+    WHERE event_id IS NOT NULL OR (event_label IS NOT NULL AND event_label <> '')
+    GROUP BY gkey
+")->fetchAll();
+
+$eventOverview = [];
+foreach ($groups as $g) {
+    $name = null; $date = null;
+    if ($g['event_id']) {
+        $info = $g['event_type'] === 'future_tour' ? ($futById[(int)$g['event_id']] ?? null) : ($tourById[(int)$g['event_id']] ?? null);
+        $name = $info['name'] ?? $g['any_label'];   // ha a túra törölve, marad a címke
+        $date = $info['date'] ?? null;
+    } else {
+        $name = $g['any_label'];
+        $rv = resolveEventByLabel($pdo, (string)$g['any_label']);
+        if ($rv['type'] === 'tour')            $date = $tourById[$rv['id']]['date'] ?? null;
+        elseif ($rv['type'] === 'future_tour') $date = $futById[$rv['id']]['date']  ?? null;
+    }
+    $eventOverview[] = [
+        'gkey'    => $g['gkey'],
+        'name'    => ($name !== null && $name !== '') ? $name : '(névtelen esemény)',
+        'date'    => $date ?: $g['first_tx'],
+        'income'  => (float)$g['income'],
+        'expense' => (float)$g['expense'],
+        'cnt'     => (int)$g['cnt'],
+    ];
+}
+// Áttekintés: esemény dátuma szerint, legújabb felül
+usort($eventOverview, fn($a, $b) => strcmp((string)$b['date'], (string)$a['date']));
+// Választó legördülő: név szerint
+$eventOptions = $eventOverview;
+usort($eventOptions, fn($a, $b) => strcasecmp((string)$a['name'], (string)$b['name']));
+
+// Kiválasztott esemény részletei (gkey alapján)
+$evRows = []; $evIncome = 0.0; $evExpense = 0.0; $selectedName = '';
+if ($selectedEvent !== '') {
+    if (str_starts_with($selectedEvent, 'L:')) {
+        $lbl = substr($selectedEvent, 2);
+        $st = $pdo->prepare("SELECT * FROM transactions WHERE event_id IS NULL AND event_label = ? ORDER BY tx_date ASC, id ASC");
+        $st->execute([$lbl]);
+        $evRows = $st->fetchAll();
+        $selectedName = $lbl;
+    } elseif (str_contains($selectedEvent, ':')) {
+        [$ty, $idStr] = explode(':', $selectedEvent, 2);
+        $idn = (int)$idStr;
+        if (in_array($ty, ['tour', 'future_tour'], true) && $idn > 0) {
+            $st = $pdo->prepare("SELECT * FROM transactions WHERE event_type = ? AND event_id = ? ORDER BY tx_date ASC, id ASC");
+            $st->execute([$ty, $idn]);
+            $evRows = $st->fetchAll();
+            $info = $ty === 'future_tour' ? ($futById[$idn] ?? null) : ($tourById[$idn] ?? null);
+            $selectedName = $info['name'] ?? '';
+        }
+    }
+    foreach ($evRows as $r) {
+        if ($r['tx_type'] === 'income') $evIncome += (float)$r['amount'];
+        else                            $evExpense += (float)$r['amount'];
+    }
+}
+$evResult = $evIncome - $evExpense;
+
+?>
+
+<div class="card" style="margin-bottom:16px;">
+  <div class="card-header"><h2>Esemény kimutatás</h2></div>
+  <div class="card-body">
+    <form method="get" class="filter-bar">
+      <input type="hidden" name="tab" value="report">
+      <div class="form-group" style="margin:0;flex:1;min-width:240px;">
+        <label style="font-size:12px;">Esemény</label>
+        <select name="event" class="form-control" onchange="this.form.submit()">
+          <option value="">— válassz eseményt —</option>
+          <?php foreach ($eventOptions as $opt): ?>
+            <option value="<?= e($opt['gkey']) ?>" <?= $selectedEvent === $opt['gkey'] ? 'selected' : '' ?>>
+              <?= e($opt['name']) ?> (<?= (int)$opt['cnt'] ?> tétel)
+            </option>
+          <?php endforeach; ?>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary btn-sm" style="align-self:flex-end;">Mutat</button>
+    </form>
+  </div>
+</div>
+
+<?php if ($selectedEvent !== ''): ?>
+  <div class="rg-4" style="margin-bottom:16px;">
+    <div class="card"><div class="card-body" style="display:flex;align-items:center;gap:16px;">
+      <div style="font-size:24px;font-weight:700;color:var(--primary);"><?= number_format((int)$evIncome, 0, ',', ' ') ?> Ft</div>
+      <div><div style="font-weight:600;font-size:14px;">Bevétel</div></div>
+    </div></div>
+    <div class="card"><div class="card-body" style="display:flex;align-items:center;gap:16px;">
+      <div style="font-size:24px;font-weight:700;color:var(--danger);"><?= number_format((int)$evExpense, 0, ',', ' ') ?> Ft</div>
+      <div><div style="font-weight:600;font-size:14px;">Kiadás</div></div>
+    </div></div>
+    <div class="card"><div class="card-body" style="display:flex;align-items:center;gap:16px;">
+      <div style="font-size:24px;font-weight:700;color:<?= $evResult >= 0 ? 'var(--primary)' : 'var(--danger)' ?>;">
+        <?= $evResult >= 0 ? '+' : '' ?><?= number_format((int)$evResult, 0, ',', ' ') ?> Ft
+      </div>
+      <div><div style="font-weight:600;font-size:14px;"><?= $evResult >= 0 ? 'Nyereség' : 'Veszteség' ?></div>
+           <div style="font-size:12px;color:var(--text-muted);"><?= count($evRows) ?> tranzakció</div></div>
+    </div></div>
+    <div class="card"><div class="card-body" style="display:flex;align-items:center;gap:16px;">
+      <div style="font-size:15px;font-weight:600;"><?= e($selectedName !== '' ? $selectedName : '—') ?></div>
+    </div></div>
+  </div>
+
+  <div class="card">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Dátum</th><th>Típus</th><th>Kategória</th><th>Leírás</th><th>Partner</th><th>Számla</th><th style="text-align:right;">Összeg</th></tr>
+        </thead>
+        <tbody>
+          <?php foreach ($evRows as $tx): ?>
+          <tr>
+            <td style="white-space:nowrap;font-size:13px;"><?= e((new DateTime($tx['tx_date']))->format('Y.m.d')) ?></td>
+            <td><span class="badge <?= $tx['tx_type']==='income' ? 'badge-active' : 'badge-inactive' ?>"><?= $tx['tx_type']==='income' ? 'Bevétel' : 'Kiadás' ?></span></td>
+            <td style="font-size:13px;"><?= e($tx['category']) ?></td>
+            <td style="font-size:13px;max-width:240px;"><?= e($tx['description']) ?></td>
+            <td style="font-size:13px;"><?= e($tx['partner']) ?></td>
+            <td style="font-size:13px;"><?= e($tx['account']) ?></td>
+            <td style="text-align:right;font-weight:600;white-space:nowrap;color:<?= $tx['tx_type']==='income' ? 'var(--primary)' : 'var(--danger)' ?>;">
+              <?= $tx['tx_type']==='income' ? '+' : '−' ?><?= number_format((float)$tx['amount'], 0, ',', ' ') ?> Ft
+            </td>
+          </tr>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<?php endif; ?>
+
+<div class="card" style="margin-top:20px;">
+  <div class="card-header"><h2>Összes esemény áttekintés</h2></div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Dátum</th><th>Esemény</th><th style="text-align:center;">Tételek</th>
+          <th style="text-align:right;">Bevétel</th><th style="text-align:right;">Kiadás</th><th style="text-align:right;">Eredmény</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php if (empty($eventOverview)): ?>
+        <tr><td colspan="6"><div class="empty-state"><div class="empty-icon">📊</div><p>Még nincs eseményhez kötött tranzakció.</p></div></td></tr>
+        <?php else: foreach ($eventOverview as $ev): $res = (float)$ev['income'] - (float)$ev['expense']; ?>
+        <tr>
+          <td style="white-space:nowrap;font-size:13px;color:var(--text-muted);"><?= $ev['date'] ? e((new DateTime($ev['date']))->format('Y.m.d')) : '—' ?></td>
+          <td style="font-size:13px;font-weight:500;"><a href="?tab=report&event=<?= urlencode($ev['gkey']) ?>"><?= e($ev['name']) ?></a></td>
+          <td style="text-align:center;font-size:13px;color:var(--text-muted);"><?= (int)$ev['cnt'] ?></td>
+          <td style="text-align:right;font-size:13px;color:var(--primary);"><?= number_format((int)$ev['income'], 0, ',', ' ') ?> Ft</td>
+          <td style="text-align:right;font-size:13px;color:var(--danger);"><?= number_format((int)$ev['expense'], 0, ',', ' ') ?> Ft</td>
+          <td style="text-align:right;font-weight:700;white-space:nowrap;color:<?= $res >= 0 ? 'var(--primary)' : 'var(--danger)' ?>;">
+            <?= $res >= 0 ? '+' : '' ?><?= number_format((int)$res, 0, ',', ' ') ?> Ft
+          </td>
+        </tr>
+        <?php endforeach; endif; ?>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<?php elseif ($activeTab === 'links'): ?>
+<!-- ══════════════════ ÖSSZERENDELÉSEK ══════════════════ -->
+<?php
+// Összerendeletlen esemény-nevek (van event_label, de nincs event_id) — kézi párosításhoz
+$unlinkedLabels = $pdo->query("
+    SELECT event_label, COUNT(*) AS cnt
+    FROM transactions
+    WHERE event_label IS NOT NULL AND event_label <> '' AND event_id IS NULL
+    GROUP BY event_label
+    ORDER BY event_label ASC
+")->fetchAll();
+
+// Túra-választó forrásai (csak nevesített túrák, mert a címke egy névvel egyezik)
+$dropTours = $pdo->query("SELECT id, name, tour_date FROM tours WHERE name IS NOT NULL AND name <> '' ORDER BY tour_date DESC, id DESC")->fetchAll();
+
+function renderEventOptions(array $dropTours, array $dropFuture, string $sel): string {
+    $h = '<option value="">— nincs / hagyd —</option>';
+    if ($dropFuture) {
+        $h .= '<optgroup label="Meghirdetett túrák">';
+        foreach ($dropFuture as $t) {
+            $v = 'future_tour:' . (int)$t['id'];
+            $d = !empty($t['start_date']) ? ' (' . (new DateTime($t['start_date']))->format('Y.m.d') . ')' : '';
+            $h .= '<option value="' . e($v) . '"' . ($sel === $v ? ' selected' : '') . '>' . e($t['name'] . $d) . '</option>';
+        }
+        $h .= '</optgroup>';
+    }
+    if ($dropTours) {
+        $h .= '<optgroup label="Korábbi túrák">';
+        foreach ($dropTours as $t) {
+            $v = 'tour:' . (int)$t['id'];
+            $d = !empty($t['tour_date']) ? ' (' . (new DateTime($t['tour_date']))->format('Y.m.d') . ')' : '';
+            $h .= '<option value="' . e($v) . '"' . ($sel === $v ? ' selected' : '') . '>' . e($t['name'] . $d) . '</option>';
+        }
+        $h .= '</optgroup>';
+    }
+    return $h;
+}
+?>
+
+<div class="card">
+  <div class="card-header">
+    <h2>Esemény-összerendelések</h2>
+    <?php if (!empty($unlinkedLabels)): ?>
+      <span class="badge badge-overdue" style="font-size:11px;"><?= count($unlinkedLabels) ?> név · <?= (int)$unlinkedCount ?> tétel</span>
+    <?php endif; ?>
+  </div>
+  <div class="card-body">
+    <?php if (empty($unlinkedLabels)): ?>
+      <div class="empty-state"><div class="empty-icon">✅</div><p>Minden eseményhez kötött tranzakció össze van rendelve konkrét túrával.</p></div>
+    <?php else: ?>
+      <p style="margin:0 0 14px;font-size:13px;color:var(--text-muted);">
+        Az alábbi (importált) esemény-nevek még nincsenek konkrét túrához kötve. Válaszd ki soronként a megfelelő túrát,
+        majd <strong>Összerendelések mentése</strong> — a párosítás az adott névvel rendelkező összes tranzakcióra érvényes lesz.
+        (A kimutatások a név alapján enélkül is működnek.)
+      </p>
+      <form method="post" action="<?= BASE_URL ?>/actions/transaction-link-events.php">
+        <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
+        <div class="table-wrap" style="max-height:560px;overflow:auto;">
+          <table>
+            <thead>
+              <tr><th>Esemény neve (importált)</th><th style="text-align:center;width:90px;">Tételek</th><th style="width:360px;">Hozzárendelt túra</th></tr>
+            </thead>
+            <tbody>
+              <?php foreach ($unlinkedLabels as $i => $ul):
+                $rv  = resolveEventByLabel($pdo, $ul['event_label']);
+                $sel = $rv['type'] !== null ? ($rv['type'] . ':' . $rv['id']) : '';
+              ?>
+              <tr>
+                <td style="font-size:13px;font-weight:500;">
+                  <?= e($ul['event_label']) ?>
+                  <input type="hidden" name="label[<?= $i ?>]" value="<?= e($ul['event_label']) ?>">
+                </td>
+                <td style="text-align:center;font-size:13px;color:var(--text-muted);"><?= (int)$ul['cnt'] ?></td>
+                <td>
+                  <select name="event[<?= $i ?>]" class="form-control" style="width:100%;">
+                    <?= renderEventOptions($dropTours, $futureTours, $sel) ?>
+                  </select>
+                  <?php if ($sel !== ''): ?><small style="color:var(--text-muted);font-size:11px;">Javasolt egyezés a név alapján előre kiválasztva.</small><?php endif; ?>
+                </td>
+              </tr>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
+        </div>
+        <div style="margin-top:14px;">
+          <button type="submit" class="btn btn-primary">Összerendelések mentése</button>
+        </div>
+      </form>
+    <?php endif; ?>
+  </div>
 </div>
 
 <?php elseif ($activeTab === 'export'): ?>

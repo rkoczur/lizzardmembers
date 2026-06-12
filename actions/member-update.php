@@ -112,15 +112,17 @@ $beforeStmt = $pdo->prepare("SELECT firstname, lastname, username, email, dateof
 $beforeStmt->execute([$memberId]);
 $before = $beforeStmt->fetch();
 
+// Megjegyzés: a last_payment (utolsó tagdíj fizetés) NEM szerkeszthető — a tranzakciós
+// naplóból származtatott (lásd recalcMembershipPayments), ezért itt nem mentjük.
 $fields = ['firstname=?','lastname=?','username=?','email=?',
            'dateofbirth=?','zipcode=?','city=?','address=?','phone=?',
            'tshirt_size=?','emergency_name=?','emergency_relation=?','emergency_phone=?',
-           'member_since=?','last_payment=?','role=?'];
+           'member_since=?','role=?'];
 $params = [$firstname, $lastname, $username, $email,
            $dateofbirth ?: null, $zipcode ?: null, $city ?: null,
            $address ?: null, $phone ?: null, $tshirtSize ?: null,
            $emergencyName ?: null, $emergencyRelation ?: null, $emergencyPhone ?: null,
-           $memberSince ?: null, $lastPayment ?: null,
+           $memberSince ?: null,
            $role];
 
 if ($avatarFilename) {
@@ -157,7 +159,7 @@ $auditFieldLabels = [
     'city' => 'Város', 'address' => 'Cím', 'phone' => 'Telefon',
     'tshirt_size' => 'Pólóméret', 'emergency_name' => 'Vészhelyzeti kapcsolattartó',
     'emergency_relation' => 'Kapcsolat típusa', 'emergency_phone' => 'Vészhelyzeti telefon',
-    'member_since' => 'Tag azóta', 'last_payment' => 'Utolsó díjfizetés', 'role' => 'Szerepkör',
+    'member_since' => 'Tag azóta', 'role' => 'Szerepkör',
 ];
 $auditNewValues = [
     'firstname' => $firstname, 'lastname' => $lastname,
@@ -166,7 +168,7 @@ $auditNewValues = [
     'city' => $city, 'address' => $address, 'phone' => $phone,
     'tshirt_size' => $tshirtSize ?: '', 'emergency_name' => $emergencyName,
     'emergency_relation' => $emergencyRelation ?: '', 'emergency_phone' => $emergencyPhone,
-    'member_since' => $memberSince ?: '', 'last_payment' => $lastPayment ?: '', 'role' => $role,
+    'member_since' => $memberSince ?: '', 'role' => $role,
 ];
 $auditChanges = [];
 foreach ($auditFieldLabels as $field => $label) {

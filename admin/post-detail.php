@@ -60,7 +60,7 @@ include __DIR__ . '/../includes/admin-header.php';
 <div class="card" style="max-width:900px;">
   <div class="card-body">
     <?php if (!$ro): ?>
-    <form method="post" enctype="multipart/form-data" action="<?= BASE_URL ?>/actions/post-save.php">
+    <form method="post" enctype="multipart/form-data" action="<?= BASE_URL ?>/actions/post-save.php" id="post-form">
       <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
       <?php if (!$isNew): ?>
         <input type="hidden" name="id" value="<?= (int)$id ?>">
@@ -132,16 +132,19 @@ include __DIR__ . '/../includes/admin-header.php';
       <div style="margin-top:24px;display:flex;gap:12px;">
         <button type="submit" class="btn btn-primary">Mentés</button>
         <?php if (!$isNew): ?>
-          <form method="post" action="<?= BASE_URL ?>/actions/post-delete.php" style="margin:0;"
-                onsubmit="return confirm('Biztosan törölni szeretnéd ezt a posztot?')">
-            <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
-            <input type="hidden" name="id" value="<?= (int)$id ?>">
-            <button type="submit" class="btn btn-danger">Törlés</button>
-          </form>
+          <button type="submit" form="post-delete-form" class="btn btn-danger">Törlés</button>
         <?php endif; ?>
         <a href="<?= BASE_URL ?>/admin/posts.php" class="btn btn-ghost">Mégse</a>
       </div>
     </form>
+    <?php if (!$isNew): ?>
+    <!-- Külön törlés-űrlap (nem ágyazható a szerkesztő űrlapba) -->
+    <form id="post-delete-form" method="post" action="<?= BASE_URL ?>/actions/post-delete.php"
+          onsubmit="return confirm('Biztosan törölni szeretnéd ezt a posztot?')">
+      <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
+      <input type="hidden" name="id" value="<?= (int)$id ?>">
+    </form>
+    <?php endif; ?>
     <?php else: ?>
     <div style="padding:8px 0;">
       <div class="form-group full" style="margin-bottom:12px;"><label>Cím</label><p style="margin:4px 0;"><?= e($post['title'] ?? '—') ?></p></div>
@@ -185,6 +188,24 @@ tinymce.init({
   relative_urls: false,
   remove_script_host: false,
   convert_urls: false,
+  // Képfeltöltés (drag&drop, beillesztés és a kép-párbeszéd „Feltöltés” füle)
+  automatic_uploads: true,
+  images_file_types: 'jpg,jpeg,png,webp,gif',
+  file_picker_types: 'image',
+  images_upload_handler: function (blobInfo, progress) {
+    return new Promise(function (resolve, reject) {
+      var fd = new FormData();
+      fd.append('file', blobInfo.blob(), blobInfo.filename());
+      fd.append('csrf_token', '<?= csrfToken() ?>');
+      fetch('<?= BASE_URL ?>/actions/post-image-upload.php', { method: 'POST', body: fd, credentials: 'same-origin' })
+        .then(function (res) { return res.json().then(function (j) { return { ok: res.ok, j: j }; }); })
+        .then(function (r) {
+          if (r.ok && r.j.location) { resolve(r.j.location); }
+          else { reject({ message: r.j.error || 'A képfeltöltés sikertelen.', remove: true }); }
+        })
+        .catch(function () { reject({ message: 'Hálózati hiba a képfeltöltés közben.', remove: true }); });
+    });
+  },
   setup: function(editor) {
     editor.on('change', function() { editor.save(); });
   }

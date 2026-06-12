@@ -66,6 +66,7 @@ function mtszBreakdownLines(array $t): array {
     $alpineElev = ($t['alpine_elevation'] !== null && $t['alpine_elevation'] !== '') ? (int)$t['alpine_elevation']  : null;
     $hours      = ($t['tour_hours'] !== null && $t['tour_hours'] !== '')            ? (float)$t['tour_hours']       : null;
     $campNights = (int)($t['camping_nights_fixed'] ?? 0);
+    $accom      = $t['accommodation'] ?? '';
     $hasAlpine  = ($alpineKm !== null && $alpineKm > 0) || ($alpineElev !== null && $alpineElev > 0);
 
     $fn = function(float $n): string {
@@ -135,12 +136,13 @@ function mtszBreakdownLines(array $t): array {
             $lines[] = $days > 1 ? "Téli pluszpont: {$days} nap × {$eff} = {$b} pont" : "Téli pluszpont: {$b} pont";
         }
     }
+    $campMult = ($accom === 'sator') ? 2 : 1; // sátras szállásnál a tábor pontjai duplázódnak
     if ($campNights > 0 && $multiDay === 'csillag') {
-        $eff = 1 * $bonusMult; $b = $campNights * $eff;
-        $lines[] = "Állótábor: {$campNights} éj × {$eff} = {$b} pont";
+        $eff = 1 * $bonusMult * $campMult; $b = $campNights * $eff;
+        $lines[] = "Állótábor: {$campNights} éj × {$eff} = {$b} pont" . ($campMult > 1 ? ' (sátor ×2)' : '');
     } elseif ($campNights > 0 && $multiDay === 'vandor') {
-        $eff = 3 * $bonusMult; $b = $campNights * $eff;
-        $lines[] = "Mozgótábor: {$campNights} éj × {$eff} = {$b} pont";
+        $eff = 3 * $bonusMult * $campMult; $b = $campNights * $eff;
+        $lines[] = "Mozgótábor: {$campNights} éj × {$eff} = {$b} pont" . ($campMult > 1 ? ' (sátor ×2)' : '');
     }
     if ($type === 'vizi' && $portages > 0) {
         $eff = 3 * $bonusMult; $b = $portages * $eff;
