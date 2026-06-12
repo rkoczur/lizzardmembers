@@ -92,7 +92,7 @@ $aSearch      = trim($_GET['aq'] ?? '');
 
 $aWhere  = ['created_at >= DATE_SUB(NOW(), INTERVAL 90 DAY)'];
 $aParams = [];
-if ($filterType && in_array($filterType, ['member','tour'], true)) {
+if ($filterType && in_array($filterType, ['member','tour','transaction'], true)) {
     $aWhere[]  = 'entity_type = ?';
     $aParams[] = $filterType;
 }
@@ -116,7 +116,7 @@ $aTotal     = (int)$aTotalStmt->fetchColumn();
 
 $actionLabels  = ['create' => 'Létrehozás', 'update' => 'Módosítás', 'delete' => 'Törlés'];
 $actionClasses = ['create' => 'badge-active', 'update' => 'badge-overdue', 'delete' => 'badge-inactive'];
-$typeLabels    = ['member' => 'Tag', 'tour' => 'Túra'];
+$typeLabels    = ['member' => 'Tag', 'tour' => 'Túra', 'transaction' => 'Tranzakció'];
 
 // ── E-mail napló adatok ────────────────────────────────────────────
 $emailLogs   = [];
@@ -323,8 +323,9 @@ include __DIR__ . '/../includes/admin-header.php';
     </div>
     <select name="type" class="form-control" style="width:auto;min-width:130px;">
       <option value="">Minden típus</option>
-      <option value="member" <?= $filterType==='member'?'selected':'' ?>>Tag</option>
-      <option value="tour"   <?= $filterType==='tour'  ?'selected':'' ?>>Túra</option>
+      <option value="member"      <?= $filterType==='member'     ?'selected':'' ?>>Tag</option>
+      <option value="tour"        <?= $filterType==='tour'       ?'selected':'' ?>>Túra</option>
+      <option value="transaction" <?= $filterType==='transaction'?'selected':'' ?>>Tranzakció</option>
     </select>
     <select name="action" class="form-control" style="width:auto;min-width:150px;">
       <option value="">Minden művelet</option>

@@ -70,7 +70,20 @@ function ensureFutureToursSchema(PDO $pdo): void {
         $pdo->exec("INSERT IGNORE INTO future_tour_gpx_files (future_tour_id, filename)
                     SELECT id, gpx_file FROM future_tours WHERE gpx_file IS NOT NULL");
     } catch (Throwable) {}
+    // Photo gallery images per future tour (label doubles as caption / alt text)
+    $pdo->exec("CREATE TABLE IF NOT EXISTS `future_tour_gallery_images` (
+        `id`              INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        `future_tour_id`  INT UNSIGNED NOT NULL,
+        `filename`        VARCHAR(255) NOT NULL,
+        `label`           VARCHAR(255) DEFAULT NULL,
+        `sort_order`      INT NOT NULL DEFAULT 0,
+        `uploaded_at`     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE KEY `uq_ftgal_filename` (`filename`),
+        FOREIGN KEY (`future_tour_id`) REFERENCES `future_tours`(`id`) ON DELETE CASCADE
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
     try { $pdo->exec("ALTER TABLE future_tours ADD COLUMN lizzardier_points INT UNSIGNED DEFAULT NULL AFTER participation_fee"); } catch (Throwable) {}
+    try { $pdo->exec("ALTER TABLE future_tours ADD COLUMN fee_includes TEXT DEFAULT NULL AFTER participation_fee"); } catch (Throwable) {}
+    try { $pdo->exec("ALTER TABLE future_tours ADD COLUMN fee_excludes TEXT DEFAULT NULL AFTER fee_includes"); } catch (Throwable) {}
     try { $pdo->exec("ALTER TABLE future_tours ADD COLUMN cover_img VARCHAR(255) DEFAULT NULL AFTER name"); } catch (Throwable) {}
     try { $pdo->exec("ALTER TABLE future_tours ADD COLUMN short_intro VARCHAR(500) DEFAULT NULL AFTER description"); } catch (Throwable) {}
     // Guest application support

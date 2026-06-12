@@ -23,7 +23,18 @@
       "Read(//c/Program Files \\(x86\\)/Microsoft/Edge/Application/**)",
       "Bash('C:/Program Files/Google/Chrome/Application/chrome.exe' --headless=new --disable-gpu --hide-scrollbars --force-device-scale-factor=1 --window-size=390,1600 --screenshot=C:/xampp/htdocs/lizzardmembers/.verify/penzugyek_m2.png http://localhost/lizzardmembers/public/penzugyek.php)",
       "Bash('C:/Program Files/Google/Chrome/Application/chrome.exe' --headless=new --disable-gpu --hide-scrollbars --window-size=1200,1600 --screenshot=C:/xampp/htdocs/lizzardmembers/.verify/penzugyek_wide.png http://localhost/lizzardmembers/public/penzugyek.php)",
-      "Bash(awk '{print $5, $NF}')"
+      "Bash(awk '{print $5, $NF}')",
+      "Bash(php -r '$c=parse_ini_file\\(\"config.ini\",true\\); echo \"host=\".$c[\"database\"][\"host\"].\" port=\".$c[\"database\"][\"port\"].\" db=\".$c[\"database\"][\"dbname\"].\" user=\".$c[\"database\"][\"user\"].\"\\\\n\";')",
+      "Bash(php -r '$c=parse_ini_file\\(\"config.ini\",true\\);$d=$c[\"database\"];$f=fopen\\(\"php://stdout\",\"w\"\\); *)",
+      "Bash(curl -s \"http://localhost/lizzardmembers/public/index.php\")",
+      "Bash(curl -s \"http://localhost/lizzardmembers/public/tour-detail.php?id=1\")",
+      "Bash(php -r ' *)",
+      "Bash(php finance/_convert.php)",
+      "Bash(php finance/_explore.php)",
+      "Bash(php finance/_explore2.php)",
+      "Bash(php finance/_build.php)",
+      "Bash(sed -n '1,6p')",
+      "Bash(sed -n '2,6p' finance/konyveles_import.csv)"
     ]
   }
 }

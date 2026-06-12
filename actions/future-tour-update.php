@@ -40,6 +40,8 @@ $accommodation = trim($_POST['accommodation'] ?? '') ?: null;
 $travel        = trim($_POST['travel']        ?? '') ?: null;
 $equipment     = trim($_POST['equipment']     ?? '') ?: null;
 $experience    = trim($_POST['experience']    ?? '') ?: null;
+$feeIncludes   = trim($_POST['fee_includes']  ?? '') ?: null;
+$feeExcludes   = trim($_POST['fee_excludes']  ?? '') ?: null;
 
 $requiresMembership = !empty($_POST['requires_membership']) ? 1 : 0;
 
@@ -87,8 +89,8 @@ if (!empty($_FILES['cover_img']['tmp_name']) && $_FILES['cover_img']['error'] ==
     }
 }
 
-$pdo->prepare("UPDATE future_tours SET name=?, description=?, short_intro=?, start_date=?, num_days=?, max_attendees=?, participation_fee=?, lizzardier_points=?, country=?, region=?, accommodation=?, travel=?, equipment=?, experience=?, status=?, disabled_standard_fields=?, requires_membership=?, cover_img=? WHERE id=?")
-    ->execute([$name, $description ?: null, $shortIntro, $startDate, $numDays, $maxAttendees, $fee, $lizzardierPoints, $country, $region, $accommodation, $travel, $equipment, $experience, $status, $disabledFieldsJson, $requiresMembership, $newCoverImg, $id]);
+$pdo->prepare("UPDATE future_tours SET name=?, description=?, short_intro=?, start_date=?, num_days=?, max_attendees=?, participation_fee=?, fee_includes=?, fee_excludes=?, lizzardier_points=?, country=?, region=?, accommodation=?, travel=?, equipment=?, experience=?, status=?, disabled_standard_fields=?, requires_membership=?, cover_img=? WHERE id=?")
+    ->execute([$name, $description ?: null, $shortIntro, $startDate, $numDays, $maxAttendees, $fee, $feeIncludes, $feeExcludes, $lizzardierPoints, $country, $region, $accommodation, $travel, $equipment, $experience, $status, $disabledFieldsJson, $requiresMembership, $newCoverImg, $id]);
 
 // Sync days: delete existing, re-insert from POST
 $pdo->prepare("DELETE FROM future_tour_days WHERE future_tour_id = ?")->execute([$id]);
@@ -181,6 +183,57 @@ if (!empty($_FILES['gpx_files']['tmp_name'])) {
         $newFile = 'gpx_ft_' . $id . '_' . time() . '_' . $i . '.gpx';
         if (move_uploaded_file($tmp, GPX_DIR . $newFile)) {
             $insGpx->execute([$id, $newFile, $sortBase + $i + 1]);
+        }
+    }
+}
+
+// Fotógaléria kezelése (csak túrakezelő jogosultsággal)
+if (canManageTours()) {
+    // 1) Feliratok mentése
+    foreach ($_POST['gallery_label'] ?? [] as $gid => $label) {
+        $gid = (int)$gid;
+        if (!$gid) continue;
+        $pdo->prepare("UPDATE future_tour_gallery_images SET label = ? WHERE id = ? AND future_tour_id = ?")
+            ->execute([trim($label) ?: null, $gid, $id]);
+    }
+    // 2) Átrendezés — a gallery_order[] a vizuális sorrendben érkezik
+    $galOrder = array_values(array_filter(array_map('intval', $_POST['gallery_order'] ?? [])));
+    if ($galOrder) {
+        $updOrder = $pdo->prepare("UPDATE future_tour_gallery_images SET sort_order = ? WHERE id = ? AND future_tour_id = ?");
+        foreach ($galOrder as $pos => $gid) {
+            $updOrder->execute([$pos, $gid, $id]);
+        }
+    }
+    // 3) Törlés (előbb a fájl, majd a sor)
+    $deleteGalIds = array_values(array_filter(array_map('intval', $_POST['delete_gallery_ids'] ?? [])));
+    if ($deleteGalIds) {
+        $gph  = implode(',', array_fill(0, count($deleteGalIds), '?'));
+        $grows = $pdo->prepare("SELECT filename FROM future_tour_gallery_images WHERE id IN ($gph) AND future_tour_id = ?");
+        $grows->execute(array_merge($deleteGalIds, [$id]));
+        foreach ($grows->fetchAll(PDO::FETCH_COLUMN) as $gfn) {
+            if ($gfn && file_exists(TOUR_GALLERY_DIR . $gfn)) @unlink(TOUR_GALLERY_DIR . $gfn);
+        }
+        $pdo->prepare("DELETE FROM future_tour_gallery_images WHERE id IN ($gph) AND future_tour_id = ?")
+            ->execute(array_merge($deleteGalIds, [$id]));
+    }
+    // 4) Új képek feltöltése (a maradék kapacitás erejéig)
+    if (!empty($_FILES['gallery_files']['tmp_name'][0])) {
+        if (!is_dir(TOUR_GALLERY_DIR)) mkdir(TOUR_GALLERY_DIR, 0755, true);
+        $galExisting = (int)$pdo->query("SELECT COUNT(*) FROM future_tour_gallery_images WHERE future_tour_id = $id")->fetchColumn();
+        $galSortBase = (int)$pdo->query("SELECT COALESCE(MAX(sort_order),0) FROM future_tour_gallery_images WHERE future_tour_id = $id")->fetchColumn();
+        $galAllowed = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/webp' => 'webp'];
+        $insGal = $pdo->prepare("INSERT IGNORE INTO future_tour_gallery_images (future_tour_id, filename, sort_order) VALUES (?, ?, ?)");
+        foreach ($_FILES['gallery_files']['tmp_name'] as $i => $tmp) {
+            if ($galExisting >= GALLERY_MAX_IMAGES) break;
+            if (($_FILES['gallery_files']['error'][$i] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK) continue;
+            $gsize = (int)($_FILES['gallery_files']['size'][$i] ?? 0);
+            $gmime = (new finfo(FILEINFO_MIME_TYPE))->file($tmp);
+            if (!isset($galAllowed[$gmime]) || $gsize > GALLERY_MAX_BYTES) continue;
+            $gFile = 'ftgal_' . $id . '_' . time() . '_' . $i . '.' . $galAllowed[$gmime];
+            if (move_uploaded_file($tmp, TOUR_GALLERY_DIR . $gFile)) {
+                $insGal->execute([$id, $gFile, $galSortBase + $i + 1]);
+                $galExisting++;
+            }
         }
     }
 }

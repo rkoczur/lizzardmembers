@@ -59,6 +59,13 @@ $gpxFilesStmt->execute([$id]);
 $gpxFiles = $gpxFilesStmt->fetchAll();
 $hasMap = !empty($gpxFiles);
 
+$galStmt = $pdo->prepare("SELECT * FROM future_tour_gallery_images WHERE future_tour_id = ? ORDER BY sort_order ASC, uploaded_at ASC");
+$galStmt->execute([$id]);
+$gallery = $galStmt->fetchAll();
+
+$coverUrl = !empty($tour['cover_img']) ? BASE_URL . '/assets/uploads/tour-covers/' . $tour['cover_img'] : '';
+$hasCover = $coverUrl !== '';
+
 $flash_success = getFlash('success');
 $flash_error   = getFlash('error');
 
@@ -103,45 +110,72 @@ include __DIR__ . '/../includes/user-header.php';
           <?php endif; ?>
         </div>
 
-        <!-- Stats grid -->
-        <div class="tour-stats-grid">
-          <div class="tour-stat-cell">
-            <div class="tour-stat-label">Kezdés</div>
-            <div class="tour-stat-value"><?= $tour['start_date'] ? formatDate($tour['start_date']) : '—' ?></div>
-          </div>
-          <div class="tour-stat-cell">
-            <div class="tour-stat-label">Időtartam</div>
-            <div class="tour-stat-value"><?= (int)$tour['num_days'] ?> nap</div>
-          </div>
-          <div class="tour-stat-cell">
-            <div class="tour-stat-label">Helyek</div>
-            <div class="tour-stat-value" style="color:<?= $spotsLeft > 0 ? 'var(--primary)' : 'var(--danger)' ?>;">
-              <?= $spotsLeft > 0 ? $spotsLeft . ' / ' . (int)$tour['max_attendees'] : 'Betelt' ?>
+        <!-- Borítókép + összegző sáv -->
+        <div class="tour-hero<?= $hasCover ? '' : ' tour-hero--nocover' ?>"<?= $hasCover ? ' style="background-image:url(\'' . e($coverUrl) . '\');"' : '' ?>>
+          <div class="tour-hero-scrim">
+            <div class="tour-hero-band">
+              <div class="tour-hero-stat">
+                <span class="ths-label">Kezdés</span>
+                <span class="ths-value"><?= $tour['start_date'] ? formatDate($tour['start_date']) : '—' ?></span>
+              </div>
+              <div class="tour-hero-stat">
+                <span class="ths-label">Időtartam</span>
+                <span class="ths-value"><?= (int)$tour['num_days'] ?> nap</span>
+              </div>
+              <div class="tour-hero-stat">
+                <span class="ths-label">Helyek</span>
+                <span class="ths-value"><?= $spotsLeft > 0 ? $spotsLeft . ' / ' . (int)$tour['max_attendees'] : 'Betelt' ?></span>
+              </div>
+              <?php if ($tour['lizzardier_points'] !== null): ?>
+              <div class="tour-hero-stat">
+                <span class="ths-label">Lizzardier</span>
+                <span class="ths-value"><?= (int)$tour['lizzardier_points'] ?> pont</span>
+              </div>
+              <?php endif; ?>
             </div>
           </div>
-          <?php if ($tour['lizzardier_points'] !== null): ?>
-          <div class="tour-stat-cell">
-            <div class="tour-stat-label">Lizzardier</div>
-            <div class="tour-stat-value" style="color:var(--primary);"><?= (int)$tour['lizzardier_points'] ?> pont</div>
-          </div>
-          <?php endif; ?>
-          <?php if ($tour['participation_fee'] !== null): ?>
-          <div class="tour-stat-cell">
-            <div class="tour-stat-label">Részvételi díj</div>
+        </div>
+
+        <?php if ($tour['participation_fee'] !== null): ?>
+        <div class="tour-fee-block">
+          <div class="tfb-header">
+            <span class="tfb-label">Részvételi díj</span>
             <?php if ((float)$tour['participation_fee'] <= 0): ?>
-              <div class="tour-stat-value">Ingyenes</div>
+              <span class="tfb-value">Ingyenes</span>
             <?php elseif ($feeDiscount > 0): ?>
-              <div style="font-size:12px;color:var(--text-muted);text-decoration:line-through;line-height:1.3;"><?= number_format((float)$tour['participation_fee'], 0, ',', ' ') ?> Ft</div>
-              <div class="tour-stat-value" style="color:var(--primary);">
-                <?= number_format((float)$tour['participation_fee'] * (1 - $feeDiscount / 100), 0, ',', ' ') ?> Ft
-                <span class="badge-discount" style="margin-left:2px;">-<?= $feeDiscount ?>%</span>
-              </div>
+              <span class="tfb-orig"><?= number_format((float)$tour['participation_fee'], 0, ',', ' ') ?> Ft</span>
+              <span class="tfb-value"><?= number_format((float)$tour['participation_fee'] * (1 - $feeDiscount / 100), 0, ',', ' ') ?> Ft
+                <span class="badge-discount">-<?= $feeDiscount ?>%</span></span>
             <?php else: ?>
-              <div class="tour-stat-value"><?= number_format((float)$tour['participation_fee'], 0, ',', ' ') ?> Ft</div>
+              <span class="tfb-value"><?= number_format((float)$tour['participation_fee'], 0, ',', ' ') ?> Ft</span>
+            <?php endif; ?>
+          </div>
+          <?php
+          $feeInclLines = !empty($tour['fee_includes']) ? array_values(array_filter(array_map('trim', explode("\n", $tour['fee_includes'])), fn($l) => $l !== '')) : [];
+          $feeExclLines = !empty($tour['fee_excludes']) ? array_values(array_filter(array_map('trim', explode("\n", $tour['fee_excludes'])), fn($l) => $l !== '')) : [];
+          if ($feeInclLines || $feeExclLines):
+          ?>
+          <div class="tfb-ie-grid">
+            <?php if ($feeInclLines): ?>
+            <div class="tfb-ie-section tfb-ie-includes<?= !$feeExclLines ? ' tfb-ie-section--only' : '' ?>">
+              <div class="tfb-ie-title">Tartalmazza</div>
+              <ul class="tfb-ie-list">
+                <?php foreach ($feeInclLines as $line): ?><li><?= e($line) ?></li><?php endforeach; ?>
+              </ul>
+            </div>
+            <?php endif; ?>
+            <?php if ($feeExclLines): ?>
+            <div class="tfb-ie-section tfb-ie-excludes<?= !$feeInclLines ? ' tfb-ie-section--only' : '' ?>">
+              <div class="tfb-ie-title">Nem tartalmazza</div>
+              <ul class="tfb-ie-list">
+                <?php foreach ($feeExclLines as $line): ?><li><?= e($line) ?></li><?php endforeach; ?>
+              </ul>
+            </div>
             <?php endif; ?>
           </div>
           <?php endif; ?>
         </div>
+        <?php endif; ?>
 
         <!-- Description -->
         <?php if (!empty($tour['description'])): ?>
@@ -280,6 +314,22 @@ include __DIR__ . '/../includes/user-header.php';
       <?php endif; ?>
     </div>
     </div><!-- /sticky-panel -->
+
+    <!-- Galéria (a jelentkezés és a térképek között) -->
+    <?php if (!empty($gallery)): ?>
+    <div class="card fdg-gallery">
+      <div class="card-header"><h2>Galéria</h2></div>
+      <div class="card-body">
+        <div class="tour-gallery-grid" id="tour-gallery">
+          <?php foreach ($gallery as $gi => $img): ?>
+          <button type="button" class="tour-gallery-thumb" data-full="<?= e(TOUR_GALLERY_URL . $img['filename']) ?>" data-caption="<?= e($img['label'] ?? '') ?>">
+            <img src="<?= e(TOUR_GALLERY_URL . $img['filename']) ?>" alt="<?= e($img['label'] ?? $tour['name']) ?>" loading="lazy">
+          </button>
+          <?php endforeach; ?>
+        </div>
+      </div>
+    </div>
+    <?php endif; ?>
 
     <?php if (!empty($gpxFiles)): ?>
     <div class="fdg-maps">

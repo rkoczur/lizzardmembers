@@ -19,3 +19,9 @@ define('FLAG_DIR',   dirname(__DIR__) . DIRECTORY_SEPARATOR . 'assets' . DIRECTO
 define('FLAG_URL',   BASE_URL . '/assets/uploads/flags/');
 define('GPX_DIR',    dirname(__DIR__) . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'gpx' . DIRECTORY_SEPARATOR);
 define('GPX_URL',    BASE_URL . '/assets/uploads/gpx/');
+define('TOUR_GALLERY_DIR', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'tour-gallery' . DIRECTORY_SEPARATOR);
+define('TOUR_GALLERY_URL', BASE_URL . '/assets/uploads/tour-gallery/');
+define('SOCIAL_DIR', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'social' . DIRECTORY_SEPARATOR);
+define('SOCIAL_URL', BASE_URL . '/assets/uploads/social/');
+define('GALLERY_MAX_IMAGES', 30);
+define('GALLERY_MAX_BYTES',  5 * 1024 * 1024);

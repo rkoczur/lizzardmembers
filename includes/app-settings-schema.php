@@ -39,6 +39,17 @@ function saveSetting(PDO $pdo, string $key, string $value): void
         ->execute([$key, $value]);
 }
 
+/**
+ * A globális (alapértelmezett) közösségi megosztási kép (OpenGraph) abszolút útvonala,
+ * vagy null, ha nincs beállítva. A hívó oldal állítja be a $ogImage változót ezzel,
+ * a public-header.php pedig abszolút URL-lé alakítja.
+ */
+function defaultSocialImage(PDO $pdo): ?string
+{
+    $f = getSetting($pdo, 'social_default_image', '');
+    return $f !== '' ? SOCIAL_URL . $f : null;
+}
+
 function getSmtpConfig(PDO $pdo): array
 {
     return [

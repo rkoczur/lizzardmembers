@@ -352,6 +352,72 @@ function initMtszOverride() {
   sync();
 }
 
+/* ===== Túra fotógaléria — egyszerű, könyvtár nélküli lightbox ===== */
+function initTourGalleryLightbox() {
+  const grid = document.getElementById('tour-gallery');
+  if (!grid) return;
+  const thumbs = Array.from(grid.querySelectorAll('.tour-gallery-thumb'));
+  if (!thumbs.length) return;
+
+  const lb = document.createElement('div');
+  lb.className = 'lightbox-backdrop';
+  lb.setAttribute('role', 'dialog');
+  lb.setAttribute('aria-modal', 'true');
+  lb.innerHTML =
+    '<button class="lb-close" type="button" aria-label="Bezárás">✕</button>' +
+    '<button class="lb-prev" type="button" aria-label="Előző">‹</button>' +
+    '<figure class="lb-figure"><img class="lb-img" alt=""><figcaption class="lb-cap"></figcaption></figure>' +
+    '<button class="lb-next" type="button" aria-label="Következő">›</button>';
+  document.body.appendChild(lb);
+
+  const imgEl = lb.querySelector('.lb-img');
+  const capEl = lb.querySelector('.lb-cap');
+  const closeBtn = lb.querySelector('.lb-close');
+  let idx = 0, lastFocus = null;
+
+  function show(i) {
+    idx = (i + thumbs.length) % thumbs.length;
+    const t = thumbs[idx];
+    imgEl.src = t.dataset.full;
+    const cap = t.dataset.caption || '';
+    capEl.textContent = cap;
+    capEl.style.display = cap ? '' : 'none';
+    imgEl.alt = cap;
+  }
+  function open(i) {
+    lastFocus = document.activeElement;
+    show(i);
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    closeBtn.focus();
+  }
+  function close() {
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  thumbs.forEach((t, i) => t.addEventListener('click', () => open(i)));
+  closeBtn.addEventListener('click', close);
+  lb.querySelector('.lb-prev').addEventListener('click', () => show(idx - 1));
+  lb.querySelector('.lb-next').addEventListener('click', () => show(idx + 1));
+  lb.addEventListener('click', e => { if (e.target === lb) close(); });
+  document.addEventListener('keydown', e => {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') close();
+    else if (e.key === 'ArrowLeft') show(idx - 1);
+    else if (e.key === 'ArrowRight') show(idx + 1);
+  });
+
+  // Mobil swipe
+  let sx = 0;
+  lb.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
+  lb.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - sx;
+    if (Math.abs(dx) > 50) show(idx + (dx < 0 ? 1 : -1));
+  }, { passive: true });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   initMemberSearch();
   initMtszOverride();
@@ -367,4 +433,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initResponsiveTables();
   initDateYearLimit();
   initHeroParallax();
+  initTourGalleryLightbox();
 });

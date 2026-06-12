@@ -1212,10 +1212,11 @@ body.embed-mode .card-body { padding-top: 12px !important; }
 
 /* Mobilon a jelentkezés kártya legyen legfelül (sorrend: CTA → részletek → térképek) */
 @media (max-width: 768px) {
-  .fdg-right { display: contents; }            /* a CTA és a térképek a grid közvetlen elemeivé válnak */
-  .fdg-cta  { order: 1; position: static; top: auto; min-width: 0; }
-  .fdg-left { order: 2; }
-  .fdg-maps { order: 3; min-width: 0; }
+  .fdg-right { display: contents; }            /* a CTA, a galéria és a térképek a grid közvetlen elemeivé válnak */
+  .fdg-cta     { order: 1; position: static; top: auto; min-width: 0; }
+  .fdg-left    { order: 2; }
+  .fdg-gallery { order: 3; min-width: 0; }
+  .fdg-maps    { order: 4; min-width: 0; }
 }
 
 /* ===== Toplista táblázat — egységes a publikus "Örökös toplista" kinézettel ===== */
@@ -1306,4 +1307,113 @@ body.embed-mode .card-body { padding-top: 12px !important; }
     letter-spacing: .06em;
     color: var(--text-muted);
   }
+}
+
+/* ===== Túra borítókép + összegző sáv (meghirdetett túra részletek) ===== */
+.tour-hero {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  min-height: 240px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: flex-end;
+}
+.tour-hero--nocover { background: linear-gradient(135deg, var(--sidebar-bg), var(--primary)); }
+.tour-hero-scrim {
+  width: 100%;
+  background: linear-gradient(to top, rgba(0,0,0,.72) 0%, rgba(0,0,0,.45) 55%, rgba(0,0,0,0) 100%);
+  padding: 60px 18px 16px;
+}
+.tour-hero-band { display: flex; flex-wrap: wrap; gap: 22px; }
+.tour-hero-stat { display: flex; flex-direction: column; min-width: 64px; }
+.tour-hero-stat .ths-label {
+  font-size: 11px; text-transform: uppercase; letter-spacing: .05em;
+  color: rgba(255,255,255,.82); font-weight: 600; margin-bottom: 2px;
+}
+.tour-hero-stat .ths-value {
+  font-size: 17px; font-weight: 800; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,.5);
+}
+/* Kiemelt részvételi díj a borító alatt */
+.tour-fee-block {
+  background: var(--primary-light); border: 1px solid var(--primary);
+  border-radius: var(--radius-sm); padding: 10px 14px; margin-bottom: 16px;
+}
+.tfb-header { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.tour-fee-block .tfb-label {
+  font-size: 11px; text-transform: uppercase; letter-spacing: .05em;
+  color: var(--primary-dark); font-weight: 700;
+}
+.tour-fee-block .tfb-value { font-size: 18px; font-weight: 800; color: var(--primary-dark); }
+.tour-fee-block .tfb-orig { font-size: 13px; color: var(--text-muted); text-decoration: line-through; }
+/* Tartalmazza / Nem tartalmazza listák */
+.tfb-ie-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+  margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--primary);
+}
+.tfb-ie-section--only { grid-column: 1 / -1; }
+.tfb-ie-title {
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .04em; margin-bottom: 5px;
+}
+.tfb-ie-includes .tfb-ie-title { color: var(--success, #16a34a); }
+.tfb-ie-excludes .tfb-ie-title { color: var(--danger, #dc2626); }
+.tfb-ie-list { list-style: none; padding: 0; margin: 0; font-size: 13px; color: var(--text); line-height: 1.55; }
+.tfb-ie-list li { display: flex; gap: 5px; align-items: flex-start; }
+.tfb-ie-includes .tfb-ie-list li::before { content: '✓'; color: var(--success, #16a34a); font-weight: 700; flex-shrink: 0; }
+.tfb-ie-excludes .tfb-ie-list li::before { content: '✕'; color: var(--danger, #dc2626); font-weight: 700; flex-shrink: 0; }
+@media (max-width: 600px) {
+  .tour-hero { min-height: 180px; }
+  .tour-hero-scrim { padding: 48px 14px 14px; }
+  .tour-hero-band { gap: 14px; }
+  .tour-hero-stat .ths-value { font-size: 15px; }
+  .tour-fee-block .tfb-value { font-size: 16px; }
+  .tfb-ie-grid { grid-template-columns: 1fr; }
+}
+
+/* ===== Túra fotógaléria (publikus + tag nézet) ===== */
+.tour-gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 8px; }
+.tour-gallery-thumb {
+  padding: 0; border: 0; cursor: pointer; border-radius: var(--radius-sm);
+  overflow: hidden; aspect-ratio: 1 / 1; background: var(--border); display: block;
+}
+.tour-gallery-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .2s; }
+.tour-gallery-thumb:hover img { transform: scale(1.05); }
+
+/* Admin galéria szerkesztő */
+.gallery-admin-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin-bottom: 4px; }
+.gallery-admin-item { border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 8px; cursor: grab; background: var(--bg); }
+.gallery-admin-item img { width: 100%; height: 110px; object-fit: cover; border-radius: 4px; display: block; margin-bottom: 6px; pointer-events: none; }
+.gallery-admin-item .gallery-admin-label { width: 100%; font-size: 12px; margin-bottom: 6px; }
+.gallery-admin-item .gallery-admin-del { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--danger); cursor: pointer; }
+.gallery-admin-item .gallery-admin-del input { width: auto; padding: 0; }
+
+/* ===== Lightbox ===== */
+.lightbox-backdrop {
+  display: none; position: fixed; inset: 0; background: rgba(0,0,0,.9);
+  z-index: 300; align-items: center; justify-content: center;
+}
+.lightbox-backdrop.open { display: flex; }
+.lightbox-backdrop .lb-figure {
+  margin: 0; max-width: 92vw; max-height: 90vh;
+  display: flex; flex-direction: column; align-items: center;
+}
+.lightbox-backdrop .lb-img { max-width: 92vw; max-height: 82vh; object-fit: contain; border-radius: 6px; }
+.lightbox-backdrop .lb-cap { color: #fff; margin-top: 10px; font-size: 14px; text-align: center; max-width: 92vw; }
+.lightbox-backdrop .lb-close,
+.lightbox-backdrop .lb-prev,
+.lightbox-backdrop .lb-next {
+  position: fixed; background: rgba(255,255,255,.15); color: #fff; border: 0;
+  cursor: pointer; border-radius: 50%; width: 46px; height: 46px; font-size: 24px; line-height: 1;
+}
+.lightbox-backdrop .lb-close:hover,
+.lightbox-backdrop .lb-prev:hover,
+.lightbox-backdrop .lb-next:hover { background: rgba(255,255,255,.28); }
+.lightbox-backdrop .lb-close { top: 16px; right: 16px; }
+.lightbox-backdrop .lb-prev { left: 16px; top: 50%; transform: translateY(-50%); }
+.lightbox-backdrop .lb-next { right: 16px; top: 50%; transform: translateY(-50%); }
+@media (max-width: 600px) {
+  .lightbox-backdrop .lb-prev, .lightbox-backdrop .lb-next { width: 40px; height: 40px; font-size: 20px; }
 }

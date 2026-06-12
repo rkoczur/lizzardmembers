@@ -1,3 +1,4 @@
+<?php require_once __DIR__ . '/version.php'; ?>
 <!DOCTYPE html>
 <html lang="hu">
 <head>
@@ -5,10 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
   <title><?= e($pageTitle ?? 'Admin') ?> — <?= APP_NAME ?></title>
-  <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/style.css">
+  <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/style.css?v=<?= APP_VERSION ?>">
   <link rel="icon" href="<?= BASE_URL ?>/assets/img/lizzard_logo.png" type="image/png">
 </head>
-<?php require_once __DIR__ . '/version.php'; ?>
 <body>
 <div class="app-wrapper">
 
@@ -75,6 +75,14 @@
         </svg>
         Statisztikák
       </a>
+      <?php if (canManageFinances()): ?>
+      <a href="<?= BASE_URL ?>/admin/bookkeeping.php" class="<?= ($activePage ?? '') === 'bookkeeping' ? 'active' : '' ?>">
+        <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path d="M4 4h16v16H4z"/><line x1="4" y1="9" x2="20" y2="9"/><line x1="9" y1="9" x2="9" y2="20"/>
+        </svg>
+        Könyvelés
+      </a>
+      <?php endif; ?>
       <a href="<?= BASE_URL ?>/admin/security.php" class="<?= in_array($activePage ?? '', ['security', 'logs', 'settings', 'tools']) ? 'active' : '' ?>">
         <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <circle cx="12" cy="12" r="3"/>

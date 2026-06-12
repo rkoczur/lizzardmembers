@@ -6,10 +6,12 @@ require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/public-schema.php';
 require_once __DIR__ . '/../includes/future-tours-schema.php';
+require_once __DIR__ . '/../includes/app-settings-schema.php';
 
 $pdo = getDb();
 ensurePublicSchema($pdo);
 ensureFutureToursSchema($pdo);
+ensureAppSettingsSchema($pdo);
 
 // Hero background image (stored in pages table with slug 'hero-image')
 $heroImgStmt = $pdo->prepare("SELECT body FROM pages WHERE slug = 'hero-image' LIMIT 1");
@@ -44,6 +46,7 @@ function huDateRange(string $startYmd, int $numDays, array $m): string {
 
 $pageTitle     = 'Lizzard Outdoor';
 $activePubPage = 'home';
+$ogImage       = defaultSocialImage($pdo);
 include __DIR__ . '/../includes/public-header.php';
 ?>
 

@@ -1,0 +1,536 @@
+﻿Kód;Elnevezés;Ország;Tájegység;"Dátum (ÉÉÉÉ-HH-NN)";Napok;"Szállás (sator/turistahaz/apartman/hotel)";"Túramód (gyalogos/kerekparos/vizi/si/barlangi/munka)";Altípus;Km;"Magashegyi km";"Szintemelkedés (m)";"Magashegyi szintemelkedés (m)";"Túraidő (óra)";"Többnapos típusa (csillag/vandor)";"Eltöltött éjszakák";Hajóátemelések;"Vendég résztvevők";"Lizzardier pont";"MTSZ pont"
+;"RPDDK02 részlet";HU;Őrség;2026-05-30;1;;gyalogos;normal;27;;300;;;;0;0;1;0;47
+558GY;"Rax - mászótábor 2026";AT;Niederösterreich;2026-05-24;3;sator;gyalogos;normal;15.2;1.8;1153;173;;csillag;2;0;6;0;60
+556GY;Vértes-tábor;HU;Vértes;2026-05-02;1;;gyalogos;normal;12.9;;361;;;;0;0;0;0;27
+544GY;"Szerbia - Tara Nemzeti Park";RS;Dinári-hegység;2026-05-01;4;hotel;gyalogos;normal;32;;1522;;;csillag;0;0;0;18;78
+456;"Petőfi Túra 70 TT";HU;Kiskunság;2026-04-25;1;;gyalogos;normal;72;;300;;16;;0;0;0;0;114
+555GY;"Gánt - bauxit bánya";HU;Vértes;2026-04-17;1;;gyalogos;normal;11.3;;277;;;;0;0;0;0;22
+452;"Zálog-bérc kör";HU;Börzsöny;2026-04-12;1;;gyalogos;normal;15;;400;;6;;0;0;1;0;31
+455;"Strázsa Honvéd TT";HU;Alföld;2026-04-11;1;;gyalogos;normal;46;;186;;12;;0;0;0;0;73
+454;"Dél-Dunántúli piros";HU;Dunántúli-domság;2026-04-08;1;;gyalogos;normal;24;;350;;6;;0;0;0;0;43
+554GY;Kő-hegyek;HU;Börzsöny;2026-04-06;1;;gyalogos;normal;14;;257;;;;0;0;0;0;26
+553GY;Margita;HU;Gödöllői-dombság;2026-04-05;1;;gyalogos;normal;11;;257;;;;0;0;0;0;22
+453;"Bükki Kéktúra jelvényszerző túramozgalom";HU;Bükk;2026-04-05;1;;gyalogos;normal;26;;1000;;7;;0;0;0;0;59
+543GY;"Kanyonok Dalmáciában: Krupa és Paklenica";HR;Velebit;2026-04-03;4;apartman;gyalogos;normal;44;;1828;;;csillag;0;0;0;20;103
+552GY;Csákányospuszta;HU;Vértes;2026-03-29;1;;gyalogos;normal;13.1;;393;;;;0;0;0;0;28
+551GY;Péliföldszentkereszt;HU;Gerecse;2026-03-28;1;;gyalogos;normal;10.2;;338;;;;0;0;0;0;22
+550GY;Széna-hegy;HU;Budai-hegység;2026-03-22;1;;gyalogos;normal;13;;397;;;;0;0;0;0;27
+549GY;"Nagy-Kopasz kör";HU;Budai-hegység;2026-03-21;1;;gyalogos;normal;9.8;;301;;;;0;0;0;0;21
+447;"Felfedező túra Nomádhoz";HU;Börzsöny;2026-03-21;1;;gyalogos;normal;17;;706;;4;;0;0;0;0;40
+448;"Kincsem 40 teljesítménytúra";HU;Tápióvidék;2026-03-21;1;;gyalogos;normal;40;;84;;10;;0;0;0;0;65
+548GY;"Normafa - János-hegy";HU;Budai-hegység;2026-03-08;1;;gyalogos;normal;10.8;;398;;;;0;0;0;0;24
+446;"Holdvilág-árok kör";HU;Pilis;2026-03-08;1;;gyalogos;normal;14;;725;;4;;0;0;1;0;36
+547GY;"Sorrento - Kakukk-hegy";HU;Budai-hegység;2026-03-07;1;;gyalogos;normal;10.2;;339;;;;0;0;0;0;22
+445;"Malom Kör – 20";HU;Börzsöny;2026-02-28;1;;gyalogos;normal;21;;722;;7;;0;0;0;0;49
+444;"Kis-Maros - Zebegény";HU;Börzsöny;2026-02-22;1;;gyalogos;normal;16;;371;;5;;0;0;0;0;34
+443;"(Jég)csepegő kövek a Mecsekben";HU;Mecsek;2026-02-21;2;turistahaz;gyalogos;normal;27.1;;1053;;10;csillag;1;0;0;6;69
+546GY;Budakeszi;HU;Budai-hegység;2026-02-14;1;;gyalogos;normal;11.6;;458;;;;0;0;0;0;30
+441;"Tanúhegyek hósipkában";HU;Balaton-felvidék;2026-01-24;1;hotel;gyalogos;normal;17;;585;;6;csillag;1;0;0;7;41
+442;"Dél-Dunántúli Kéktúra 09-es szakasz.";HU;Mecsek;2026-01-24;1;;gyalogos;normal;11;;564;;4;;0;0;1;0;31
+440;"Julianus-kilátó classic";HU;Börzsöny;2026-01-17;1;;gyalogos;normal;11;;496;;5;;0;0;0;0;29
+439;"Téli Kevély kör";HU;Pilis;2026-01-11;1;;gyalogos;normal;11;;634;;3;;0;0;0;0;32
+438;"Közép-dunántúli Piros Túra túramozgalom";HU;Bakony;2025-12-22;1;;gyalogos;normal;20;;424;;6;;0;0;0;0;41
+435;"Food Film Hikers #1";HU;Budai-hegység;2025-12-20;1;;gyalogos;normal;17;;612;;6;;0;0;4;0;41
+437;"Tortúra 65 TT";HU;Bükk;2025-12-20;1;;gyalogos;normal;64;;1849;;16;;0;0;0;0;136
+434;"Évzáró 2025";HU;Pilis;2025-12-06;2;turistahaz;gyalogos;normal;15;;616;;6;csillag;1;0;0;7;42
+433;"Edző túra - Pilistető direkt";HU;Pilis;2025-11-29;1;;gyalogos;normal;17;;882;;4;;0;0;0;0;43
+436;"Tanúhegyek nyomában 40 TT";HU;Balatonfelvidék;2025-11-29;1;;gyalogos;normal;42;;1600;;10;;0;0;0;0;95
+432;"Túra és Társas";HU;Börzsöny;2025-11-01;1;;gyalogos;normal;17;;553;;6;;0;0;3;0;37
+409;"Kovács Beáta emléktúra – Egercsehi 45";HU;Heves–Borsodi-dombság;2025-10-25;1;;gyalogos;normal;50;;1465;;11;;0;0;0;0;104
+410;"Kohászok Útja jelvényszerző túramozgalom";HU;Nógrád-Gömöri-bazaltvidék;2025-10-25;1;;gyalogos;normal;25;;790;;6;;0;0;0;0;53
+431;"Börzsönyi chill";HU;Börzsöny;2025-10-24;1;;gyalogos;normal;8;;316;;3;;0;0;2;0;18
+542GY;"Két nap Börzsöny";HU;Börzsöny;2025-10-10;2;turistahaz;gyalogos;normal;;;;;;;0;0;0;7;0
+430;"Kéktúra finish";HU;Zemplén;2025-10-05;1;;gyalogos;normal;16;;642;;5;;0;0;0;0;37
+408;"Kemence - Csóványos";HU;Börzsöny;2025-10-04;1;;gyalogos;normal;21;;799;;8;;0;0;0;0;47
+429;"Csapatépítő túravezetés";SK;"Szlovák Paradicsom";2025-09-27;2;turistahaz;gyalogos;normal;21;;883;;10;csillag;1;0;19;0;50
+405;"Közép-dunántúli Piros jelvényszerző túramozgalom";HU;Vértes;2025-09-17;1;;gyalogos;normal;21;;261;;5;;0;0;0;0;37
+404;"Geogo instant túra";HU;Kiskunság;2025-09-16;1;;gyalogos;normal;13;;67;;3;;0;0;0;0;24
+403;"Kecskeméti ""felemás"" Geogo túratervezet";HU;Kiskunság;2025-09-15;1;;gyalogos;normal;16;;100;;4;;0;0;0;0;29
+407;"Dömös #beatyesterday";HU;Pilis;2025-09-14;1;;gyalogos;normal;17;;639;;5;;0;0;0;0;38
+402;Tápiószele;HU;Tápióvidék;2025-09-13;1;;gyalogos;normal;25;;50;;6;;0;0;0;0;42
+398;"Libaterelő 27 teljesítménytúra";HU;Tápióvidék;2025-09-06;1;;gyalogos;normal;27;;460;;6;;0;0;0;0;50
+397;;HU;Mecsek;2025-08-30;1;;gyalogos;normal;40;;800;;10;;0;0;0;0;76
+428;"Csúcstámadás térdfájás miatt meghiúsult";GE;Kazbegi;2025-08-21;4;sator;gyalogos;normal;44;;2503;;22;vandor;3;0;1;0;125
+426;"Olympus, Petros csúcs, Meteórák";GR;Halkidiki;2025-08-08;4;turistahaz;gyalogos;normal;19.6;13;1229;1436;2;csillag;4;0;1;0;154
+424;"Vadvizi kajak tanfolyam";AT;"Salza völgye";2025-07-30;4;turistahaz;vizi;folyasirany;40;;0;;25;csillag;4;6;2;0;62
+396;"Kohász Kék jelvényszerző túramozgalom";HU;Bükk;2025-07-26;1;;gyalogos;normal;27;;506;;6;;0;0;0;0;51
+423;"Fehér-tavi csúcs - csúcs nélkül";SK;Magas-Tátra;2025-07-26;2;apartman;gyalogos;normal;28;;1562;;10;vandor;1;0;0;15;76
+541V;"Ipoly 2025";HU;Ipolyság;2025-07-19;2;sator;vizi;folyasirany;36;;;;;vandor;1;2;0;10;45
+421;"SUP Ipoly bejárás";HU;Ipolyság;2025-07-17;1;;vizi;folyasirany;9;;0;;3;;0;0;0;0;9
+406;"Csemő Virágünnepe 20 Teljesítménytúra";HU;Nagykunság;2025-07-05;1;;gyalogos;normal;18;;25;;4;;0;0;0;0;31
+420;Vadálló-kövek;HU;Pilis;2025-06-29;1;;gyalogos;normal;17;;1118;;4;;0;0;0;0;48
+395;"Rockenbauer Pál Dél-dunántúli Kéktúra";HU;Dunántúli-domság;2025-06-29;1;;gyalogos;normal;37;;800;;9;;0;0;0;0;72
+394;"Rockenbauer Pál Dél-dunántúli Kéktúra";HU;Dunántúli-domság;2025-06-28;1;;gyalogos;normal;41;;840;;10;;0;0;0;0;78
+393;"Rockenbauer Pál Dél-dunántúli Kéktúra";HU;Dunántúli-domság;2025-06-27;1;;gyalogos;normal;26;;250;;7;;0;0;0;0;44
+392;"Szent Iván éji Sóút Teljesítménytúra 15";HU;Alföld;2025-06-21;1;;gyalogos;normal;15;;50;;2;;0;0;0;0;27
+391;"Olasz-kaputól Olasz-kapuig";HU;Bükk;2025-06-14;1;;gyalogos;normal;16;;370;;5;;0;0;0;0;31
+419;"Pádis kevésbé látogatott részei";RO;Pádis;2025-06-07;3;apartman;gyalogos;normal;34;;1603;;16;csillag;2;0;0;15;85
+390;"BükKiNyúlsz! 40 Teljesítménytúra";HU;Bükk;2025-06-07;1;;gyalogos;normal;41;;1406;;9;;0;0;0;0;90
+401;"Mackó 20 TT";HU;Tápióvidék;2025-05-31;1;;gyalogos;normal;21;;158;;4;;0;0;0;0;35
+418;"Pilistető-Vaskapu edzés";HU;Pilis;2025-05-31;1;;gyalogos;normal;15;;1075;;3;;0;0;0;0;44
+388;"Sarokkő SE - Légből kapott túra 24 km";HU;Budai-hegység;2025-05-25;1;;gyalogos;normal;24;;620;;5;;0;0;0;0;48
+400;"Nyakvágó TT";HU;Kiskunság;2025-05-24;1;;gyalogos;normal;35;;78;;8;;0;0;0;0;57
+417;"Országos Kék Túra - Alíz kísérős";HU;Cserehát;2025-05-24;1;;gyalogos;normal;42;;837;;12;;1;0;0;0;80
+387;"Rockenbauer Pál - Dél-Dúnántúli Kéktúra";HU;Dunántúli-domság;2025-05-21;1;;gyalogos;normal;28;;513;;7;;0;0;0;0;52
+386;"Rockenbauer Pál - Dél-Dúnántúli Kéktúra";HU;Dunántúli-domság;2025-05-20;1;;gyalogos;normal;35;;441;;8;;0;0;0;0;61
+385;"Rockenbauer Pál - Dél-Dúnántúli Kéktúra";HU;Dunántúli-domság;2025-05-19;1;;gyalogos;normal;12;;114;;3;;0;0;0;0;20
+399;"Három Határ TT";HU;Kiskunság;2025-05-10;1;;gyalogos;normal;25;;107;;6;;0;0;0;0;40
+416;"Evezés az Öreg-Túron";HU;Szatmár;2025-05-02;2;sator;vizi;folyasirany;38;;0;;13;vandor;1;2;0;13;47
+415;OKT-19;HU;Cserehát;2025-04-27;1;;gyalogos;normal;20;;542;;5;;0;0;0;0;41
+384;"Petőfi túra 40 teljesítménytúra";HU;Kiskunság;2025-04-26;1;;gyalogos;normal;39;;200;;9;;0;0;0;0;63
+383;"Kohászok Útja jelvényszerző túramozgalom";HU;Bükk;2025-04-20;1;;gyalogos;normal;24;;1216;;6;;0;0;0;0;60
+414;"Nomád Vértes";HU;Vértes;2025-04-05;2;sator;gyalogos;normal;27;;748;;10;vandor;1;0;0;8;58
+381;"RP-DDK jelvényszerző túramozgalom";HU;Dunántúli-domság;2025-03-30;1;;gyalogos;normal;18;;105;;4;;0;0;0;0;29
+413;"Lilla szülinapi túrája";SK;Magas-Tátra;2025-03-29;2;turistahaz;gyalogos;normal;20;;817;;8;vandor;1;0;2;0;49
+380;"RP-DDK jelvényszerző túramozgalom";HU;Dunántúli-domság;2025-03-29;1;;gyalogos;normal;41;;499;;10;;0;0;0;0;71
+379;"RP-DDK jelvényszerző túramozgalom";HU;Dunántúli-domság;2025-03-28;1;;gyalogos;normal;14;;688;;3;;0;0;0;0;35
+412;"**Kotló Dülő";HU;Vértes;2025-03-09;1;;gyalogos;normal;12;;432;;4;;0;0;1;0;27
+378;"RP-DDK jelvényszerző túramozgalom";HU;Dunántúli-domság;2025-02-02;1;;gyalogos;normal;36;;200;;8;;0;0;0;0;61
+377;"RP-DDK jelvényszerző túramozgalom";HU;Dunántúli-domság;2025-02-01;1;;gyalogos;normal;33;;590;;7;;0;0;0;0;64
+411;"Ágasvár kör";HU;Mátra;2025-01-19;1;;gyalogos;normal;16;;616;;6;;0;0;2;1;39
+389;"Pilisi Nyárkezdő Félmaraton TT";HU;Pilis;2025-01-06;1;;gyalogos;normal;21;;690;;;;0;0;0;0;48
+557GY;"Évzáró 2024";HU;Mátra;2024-11-30;2;turistahaz;gyalogos;normal;17;;996;;;vandor;1;0;0;7;48
+376;"Kisvasúti emléktúra (Kecskemét KK-Kiskőrös KK) Teljesítménytúra";HU;Alföld;2024-11-30;1;;gyalogos;normal;60;;174;;;;0;0;0;0;93
+375;"Országos Kéktúra - Hűvösvölgy";HU;Budai-hegység;2024-11-22;1;;gyalogos;normal;22;;450;;6;;0;0;0;0;42
+374;"Rockenbauer Pál Dél-dunántúli Kéktúra jelvényszerző túramozgalom";HU;Dunántúli-domság;2024-11-17;1;;gyalogos;normal;22;;843;;5;;0;0;0;0;50
+373;"RP Dél-Dunántúli Kék és Dél-dunántúli Piros";HU;Dunántúli-domság;2024-11-16;1;;gyalogos;normal;38;;842;;8;;0;0;0;0;74
+540GY;"Cseh Paradicsom 2024";CZ;"Cseh Óriás-hegység";2024-11-01;3;apartman;gyalogos;normal;24.1;;589;;;csillag;3;0;0;15;51
+372;"Közép-dunántúli Piros Túra jelvényszerző túramozgalom";HU;Dunántúli-domság;2024-10-12;1;;gyalogos;normal;21;;250;;5;;0;0;0;0;37
+539K;"Tisza tavi bringázás és evezés";HU;Tisza-tó;2024-09-23;2;apartman;kerekparos;mout;84;;100;;;csillag;2;0;0;10;45
+538K;"Bringás reggeli #3";HU;Budai-hegység;2024-07-05;1;sator;kerekparos;mout;71;;324;;;vandor;1;0;1;8;42
+537V;"Ipoly 2024";HU;Ipolyság;2024-06-16;2;sator;vizi;folyasirany;39;;;;;vandor;1;2;0;10;48
+371;"Közép-dunántúli Piros Túra jelvényszerző túramozgalom";HU;Dunántúli-domság;2024-06-15;1;;gyalogos;normal;22;;726;;6;;0;0;0;0;48
+368;**;HU;Vértes;2024-05-26;2;turistahaz;gyalogos;normal;21;;450;;12;vandor;1;0;0;0;44
+370;"Kinizsi 100";HU;Budai-hegység;2024-05-24;1;;gyalogos;normal;100;;3155;;23;;0;0;0;0;213
+369;"Balaton kör";HU;Balaton;2024-05-19;4;apartman;kerekparos;mout;207;;715;;;vandor;4;0;0;0;123
+536GY;"Tavaszvégi nomád a Vértes lankáin";HU;Vértes;2024-05-18;2;sator;gyalogos;normal;23;;600;;;vandor;1;0;0;8;50
+535K;"Bringázz és Jógázz";HU;Pilis;2024-05-04;1;;kerekparos;mout;28;;98;;;;0;0;0;2;15
+367;"Sárga 70 teljesítménytúra";HU;Pilis;2024-05-01;1;;gyalogos;normal;70;;2100;;21;;0;0;0;0;147
+534GY;"Dürnstein – az osztrák Dunakanyar";AT;Wachau;2024-04-08;2;hotel;gyalogos;normal;28;;1400;;;csillag;1;0;0;9;71
+382;"Strázsa József Attila Emlék-teljesítménytúra 38";HU;Alföld;2024-04-05;1;;gyalogos;normal;37;;142;;8;;0;0;0;0;58
+366;"Dél-Dunántúli Piros és  RP-DDK jelvényszerző túramozgalom";HU;Dunántúli-domság;2024-03-24;1;;gyalogos;normal;33;;580;;7;;0;0;0;0;61
+365;"Koppány teljesítménytúrák 30";HU;Dunántúli-domság;2024-03-23;1;;gyalogos;normal;27;;620;;5;;0;0;0;0;53
+364;"Dunán-innen Dunán-túl 50 Teljesítménytúra";HU;Mezőföld;2024-02-24;1;;gyalogos;normal;47;;218;;10;;0;0;0;0;78
+533GY;"Télűző Farsangi túra";HU;Börzsöny;2024-02-23;2;turistahaz;gyalogos;normal;19;;465;;;csillag;1;0;4;5;45
+362;;HU;Gerecse;2024-02-18;1;;gyalogos;normal;13;;203;;;;0;0;0;0;27
+532GY;Margita;HU;Margita;2024-02-16;1;;gyalogos;normal;17;;485;;;;0;0;0;1;38
+363;"RP-DDK és DDP jelvényszerző túramozgalom";HU;Mecsek;2024-02-10;1;;gyalogos;normal;28;;780;;7;;0;0;0;0;61
+531GY;"Hópehely fogócska Galyatetőn";HU;Mátra;2024-01-27;2;turistahaz;gyalogos;normal;20.9;;1100;;;csillag;1;0;0;5;60
+361;"RP-DDK és DDP jelvényszerző túramozgalom.";HU;Dunántúli-domság;2024-01-20;1;;gyalogos;normal;26;;650;;7;;0;0;0;0;55
+530GY;"Téli Nomád - Mátra";HU;Bükk;2024-01-18;2;sator;gyalogos;normal;21;;629;;;vandor;1;0;0;11;53
+529GY;"Évzáró 2023";HU;Pilis;2024-01-01;2;turistahaz;gyalogos;normal;12.9;;389;;;csillag;1;0;0;5;34
+360;OKT;HU;Bükk;2023-12-30;2;turistahaz;gyalogos;normal;50;;1001;;13;vandor;1;0;0;0;104
+359;"Közép-dunántúli Piros Túra jelvényszerző túramozgalom";HU;Vértes;2023-12-16;1;;gyalogos;normal;21;;410;;5;;0;0;0;0;43
+358;"Bakonyi Mikulás 40 Teljesítménytúra";HU;Bakony;2023-12-12;1;;gyalogos;normal;38;;810;;9;;0;0;0;0;76
+528GY;Gombatúra;HU;Börzsöny;2023-11-27;1;;gyalogos;normal;7;;98;;;;0;0;0;1;15
+357;"Közép-dunántúli Piros Túra jelvényszerző túramozgalom";HU;Gerecse;2023-11-23;1;;gyalogos;normal;19;;305;;5;;0;0;0;0;35
+527GY;"Geológiai kalandok a Mecsekben";HU;Mecsek;2023-11-18;2;hotel;gyalogos;normal;4.5;;284;;;csillag;1;0;7;5;13
+526GY;"Túrázz és jógázz";HU;Pilis;2023-11-04;1;;gyalogos;normal;7;;155;;;;0;0;3;2;14
+354;"OKT-27/3 - Füzér-Hollóháza";HU;Zempléni-hegység;2023-10-22;1;;gyalogos;normal;13;;589;;;;0;0;0;0;31
+355;;HU;Bükk;2023-10-11;2;turistahaz;gyalogos;normal;42.5;;1355;;;vandor;1;0;0;0;94
+525GY;"Sziklatornyok között a Kis-Fátrában";SK;Kis-Fátra;2023-10-07;2;apartman;gyalogos;normal;20;;1850;;;csillag;1;0;3;10;68
+356;;HU;Bakony;2023-10-07;1;;gyalogos;normal;69.5;;2045;;16;;0;0;0;0;145
+524GY;"Kedélyes Kevélyek";HU;Pilis;2023-10-01;1;;gyalogos;normal;12;;395;;;;0;0;0;1;26
+353;"Országos Kéktúra OKT 25-26";HU;"Zempléni-hegység, Cserehát";2023-09-30;2;turistahaz;gyalogos;normal;41;;605;;;vandor;1;0;0;0;77
+352;"OKT-19 - Hollókő-Mátraverebély";HU;Cserhát;2023-09-09;2;turistahaz;gyalogos;normal;38;;1151;;;vandor;1;0;0;0;83
+351;"Országos Kéktúra - OKT-01";HU;Kőszegi-hegység;2023-09-03;1;;gyalogos;normal;23;;89;;;;0;0;0;0;39
+348;"Piros túra";HU;Gödöllői-dombság;2023-08-19;1;;gyalogos;normal;32;;470;;8;;0;0;0;0;57
+349;"Kőszeg - Szeleste (OKT)";HU;Kőszegi-hegység;2023-08-19;1;;gyalogos;normal;36;;302;;;;0;0;0;0;60
+346;"Retyezát legmagasabb csúcsai";RO;Retyezát;2023-08-04;4;turistahaz;gyalogos;normal;10;29;513;2309;24;csillag;3;0;0;18;211
+347;Gensgitschhöhe-Lasaberg;AT;Steiermark/Salzburg;2023-07-30;2;turistahaz;gyalogos;normal;3;13;260;981;;vandor;1;0;0;0;94
+522GY;Kis-Viszóka;SK;Magas-Tátra;2023-07-22;2;turistahaz;gyalogos;normal;7.4;10.6;311;1007;;vandor;1;0;3;14;95
+345;"Tiszató evezés";HU;Tisza-tó;2023-07-21;1;;vizi;allovi;12;;0;;3;;0;0;0;0;18
+350;Balatonfelvidék;HU;Balaton-felvidék;2023-07-15;1;;gyalogos;normal;47;;1175;;11;;0;0;0;0;94
+521GY;"Vadálló Kövek";HU;Visegrádi-hegység;2023-07-08;1;;gyalogos;normal;11.8;;504;;;;0;0;3;1;28
+344;"UTT 130";HU;Tisza-tó;2023-07-01;1;;kerekparos;mout;130;;118;;12;;0;0;0;0;66
+520V;"Kajakozás az RSD Dunán";HU;Duna;2023-06-18;1;;vizi;folyasirany;21;;;;;;0;0;3;4;21
+341;"Országos Kéktúra OKT-25/2";HU;Cserehát;2023-06-10;1;;gyalogos;normal;30;;610;;;;0;0;0;0;57
+342;"Nosztra 40 teljesítménytúra";HU;Börzsöny;2023-06-10;1;;gyalogos;normal;39;;1600;;8;;0;0;0;0;91
+340;;HU;Zemplén;2023-05-23;2;turistahaz;gyalogos;normal;38;;880;;;vandor;2;0;0;0;81
+339;;HU;Cserehát;2023-05-21;1;;gyalogos;normal;21;;681;;;;0;0;0;0;45
+519GY;"Hiúz Ház 1";HU;Börzsöny;2023-05-20;2;turistahaz;gyalogos;normal;14.4;;628;;;;0;0;0;7;34
+337;"Sárga 40km TT";HU;Pilis;2023-05-01;1;;gyalogos;normal;40;;1164;;9;;0;0;0;0;83
+336;"**Sárga 30km éjszakai TT";HU;Pilis;2023-04-30;1;;gyalogos;normal;31;;1000;;8;;0;0;0;0;67
+338;"Nagykovácsi - Ilona-lak";HU;Budai-hegység;2023-04-22;2;sator;gyalogos;normal;21;;500;;5;vandor;1;0;0;0;45
+335;"Kőről kőre a Velencei hegységben instant";HU;Bakony;2023-04-16;1;;gyalogos;normal;19;;511;;6;;0;0;0;0;39
+333;"Gerecse 50";HU;Gerecse;2023-04-15;1;;gyalogos;normal;49;;1555;;10;;0;0;0;0;105
+332;**;HU;Vértes;2023-04-01;2;turistahaz;gyalogos;normal;46;;886;;13;csillag;1;0;0;0;88
+334;"OKT-10 + Túravezető tanfolyam";HU;Gerecse;2023-03-31;4;turistahaz;gyalogos;normal;71;;1513;;18;vandor;4;0;0;0;149
+331;"X. Strázsa Petőfi Emlék - Teljesítménytúra 31 km";HU;Alföld;2023-03-25;1;;gyalogos;normal;31;;85;;7;;0;0;0;0;51
+328;"Zemplén Regéc-Makkoshotyka";HU;Zemplén;2023-03-18;1;;gyalogos;normal;25;;592;;;;0;0;0;0;49
+329;"Hiúz Ház";HU;Börzsöny;2023-03-18;2;turistahaz;gyalogos;normal;27;;1223;;12;csillag;1;0;0;0;66
+330;"Kincsem 40 Teljesítménytúra";HU;Tápióvidék;2023-03-18;1;;gyalogos;normal;40;;84;;6;;0;0;0;0;65
+327;;HU;Zemplén;2023-02-25;1;;gyalogos;normal;15;;493;;;;0;0;0;0;35
+324;"Kitörés 25";HU;Budai-hegység;2023-02-11;1;;gyalogos;normal;23;;951;;6;;0;0;0;0;57
+325;"Szlovák Paradicsom Télen";SK;"Slovensky raj";2023-02-11;2;turistahaz;gyalogos;normal;21;;817;;10;csillag;2;0;0;11;56
+326;"Téli Margita 40 TT";HU;"Gödöllői dombság";2023-02-11;1;;gyalogos;normal;40;;650;;9;;0;0;0;0;76
+518GY;"Túra a szaunába";HU;Budai-hegység;2023-02-02;1;;gyalogos;normal;13.6;;420;;;;0;0;0;2;32
+323;**;HU;Budai-hegység;2023-01-29;1;;gyalogos;normal;17;;453;;4;;0;0;0;0;38
+320;"Pest Megyei Piros jelvényszerző túramozgalom";HU;"Pesti síkság";2023-01-28;1;;gyalogos;normal;25;;60;;7;;0;0;0;0;45
+321;;HU;Kőszegi-hegység;2023-01-28;1;;gyalogos;normal;15;;296;;;;0;0;0;0;31
+322;**;HU;Budai-hegység;2023-01-27;1;;gyalogos;normal;17;;692;;4;;0;0;0;0;42
+313;"Bartina Maraton Teljesítménytúra";HU;Szekszárdi-dombság;2023-01-21;1;;gyalogos;normal;42;;1036;;9;;0;0;0;0;87
+319;"Nomád Börzsöny - Magosfa";HU;Börzsöny;2023-01-21;2;sator;gyalogos;normal;14;;800;;8;vandor;1;0;0;11;46
+318;"Országos Kéktúra OKT-011";HU;Börzsöny;2023-01-14;1;;gyalogos;normal;12;;490;;5;;0;0;0;2;31
+317;"**Cicőke kör Kemencéről";HU;Börzsöny;2023-01-08;1;;gyalogos;normal;17;;453;;6;;0;0;0;0;38
+312;"Börzsöny Kapuja 35 TT";HU;Börzsöny;2023-01-07;1;;gyalogos;normal;36;;919;;7;;0;0;0;0;75
+316;"Újévi bemelegítés";HU;Budai-hegység;2023-01-07;1;;gyalogos;normal;12;;437;;6;;0;0;6;0;30
+315;"**Szenteste előtti Vadálló kövek";HU;Pilis;2022-12-24;1;;gyalogos;normal;12;;586;;5;;0;0;0;0;33
+311;"Pest Megyei Piros jelvényszerző túramozgalom";HU;Börzsöny;2022-12-22;1;;gyalogos;normal;18;;510;;6;;0;0;0;0;40
+310;Királyrét-Csóványos;HU;Börzsöny;2022-12-17;1;;gyalogos;normal;17;;816;;;;0;0;0;0;45
+314;**;HU;Budai-hegység;2022-12-10;1;;gyalogos;normal;16;;540;;5;;0;0;2;0;38
+517GY;"Évzáró 2022";HU;Börzsöny;2022-12-09;2;turistahaz;gyalogos;normal;12.2;;346;;;csillag;1;0;0;5;32
+309;"OKT-19/1 - Becske-Cserhátsurány";HU;Cserhát;2022-11-27;1;;gyalogos;normal;17;;512;;;;0;0;0;0;36
+308;"Évadzáró gyalogtúra a Nyakason TT";HU;Budai-hegység;2022-11-19;1;;gyalogos;normal;26;;516;;5;;0;0;0;0;49
+516GY;"Nomád Bakony - ősz";HU;Bakony;2022-11-13;2;sator;gyalogos;normal;33;;621;;;;0;0;2;8;62
+306;"Aranyló ősz teljesítménytúra";HU;Mecsek;2022-11-06;1;;gyalogos;normal;22;;730;;5;;0;0;0;0;48
+305;"Zselic kör";HU;Zselic;2022-11-05;1;;gyalogos;normal;35;;670;;7;;0;0;0;0;66
+303;"Skuta (2532 m) - Kemperla";SI;Kamnik;2022-10-31;2;turistahaz;gyalogos;normal;5;8;615;1205;12;vandor;1;0;2;0;98
+304;"OKT-25/1 - Bódvaszilas-Tornabarakony";HU;Cserehát;2022-10-31;1;;gyalogos;normal;19;;456;;;;0;0;0;0;38
+302;"Kovács Beáta emléktúra";HU;Bükk;2022-10-29;1;;gyalogos;normal;47;;1375;;10;;0;0;0;0;98
+301;"Boszorkánykő, Salgó vára";HU;Karancs–Medves;2022-10-23;1;;gyalogos;normal;12;;320;;;;0;0;0;0;24
+300;"Mindszenty József teljesítmény- és emléktúra a Cserhátban 40";HU;Naszály;2022-10-22;1;;gyalogos;normal;40;;1022;;8;;0;0;0;0;80
+299;"OKT-20 - Mátraverebély-Mátraszentistván";HU;Mátra;2022-10-19;1;;gyalogos;normal;12;;746;;;;0;0;0;0;33
+297;"Cartographia - Budai Kilátók Teljesítménytúra";HU;Budai-hg;2022-10-08;1;;gyalogos;normal;23;;700;;5;;0;0;0;0;49
+298;"Gesause #4 - végre Buchstein";AT;"Gesäuse Nemzeti Park";2022-10-08;1;turistahaz;gyalogos;normal;15;6;850;900;10;csillag;1;0;0;12;95
+296;"3 Tó teljesítménytúra";HU;Alföld;2022-09-24;1;;gyalogos;normal;32;;132;;7;;0;0;0;0;51
+295;"Tóról-tóra-túra 50 teljesítménytúra";HU;Alföld;2022-09-17;1;;gyalogos;normal;50;;86;;10;;0;0;0;0;80
+294;"Országos Kéktúra OKT-02";HU;Balatonfelvidék;2022-09-03;3;turistahaz;gyalogos;normal;77;;641;;;vandor;3;0;0;0;137
+293;"Esztergom - Róka szikla";HU;Visegrádi-hegység;2022-08-28;1;;gyalogos;normal;20;;707;;;;0;0;0;0;44
+515V;"Soroksári evezés";HU;Duna;2022-08-27;1;;vizi;folyasirany;20;;;;;;0;0;1;4;20
+288;"Városnapi Teljesítménytúra Sülysáp";HU;Tápióvidék;2022-08-27;1;;gyalogos;normal;36;;365;;7;;0;0;0;0;61
+292;"Dunakanyar evezés";HU;Duna;2022-08-27;1;;vizi;folyasirany;18;;0;;;;0;0;0;0;18
+291;"Evezés a Rábán";HU;Rába;2022-08-20;1;;vizi;folyasirany;21;;0;;;;0;0;0;0;21
+514GY;"Tátra - Bélai havasok";SK;Bélai-havasok;2022-08-13;2;turistahaz;gyalogos;normal;12.6;11.1;780;1260;;csillag;1;0;0;14;120
+287;"Piros túra";HU;"Pesti síkság";2022-08-13;1;;gyalogos;normal;29;;140;;7;;0;0;0;0;46
+286;**;HU;Bakony/Vértes;2022-08-05;3;apartman;gyalogos;normal;89;;1812;;21;vandor;2;0;0;0;176
+290;;IT;Dolomitok;2022-08-03;3;turistahaz;gyalogos;normal;2;31;0;1740;;vandor;3;0;0;0;184
+289;"Szádelő + Aggteleki barlang";HU;Gömör-Tornai-karszt;2022-07-30;2;apartman;gyalogos;normal;9;;492;;5;csillag;2;0;0;0;25
+285;"Országos Kéktúra OKT-23";HU;Upponyi-hegység;2022-07-22;3;apartman;gyalogos;normal;52;;1739;;;vandor;2;0;0;0;119
+284;"Nagykovácsi - Nagy-Kopasz";HU;"Budai hg";2022-07-17;1;;gyalogos;normal;17;;582;;;;0;0;0;0;37
+283;"Piros túra";HU;"Pesti síkság";2022-07-16;1;;gyalogos;normal;34;;55;;8;;0;0;0;0;55
+282;Likas-kő;HU;Velencei-hegység;2022-07-03;1;;gyalogos;normal;11;;316;;;;0;0;0;0;23
+513GY;"Nomád Keszthely";HU;Keszthelyi-hegység;2022-06-25;2;sator;gyalogos;normal;14.7;;368;;;vandor;1;0;0;8;32
+281;"OKT-24 - Putnok-Bódvaszilas";HU;Aggteleki-karszt;2022-06-24;4;apartman;gyalogos;normal;66;;1588;;;vandor;3;0;0;0;140
+512V;"Ipoly 2022";HU;Ipolyság;2022-06-04;2;sator;vizi;folyasirany;62;;;;;vandor;2;3;1;12;77
+280;"Nagykovácsi - Ilona-lak";HU;Budai-hegység;2022-05-28;1;;gyalogos;normal;12;;326;;;;0;0;0;0;25
+279;"OKT-20: Mátraszentistván - Mátraháza,  OKT-21: Mátraháza - Sirok";HU;Mátra;2022-05-22;3;turistahaz;gyalogos;normal;39;;1359;;;vandor;2;0;0;0;92
+278;Málna-bérc;HU;Börzsöny;2022-05-21;1;;gyalogos;normal;12;;603;;;;0;0;0;0;30
+511GY;"A Zemplén bércein";HU;Zemplén;2022-05-20;2;turistahaz;gyalogos;normal;31;;1170;;;csillag;1;0;0;10;71
+277;"Pilisi vándorlás/4. szakasz - Pomáz-Pilisszentlászló";HU;Visegrádi-hegység;2022-05-08;1;;gyalogos;normal;23;;800;;;;0;0;0;0;51
+510GY;"Nomád Mecsek";HU;Mecsek;2022-05-07;2;sator;gyalogos;normal;19.1;;480;;;vandor;1;0;0;8;41
+509GY;"Ultrabalaton 2022";HU;Balatonfelvidék;2022-05-01;2;apartman;gyalogos;normal;21;;50;;;csillag;1;0;1;12;40
+275;"Pilistető - Dobogókő";HU;Pilis;2022-05-01;1;;gyalogos;normal;18;;750;;6;;0;0;0;0;42
+276;"Kohászok útja jelvényszerző túramozgalom";HU;Bükk;2022-04-30;1;;gyalogos;normal;31;;851;;8;;0;0;0;0;64
+274;;HU;Pilis;2022-04-24;1;;gyalogos;normal;10;;612;;;;0;0;1;0;27
+273;"Bölcső-hegy, Holdvilág-árok";HU;Visegrádi-hegység;2022-04-23;1;;gyalogos;normal;10;;432;;;;0;0;1;0;24
+272;"Bükk hegyhát";HU;Bükk;2022-04-17;1;;gyalogos;normal;11;;345;;;;0;0;6;0;23
+271;"Pest Megyei Piros jelvényszerző túramozgalom";HU;Cserhát;2022-04-16;1;;gyalogos;normal;28;;300;;6;;0;0;0;0;48
+508GY;"Erdély felfedezetlen ösvényein: Csoklovina";RO;Kárpátok;2022-04-15;4;hotel;gyalogos;normal;24;6;800;352;;csillag;3;0;5;15;87
+270;"Túravezető tanfolyam terepgyakorlat - Csákányospuszta körtúra";HU;Vértes;2022-04-10;1;;gyalogos;normal;10;;320;;5;;0;0;0;0;21
+269;"Túravezető tanfolyam terepgyakorlat - Normafa körtúra";HU;"Budai hg";2022-04-03;1;;gyalogos;normal;13;;330;;6;;0;0;0;0;26
+268;"Túravezető tanfolyam terepgyakorlat - Csillebérc körtúra";HU;"Budai hg";2022-04-02;1;;gyalogos;normal;10;;260;;5;;0;0;0;0;20
+267;"""Kisamerika""";HU;Bükkalja;2022-03-27;1;;gyalogos;normal;17;;378;;;;0;0;1;0;33
+507GY;"Országos Kék túra OKT-15";HU;Pilis;2022-03-15;1;;gyalogos;normal;22.8;;1060;;;;0;0;0;2;55
+263;"Pest Megyei Piros jelvényszerző túramozgalom";HU;Alföld;2022-03-14;1;;gyalogos;normal;18;;30;;4;;0;0;0;0;31
+266;"OKT-18/3 - Becske-Felsőpetény";HU;Cserhát;2022-03-13;1;;gyalogos;normal;25;;545;;;;0;0;0;0;48
+262;"Pest Megyei Piros jelvényszerző túramozgalom";HU;Alföld;2022-03-12;1;;gyalogos;normal;37;;651;;8;;0;0;0;0;69
+265;"OKT-09/3 - Jásd-Bakonykúti";HU;Bakony;2022-03-12;1;;gyalogos;normal;26;;543;;;;0;0;0;0;50
+261;"""Budai kilátások 20"" Instant Túra";HU;"Budai hg";2022-03-06;1;;gyalogos;normal;21;;680;;6;;0;0;0;0;45
+264;"Óbarok - Lófingató hegy";HU;Gerecse;2022-02-27;1;;gyalogos;normal;12;;280;;;;0;0;0;0;27
+506GY;"Burok völgy";HU;Bakony;2022-02-20;2;turistahaz;gyalogos;normal;19;;499;;;csillag;1;0;1;6;45
+260;;HU;Medves-fennsík;2022-02-19;1;;gyalogos;normal;16;;396;;;;0;0;0;0;35
+259;;HU;Pilis;2022-02-19;1;;gyalogos;normal;21;;700;;6;;0;0;0;0;49
+257;Lábatlan;HU;Gerecse;2022-02-12;1;;gyalogos;normal;24;;660;;5;;0;0;0;0;52
+258;"Garadna - Diósgyőr";HU;Bükk;2022-02-12;2;turistahaz;gyalogos;normal;30;;1308;;;vandor;2;0;0;0;83
+256;"Túristaháztól túristaházig";HU;Börzsöny;2022-02-05;1;;gyalogos;normal;10;;311;;4;;0;0;0;0;24
+253;"Pest Megyei Piros jelvényszerző túramozgalom";HU;Csepel-sziget;2022-01-29;1;;gyalogos;normal;27;;20;;6;;0;0;0;0;47
+505GY;"Prédikáló szék Gabival";HU;Visegrádi-hegység;2022-01-22;1;;gyalogos;normal;15;;422;;;;0;0;4;1;34
+255;"Nomád Börzsöny";HU;Börzsöny;2022-01-22;2;sator;gyalogos;normal;25;;900;;11;vandor;1;0;0;11;65
+254;;HU;Vértes;2022-01-09;1;;gyalogos;normal;9;;251;;;;0;0;0;0;22
+251;"Téli Kőrös TT 30";HU;Alföld;2022-01-08;1;;gyalogos;normal;30;;79;;6;;0;0;0;0;53
+252;"Markazi körtúra";HU;Mátra;2022-01-08;1;;gyalogos;normal;14;;525;;5;;0;0;1;1;35
+250;"Évnyitó túra Gabival";HU;Bükk;2022-01-01;1;;gyalogos;normal;13;;534;;;;0;0;0;2;33
+247;**;HU;Gerecse;2021-12-31;1;;gyalogos;normal;11;;500;;4;;0;0;0;0;30
+249;"Szilvásvárad - Szalajka-völgy";HU;Bükk;2021-12-31;1;;gyalogos;normal;8;;226;;;;0;0;0;0;20
+246;"Piliscsabai sziklák";HU;Pilis;2021-12-28;1;;gyalogos;normal;13;;507;;;;0;0;0;0;33
+245;"OKT-03/2 - Zalaszántó-Sümeg";HU;Keszthelyi-hegység;2021-12-25;1;;gyalogos;normal;20;;331;;;;0;0;0;0;40
+248;"Rákóczi jelvényszerző túramozgalom a Mátrában";HU;Mátra;2021-12-22;1;;gyalogos;normal;9;;805;;2;;0;0;0;0;33
+244;"Bakony_OKT-09/2 - Jásd-Zirc";HU;Bakony;2021-12-19;1;;gyalogos;normal;17;;349;;;;0;0;0;0;35
+504GY;"Budai hegyek - Nóri";HU;Budai-hegység;2021-12-13;1;;gyalogos;normal;11.8;;450;;;;0;0;0;1;30
+242;"Anna-völgy - Bölcső-hegy";HU;Visegrádi-hegység;2021-12-12;1;;gyalogos;normal;8;;500;;3;;0;0;0;0;25
+243;;HU;Bükk;2021-12-12;1;;gyalogos;normal;12;;336;;;;0;0;0;0;28
+241;"Pilisi vándorlás/4-5. szakasz";HU;Visegrádi-hegység;2021-12-05;1;;gyalogos;normal;14;;381;;;;0;0;0;0;32
+239;"Apáthy Szikla";HU;"Budai hg";2021-12-04;1;;gyalogos;normal;10;;300;;3;;0;0;0;0;24
+240;"Tokod - Mogyorósbánya";HU;Gerecse;2021-12-04;1;;gyalogos;normal;15;;686;;;;0;0;0;0;39
+503GY;"Évzáró 2021";HU;Budai-hegység;2021-12-03;1;;gyalogos;normal;11.1;;334;;;;0;0;0;1;26
+238;"Ködös Börzsöny TT";HU;Börzsöny;2021-11-27;1;;gyalogos;normal;29;;1021;;6;;0;0;0;0;64
+237;"Pásztó - Ágasvár";HU;Mátra;2021-11-21;1;;gyalogos;normal;21;;864;;;;0;0;0;0;49
+502GY;"Őszi Nomád Mátra";HU;Mátra;2021-11-14;2;sator;gyalogos;normal;24.3;;799;;;vandor;1;0;2;8;55
+236;"Bükk - Bükk 900-as csúcsai 2. rész";HU;Bükk;2021-11-13;1;;gyalogos;normal;12;;496;;;;0;0;0;0;28
+501GY;"Spartacus Classic";HU;Pilis;2021-11-07;1;;gyalogos;normal;13;;422;;;;0;0;4;1;28
+235;"Országos Kéktúra OKT-3";HU;Zalai-dombvidék;2021-11-06;1;;gyalogos;normal;10;;265;;4;;0;0;0;0;20
+500GY;Nagy-Kopasz;HU;Budai-hegység;2021-11-02;1;;gyalogos;normal;13.4;;354;;;;0;0;0;1;27
+232;Pilistető;HU;Pilis;2021-11-01;1;;gyalogos;normal;8;;500;;2;;0;0;0;0;22
+231;"Kemence környékén";HU;Börzsöny;2021-10-31;1;;gyalogos;normal;13;;600;;5;;0;0;0;0;32
+234;OKT-08/2;HU;Bakony;2021-10-31;1;;gyalogos;normal;20;;565;;;;0;0;0;0;41
+230;"Kovács Beáta Emléktúra - Egercsehi 45";HU;Bükk;2021-10-30;1;;gyalogos;normal;47;;1375;;10;;0;0;0;0;98
+233;"Sárga sáv és LevenDuna - jelzésfestés";HU;"Érdi dombság";2021-10-27;1;;munka;;0;;0;;9;;0;0;0;0;63
+229;"Herend - Bakonybél";HU;Bakony;2021-10-24;1;;gyalogos;normal;22;;600;;5;;0;0;0;0;45
+228;"OKT-06- Badacsonytördemic - Nagyvázsony";HU;Balaton-felvidék;2021-10-18;2;apartman;gyalogos;normal;51;;1604;;;vandor;1;0;1;0;112
+227;"OKT-11/3 - Szárliget-Bánya-hegyi erdészház";HU;Gerecse;2021-10-14;1;;gyalogos;normal;36;;871;;;;0;0;0;0;71
+226;"Bakonyi Barangolás 70 TT";HU;Bakony;2021-10-09;1;;gyalogos;normal;69;;2045;;15;;0;0;0;0;144
+499GY;"Ultrabalaton 2021";HU;Balaton;2021-10-02;2;apartman;gyalogos;normal;20;;100;;;csillag;1;0;0;10;39
+225;"OKT-23/1 - Szarvaskő-Bélapátfalva";HU;Bükk;2021-09-26;1;;gyalogos;normal;17;;777;;;;0;0;0;0;41
+223;"3 Tó TT";HU;Kiskunság;2021-09-25;1;;gyalogos;normal;30;;114;;7;;0;0;0;0;47
+224;"Sucha Bela classic";SK;"Szlovák Paradicsom";2021-09-25;1;;gyalogos;normal;17;;638;;;;0;0;0;0;38
+221;"Kohászok útja";HU;Bükk;2021-09-18;1;;gyalogos;normal;15;;359;;4;;0;0;0;0;30
+219;"Zebegény - Törökmező";HU;Börzsöny;2021-09-11;1;;gyalogos;normal;24;;800;;6;;0;0;0;0;52
+217;"Országos Kéktúra - OKT13";HU;Pilis;2021-08-28;1;;gyalogos;normal;24;;700;;6;;0;0;0;0;50
+214;"Országos Kéktúra - OKT-16";HU;Pilis;2021-08-21;1;;gyalogos;normal;25;;610;;8;;0;0;0;0;50
+215;"Csákberény IVV túra 30";HU;Vértes;2021-08-14;1;;gyalogos;normal;32;;600;;7;;0;0;0;0;60
+498GY;Poporó;HU;Bükk;2021-08-13;2;apartman;gyalogos;normal;11;;360;;;csillag;1;0;0;6;25
+216;"Békás szoros környéke";RO;"Gyergyói hegyek";2021-08-10;4;turistahaz;gyalogos;normal;45;7;2612;607;;csillag;5;0;0;0;170
+213;"Evezés a Rábán";HU;Rába;2021-08-05;3;sator;vizi;folyasirany;58;;0;;;vandor;3;1;0;0;70
+212;"OKT 08/1";HU;Bakony;2021-07-25;1;;gyalogos;normal;21;;413;;;;0;0;0;0;40
+497V;"Ipoly 2021";HU;Ipolyság;2021-07-24;2;sator;vizi;folyasirany;48;;;;;vandor;1;2;1;12;57
+211;"Eger - Pereces";HU;Bükk;2021-07-22;1;;gyalogos;normal;77;;3200;;17;;2;0;0;0;180
+210;"Nagybörzsöny - Szob";HU;Börzsöny;2021-07-18;1;;gyalogos;normal;20;;630;;4;;0;0;0;0;43
+209;"Diósjenő - Nagybörzsöny";HU;Börzsöny;2021-07-10;1;;gyalogos;normal;42;;1200;;9;;1;0;0;0;87
+207;"Bakonykoppány - Vinye";HU;Bakony;2021-07-01;1;;gyalogos;normal;22;;670;;5;;0;0;0;0;46
+496GY;"(Nem)Pünkösd a Dunakanyarban";HU;Visegrádi-hegység;2021-06-27;1;;gyalogos;normal;15;;433;;;;0;0;5;1;31
+208;Felsőpetény-Szendehely;HU;Cserhát;2021-06-27;1;;gyalogos;normal;21;;717;;;;0;0;0;0;46
+206;"Tóról-tóra teljesítménytúra";HU;;2021-06-26;1;;gyalogos;normal;66;;90;;16;;0;0;0;0;104
+204;"Csillaglesen a Zselicben";HU;Zselic;2021-06-19;1;turistahaz;gyalogos;normal;20;;300;;6;csillag;1;0;0;10;37
+203;"Pilisi vándorlás 1. szakasz";HU;Pilis;2021-06-13;1;;gyalogos;normal;26;;899;;;;0;0;0;0;57
+199;**;HU;Bakony;2021-05-29;2;sator;gyalogos;normal;29;;1203;;10;vandor;1;0;0;0;71
+200;OKT-15;HU;Pilis;2021-05-29;1;;gyalogos;normal;23;;500;;6;;0;0;0;0;45
+201;Izsák-Kiskőrös;HU;Kiskunság;2021-05-29;1;;gyalogos;normal;39;;122;;8;;0;0;0;0;61
+202;"Fekete-völgy / Nagy-hideg-hegy";HU;Börzsöny;2021-05-29;1;;gyalogos;normal;21;;1080;;;;0;0;0;0;53
+198;"Pilisi vándorlás/3. szakasz - Pilisszentkereszt-Pomáz";HU;Pilis;2021-05-22;1;;gyalogos;normal;25;;658;;;;0;0;0;0;51
+197;"Pilisi vándorlás/2. szakasz - Piliscsaba-Pilisszentkereszt";HU;Pilis;2021-05-21;1;;gyalogos;normal;23;;795;;;;0;0;0;0;50
+196;"OKT-09/1 - Bodajk-Bakonykúti";HU;Bakony;2021-05-20;1;;gyalogos;normal;22;;521;;;;0;0;0;0;43
+195;"OKT-11/2 - Mogyorósbánya-Tardos";HU;Gerecse;2021-05-18;1;;gyalogos;normal;23;;842;;;;0;0;0;0;51
+192;"Gödöllői kék";HU;Gödöllői-dombság;2021-05-09;1;;gyalogos;normal;19;;500;;;;0;0;0;0;39
+193;"Három Határ TT 50";HU;Kiskunság;2021-05-08;1;;gyalogos;normal;50;;125;;11;;0;0;0;0;78
+194;"Országos Kéktúra OKT-22";HU;Mátra;2021-05-08;1;;gyalogos;normal;20;;541;;;;0;0;0;0;41
+191;"Nagykovácsi - Hűvösvölgy";HU;Budai-hegység;2021-05-01;1;;gyalogos;normal;23;;639;;;;0;0;0;0;47
+495GY;Cicőke;HU;Börzsöny;2021-04-24;2;sator;gyalogos;normal;22;;853;;;vandor;1;0;0;8;53
+189;Pes-kő;HU;Vértes;2021-04-17;1;;gyalogos;normal;10;;300;;3;;0;0;0;0;21
+190;Mályinka;HU;Bükk;2021-04-17;1;;gyalogos;normal;15;;728;;;;0;0;0;0;37
+187;;HU;Vértes;2021-04-11;1;;gyalogos;normal;16;;590;;4;;0;0;0;0;36
+545GY;"Kemence kör";HU;Börzsöny;2021-04-10;1;;gyalogos;normal;17.4;;883;;;;0;0;2;1;44
+184;**;HU;Börzsöny;2021-04-10;1;;gyalogos;normal;15;;760;;5;;0;0;2;0;38
+188;"Boldog Özséb Maraton IT";HU;Pilis;2021-04-10;1;;gyalogos;normal;40;;1800;;10;;0;0;0;0;96
+186;"OKT-07_Nagyvázsony - Városlőd";HU;Bakony;2021-04-05;1;;gyalogos;normal;26;;545;;;;0;0;0;0;50
+185;Kakukk-hegy;HU;Gerecse;2021-04-04;1;;gyalogos;normal;14;;306;;;;0;0;0;0;27
+182;OKT11/1;HU;Gerecse;2021-03-28;1;;gyalogos;normal;15;;635;;;;0;0;0;0;35
+181;;HU;Gerecse;2021-03-27;1;;gyalogos;normal;12;;351;;;;0;0;0;0;25
+180;Nyakas-kő;HU;Budai-hegység;2021-03-21;1;;gyalogos;normal;12;;394;;;;0;0;0;0;26
+179;"Országos Kéktúra OKT-18";HU;Börzsöny;2021-03-15;1;;gyalogos;normal;16;;426;;;;0;0;0;0;33
+167;"Zajnát tető";HU;Budai-hegység;2021-03-13;1;;gyalogos;normal;13;;470;;4;;0;0;0;0;29
+178;Halyagos;HU;Börzsöny;2021-03-07;1;;gyalogos;normal;13;;526;;;;0;0;0;0;30
+172;"Hytemes instant túra";HU;;2021-03-06;1;;gyalogos;normal;32;;250;;6;;0;0;0;0;53
+177;"B kör instant teljesítmény túra";HU;Vértes;2021-03-06;1;;gyalogos;normal;26;;545;;;;0;0;0;0;50
+176;Felsőtárkány;HU;Bükk;2021-02-28;1;;gyalogos;normal;17;;493;;;;0;0;0;0;38
+166;"Zagyva Parti Tó Túra II. (Egyéni Túra) 42";HU;Jászság;2021-02-20;1;;gyalogos;normal;42;;75;;8;;0;0;0;0;71
+175;"Velence - Bence-hegy";HU;Velencei-hegység;2021-02-20;1;;gyalogos;normal;17;;397;;;;0;0;0;0;36
+174;"Pilis Instant teljesítmény túra - Rókás kör";HU;Pilis;2021-02-15;1;;gyalogos;normal;28;;646;;;;0;0;0;0;58
+173;"Dobogókő - Vadálló-kövek";HU;Visegrádi-hegység;2021-02-06;1;;gyalogos;normal;15;;749;;;;0;0;0;0;40
+183;"Hűvösvölgy - Üröm";HU;Budai-hegység;2021-02-04;1;;gyalogos;normal;16;;550;;4;;0;0;0;0;38
+171;;HU;Gödöllői-dombság;2021-01-31;1;;gyalogos;normal;20;;398;;;;0;0;0;0;41
+494GY;"Téli nomád mátra";HU;Mátra;2021-01-30;2;sator;gyalogos;normal;22.4;;1050;;;vandor;1;0;0;11;64
+165;"Bartina maraton";HU;Szekszárdi-dombság;2021-01-30;1;;gyalogos;normal;43;;848;;9;;0;0;0;0;84
+170;"Ingó kövek";HU;Velencei-hegység;2021-01-23;1;;gyalogos;normal;17;;359;;;;0;0;0;0;36
+164;"Dobogókő - Rám-hegy";HU;Pilis;2021-01-16;1;;gyalogos;normal;8;;530;;4;;0;0;0;0;26
+169;Bélapátfalva-Lillafüred;HU;Bükk;2021-01-16;2;turistahaz;gyalogos;normal;26;;969;;;vandor;2;0;0;0;70
+163;3szög-4szög;HU;Pilis;2021-01-10;1;;gyalogos;normal;12;;670;;5;;0;0;0;0;34
+162;"Mátrai kilátások 30 Instant túra";HU;Mátra;2021-01-09;1;;gyalogos;normal;27;;1250;;6;;0;0;0;0;69
+168;"Gomba szikla";HU;Pilis;2021-01-09;1;;gyalogos;normal;20;;633;;;;0;0;0;0;46
+161;"Villámkör - Gömbvillám IT";HU;;2021-01-02;1;;gyalogos;normal;31;;690;;6;;0;0;0;0;63
+160;"OKT-03 - Keszthely-Zalaszántó";HU;Keszthelyi-hegység;2020-12-29;1;;gyalogos;normal;30;;694;;;;0;0;0;0;62
+159;Csillebérc;HU;Budai-hegység;2020-12-27;1;;gyalogos;normal;15;;425;;;;0;0;0;0;34
+158;"Zsivány sziklák";HU;Pilis;2020-12-23;1;;gyalogos;normal;15;;569;;;;0;0;0;0;37
+151;"Szénás kör instant túra";HU;Budai-hegység;2020-12-05;1;;gyalogos;normal;31;;895;;6;;0;0;0;0;67
+150;Üvegtigris;HU;Keleti-Gerecse;2020-11-29;1;;gyalogos;normal;12;;350;;5;;0;0;0;0;25
+148;Péliföldszentkereszt-Tokod;HU;Gerecse;2020-11-22;1;;gyalogos;normal;19;;900;;6;;0;0;0;0;47
+149;"** OKT 10. szakasz";HU;Vértes;2020-11-22;2;turistahaz;gyalogos;normal;40;;925;;10;vandor;1;0;0;0;82
+157;"Szily kápolna";HU;Budai-hegység;2020-11-22;1;;gyalogos;normal;11;;363;;;;0;0;0;0;24
+147;Törökmező;HU;Börzsöny;2020-11-17;1;;gyalogos;normal;13;;550;;5;;0;0;0;0;31
+146;"Kőről kőre a Gerecsében instant túra";HU;Gerecse;2020-11-14;1;;gyalogos;normal;28;;1050;;6;;0;0;0;0;63
+156;Csákberény-Géza-pihenő;HU;Vértes;2020-11-14;1;;gyalogos;normal;20;;403;;;;0;0;0;0;38
+145;"Sebes Pisztráng TT";HU;Bükk;2020-11-07;1;;gyalogos;normal;46;;1622;;10;;0;0;0;0;101
+155;Odvas-kő;HU;Bakony;2020-11-06;2;turistahaz;gyalogos;normal;32;;1125;;;vandor;2;0;0;0;77
+154;"Lajos-forrás - Vasas-szakadék";HU;"Visegrádi hegység";2020-11-01;1;;gyalogos;normal;13;;534;;;;0;0;0;0;30
+143;"Esztergom-Búbánat völgy";HU;Visegrádi-hegység;2020-10-31;1;;gyalogos;normal;12;;500;;4;;0;0;0;0;28
+144;"Kékes 2x TT";HU;Mátra;2020-10-31;1;;gyalogos;normal;27;;1515;;6;;0;0;0;0;71
+142;"Visegrádi hegység gyöngyszemei";HU;Visegrádi-hegység;2020-10-23;1;;gyalogos;normal;21;;924;;7;;0;0;1;2;50
+153;"Piliscsév, Studenka forrás";HU;Pilis;2020-10-18;1;;gyalogos;normal;9;;272;;;;0;0;0;0;19
+139;"Nomád Cserhát";HU;Cserhát;2020-10-10;2;sator;gyalogos;normal;28;;699;;11;vandor;1;0;0;6;59
+140;"OKT 12 + egy kicsi";HU;Pilis;2020-10-10;1;;gyalogos;normal;23;;730;;6;;0;0;0;0;49
+141;"Strázsa Honvéd TT 45";HU;Alföld;2020-10-10;1;;gyalogos;normal;45;;90;;9;;0;0;0;0;72
+152;"Bükk - Bükk 900-as csúcsai 1. rész";HU;Bükk;2020-10-10;2;turistahaz;gyalogos;normal;28;;1051;;;csillag;2;0;0;0;65
+126;"Jane Goodall Tanösvény";HU;Budai-hegység;2020-10-02;1;;gyalogos;normal;11;;460;;4;;0;0;0;0;26
+125;"Balathlon UM 1. szakasza";HU;Balaton;2020-09-25;1;;gyalogos;normal;58;;0;;13;;0;0;0;0;90
+123;Pörgöl-barlang;HU;Bakony;2020-09-19;2;turistahaz;gyalogos;normal;31;;1400;;10;vandor;1;0;0;0;78
+124;"Kőről kőre a Börzsönyben maraton IT";HU;Börzsöny;2020-09-19;1;;gyalogos;normal;40;;1500;;9;;0;0;0;0;90
+138;"Mogyoróska - Regéc";HU;Zempléni-hegység;2020-09-12;1;;gyalogos;normal;8;;337;;;;0;0;0;0;19
+121;"Kiskunság Instant Trail 50";HU;Kiskunság;2020-09-05;1;;gyalogos;normal;48;;432;;10;;0;0;0;0;81
+492GY;"Cool túra az Őrségben";HU;Őrség;2020-09-04;2;apartman;gyalogos;normal;19;;250;;;csillag;1;0;2;5;35
+120;"Városnapi Teljesítménytúrák Sülysáp 33 km";HU;Balatonfelvidék;2020-08-22;1;;gyalogos;normal;32;;388;;6;;0;0;0;0;56
+137;"OKT-12. szakasz";HU;Pilis;2020-08-22;1;;gyalogos;normal;18;;530;;;;0;0;0;0;38
+118;"Oltárkő, Csesznek";HU;Bakony;2020-08-21;1;;gyalogos;normal;16;;600;;6;;0;0;0;0;36
+136;"OKT-15. szakasz";HU;Pilis;2020-08-21;1;;gyalogos;normal;22;;495;;;;0;0;0;0;43
+117;"OKT 6-7-8. szakasz";HU;"Balaton felvidék, Bakony";2020-08-16;4;turistahaz;gyalogos;normal;97;;2310;;;vandor;3;0;0;0;201
+119;"Kohász Kék TT 32";HU;"Heves-Borsodi dombság";2020-08-15;1;;gyalogos;normal;32;;880;;7;;0;0;0;0;66
+116;"Balaton IVV 40";HU;Balaton;2020-08-02;1;;gyalogos;normal;39;;900;;8;;0;0;0;0;77
+135;;AT;Steiermark;2020-07-26;5;hotel;gyalogos;normal;45;47;2330;2749;;vandor;5;0;0;0;395
+115;"Szelidi-tó TT 22";HU;Kiskunság;2020-07-25;1;;gyalogos;normal;22;;34;;;;0;0;0;0;37
+114;Kiskovácsi-Szentendre;HU;Pilis;2020-07-21;1;;gyalogos;normal;15;;920;;7;;0;0;0;0;41
+112;"Gesause #3 - Palfau/Wasserlochklamm";AT;"Ybbstaler Alps";2020-07-12;1;;gyalogos;normal;5;;441;;2;;0;0;0;15;16
+134;"OKT-16. szakasz";HU;Visegrádi-hegység;2020-07-12;1;;gyalogos;normal;24;;620;;;;0;0;0;0;48
+111;"Bakonybél környékén";HU;Bakony;2020-07-11;2;turistahaz;gyalogos;normal;43;;1280;;;vandor;1;0;0;0;93
+491K;"Bringás reggeli #1";HU;Pilis;2020-07-04;2;sator;kerekparos;mout;69;;320;;;vandor;1;0;0;4;41
+110;"Csemő Virágünnepe 20 TT";HU;Nagykunság;2020-07-04;1;;gyalogos;normal;18;;25;;3;;0;0;0;0;31
+133;;HU;Cserhát;2020-06-14;1;;gyalogos;normal;19;;587;;;;0;0;0;0;40
+490GY;"Nomád túra a Tanúhegyeknél";HU;Balatonfelvidék;2020-06-13;2;sator;gyalogos;normal;34.8;;1134;;;vandor;1;0;0;8;78
+108;Drégelyvár;HU;Börzsöny;2020-06-13;1;;gyalogos;normal;18;;870;;5;;0;0;0;0;44
+132;"Schaffer-kút / Drégelyvár";HU;Börzsöny;2020-06-13;1;;gyalogos;normal;18;;742;;;;0;0;0;0;42
+107;Lófingatúra;HU;Vértes;2020-06-07;1;;gyalogos;normal;21;;500;;7;;0;0;3;2;42
+105;"Naszály kör";HU;Cserhát;2020-06-06;1;;gyalogos;normal;45;;1250;;10;;0;0;0;0;93
+106;"Sisakvirág tanösvény";HU;Budai-hegység;2020-06-06;1;;gyalogos;normal;14;;400;;7;;0;0;0;0;29
+131;Arka;HU;Zempléni-hegység;2020-06-06;1;;gyalogos;normal;20;;665;;;;0;0;0;0;43
+103;"Porva-Csesznek - Bakonybél";HU;Bakony;2020-06-01;1;;gyalogos;normal;16;;560;;5;;0;0;0;0;35
+104;**;HU;Bükk;2020-06-01;1;;gyalogos;normal;12;;540;;5;;0;0;0;0;29
+130;"Királyrét - Csóványos";HU;Börzsöny;2020-06-01;1;;gyalogos;normal;22;;906;;;;0;0;0;0;51
+101;"Nagykovácsi - Zsíros-hegy";HU;Budai-hegység;2020-05-30;1;;gyalogos;normal;15;;430;;4;;0;0;0;0;31
+102;Szarvaskő;HU;Bükk;2020-05-30;1;;gyalogos;normal;39;;1690;;9;;0;0;0;0;92
+129;Kopasz-erdő;HU;Budai-hegység;2020-05-30;1;;gyalogos;normal;12;;315;;;;0;0;0;0;24
+100;"Ingó kövek";HU;Bakony;2020-05-25;1;;gyalogos;normal;18;;465;;4;;0;0;0;0;36
+98;Gánt;HU;Vértes;2020-05-23;1;;gyalogos;normal;24;;440;;6;;0;0;0;0;45
+99;Pilisszentkereszt-Dobogókő;HU;Pilis;2020-05-23;1;;gyalogos;normal;30;;1425;;8;;0;0;0;0;74
+128;"Csergezán Pál";HU;Budai-hegység;2020-05-17;1;;gyalogos;normal;10;;230;;;;0;0;0;0;20
+96;"Kisinócról a pusztákba";HU;Börzsöny;2020-05-16;1;;gyalogos;normal;18;;950;;8;;0;0;0;0;46
+97;"Ördög kör instant túra";HU;Bakony;2020-05-16;1;;gyalogos;normal;53;;1070;;12;;0;0;0;0;101
+127;"Szelim és Arany lyuk";HU;Gerecse;2020-05-10;1;;gyalogos;normal;14;;570;;;;0;0;0;0;32
+95;Kevélyek;HU;Pilis;2020-05-07;1;;gyalogos;normal;10;;570;;4;;0;0;0;0;26
+94;"Maszatmaraton: Mama 33 instant túra";HU;"Gödöllői dombság";2020-04-25;1;;gyalogos;normal;33;;517;;;;0;0;0;0;60
+93;"Nagy-Kopasz hegy";HU;Budai-hegység;2020-04-23;1;;gyalogos;normal;20;;605;;6;;0;0;0;0;42
+92;"Spa 42k Instant túra";HU;Alföld;2020-04-18;1;;gyalogos;normal;43;;208;;9;;0;0;0;0;69
+82;"Kőről kőre a Biai hegyekben Geogo IT";HU;Budai-hegység;2020-04-11;1;;gyalogos;normal;26;;607;;6;;0;0;0;0;51
+91;Vaskapu-Pilis;HU;Pilis;2020-04-11;1;;gyalogos;normal;21;;937;;;;0;0;0;0;50
+90;"Apát-kúti völgy";HU;"Visegrádi hegység";2020-04-09;1;;gyalogos;normal;15;;438;;;;0;0;0;0;31
+81;"Vértes Tatabányáról";HU;Gerecse;2020-04-04;1;;gyalogos;normal;21;;700;;4;;0;0;0;0;46
+80;"Jakab 35 instant túra";HU;Bugac;2020-03-21;1;;gyalogos;normal;35;;150;;7;;0;0;0;0;56
+79;"Visegrád fellegvár";HU;Pilis;2020-03-15;1;;gyalogos;normal;16;;550;;5;;0;0;0;0;35
+78;"Reguly Antal Emléktúra 35";HU;Bakony;2020-03-07;1;;gyalogos;normal;35;;690;;7;;0;0;0;0;66
+77;"** Vaskapu";HU;Pilis;2020-02-23;1;;gyalogos;normal;15;;794;;5;;0;0;3;0;41
+76;Kámor;HU;Börzsöny;2020-02-16;1;;gyalogos;normal;20;;1021;;6;;0;0;5;2;53
+75;"PITE 30 TT";HU;Mecsek;2020-02-15;1;;gyalogos;normal;29;;855;;6;;0;0;0;0;64
+74;"Téli sóút 34 TT";HU;Szolnok;2020-02-01;1;;gyalogos;normal;32;;52;;6;;0;0;0;0;55
+89;Tardos;HU;Gerecse;2020-02-01;1;;gyalogos;normal;12;;411;;;;0;0;0;0;29
+88;Huszonnégyökrös-hegy;HU;Budai-hegység;2020-01-26;1;;gyalogos;normal;13;;380;;;;0;0;0;0;30
+72;"Fagyott mesevilág: Lillafüred";HU;Bükk;2020-01-25;2;turistahaz;gyalogos;normal;30;;1195;;9;vandor;1;0;0;6;78
+73;"Nagyvisnyó - Stimecz ház";HU;Bükk;2020-01-25;1;;gyalogos;normal;20;;1204;;8;;0;0;0;0;57
+87;Fenyőgyöngye;HU;Budai-hegység;2020-01-25;1;;gyalogos;normal;10;;396;;;;0;0;0;0;26
+70;"Nomád téli ""expedíció"" a Bükkben";HU;Bükk;2020-01-11;2;sator;gyalogos;normal;32;;1123;;11;vandor;1;0;0;7;79
+71;"**Téli Turul Teljesítménytúra 20";HU;Budai-hegység;2020-01-11;1;;gyalogos;normal;22;;640;;5;;0;0;0;0;49
+86;"Gyömbér-Chopok kör";SK;"Alacsony Tátra";2020-01-11;2;turistahaz;gyalogos;normal;2;6;380;692;;vandor;1;0;15;0;74
+69;**;HU;Pilis;2020-01-05;1;;gyalogos;normal;22;;1218;;5;;0;0;0;0;60
+85;Tündér-szikla;HU;Budai-hegység;2020-01-04;1;;gyalogos;normal;10;;341;;;;0;0;0;0;25
+68;"Szilveszter 2019";AT;Schneealpe;2019-12-30;2;apartman;gyalogos;normal;15.6;;789;;5;csillag;1;0;2;0;46
+84;"Kis-Gerecse kőfejtő";HU;Gerecse;2019-12-29;1;;gyalogos;normal;9;;256;;4;;0;0;0;0;22
+66;"Brassó, Hétlétra-szurdok";RO;Brassó;2019-12-21;1;;gyalogos;normal;12;5;949;310;9;;0;0;0;0;67
+65;"Évzáró 2019";HU;Pilis;2019-12-01;1;turistahaz;gyalogos;normal;17;;635;;4;vandor;1;0;0;5;44
+62;**;HU;Cserhát;2019-11-03;1;;gyalogos;normal;17;;400;;5;;0;0;0;0;34
+61;"Alpenvereinsteig (B)";AT;Rax;2019-10-27;1;;gyalogos;normal;14;4;1044;98;7;;0;0;1;0;58
+83;Hármashatár-hegy;HU;Budai-hegység;2019-10-26;1;;gyalogos;normal;13;;541;;6;;0;0;0;0;30
+48;"Bélapátfalvától a Bükkbe";HU;Bükk;2019-10-23;1;;gyalogos;normal;15;;630;;5;;0;0;0;0;35
+60;"Pusztamarót - jelöletlen utak";HU;Gerecse;2019-10-22;1;;gyalogos;normal;10;;422;;;;0;0;0;0;23
+59;Nagy-szénás;HU;Budai-hegység;2019-10-21;1;;gyalogos;normal;22;;580;;;;0;0;0;0;45
+58;"Kő kapu (Vaskapu)";HU;Pilis;2019-10-20;1;;gyalogos;normal;10;;366;;;;0;0;0;0;22
+47;Selmecbánya;SK;Selmecbánya;2019-10-19;2;turistahaz;gyalogos;normal;29;;1138;;10;csillag;1;0;0;10;67
+46;"Szlovák Paradicsom - Sokolina Dolina";SK;"Szlovák paradicsom";2019-10-11;2;turistahaz;gyalogos;normal;33;;1200;;18;csillag;2;0;0;14;76
+44;"Pilisi szurdok túra";HU;Pilis;2019-09-14;1;;gyalogos;normal;28;;1117;;16;;1;0;0;8;64
+45;"Grossvenediger 3666 m";AT;"Hohe Tauern";2019-09-14;2;turistahaz;gyalogos;normal;0;28;0;2553;16;vandor;2;0;4;0;198
+57;"Zebegény tábor";HU;Börzsöny;2019-08-18;1;;gyalogos;normal;9;;399;;;csillag;2;0;0;0;23
+56;;RO;"Gyergyói hegyek";2019-08-01;3;turistahaz;gyalogos;normal;27;12;2595;889;;csillag;5;0;0;0;169
+55;"Jennersdorf - evezés a Rábán";HU;Rába;2019-07-27;1;sator;vizi;folyasirany;26;;0;;;csillag;2;0;0;0;28
+54;"Pilisszentiván Villa Negra";HU;Budai-hegység;2019-07-21;1;;gyalogos;normal;10;;230;;;;0;0;0;0;20
+43;Helemba;SK;Helemba;2019-06-29;1;;gyalogos;normal;14;;571;;5;;0;0;3;2;32
+39;"Gesause #2";AT;"Ennstaler Alpen";2019-06-22;2;turistahaz;gyalogos;normal;3;7;311;650;6;;1;0;1;12;58
+53;"Morski Oko oda-vissza";PL;"Lengyel Tátra";2019-06-09;1;;gyalogos;normal;22;;837;;;;0;0;0;0;50
+489V;"Rafttal a Szigetközben";HU;Szigetköz;2019-06-01;3;apartman;vizi;folyasirany;20;;;;;csillag;1;2;0;11;27
+52;"Túravezetői tanfolyam 4";HU;Börzsöny;2019-06-01;1;;gyalogos;normal;40;;1415;;;;1;0;0;0;88
+51;"Munkatúra - Túravezetői tanfolyam";HU;Budai-hegység;2019-05-25;1;;munka;;0;;0;;3;;0;0;0;0;21
+50;Klastrompuszta;HU;Pilis;2019-05-19;1;;gyalogos;normal;12;;512;;;;0;0;0;0;28
+38;"Nomád Vértes";HU;Vértes;2019-05-18;2;sator;gyalogos;normal;37;;718;;16;vandor;1;0;0;7;73
+49;"Eldugott helyek Budán";HU;Budai-hegység;2019-05-18;1;;gyalogos;normal;10;;349;;;;0;0;0;0;22
+42;"Túravezetői tanfolyam 3";HU;Budai-hegység;2019-05-11;1;;gyalogos;normal;14;;333;;;;0;0;0;0;28
+41;"Túravezetői tanfolyam 2";HU;Budai-hegység;2019-05-04;1;;gyalogos;normal;11;;308;;;;0;0;0;0;23
+40;"Velencei hegység keresztben";HU;"Velencei hegység";2019-05-01;1;;gyalogos;normal;14;;332;;;;0;0;0;0;28
+37;"Országos Kéktúra - OKT-17";HU;Börzsöny;2019-04-21;2;turistahaz;gyalogos;normal;42;;1530;;;vandor;1;0;0;0;97
+35;"Grossglockner mászás";AT;"Hohe Tauern";2019-04-12;3;turistahaz;gyalogos;normal;0;18;0;2139;14;vandor;2;0;2;0;152
+34;"Zempléni kalandozás";HU;Zemplén;2019-04-07;1;;gyalogos;normal;19;;865;;7;;0;0;0;6;46
+36;"Túravezetői tanfolyam 1";HU;Vértes;2019-04-06;2;turistahaz;gyalogos;normal;40;;730;;;csillag;2;0;0;0;77
+33;"Pilisszentlélek körül";HU;Visegrádi-hegység;2019-03-31;1;;gyalogos;normal;13;;426;;;;0;0;0;0;28
+31;"Nyakas kő";HU;Budai-hegység;2019-03-30;1;;gyalogos;normal;24;;596;;7;;0;0;2;2;48
+32;"Kis Budai kanyar";HU;Budai-hegység;2019-03-23;1;;gyalogos;normal;14;;525;;;;0;0;0;0;32
+30;"Kevélyek körtúra";HU;Pilis;2019-02-24;1;;gyalogos;normal;8;;350;;;;0;0;49;0;22
+29;Pap-rét;HU;Visegrádi-hegység;2019-02-17;1;;gyalogos;normal;8;;250;;3;;0;0;0;0;20
+28;Csillebérc;HU;Budai-hegység;2019-02-16;1;;gyalogos;normal;13;;400;;;;0;0;6;0;31
+488GY;"Bükki Farsang";HU;Bükk;2019-02-09;2;turistahaz;gyalogos;normal;29;;788;;;csillag;1;0;0;5;66
+27;"Budaörsi gerincek";HU;Budai-hegység;2019-01-27;1;;gyalogos;normal;12;;250;;4;;0;0;41;0;26
+26;"Hármashatárhegy körben";HU;Budai-hegység;2019-01-20;1;;gyalogos;normal;10;;350;;4;;0;0;32;0;25
+25;"Téli Nomád a Börzsönyben";HU;Börzsöny;2019-01-19;2;sator;gyalogos;normal;16;;650;;10;vandor;1;0;0;9;46
+24;"Nomádhoz keresgélős";HU;Börzsöny;2019-01-05;1;;gyalogos;normal;15;;557;;5;;0;0;7;0;37
+23;"Szilveszter Óbányán";HU;Mecsek;2018-12-29;3;turistahaz;gyalogos;normal;24;;739;;10;csillag;3;0;2;0;63
+22;"Téli Scnheeberg sátrazás";AT;Schneeberg;2018-12-01;2;sator;gyalogos;normal;11;;747;;8;vandor;1;0;1;0;40
+21;"Természetjáró tájékozódási verseny";HU;Mátra;2018-11-17;1;;gyalogos;tajekozodasi;6;;300;;;;0;0;0;0;24
+19;"** Zalaegerszeg környéke";HU;Zalai-dombság;2018-11-02;1;;gyalogos;normal;14;;173;;;;0;0;0;0;24
+18;"Vadálló-kövek kör";HU;Visegrádi-hg;2018-10-28;1;;gyalogos;normal;20;;631;;7;;0;0;4;0;43
+17;"Országos kéktúra OKT-05";HU;Balaton-felvidék;2018-10-24;1;;gyalogos;normal;18;;405;;5;;0;0;0;0;35
+16;"Országos kéktúra OKT-04";HU;Balaton-felvidék;2018-10-22;1;;gyalogos;normal;25;;570;;6;;0;0;0;0;49
+14;"Valencia és környéke";ES;Valenciai-partvidék;2018-10-13;3;apartman;gyalogos;normal;17;;678;;5;csillag;3;0;0;0;42
+13;"Határon innen, határon túl";SK;Szádelő;2018-10-06;2;turistahaz;gyalogos;normal;35;;1755;;11;csillag;1;0;0;10;89
+12;"Teve-szikla kör";HU;Pilis;2018-09-30;1;;gyalogos;normal;7;;343;;4;;0;0;1;0;17
+486GY;"Gyalog és vízitúra a Dunakanyarban";HU;Dunakanyar;2018-09-29;1;;gyalogos;normal;12;;300;;;;0;0;0;8;24
+485GY;"Túra és edzés a Fellegvárban";HU;Visegrádi-hegység;2018-09-15;1;;gyalogos;normal;18;;599;;;;0;0;3;3;39
+10;"Ferrátázás a Bakonyban";HU;Bakony;2018-09-09;1;;gyalogos;normal;5;;349;;6;;0;0;1;0;14
+9;"Nyári nomád a Mátrában";HU;Mátra;2018-09-01;2;sator;gyalogos;normal;26;;1346;;9;vandor;1;0;1;10;69
+8;"Barlangok a Pádison";RO;Bihar;2018-08-18;3;apartman;gyalogos;normal;48;;2996;;13;csillag;3;0;0;15;135
+7;"Wiesbachhorn mászás";AT;"Hohe Tauern";2018-08-04;2;turistahaz;gyalogos;normal;0;13;0;1949;13;vandor;1;0;1;0;123
+6;"Pilis Direkt";HU;Pilis;2018-07-22;1;;gyalogos;normal;8;;580;;2;;0;0;0;0;24
+5;"Kalandnyaralás Arco-ban";IT;Trentino;2018-07-01;4;apartman;gyalogos;normal;29;;3669;;16;csillag;4;0;3;0;121
+4;"A Kelet-Mecsek kincsei";HU;Mecsek;2018-06-23;2;turistahaz;gyalogos;normal;31;;945;;9;csillag;1;0;0;5;66
+3;"Felfedező bejárás a Mátrában";HU;Mátra;2018-05-19;1;;gyalogos;normal;18;;629;;4;;0;0;0;0;40
+2;"Kalandozások Ukrajnában";UA;Kárpátalja;2018-04-28;2;apartman;gyalogos;normal;21;15;1243;1171;11;csillag;2;0;0;15;150
+484GY;"Strázsa hegyek";HU;Visegrádi-hegység;2018-04-22;1;;gyalogos;normal;20.9;;503;;;;0;0;0;2;41
+483GY;"Balatoni túra mandulavirágzáskor";HU;Balatonfelvidék;2018-04-13;2;apartman;gyalogos;normal;18;;428;;;csillag;1;0;7;10;37
+1;"Vitányvár kör";HU;Vértes;2018-04-01;1;;gyalogos;normal;15;;389;;5;;0;0;3;2;30
+482GY;"Spartacus és Apátkuti völgy";HU;Pilis;2018-03-04;1;;gyalogos;normal;16;;422;;;;0;0;5;1;32
+481GY;"Téli Bakony";HU;Bakony;2018-01-13;2;sator;gyalogos;normal;24;;744;;;csillag;1;0;2;6;58
+480GY;"Adventi Pilis";HU;Pilis;2017-12-17;1;;gyalogos;normal;12.1;;368;;;;0;0;3;1;29
+479GY;"Gesause #1";AT;"Ennstaler Alpen";2017-10-20;3;apartman;gyalogos;normal;26.9;6;1912;700;;csillag;2;0;0;15;127
+478GY;"LandArt túra a Kevélyeknél";HU;Pilis;2017-10-14;1;;gyalogos;normal;;;;;;;0;0;3;2;0
+477GY;"Dunakanyar földön vízen";HU;Visegrádi-hegység;2017-10-10;1;;gyalogos;normal;14;;582;;;;0;0;3;2;33
+476GY;"Szlovák Paradicsom - Kysel szurdok";SK;Szlovák-Paradicsom;2017-09-02;2;apartman;gyalogos;normal;27.1;;1177;;;csillag;1;0;0;11;65
+475GY;"A Holdvilág-ároktól a Gomba szikláig";HU;Pilis;2017-08-19;1;;gyalogos;normal;17;;599;;;;0;0;11;1;37
+474K;"Velencei tó kör bicajjal";HU;Velencei-hegység;2017-07-22;1;;kerekparos;mout;30;;89;;;;0;0;1;2;16
+473GY;"Nomád Túra a Bakonyban";HU;Bakony;2017-06-24;2;sator;gyalogos;normal;26.4;;630;;;vandor;1;0;2;7;55
+472GY;Dunabogdány;HU;Pilis;2017-05-27;1;;gyalogos;normal;18;;499;;;;0;0;9;1;37
+471GY;"Beusnita - Erdély";RO;Kárpátok;2017-04-28;4;hotel;gyalogos;normal;39;;1255;;;csillag;3;0;2;10;87
+470GY;"Húsvétolás a Pilisben";HU;Pilis;2017-04-17;1;;gyalogos;normal;18;;742;;;;0;0;1;2;42
+469GY;Gerecse50;HU;Gerecse;2017-03-26;1;;gyalogos;normal;48.7;;1442;;;;0;0;10;4;102
+468GY;"Budaörsi csatangolás";HU;Budai-hegység;2017-02-18;1;;gyalogos;normal;17;;399;;;;0;0;4;1;36
+467GY;Hollókő;HU;Cserhát;2017-01-22;1;;gyalogos;normal;;;;;;;0;0;5;2;3
+466GY;"Havas hétvége Galyatetőn";HU;Mátra;2017-01-14;2;turistahaz;gyalogos;normal;21;;895;;;;0;0;3;5;55
+465GY;Pilismarót;HU;Pilis;2017-01-07;1;;gyalogos;normal;17;;485;;;;0;0;8;2;38
+464GY;Mátrakeresztes;HU;Mátra;2016-11-05;1;;gyalogos;normal;15;;395;;;;0;0;9;1;30
+463GY;"Piliscsaba - barlangok";HU;Pilis;2016-10-29;1;;gyalogos;normal;22;;681;;;;0;0;11;2;47
+462GY;"Pilisi kilátások 1.";HU;Pilis;2016-10-15;1;;gyalogos;normal;19;;570;;9;;0;0;10;2;40
+461GY;"Szlovák Paradicsom felfedezése";SK;Szlovák-Paradicsom;2016-09-23;2;sator;gyalogos;normal;26;;992;;12;csillag;2;0;4;10;61
+460GY;"Nomád Bükk";HU;Bükk;2016-07-23;2;sator;gyalogos;normal;26;;894;;12;vandor;1;0;5;5;60
+459GY;"Bolzano-i Alpok felfedezése";IT;Dolomitok;2016-05-06;2;apartman;gyalogos;normal;15;7;418;860;12;csillag;2;0;3;15;88
+458GY;"Mátrabérc kelet";HU;Mátra;2016-03-19;1;;gyalogos;normal;28;;1283;;10;;0;0;11;3;68
+457GY;"Spartacus ösvény télen";HU;Pilis;2016-02-06;1;;gyalogos;normal;15;;356;;8;;0;0;11;2;33

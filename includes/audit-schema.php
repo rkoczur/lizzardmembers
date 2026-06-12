@@ -20,4 +20,9 @@ function ensureAuditSchema(PDO $pdo): void
     try {
         $pdo->exec("ALTER TABLE `audit_log` MODIFY COLUMN `entity_type` ENUM('member','tour','backup') NOT NULL");
     } catch (PDOException) { /* már megvan — kihagyás */ }
+
+    // Migráció: 'transaction' entitástípus engedélyezése (könyvelés/tranzakciós napló)
+    try {
+        $pdo->exec("ALTER TABLE `audit_log` MODIFY COLUMN `entity_type` ENUM('member','tour','backup','transaction') NOT NULL");
+    } catch (PDOException) { /* már megvan — kihagyás */ }
 }

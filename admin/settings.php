@@ -15,6 +15,7 @@ $smtp = getSmtpConfig($pdo);
 
 $recaptchaSiteKey  = getSetting($pdo, 'recaptcha_site_key', '');
 $recaptchaHasSecret = getSetting($pdo, 'recaptcha_secret', '') !== '';
+$socialDefaultImg  = getSetting($pdo, 'social_default_image', '');
 
 $countries = getCountries($pdo, false);
 
@@ -204,6 +205,34 @@ include __DIR__ . '/../includes/admin-header.php';
         <?php endif; ?>
         <div style="margin-top:16px;">
           <button type="submit" class="btn btn-primary">reCAPTCHA beállítások mentése</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Közösségi megosztási kép (OpenGraph) -->
+  <div class="card">
+    <div class="card-header"><h2>Közösségi megosztási kép (OpenGraph)</h2></div>
+    <div class="card-body">
+      <p style="color:var(--text-muted);font-size:13px;margin-bottom:16px;">
+        Ez a kép jelenik meg alapértelmezetten, amikor az oldal linkjét megosztják (Facebook, Messenger stb.).
+        A túrák és bejegyzések a saját borítóképüket használják; ez a globális tartalék.
+      </p>
+      <form method="post" action="<?= BASE_URL ?>/actions/settings-social-save.php" enctype="multipart/form-data">
+        <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
+        <?php if ($socialDefaultImg !== ''): ?>
+          <img src="<?= e(SOCIAL_URL . $socialDefaultImg) ?>" alt="" style="max-width:320px;width:100%;border-radius:8px;display:block;margin-bottom:10px;border:1px solid var(--border);">
+          <label style="display:flex;align-items:center;gap:8px;font-size:13px;margin-bottom:12px;cursor:pointer;">
+            <input type="checkbox" name="delete_social_image" value="1" style="width:auto;"> Kép törlése (visszaáll a logóra)
+          </label>
+        <?php endif; ?>
+        <div class="form-group">
+          <label>Kép feltöltése</label>
+          <input type="file" name="social_image" accept="image/jpeg,image/png,image/webp">
+          <small style="display:block;margin-top:4px;color:var(--text-muted);">Ajánlott méret: 1200×630 px. JPG, PNG vagy WebP, max. 5 MB.</small>
+        </div>
+        <div style="margin-top:16px;">
+          <button type="submit" class="btn btn-primary">Megosztási kép mentése</button>
         </div>
       </form>
     </div>

@@ -1084,6 +1084,7 @@
 .tour-detail-grid {
   display: grid;
   grid-template-columns: 1fr 320px;
+  grid-template-rows: auto 1fr;          /* az 1. sor a felső kártyához igazodik, a felesleg a 2. sor aljára kerül — nincs rés a kártya és a Napok között */
   grid-template-areas:
     "main    sidebar"
     "extra   sidebar";

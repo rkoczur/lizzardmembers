@@ -44,10 +44,15 @@ if (!$isNew) {
 $countries = getCountries($pdo);
 
 $gpxFiles = [];
+$galleryImages = [];
 if (!$isNew) {
     $gpxFilesStmt = $pdo->prepare("SELECT * FROM future_tour_gpx_files WHERE future_tour_id = ? ORDER BY sort_order ASC, uploaded_at ASC");
     $gpxFilesStmt->execute([$id]);
     $gpxFiles = $gpxFilesStmt->fetchAll();
+
+    $galleryStmt = $pdo->prepare("SELECT * FROM future_tour_gallery_images WHERE future_tour_id = ? ORDER BY sort_order ASC, uploaded_at ASC");
+    $galleryStmt->execute([$id]);
+    $galleryImages = $galleryStmt->fetchAll();
 }
 
 $flash_success = getFlash('success');
@@ -136,6 +141,16 @@ include __DIR__ . '/../includes/admin-header.php';
           <div class="form-group">
             <label>Részvételi díj (Ft)</label>
             <input type="number" name="participation_fee" min="0" step="1" value="<?= $tour['participation_fee'] !== null ? (int)$tour['participation_fee'] : '' ?>" placeholder="pl. 15000" <?= $ro ? 'readonly' : '' ?>>
+          </div>
+          <div class="form-group full">
+            <label>A részvételi díj tartalmazza</label>
+            <textarea name="fee_includes" rows="4" placeholder="Egy sor = egy tétel, pl.:&#10;Szállás&#10;Reggeli&#10;Túravezető" <?= $ro ? 'readonly' : '' ?>><?= e($tour['fee_includes'] ?? '') ?></textarea>
+            <small style="color:var(--text-muted);font-size:12px;">Minden sor egy tételnek számít a listán. Hagyd üresen, ha nem szükséges.</small>
+          </div>
+          <div class="form-group full">
+            <label>Nem tartalmazza</label>
+            <textarea name="fee_excludes" rows="4" placeholder="Egy sor = egy tétel, pl.:&#10;Utazási költség&#10;Ebéd" <?= $ro ? 'readonly' : '' ?>><?= e($tour['fee_excludes'] ?? '') ?></textarea>
+            <small style="color:var(--text-muted);font-size:12px;">Minden sor egy tételnek számít a listán. Hagyd üresen, ha nem szükséges.</small>
           </div>
           <div class="form-group">
             <label>Szerezhető Lizzardier pont</label>
@@ -392,6 +407,29 @@ include __DIR__ . '/../includes/admin-header.php';
             <small style="display:block;margin-top:5px;color:var(--text-muted);font-size:12px;">Több .gpx fájl is kijelölhető egyszerre. Max. 1 MB/fájl.</small>
           </div>
         <?php endif; ?>
+        <?php endif; ?>
+
+        <?php if (!$isNew && canManageTours()): ?>
+        <div class="form-section-title" style="margin-top:24px;">Fotógaléria</div>
+        <p style="font-size:13px;color:var(--text-muted);margin:0 0 12px;">
+          Húzd a képeket a kívánt sorrendbe. Legfeljebb <?= GALLERY_MAX_IMAGES ?> kép, képenként max. <?= (int)round(GALLERY_MAX_BYTES / 1024 / 1024) ?> MB (JPG, PNG, WebP).
+        </p>
+        <?php if (!empty($galleryImages)): ?>
+        <div id="gallery-admin-grid" class="gallery-admin-grid">
+          <?php foreach ($galleryImages as $img): ?>
+          <div class="gallery-admin-item" draggable="true" data-id="<?= (int)$img['id'] ?>">
+            <img src="<?= e(TOUR_GALLERY_URL . $img['filename']) ?>" alt="">
+            <input type="hidden" name="gallery_order[]" value="<?= (int)$img['id'] ?>">
+            <input type="text" name="gallery_label[<?= (int)$img['id'] ?>]" value="<?= e($img['label'] ?? '') ?>" placeholder="Képaláírás (opcionális)" class="gallery-admin-label">
+            <label class="gallery-admin-del"><input type="checkbox" name="delete_gallery_ids[]" value="<?= (int)$img['id'] ?>"> Törlés</label>
+          </div>
+          <?php endforeach; ?>
+        </div>
+        <?php endif; ?>
+        <div style="margin-top:10px;">
+          <input type="file" name="gallery_files[]" accept="image/jpeg,image/png,image/webp" multiple>
+          <small style="display:block;margin-top:5px;color:var(--text-muted);font-size:12px;">Több kép is kijelölhető egyszerre.</small>
+        </div>
         <?php endif; ?>
 
         <?php if (!$ro): ?>
@@ -676,5 +714,27 @@ document.getElementById('copy-public-link-btn')?.addEventListener('click', funct
 })();
 </script>
 <?php endif; ?>
+
+<script>
+// Fotógaléria — natív drag & drop átrendezés (a gallery_order[] hidden inputok a kártyával együtt mozognak)
+(function () {
+  const grid = document.getElementById('gallery-admin-grid');
+  if (!grid) return;
+  let dragEl = null;
+  grid.addEventListener('dragstart', function (e) {
+    dragEl = e.target.closest('.gallery-admin-item');
+    if (dragEl) e.dataTransfer.effectAllowed = 'move';
+  });
+  grid.addEventListener('dragover', function (e) {
+    e.preventDefault();
+    const over = e.target.closest('.gallery-admin-item');
+    if (!over || !dragEl || over === dragEl) return;
+    const rect = over.getBoundingClientRect();
+    const after = (e.clientY - rect.top) > rect.height / 2 || (e.clientX - rect.left) > rect.width / 2;
+    grid.insertBefore(dragEl, after ? over.nextSibling : over);
+  });
+  grid.addEventListener('dragend', function () { dragEl = null; });
+})();
+</script>
 
 <?php include __DIR__ . '/../includes/admin-footer.php'; ?>
