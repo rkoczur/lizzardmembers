@@ -131,6 +131,31 @@ foreach ($allMemberIds as $uid) {
     $ins->execute([$newId, $uid]);
 }
 
+// GPX feltöltés (opcionális, max 1 MB) — hiba esetén nem buktatja meg a beküldést, csak jelez
+$gpxNote = '';
+if (isset($_FILES['gpx_file']) && ($_FILES['gpx_file']['error'] ?? UPLOAD_ERR_NO_FILE) === UPLOAD_ERR_OK) {
+    $gpxTmp  = $_FILES['gpx_file']['tmp_name'];
+    $gpxExt  = strtolower(pathinfo($_FILES['gpx_file']['name'] ?? '', PATHINFO_EXTENSION));
+    $gpxSize = (int)($_FILES['gpx_file']['size'] ?? 0);
+    $mime    = (new finfo(FILEINFO_MIME_TYPE))->file($gpxTmp);
+    $allowedMimes = ['text/xml', 'application/xml', 'application/gpx+xml', 'text/plain', 'application/octet-stream'];
+    if ($gpxExt !== 'gpx') {
+        $gpxNote = ' A GPX fájl nem lett csatolva (csak .gpx tölthető fel).';
+    } elseif ($gpxSize > 1 * 1024 * 1024) {
+        $gpxNote = ' A GPX fájl nem lett csatolva (a méret meghaladta az 1 MB-ot).';
+    } elseif (!in_array($mime, $allowedMimes, true)) {
+        $gpxNote = ' A GPX fájl nem lett csatolva (érvénytelen formátum).';
+    } else {
+        if (!is_dir(GPX_DIR)) mkdir(GPX_DIR, 0755, true);
+        $gpxFile = 'gpx_' . $newId . '_' . time() . '.gpx';
+        if (move_uploaded_file($gpxTmp, GPX_DIR . $gpxFile)) {
+            $pdo->prepare("INSERT IGNORE INTO tour_gpx_files (tour_id, filename) VALUES (?, ?)")->execute([$newId, $gpxFile]);
+        } else {
+            $gpxNote = ' A GPX fájl feltöltése nem sikerült.';
+        }
+    }
+}
+
 // Admin értesítő e-mail
 try {
     require_once __DIR__ . '/../includes/app-settings-schema.php';
@@ -207,6 +232,6 @@ try {
     error_log('Tour submit admin notification setup error: ' . $ex->getMessage());
 }
 
-flash('success', 'Túrád sikeresen beküldve, jóváhagyásra vár.');
+flash('success', 'Túrád sikeresen beküldve, jóváhagyásra vár.' . $gpxNote);
 header('Location: ' . BASE_URL . '/user/tours.php');
 exit;

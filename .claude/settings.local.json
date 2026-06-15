@@ -49,7 +49,8 @@
       "Bash(php -l includes/bookkeeping-schema.php)",
       "Bash(php -l admin/transaction-detail.php)",
       "Bash(php -l actions/transaction-link-events.php)",
-      "Bash(php -l admin/bookkeeping.php)"
+      "Bash(php -l admin/bookkeeping.php)",
+      "Bash(php -l includes/tour-submit-form.php)"
     ]
   }
 }

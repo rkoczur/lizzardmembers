@@ -12,7 +12,7 @@
 ?>
 <div class="card" style="max-width:760px;">
   <div class="card-body">
-    <form method="post" action="<?= BASE_URL ?>/actions/tour-submit.php" id="tour-form">
+    <form method="post" action="<?= BASE_URL ?>/actions/tour-submit.php" id="tour-form" enctype="multipart/form-data">
       <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
 
       <div class="form-section-title">Általános adatok</div>
@@ -185,6 +185,20 @@
       <div class="form-grid">
         <div class="form-group full">
           <textarea name="submission_notes" rows="4" placeholder="Pl. egyéb körülmények, különleges információk..."><?= e($old['submission_notes'] ?? '') ?></textarea>
+        </div>
+      </div>
+
+      <div class="form-section-title">GPX nyomvonal (opcionális)</div>
+      <div class="form-grid">
+        <div class="form-group full">
+          <input type="file" name="gpx_file" accept=".gpx,application/gpx+xml">
+          <small style="display:block;margin-top:6px;color:var(--text-muted);font-size:12px;line-height:1.6;">
+            Maximum 1 MB. Ha a feltölteni kívánt GPX nagyobb ennél, javasoljuk a
+            <a href="https://gpx.studio/app" target="_blank" rel="noopener">GPX Studio</a>
+            ingyenesen használható webes alkalmazást, ahol a „Reduce number of GPS points” funkcióval
+            jelentősen csökkenthető a fájl mérete. Ezen kívül mentésnél szedd ki a pipát a <strong>HR</strong>
+            és <strong>Time</strong> mezőből.
+          </small>
         </div>
       </div>
 
