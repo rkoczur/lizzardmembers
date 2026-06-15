@@ -633,6 +633,44 @@ function renderEventOptions(array $dropTours, array $dropFuture, string $sel): s
           </table>
         </div>
       <?php endif; ?>
+
+      <?php
+        // Összevonás (tisztítás): a transactions oszlopában ÉS a presetek közt előforduló értékek uniója
+        $col = $type; // category / partner / account — megegyezik az oszlopnévvel
+        $mergeStmt = $pdo->prepare("
+            SELECT v, MAX(cnt) AS cnt FROM (
+                SELECT `$col` AS v, COUNT(*) AS cnt FROM transactions WHERE `$col` IS NOT NULL AND `$col` <> '' GROUP BY `$col`
+                UNION ALL
+                SELECT value AS v, 0 AS cnt FROM transaction_presets WHERE preset_type = ?
+            ) u GROUP BY v ORDER BY v ASC
+        ");
+        $mergeStmt->execute([$type]);
+        $mergeVals = $mergeStmt->fetchAll();
+      ?>
+      <?php if (count($mergeVals) > 1): ?>
+      <details style="margin-top:14px;border-top:1px solid var(--border);padding-top:12px;">
+        <summary style="cursor:pointer;font-size:13px;font-weight:600;">Összevonás / tisztítás</summary>
+        <form method="post" action="<?= BASE_URL ?>/actions/transaction-preset-merge.php" style="margin-top:10px;"
+              onsubmit="return confirm('Biztosan összevonod a kijelölt értékeket? Az érintett tranzakciók a cél értékre kerülnek át.')">
+          <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
+          <input type="hidden" name="preset_type" value="<?= $type ?>">
+          <label style="font-size:12px;">Beolvasztandó értékek (ezek megszűnnek) — Ctrl/Cmd-mal több is</label>
+          <select name="sources[]" multiple size="6" class="form-control" style="width:100%;margin-bottom:8px;" required>
+            <?php foreach ($mergeVals as $mv): ?>
+              <option value="<?= e($mv['v']) ?>"><?= e($mv['v']) ?> (<?= (int)$mv['cnt'] ?>)</option>
+            <?php endforeach; ?>
+          </select>
+          <label style="font-size:12px;">Cél érték (ez marad meg)</label>
+          <select name="target" class="form-control" style="width:100%;margin-bottom:8px;" required>
+            <?php foreach ($mergeVals as $mv): ?>
+              <option value="<?= e($mv['v']) ?>"><?= e($mv['v']) ?> (<?= (int)$mv['cnt'] ?>)</option>
+            <?php endforeach; ?>
+          </select>
+          <button type="submit" class="btn btn-secondary btn-sm">Összevonás</button>
+          <p style="margin:8px 0 0;font-size:11px;color:var(--text-muted);">A beolvasztott értékkel rendelkező tranzakciók a cél értékre kerülnek; az így kiürült érték törlődik az előre definiáltak közül.</p>
+        </form>
+      </details>
+      <?php endif; ?>
     </div>
   </div>
   <?php endforeach; ?>
