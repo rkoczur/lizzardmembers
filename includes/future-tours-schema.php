@@ -81,6 +81,19 @@ function ensureFutureToursSchema(PDO $pdo): void {
         UNIQUE KEY `uq_ftgal_filename` (`filename`),
         FOREIGN KEY (`future_tour_id`) REFERENCES `future_tours`(`id`) ON DELETE CASCADE
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+    // Kiküldött túraértesítők nyilvántartása (kinek ment ki már értesítő az adott túráról)
+    $pdo->exec("CREATE TABLE IF NOT EXISTS `future_tour_notifications` (
+        `id`             INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        `future_tour_id` INT UNSIGNED NOT NULL,
+        `user_id`        INT UNSIGNED DEFAULT NULL,
+        `email`          VARCHAR(255) NOT NULL,
+        `name`           VARCHAR(255) DEFAULT NULL,
+        `sent_at`        TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE KEY `uq_ft_notif` (`future_tour_id`, `user_id`),
+        KEY `idx_ft_notif_tour` (`future_tour_id`),
+        FOREIGN KEY (`future_tour_id`) REFERENCES `future_tours`(`id`) ON DELETE CASCADE
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+
     try { $pdo->exec("ALTER TABLE future_tours ADD COLUMN lizzardier_points INT UNSIGNED DEFAULT NULL AFTER participation_fee"); } catch (Throwable) {}
     try { $pdo->exec("ALTER TABLE future_tours ADD COLUMN fee_includes TEXT DEFAULT NULL AFTER participation_fee"); } catch (Throwable) {}
     try { $pdo->exec("ALTER TABLE future_tours ADD COLUMN fee_excludes TEXT DEFAULT NULL AFTER fee_includes"); } catch (Throwable) {}
@@ -94,6 +107,8 @@ function ensureFutureToursSchema(PDO $pdo): void {
     try { $pdo->exec("ALTER TABLE future_tour_applications ADD COLUMN guest_phone VARCHAR(50) DEFAULT NULL AFTER guest_email"); } catch (Throwable) {}
     try { $pdo->exec("ALTER TABLE future_tour_applications ADD COLUMN departure_city VARCHAR(255) DEFAULT NULL AFTER notes"); } catch (Throwable) {}
     try { $pdo->exec("ALTER TABLE future_tour_applications ADD COLUMN member_application_id INT UNSIGNED DEFAULT NULL AFTER paid_at"); } catch (Throwable) {}
+    // Admin általi „Jelentkezés elfogadása” időpontja (a megerősítő e-mail kiküldésének jelzése)
+    try { $pdo->exec("ALTER TABLE future_tour_applications ADD COLUMN accepted_at TIMESTAMP NULL DEFAULT NULL"); } catch (Throwable) {}
 
     $pdo->exec("
         CREATE TABLE IF NOT EXISTS future_tour_applications (

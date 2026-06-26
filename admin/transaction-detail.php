@@ -162,6 +162,14 @@ function presetSelect(string $name, array $presets, string $current): void
         <label>Leírás <span style="color:var(--danger)">*</span></label>
         <input type="text" name="description" value="<?= e($tx['description']) ?>" required>
       </div>
+      <label class="notif-row" style="margin-top:14px;border:1px solid var(--border);border-radius:8px;padding:12px 14px;cursor:pointer;display:flex;align-items:center;gap:12px;">
+        <input type="checkbox" name="highlighted" value="1" <?= !empty($tx['highlighted']) ? 'checked' : '' ?>>
+        <span class="notif-slider"></span>
+        <span style="font-size:13px;">
+          <strong>Kiemelés a listában</strong>
+          <small style="display:block;color:var(--text-muted);font-weight:400;">Folyamatban lévő tételként megjelölve — a táblázatban kiemelve látszik.</small>
+        </span>
+      </label>
       <div style="margin-top:16px;display:flex;gap:10px;">
         <button type="submit" class="btn btn-primary">Mentés</button>
         <a href="<?= BASE_URL ?>/admin/bookkeeping.php" class="btn btn-ghost">Mégse</a>

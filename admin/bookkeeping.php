@@ -38,15 +38,17 @@ $futureTours = $pdo->query("SELECT id, name, start_date FROM future_tours ORDER 
 $unlinkedCount = (int)$pdo->query("SELECT COUNT(*) FROM transactions WHERE event_label IS NOT NULL AND event_label <> '' AND event_id IS NULL")->fetchColumn();
 
 // ── Tranzakciók szűrése ────────────────────────────────────────────
-$fYear     = (int)($_GET['year'] ?? 0);
-$fType     = in_array($_GET['type'] ?? '', ['income','expense'], true) ? $_GET['type'] : '';
-$fCategory = trim($_GET['category'] ?? '');
-$fSearch   = trim($_GET['q'] ?? '');
+$fYear        = (int)($_GET['year'] ?? 0);
+$fType        = in_array($_GET['type'] ?? '', ['income','expense'], true) ? $_GET['type'] : '';
+$fCategory    = trim($_GET['category'] ?? '');
+$fSearch      = trim($_GET['q'] ?? '');
+$fHighlighted = !empty($_GET['hl']);
 
 $where = []; $params = [];
 if ($fYear > 0)        { $where[] = 'YEAR(tx_date) = ?';  $params[] = $fYear; }
 if ($fType !== '')     { $where[] = 'tx_type = ?';        $params[] = $fType; }
 if ($fCategory !== '') { $where[] = 'category = ?';       $params[] = $fCategory; }
+if ($fHighlighted)     { $where[] = 'highlighted = 1'; }
 if ($fSearch !== '')   {
     $where[] = '(description LIKE ? OR partner LIKE ? OR invoice_number LIKE ? OR account LIKE ?)';
     array_push($params, "%$fSearch%", "%$fSearch%", "%$fSearch%", "%$fSearch%");
@@ -59,7 +61,7 @@ $transactions = $txStmt->fetchAll();
 
 $years = $pdo->query("SELECT DISTINCT YEAR(tx_date) AS y FROM transactions ORDER BY y DESC")->fetchAll(PDO::FETCH_COLUMN);
 
-$hasFilter = $fYear || $fType !== '' || $fCategory !== '' || $fSearch !== '';
+$hasFilter = $fYear || $fType !== '' || $fCategory !== '' || $fSearch !== '' || $fHighlighted;
 
 $pageTitle  = 'Könyvelés';
 $activePage = 'bookkeeping';
@@ -179,6 +181,14 @@ include __DIR__ . '/../includes/admin-header.php';
         <label>Leírás <span style="color:var(--danger)">*</span></label>
         <input type="text" name="description" required placeholder="A tranzakció rövid leírása">
       </div>
+      <label class="notif-row" style="margin-top:14px;border:1px solid var(--border);border-radius:8px;padding:12px 14px;cursor:pointer;display:flex;align-items:center;gap:12px;">
+        <input type="checkbox" name="highlighted" value="1">
+        <span class="notif-slider"></span>
+        <span style="font-size:13px;">
+          <strong>Kiemelés a listában</strong>
+          <small style="display:block;color:var(--text-muted);font-weight:400;">Folyamatban lévő tételként megjelölve — a táblázatban kiemelve látszik.</small>
+        </span>
+      </label>
       <div style="margin-top:14px;">
         <button type="submit" class="btn btn-primary">Rögzítés</button>
       </div>
@@ -214,11 +224,19 @@ include __DIR__ . '/../includes/admin-header.php';
       <?php foreach ($catPresets as $v): ?><option value="<?= e($v) ?>" <?= $fCategory===$v?'selected':'' ?>><?= e($v) ?></option><?php endforeach; ?>
     </select>
     <button type="submit" class="btn btn-primary btn-sm">Szűrés</button>
+    <?php
+      // „Csak kiemeltek" egygombos kapcsoló — a többi aktív szűrőt megtartja
+      $hlToggle = array_filter(['tab'=>'transactions','q'=>$fSearch,'year'=>$fYear ?: '','type'=>$fType,'category'=>$fCategory], fn($v) => $v !== '' && $v !== null);
+      if (!$fHighlighted) $hlToggle['hl'] = 1;
+    ?>
+    <a href="?<?= e(http_build_query($hlToggle)) ?>" class="btn btn-sm <?= $fHighlighted ? 'btn-primary' : 'btn-ghost' ?>" title="Csak a kiemelt, folyamatban lévő tételek">
+      ⏳ Csak kiemeltek
+    </a>
     <?php if ($hasFilter): ?><a href="?tab=transactions" class="btn btn-ghost btn-sm">Visszaállítás</a><?php endif; ?>
   </form>
 </div>
 
-<div class="card">
+<div class="card" id="tx-table-card">
   <div class="table-wrap">
     <table>
       <thead>
@@ -230,12 +248,15 @@ include __DIR__ . '/../includes/admin-header.php';
       <tbody>
         <?php if (empty($transactions)): ?>
         <tr><td colspan="10"><div class="empty-state"><div class="empty-icon">📒</div><p>Nincs tranzakció a megadott feltételek alapján.</p></div></td></tr>
-        <?php else: foreach ($transactions as $tx): ?>
-        <tr>
+        <?php else: foreach ($transactions as $tx): $hl = !empty($tx['highlighted']); ?>
+        <tr style="<?= $hl ? 'background:#fffbeb;box-shadow:inset 4px 0 0 var(--warning,#f59e0b);' : '' ?>">
           <td style="white-space:nowrap;font-size:13px;"><?= e((new DateTime($tx['tx_date']))->format('Y.m.d')) ?></td>
           <td><span class="badge <?= $tx['tx_type']==='income' ? 'badge-active' : 'badge-inactive' ?>"><?= $tx['tx_type']==='income' ? 'Bevétel' : 'Kiadás' ?></span></td>
           <td style="font-size:13px;"><?= e($tx['category']) ?></td>
-          <td style="font-size:13px;max-width:220px;"><?= e($tx['description']) ?></td>
+          <td style="font-size:13px;max-width:220px;">
+            <?= e($tx['description']) ?>
+            <?php if ($hl): ?><span class="badge badge-overdue" style="font-size:10px;margin-left:4px;white-space:nowrap;">⏳ Folyamatban</span><?php endif; ?>
+          </td>
           <td style="font-size:13px;color:var(--text-muted);"><?= $tx['event_label'] ? e($tx['event_label']) : '—' ?></td>
           <td style="font-size:13px;"><?= e($tx['partner']) ?></td>
           <td style="font-size:13px;"><?= e($tx['account']) ?></td>
@@ -244,7 +265,18 @@ include __DIR__ . '/../includes/admin-header.php';
             <?= $tx['tx_type']==='income' ? '+' : '−' ?><?= number_format((float)$tx['amount'], 0, ',', ' ') ?> Ft
           </td>
           <td class="td-actions" style="white-space:nowrap;">
-            <a href="<?= BASE_URL ?>/admin/transaction-detail.php?id=<?= (int)$tx['id'] ?>" class="btn btn-secondary btn-sm">Szerkesztés</a>
+            <a href="<?= BASE_URL ?>/admin/transaction-detail.php?id=<?= (int)$tx['id'] ?>" class="btn btn-secondary btn-sm tx-edit-btn"
+               data-id="<?= (int)$tx['id'] ?>"
+               data-date="<?= e($tx['tx_date']) ?>"
+               data-type="<?= e($tx['tx_type']) ?>"
+               data-category="<?= e($tx['category']) ?>"
+               data-description="<?= e($tx['description']) ?>"
+               data-partner="<?= e($tx['partner']) ?>"
+               data-account="<?= e($tx['account']) ?>"
+               data-amount="<?= e(rtrim(rtrim(number_format((float)$tx['amount'], 2, '.', ''), '0'), '.')) ?>"
+               data-invoice="<?= e($tx['invoice_number'] ?? '') ?>"
+               data-event="<?= $tx['event_type'] ? e($tx['event_type'] . ':' . (int)$tx['event_id']) : '' ?>"
+               data-highlighted="<?= !empty($tx['highlighted']) ? '1' : '0' ?>">Szerkesztés</a>
             <form method="post" action="<?= BASE_URL ?>/actions/transaction-delete.php" style="margin:0;display:inline;" onsubmit="return confirm('Törlöd ezt a tranzakciót?')">
               <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
               <input type="hidden" name="id" value="<?= (int)$tx['id'] ?>">
@@ -262,6 +294,173 @@ include __DIR__ . '/../includes/admin-header.php';
   </div>
   <?php endif; ?>
 </div>
+
+<!-- ══════════════════ SZERKESZTŐ OVERLAY ══════════════════ -->
+<div id="tx-edit-overlay" style="display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.5);align-items:flex-start;justify-content:center;overflow:auto;padding:40px 16px;">
+  <div class="card" style="width:min(760px,100%);margin:0;">
+    <div class="card-header" style="display:flex;justify-content:space-between;align-items:center;">
+      <h2>Tranzakció szerkesztése</h2>
+      <button type="button" id="tx-edit-close" class="btn btn-ghost btn-sm" aria-label="Bezárás">✕</button>
+    </div>
+    <div class="card-body">
+      <div id="tx-edit-error" class="alert alert-error" style="display:none;"></div>
+      <form id="tx-edit-form" method="post" action="<?= BASE_URL ?>/actions/transaction-update.php">
+        <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
+        <input type="hidden" name="id" value="">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;">
+          <div class="form-group">
+            <label>Dátum <span style="color:var(--danger)">*</span></label>
+            <input type="date" name="tx_date" required>
+          </div>
+          <div class="form-group">
+            <label>Típus <span style="color:var(--danger)">*</span></label>
+            <select name="tx_type" required>
+              <option value="income">Bevétel</option>
+              <option value="expense">Kiadás</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Kategória <span style="color:var(--danger)">*</span></label>
+            <select name="category" required>
+              <option value="">— válassz —</option>
+              <?php foreach ($catPresets as $v): ?><option value="<?= e($v) ?>"><?= e($v) ?></option><?php endforeach; ?>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Partner <span style="color:var(--danger)">*</span></label>
+            <select name="partner" required>
+              <option value="">— válassz —</option>
+              <?php if ($partnerPresets): ?><optgroup label="Rögzített partnerek"><?php foreach ($partnerPresets as $v): ?><option value="<?= e($v) ?>"><?= e($v) ?></option><?php endforeach; ?></optgroup><?php endif; ?>
+              <?php if ($memberNames): ?><optgroup label="Tagok"><?php foreach ($memberNames as $v): ?><option value="<?= e($v) ?>"><?= e($v) ?></option><?php endforeach; ?></optgroup><?php endif; ?>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Számla <span style="color:var(--danger)">*</span></label>
+            <select name="account" required>
+              <option value="">— válassz —</option>
+              <?php foreach ($accountPresets as $v): ?><option value="<?= e($v) ?>"><?= e($v) ?></option><?php endforeach; ?>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Összeg (Ft) <span style="color:var(--danger)">*</span></label>
+            <input type="number" name="amount" min="0" step="0.01" required>
+          </div>
+          <div class="form-group">
+            <label>Esemény</label>
+            <select name="event">
+              <option value="">— nincs —</option>
+              <?php if ($futureTours): ?>
+              <optgroup label="Meghirdetett túrák">
+                <?php foreach ($futureTours as $t): ?><option value="future_tour:<?= (int)$t['id'] ?>"><?= e($t['name']) ?><?= $t['start_date'] ? ' (' . e((new DateTime($t['start_date']))->format('Y.m.d')) . ')' : '' ?></option><?php endforeach; ?>
+              </optgroup>
+              <?php endif; ?>
+              <?php if ($pastTours): ?>
+              <optgroup label="Korábbi túrák">
+                <?php foreach ($pastTours as $t): ?><option value="tour:<?= (int)$t['id'] ?>"><?= e($t['label']) ?><?= $t['tour_date'] ? ' (' . e((new DateTime($t['tour_date']))->format('Y.m.d')) . ')' : '' ?></option><?php endforeach; ?>
+              </optgroup>
+              <?php endif; ?>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Számlaszám</label>
+            <input type="text" name="invoice_number">
+          </div>
+        </div>
+        <div class="form-group" style="margin-top:12px;">
+          <label>Leírás <span style="color:var(--danger)">*</span></label>
+          <input type="text" name="description" required>
+        </div>
+        <label class="notif-row" style="margin-top:14px;border:1px solid var(--border);border-radius:8px;padding:12px 14px;cursor:pointer;display:flex;align-items:center;gap:12px;">
+          <input type="checkbox" name="highlighted" value="1">
+          <span class="notif-slider"></span>
+          <span style="font-size:13px;"><strong>Kiemelés a listában</strong><small style="display:block;color:var(--text-muted);font-weight:400;">Folyamatban lévő tételként megjelölve.</small></span>
+        </label>
+        <div style="margin-top:16px;display:flex;gap:10px;">
+          <button type="submit" class="btn btn-primary">Mentés</button>
+          <button type="button" id="tx-edit-cancel" class="btn btn-ghost">Mégse</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var overlay = document.getElementById('tx-edit-overlay');
+  var form    = document.getElementById('tx-edit-form');
+  var errBox  = document.getElementById('tx-edit-error');
+  if (!overlay || !form) return;
+  var field = function (n) { return form.querySelector('[name="' + n + '"]'); };
+
+  function setVal(name, val) {
+    var el = field(name);
+    if (!el) return;
+    if (el.tagName === 'SELECT') {
+      var has = Array.prototype.some.call(el.options, function (o) { return o.value === val; });
+      if (!has && val !== '') { var o = document.createElement('option'); o.value = val; o.textContent = val; el.appendChild(o); }
+    }
+    el.value = val;
+  }
+
+  function openEdit(d) {
+    errBox.style.display = 'none'; errBox.textContent = '';
+    field('id').value = d.id || '';
+    setVal('tx_date', d.date || '');
+    setVal('tx_type', d.type || 'income');
+    setVal('category', d.category || '');
+    setVal('partner', d.partner || '');
+    setVal('account', d.account || '');
+    setVal('amount', d.amount || '');
+    setVal('event', d.event || '');
+    setVal('invoice_number', d.invoice || '');
+    setVal('description', d.description || '');
+    field('highlighted').checked = (d.highlighted === '1');
+    overlay.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+  function closeOverlay() { overlay.style.display = 'none'; document.body.style.overflow = ''; }
+
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('.tx-edit-btn');
+    if (btn) {
+      e.preventDefault();
+      openEdit(btn.dataset);
+      return;
+    }
+    if (e.target === overlay || e.target.closest('#tx-edit-close') || e.target.closest('#tx-edit-cancel')) {
+      closeOverlay();
+    }
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && overlay.style.display === 'flex') closeOverlay(); });
+
+  function refreshTable() {
+    fetch(window.location.href, { credentials: 'same-origin' })
+      .then(function (r) { return r.text(); })
+      .then(function (html) {
+        var doc = new DOMParser().parseFromString(html, 'text/html');
+        var fresh = doc.getElementById('tx-table-card');
+        var cur   = document.getElementById('tx-table-card');
+        if (fresh && cur) cur.innerHTML = fresh.innerHTML;
+      })
+      .catch(function () { window.location.reload(); });
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var submitBtn = form.querySelector('[type="submit"]');
+    if (submitBtn) submitBtn.disabled = true;
+    errBox.style.display = 'none';
+    fetch(form.action, { method: 'POST', body: new FormData(form), credentials: 'same-origin', headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+      .then(function (r) { return r.json(); })
+      .then(function (j) {
+        if (j && j.success) { closeOverlay(); refreshTable(); }
+        else { errBox.textContent = (j && j.error) ? j.error : 'A mentés sikertelen.'; errBox.style.display = 'block'; }
+      })
+      .catch(function () { errBox.textContent = 'Hálózati hiba a mentés közben.'; errBox.style.display = 'block'; })
+      .finally(function () { if (submitBtn) submitBtn.disabled = false; });
+  });
+})();
+</script>
 
 <?php elseif ($activeTab === 'report'): ?>
 <!-- ══════════════════ KIMUTATÁS ══════════════════ -->

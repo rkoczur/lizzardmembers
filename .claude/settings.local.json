@@ -50,7 +50,16 @@
       "Bash(php -l admin/transaction-detail.php)",
       "Bash(php -l actions/transaction-link-events.php)",
       "Bash(php -l admin/bookkeeping.php)",
-      "Bash(php -l includes/tour-submit-form.php)"
+      "Bash(php -l includes/tour-submit-form.php)",
+      "Bash(php -l actions/future-tour-apply.php)",
+      "Bash(php -l api/submit-application.php)",
+      "Bash(grep -n 'future_tour_applications\\\\|paid_at\\\\|ALTER TABLE future_tour_applications\\\\|accepted_at\\\\|try { $pdo->exec' includes/future-tours-schema.php)",
+      "Bash(grep -rn \"profile_picture\\\\|\\\\`avatar\\\\`\\\\| avatar \" includes/user-schema.php setup.php)",
+      "Bash(php -l admin/orphaned-assets.php)",
+      "Bash(grep -rn \"\\\\`body\\\\`\\\\|body \" includes/public-schema.php)",
+      "Bash(php -r 'require \"includes/config.php\"; require \"includes/db.php\"; var_dump\\(canConnectToServer\\(\\)\\);')",
+      "Read(//c/xampp/mysql/bin/**)",
+      "PowerShell(Start-Process -FilePath \"C:\\\\xampp\\\\mysql\\\\bin\\\\mysqld.exe\" -ArgumentList \"--defaults-file=C:\\\\xampp\\\\mysql\\\\bin\\\\my.ini\",\"--standalone\" -WindowStyle Hidden; Start-Sleep -Seconds 6; \\(Test-NetConnection -ComputerName 127.0.0.1 -Port 3306 -WarningAction SilentlyContinue\\).TcpTestSucceeded)"
     ]
   }
 }

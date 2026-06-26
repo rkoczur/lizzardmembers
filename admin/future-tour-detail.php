@@ -6,7 +6,7 @@ require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/future-tours-schema.php';
 requireAdminOrVezeto();
-$ro = false;
+$ro = !canCreateFutureTours();
 
 $pdo = getDb();
 ensureFutureToursSchema($pdo);
@@ -53,6 +53,14 @@ if (!$isNew) {
     $galleryStmt = $pdo->prepare("SELECT * FROM future_tour_gallery_images WHERE future_tour_id = ? ORDER BY sort_order ASC, uploaded_at ASC");
     $galleryStmt->execute([$id]);
     $galleryImages = $galleryStmt->fetchAll();
+}
+
+// Kiküldött túraértesítők (kinek ment ki már értesítő erről a túráról)
+$notifiedRecipients = [];
+if (!$isNew) {
+    $notifStmt = $pdo->prepare("SELECT name, email, sent_at FROM future_tour_notifications WHERE future_tour_id = ? ORDER BY name ASC, email ASC");
+    $notifStmt->execute([$id]);
+    $notifiedRecipients = $notifStmt->fetchAll();
 }
 
 $flash_success = getFlash('success');
@@ -104,6 +112,25 @@ include __DIR__ . '/../includes/admin-header.php';
     <?php endif; ?>
   </div>
 </div>
+
+<?php if (!$isNew && !empty($notifiedRecipients)): ?>
+<details class="card" style="max-width:780px;margin-bottom:16px;">
+  <summary style="cursor:pointer;padding:14px 20px;font-weight:600;list-style:none;display:flex;align-items:center;gap:8px;">
+    📣 Értesítőt kapott (<?= count($notifiedRecipients) ?>)
+  </summary>
+  <div class="card-body" style="border-top:1px solid var(--border);">
+    <p style="margin:0 0 10px;font-size:12px;color:var(--text-muted);">Ezek a tagok már megkapták az értesítőt erről a túráról — újraküldésnél kimaradnak.</p>
+    <ul style="list-style:none;margin:0;padding:0;columns:2;column-gap:24px;font-size:11.5px;line-height:1.65;">
+      <?php foreach ($notifiedRecipients as $nr): ?>
+        <li style="break-inside:avoid;margin-bottom:2px;">
+          <span style="font-weight:600;"><?= e($nr['name'] ?: '—') ?></span>
+          <span style="color:var(--text-muted);">&lt;<?= e($nr['email']) ?>&gt;</span>
+        </li>
+      <?php endforeach; ?>
+    </ul>
+  </div>
+</details>
+<?php endif; ?>
 
 <div class="card" style="max-width:780px;">
     <div class="card-header">
@@ -604,7 +631,7 @@ document.getElementById('copy-public-link-btn')?.addEventListener('click', funct
   var failUl   = document.getElementById('announce-failed-list');
   if (!btn) return;
 
-  var token = null, ids = [], total = 0, processed = 0, sentOk = 0, failedItems = [], sending = false;
+  var token = null, ids = [], total = 0, processed = 0, sentOk = 0, failedItems = [], sending = false, aborted = false, abortError = '';
 
   function postJson(url, params) {
     var fd = new FormData();
@@ -635,32 +662,18 @@ document.getElementById('copy-public-link-btn')?.addEventListener('click', funct
   function sendBatches(list, countProgress) {
     var i = 0;
     function next() {
-      if (i >= list.length) return Promise.resolve();
+      if (i >= list.length || aborted) return Promise.resolve();
       var slice = list.slice(i, i + BATCH_SIZE); i += BATCH_SIZE;
       return postJson(BASE + '/actions/future-tour-announce-batch.php', { token: token, batch_ids: slice }).then(function (res) {
         if (!res.ok) throw new Error(res.error || 'Ismeretlen szerverhiba.');
         res.results.forEach(function (r) { if (countProgress) processed++; if (r.ok) sentOk++; else failedItems.push(r); });
         if (countProgress) setProgress();
+        // Első SMTP-hiba → leállítjuk a kiküldést, nincs újrapróbálkozás
+        if (res.stopped) { aborted = true; abortError = res.stopError || 'SMTP hiba'; return Promise.resolve(); }
         return next();
       });
     }
     return next();
-  }
-
-  function retryAfterWait() {
-    return new Promise(function (resolve) {
-      var retryIds = failedItems.map(function (f) { return f.id; });
-      failedItems = []; renderFailures();
-      var left = RETRY_WAIT;
-      label.textContent = 'Szerverhiba — a sikertelen címzettek újraküldése';
-      note.textContent = 'Újrapróbálkozás ' + left + ' mp múlva…';
-      var t = setInterval(function () {
-        left--;
-        if (left > 0) { note.textContent = 'Újrapróbálkozás ' + left + ' mp múlva…'; return; }
-        clearInterval(t); note.textContent = 'Újraküldés folyamatban…';
-        sendBatches(retryIds, false).then(resolve);
-      }, 1000);
-    });
   }
 
   function openModal() {
@@ -692,18 +705,22 @@ document.getElementById('copy-public-link-btn')?.addEventListener('click', funct
   sendBtn.addEventListener('click', function () {
     if (!token || sending) return;
     sending = true; sendBtn.disabled = true; panel.hidden = false;
-    processed = 0; sentOk = 0; failedItems = [];
+    processed = 0; sentOk = 0; failedItems = []; aborted = false; abortError = '';
     label.textContent = 'Küldés folyamatban…'; note.textContent = '';
     setProgress();
     sendBatches(ids, true).then(function () {
-      if (failedItems.length) return retryAfterWait();
-    }).then(function () {
       renderFailures();
       sending = false;
-      label.textContent = 'Kész';
-      fill.classList.add(failedItems.length ? 'is-warn' : 'is-done');
-      note.textContent = sentOk + ' sikeres küldés' + (failedItems.length ? (', ' + failedItems.length + ' sikertelen.') : '.');
       cancelBtn.textContent = 'Bezárás';
+      if (aborted) {
+        label.textContent = 'Megszakadt';
+        fill.classList.add('is-warn');
+        note.textContent = 'A küldés leállt egy SMTP-hiba miatt: ' + abortError + '. Eddig ' + sentOk + ' értesítő ment ki. A hiba javítása után újraindítva csak a még nem értesített tagok kapják meg.';
+      } else {
+        label.textContent = 'Kész';
+        fill.classList.add(failedItems.length ? 'is-warn' : 'is-done');
+        note.textContent = sentOk + ' sikeres küldés' + (failedItems.length ? (', ' + failedItems.length + ' sikertelen.') : '.');
+      }
     }).catch(function (err) {
       sending = false;
       label.textContent = 'Hiba';

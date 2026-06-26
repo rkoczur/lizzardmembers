@@ -216,6 +216,7 @@ include __DIR__ . '/../includes/admin-header.php';
             <th style="padding:10px 12px;text-align:center;font-weight:600;color:var(--text-muted);font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;">Autó / helyek</th>
             <th style="padding:10px 12px;text-align:center;font-weight:600;color:var(--text-muted);font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;">Fizetendő díj</th>
             <th style="padding:10px 12px;text-align:center;font-weight:600;color:var(--text-muted);font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;">Fizetés</th>
+            <th style="padding:10px 12px;text-align:center;font-weight:600;color:var(--text-muted);font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;">Elfogadás</th>
             <?php if (isAdmin()): ?>
             <th style="padding:10px 12px;"></th>
             <?php endif; ?>
@@ -306,6 +307,29 @@ include __DIR__ . '/../includes/admin-header.php';
                   </button>
                 <?php endif; ?>
               </form>
+              <?php endif; ?>
+            </td>
+            <td style="padding:12px 12px;text-align:center;">
+              <?php if ($app['status'] === 'confirmed' && $app['user_id']): ?>
+                <?php if (!empty($app['accepted_at'])): ?>
+                  <div style="color:var(--success,#16a34a);font-size:12px;font-weight:600;white-space:nowrap;">✓ Elfogadva</div>
+                  <div style="font-size:11px;color:var(--text-muted);"><?= date('Y.m.d', strtotime($app['accepted_at'])) ?></div>
+                  <form method="post" action="<?= BASE_URL ?>/actions/future-tour-accept.php" style="margin-top:4px;">
+                    <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
+                    <input type="hidden" name="application_id" value="<?= (int)$app['id'] ?>">
+                    <input type="hidden" name="tour_id" value="<?= $id ?>">
+                    <button type="submit" class="btn btn-ghost btn-sm" style="font-size:11px;" title="Az elfogadó e-mail újraküldése">Újraküldés</button>
+                  </form>
+                <?php else: ?>
+                  <form method="post" action="<?= BASE_URL ?>/actions/future-tour-accept.php">
+                    <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
+                    <input type="hidden" name="application_id" value="<?= (int)$app['id'] ?>">
+                    <input type="hidden" name="tour_id" value="<?= $id ?>">
+                    <button type="submit" class="btn btn-primary btn-sm" style="white-space:nowrap;">Jelentkezés elfogadása</button>
+                  </form>
+                <?php endif; ?>
+              <?php else: ?>
+                <span style="color:var(--text-muted);font-size:12.5px;">—</span>
               <?php endif; ?>
             </td>
             <?php if (isAdmin()): ?>

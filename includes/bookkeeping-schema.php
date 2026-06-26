@@ -37,6 +37,9 @@ function ensureBookkeepingSchema(PDO $pdo): void
         PRIMARY KEY (`id`),
         UNIQUE KEY `uniq_type_value` (`preset_type`, `value`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+
+    // Kiemelés (folyamatban lévő tétel) — migráció meglévő telepítéshez
+    try { $pdo->exec("ALTER TABLE `transactions` ADD COLUMN `highlighted` TINYINT(1) NOT NULL DEFAULT 0"); } catch (Throwable) {}
 }
 
 /**

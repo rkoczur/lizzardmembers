@@ -60,6 +60,8 @@ session_write_close();
 $mailer  = new SmtpMailer($smtp);
 $results = [];
 $first   = true;
+$stopped = false;
+$stopError = '';
 
 foreach ($members as $m) {
     if (!$first) usleep(400000); // 0,4 mp késleltetés a levelek között
@@ -70,6 +72,7 @@ foreach ($members as $m) {
     $html = buildBulkEmailHtml($subj, applyBulkEmailMerge($body, $m));
 
     if (trim((string)$m['email']) === '') {
+        // Hiányzó e-mail cím nem SMTP-hiba — naplózzuk, de folytatjuk
         logEmailEntry($pdo, (int)$m['id'], '', $name, $subj, $html, 'bulk', 'failed', 'Hiányzó e-mail cím');
         $results[] = ['id' => (int)$m['id'], 'name' => $name, 'ok' => false, 'error' => 'Hiányzó e-mail cím'];
         continue;
@@ -80,11 +83,15 @@ foreach ($members as $m) {
         logEmailEntry($pdo, (int)$m['id'], $m['email'], $name, $subj, $html, 'bulk', 'sent', '', $response);
         $results[] = ['id' => (int)$m['id'], 'name' => $name, 'ok' => true];
     } catch (Throwable $e) {
+        // Első SMTP-hiba → megszakítjuk a kiküldést, nincs újrapróbálkozás
         $err = $e->getMessage();
         logEmailEntry($pdo, (int)$m['id'], $m['email'], $name, $subj, $html, 'bulk', 'failed', $err, $err);
         error_log('Bulk email error to ' . $m['email'] . ': ' . $err);
         $results[] = ['id' => (int)$m['id'], 'name' => $name, 'ok' => false, 'error' => $err];
+        $stopped   = true;
+        $stopError = $err;
+        break;
     }
 }
 
-echo json_encode(['ok' => true, 'results' => $results]);
+echo json_encode(['ok' => true, 'results' => $results, 'stopped' => $stopped, 'stopError' => $stopError]);

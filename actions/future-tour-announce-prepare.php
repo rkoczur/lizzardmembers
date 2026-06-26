@@ -60,6 +60,17 @@ if (empty($ids)) {
     exit;
 }
 
+// Akiknek erről a túráról MÁR kiment értesítő, azoknak nem küldjük újra — csak a maradéknak
+$notifiedStmt = $pdo->prepare("SELECT user_id FROM future_tour_notifications WHERE future_tour_id = ? AND user_id IS NOT NULL");
+$notifiedStmt->execute([$tourId]);
+$alreadyNotified = array_map('intval', $notifiedStmt->fetchAll(PDO::FETCH_COLUMN));
+$ids = array_values(array_diff($ids, $alreadyNotified));
+
+if (empty($ids)) {
+    echo json_encode(['ok' => false, 'error' => 'Minden feliratkozott tag már megkapta az értesítőt erről a túráról.']);
+    exit;
+}
+
 $token = bin2hex(random_bytes(16));
 $_SESSION['ft_announce_job'] = [
     'token'   => $token,

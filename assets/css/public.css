@@ -932,6 +932,50 @@
 .pub-strip p  { font-size: 15px; color: rgba(255,255,255,.85); margin-bottom: 24px; }
 
 /* ── Tour cards (horizontal) ── */
+/* Hónap-elválasztó fejléc — kiemelt, gradiens „címke" + elhalványuló vonal */
+.pub-tour-month {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 44px 0 20px;
+}
+.pub-tour-month:first-of-type { margin-top: 8px; }
+.pub-tour-month-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 1px 22px 1px 18px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--sidebar-bg) 0%, #1d5750 60%, var(--primary) 100%);
+  box-shadow: 0 6px 18px rgba(26, 61, 57, .28);
+  white-space: nowrap;
+}
+.pub-tour-month-icon { color: var(--warning); flex-shrink: 0; }
+.pub-tour-month-year {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .8px;
+  color: var(--warning);
+  margin-top: 3px;
+}
+.pub-tour-month-name {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -.3px;
+  text-transform: capitalize;
+  color: #fff;
+}
+.pub-tour-month-line {
+  flex: 1;
+  height: 3px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--warning) 0%, var(--border) 35%, transparent 100%);
+}
+@media (max-width: 560px) {
+  .pub-tour-month { gap: 10px; margin: 32px 0 16px; }
+  .pub-tour-month-label { padding: 9px 16px; }
+  .pub-tour-month-name { font-size: 18px; }
+}
 .pub-tour-cards { display: flex; flex-direction: column; gap: 16px; }
 .pub-tour-card {
   background: var(--card);

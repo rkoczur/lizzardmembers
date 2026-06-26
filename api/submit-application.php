@@ -141,7 +141,12 @@ foreach ($cfStmt->fetchAll() as $cf) {
     $answerStmt->execute([$appId, $cf['id'], $answer]);
 }
 
-// --- Emails ---
+// A sikeres választ AZONNAL visszaküldjük a kliensnek, és az (esetleg lassú SMTP) e-maileket
+// utána, háttérben küldjük — így a beküldő nem kap téves „hálózati hiba" üzenetet.
+respondAndContinue(json_encode(['success' => true, 'status' => $appStatus], JSON_UNESCAPED_UNICODE));
+@set_time_limit(60);
+
+// --- Emails (a válasz elküldése után, háttérben) ---
 $smtp       = getSmtpConfig($pdo);
 $proto      = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
 $absBaseUrl = $proto . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . BASE_URL;
@@ -151,10 +156,10 @@ if ($memberLoggedIn) {
     $tourUrl = $absBaseUrl . '/user/future-tour-detail.php?id=' . $tourId;
     if ($appStatus === 'confirmed') {
         $subject     = 'Sikeres jelentkezés – ' . $tour['name'];
-        $statusBlock = '<strong style="color:#29776F;">Státusz: Megerősített</strong>'
+        $statusBlock = '<strong style="color:#29776F;">Sikeresen jelentkeztél – a helyedet fenntartjuk.</strong>'
           . ((float)($tour['participation_fee'] ?? 0) > 0
               ? '<div style="background:#fffbeb;border:1px solid #f59e0b;border-radius:6px;padding:12px 16px;margin-top:16px;font-size:13.5px;color:#b45309;">
-            ⚠ Kérjük, a részvételi díjat <strong>14 napon belül</strong> utald el.
+            ⚠ A részvételi díjat kérjük, <strong>14 napon belül</strong> utald el — eddig a helyedet fenntartjuk. Ha a befizetés a határidőig nem érkezik meg, a helyedet a várólistán következő jelentkező kapja meg.
           </div>'
               : '');
     } else {
@@ -196,11 +201,15 @@ $applicantHtml = '<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body 
 
 $emailTo  = $memberLoggedIn ? $memberUser['email'] : $guestEmail;
 $logType  = $memberLoggedIn ? 'future_tour_application' : 'future_tour_guest_application';
-try {
-    (new SmtpMailer($smtp))->send($emailTo, $displayName, $subject, $applicantHtml);
-    logEmailEntry($pdo, $memberLoggedIn ? $userId : null, $emailTo, $displayName, $subject, $applicantHtml, $logType, 'sent');
-} catch (Throwable $ex) {
-    logEmailEntry($pdo, $memberLoggedIn ? $userId : null, $emailTo, $displayName, $subject, $applicantHtml, $logType, 'failed', $ex->getMessage());
+// A megerősített (helyet kapott) tag NEM kap automatikus e-mailt — azt az admin „Jelentkezés
+// elfogadása” gombja küldi ki. A várólistás tag és a jóváhagyásra váró vendég értesül.
+if (!($memberLoggedIn && $appStatus === 'confirmed')) {
+    try {
+        (new SmtpMailer($smtp))->send($emailTo, $displayName, $subject, $applicantHtml);
+        logEmailEntry($pdo, $memberLoggedIn ? $userId : null, $emailTo, $displayName, $subject, $applicantHtml, $logType, 'sent');
+    } catch (Throwable $ex) {
+        logEmailEntry($pdo, $memberLoggedIn ? $userId : null, $emailTo, $displayName, $subject, $applicantHtml, $logType, 'failed', $ex->getMessage());
+    }
 }
 
 $adminSubject = ($memberLoggedIn ? 'Új túrajelentkezés' : 'Új vendég túrajelentkezés') . ' – ' . $tour['name'];
@@ -240,4 +249,4 @@ foreach ($pdo->query("SELECT id, email, firstname, lastname FROM users WHERE rol
     }
 }
 
-echo json_encode(['success' => true, 'status' => $appStatus], JSON_UNESCAPED_UNICODE);
+exit;

@@ -12,7 +12,7 @@ require_once __DIR__ . '/../includes/functions.php';
 
 header('Content-Type: application/json; charset=UTF-8');
 
-if (!isLoggedIn() || !canManagePosts()) {
+if (!isLoggedIn() || !canCreatePosts()) {
     http_response_code(403);
     echo json_encode(['error' => 'Nincs jogosultságod a feltöltéshez.']);
     exit;

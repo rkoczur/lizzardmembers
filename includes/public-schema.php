@@ -68,6 +68,8 @@ function ensurePublicSchema(PDO $pdo): void
     foreach ([
         "ALTER TABLE posts ADD COLUMN cover_alt VARCHAR(255) DEFAULT NULL AFTER cover_img",
         "ALTER TABLE posts ADD COLUMN meta_keywords VARCHAR(500) DEFAULT NULL AFTER excerpt",
+        "ALTER TABLE posts ADD COLUMN author_id INT UNSIGNED DEFAULT NULL AFTER created_by",
+        "ALTER TABLE posts ADD COLUMN approval_status ENUM('approved','pending','draft') NOT NULL DEFAULT 'approved' AFTER published",
         "ALTER TABLE pages ADD COLUMN meta_description VARCHAR(500) DEFAULT NULL AFTER body",
         "ALTER TABLE pages ADD COLUMN meta_keywords VARCHAR(500) DEFAULT NULL AFTER meta_description",
     ] as $sql) {

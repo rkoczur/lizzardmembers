@@ -33,6 +33,13 @@ if (!$isNew && $id) {
 $flash_success = getFlash('success');
 $flash_error   = getFlash('error');
 
+// Szerző kézi kiválasztásához (csak teljes adminnak): aktív tagok listája
+$authorList = [];
+if (isAdmin()) {
+    $authorList = $pdo->query("SELECT id, lastname, firstname FROM users WHERE active = 1 ORDER BY lastname ASC, firstname ASC")->fetchAll();
+}
+$currentAuthorId = (int)($post['author_id'] ?? $post['created_by'] ?? 0);
+
 $pageTitle  = $isNew ? 'Új poszt' : e($post['title'] ?? 'Poszt szerkesztése');
 $activePage = 'website';
 include __DIR__ . '/../includes/admin-header.php';
@@ -83,6 +90,18 @@ include __DIR__ . '/../includes/admin-header.php';
             <option value="beszmolok" <?= ($post['category'] ?? '')       === 'beszmolok' ? 'selected' : '' ?>>Élményblog</option>
           </select>
         </div>
+        <?php if (isAdmin()): ?>
+        <div class="form-group">
+          <label>Szerző</label>
+          <select name="author_id">
+            <option value="">— Alapértelmezett (létrehozó) —</option>
+            <?php foreach ($authorList as $au): ?>
+              <option value="<?= (int)$au['id'] ?>" <?= $currentAuthorId === (int)$au['id'] ? 'selected' : '' ?>><?= e($au['lastname'] . ' ' . $au['firstname']) ?></option>
+            <?php endforeach; ?>
+          </select>
+          <small style="color:var(--text-muted);font-size:12px;">A nyilvános oldalon megjelenő szerző.</small>
+        </div>
+        <?php endif; ?>
         <div class="form-group full">
           <label>Kivonat / összefoglaló <span style="font-weight:normal;text-transform:none;letter-spacing:0;color:var(--text-muted);font-size:12px;">(a kártyán és SEO meta-leírásként is megjelenik)</span></label>
           <textarea name="excerpt" rows="2" maxlength="500"><?= e($post['excerpt'] ?? '') ?></textarea>

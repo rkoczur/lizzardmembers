@@ -13,6 +13,7 @@ function ensureUserSchema(PDO $pdo): void
         "ALTER TABLE `users` ADD COLUMN `consent_email_visibility` TINYINT(1) DEFAULT NULL AFTER `notification_prefs`",
         "ALTER TABLE `users` ADD COLUMN `consent_photo` TINYINT(1) DEFAULT NULL AFTER `consent_email_visibility`",
         "ALTER TABLE `users` ADD COLUMN `is_candidate` TINYINT(1) NOT NULL DEFAULT 0 AFTER `active`",
+        "ALTER TABLE `users` ADD COLUMN `permissions` TEXT DEFAULT NULL AFTER `role`",
     ] as $sql) {
         try { $pdo->exec($sql); } catch (PDOException) {}
     }

@@ -76,9 +76,12 @@ $subject     = 'Új meghirdetett túra – ' . $tour['name'];
 
 session_write_close();
 
-$mailer  = new SmtpMailer($smtp);
-$results = [];
-$first   = true;
+$mailer   = new SmtpMailer($smtp);
+$insNotif = $pdo->prepare("INSERT IGNORE INTO future_tour_notifications (future_tour_id, user_id, email, name) VALUES (?, ?, ?, ?)");
+$results  = [];
+$first    = true;
+$stopped  = false;
+$stopError = '';
 
 foreach ($members as $m) {
     if (!$first) usleep(400000); // 0,4 mp késleltetés
@@ -101,6 +104,7 @@ foreach ($members as $m) {
     );
 
     if (trim((string)$m['email']) === '') {
+        // Hiányzó e-mail cím nem SMTP-hiba — naplózzuk, de folytatjuk a többivel
         logEmailEntry($pdo, (int)$m['id'], '', $name, $subject, $html, 'tour_announcement', 'failed', 'Hiányzó e-mail cím');
         $results[] = ['id' => (int)$m['id'], 'name' => $name, 'ok' => false, 'error' => 'Hiányzó e-mail cím'];
         continue;
@@ -109,13 +113,18 @@ foreach ($members as $m) {
     try {
         $response = $mailer->send($m['email'], $name, $subject, $html);
         logEmailEntry($pdo, (int)$m['id'], $m['email'], $name, $subject, $html, 'tour_announcement', 'sent', '', $response);
+        $insNotif->execute([$tourId, (int)$m['id'], $m['email'], $name]); // megjegyezzük, hogy kiment
         $results[] = ['id' => (int)$m['id'], 'name' => $name, 'ok' => true];
     } catch (Throwable $e) {
+        // Első SMTP-hiba → megszakítjuk a kiküldést, nincs újrapróbálkozás
         $err = $e->getMessage();
         logEmailEntry($pdo, (int)$m['id'], $m['email'], $name, $subject, $html, 'tour_announcement', 'failed', $err, $err);
         error_log('Tour announcement error to ' . $m['email'] . ': ' . $err);
         $results[] = ['id' => (int)$m['id'], 'name' => $name, 'ok' => false, 'error' => $err];
+        $stopped   = true;
+        $stopError = $err;
+        break;
     }
 }
 
-echo json_encode(['ok' => true, 'results' => $results]);
+echo json_encode(['ok' => true, 'results' => $results, 'stopped' => $stopped, 'stopError' => $stopError]);

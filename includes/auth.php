@@ -116,7 +116,9 @@ function canManageDocuments(): bool
 
 function canManagePosts(): bool
 {
-    return in_array(currentRole(), ['admin', 'helyettes', 'kommunikacios'], true);
+    if (in_array(currentRole(), ['admin', 'helyettes', 'kommunikacios'], true)) return true;
+    // Vezető, akinek egyéni „create_post” joga van: teljes értékű posztkezelő az admin felületen is.
+    return isAnyLeader() && hasCustomPermission('create_post');
 }
 
 function canManageFaq(): bool
@@ -159,6 +161,55 @@ function canAccessWebsite(): bool
 {
     return canManageFinances() || canManageDocuments() || canManagePosts()
         || canManageFaq() || canManagePages();
+}
+
+// ── Egyéni (felhasználónkénti) jogosultságok ───────────────────────────────────
+
+/** A bejelentkezett felhasználó egyéni jogosultságai (users.permissions JSON). */
+function currentUserPermissions(): array
+{
+    static $perms = null;
+    if ($perms !== null) return $perms;
+    $perms = [];
+    $uid = getCurrentUserId();
+    if ($uid > 0) {
+        try {
+            $stmt = getDb()->prepare("SELECT permissions FROM users WHERE id = ?");
+            $stmt->execute([$uid]);
+            $raw = $stmt->fetchColumn();
+            $decoded = $raw ? json_decode((string)$raw, true) : [];
+            if (is_array($decoded)) {
+                $perms = array_values(array_filter(array_map('strval', $decoded)));
+            }
+        } catch (Throwable) { /* permissions oszlop még nem létezik — üres */ }
+    }
+    return $perms;
+}
+
+function hasCustomPermission(string $key): bool
+{
+    return in_array($key, currentUserPermissions(), true);
+}
+
+/** Bejegyzés létrehozása: a posztkezelő szerepkörök VAGY egyéni „create_post” jog. */
+function canCreatePosts(): bool
+{
+    return canManagePosts() || hasCustomPermission('create_post');
+}
+
+/** Meghirdetett túra létrehozása: admin/helyettes VAGY egyéni „create_future_tour” jog. */
+function canCreateFutureTours(): bool
+{
+    return isAdmin() || hasCustomPermission('create_future_tour');
+}
+
+/** Az adminfelületen elérhető egyéni jogok kulcs => címke. */
+function customPermissionLabels(): array
+{
+    return [
+        'create_post'        => 'Bejegyzés létrehozása',
+        'create_future_tour' => 'Meghirdetett túra létrehozása',
+    ];
 }
 
 // ── Display helpers ───────────────────────────────────────────────────────────

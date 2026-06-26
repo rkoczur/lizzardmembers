@@ -20,6 +20,7 @@ $partner     = trim($_POST['partner'] ?? '');
 $amount      = (float)str_replace([' ', ','], ['', '.'], (string)($_POST['amount'] ?? ''));
 $account     = trim($_POST['account'] ?? '');
 $invoiceNo   = trim($_POST['invoice_number'] ?? '');
+$highlighted = !empty($_POST['highlighted']) ? 1 : 0;
 $event       = resolveTransactionEvent($pdo, trim($_POST['event'] ?? ''));
 
 // Validáció — kötelező mezők
@@ -31,13 +32,13 @@ if (!$dateValid || $txType === '' || $category === '' || $description === '' || 
 }
 
 $pdo->prepare("INSERT INTO transactions
-    (tx_date, tx_type, category, description, event_type, event_id, event_label, partner, amount, account, invoice_number, created_by)
-    VALUES (?,?,?,?,?,?,?,?,?,?,?,?)")
+    (tx_date, tx_type, category, description, event_type, event_id, event_label, partner, amount, account, invoice_number, highlighted, created_by)
+    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)")
     ->execute([
         $txDate, $txType, $category, $description,
         $event['type'], $event['id'], $event['label'],
         $partner, $amount, $account, ($invoiceNo !== '' ? $invoiceNo : null),
-        getCurrentUserId(),
+        $highlighted, getCurrentUserId(),
     ]);
 
 $id = (int)$pdo->lastInsertId();

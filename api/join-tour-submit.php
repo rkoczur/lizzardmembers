@@ -107,7 +107,12 @@ foreach ($cfStmt->fetchAll() as $cf) {
     $answerStmt->execute([$tourAppId, $cf['id'], $answer]);
 }
 
-// ── Emails (optional) ────────────────────────────────────────────────
+// A sikeres választ azonnal visszaküldjük, az e-maileket utána (háttérben) küldjük —
+// így a lassú SMTP nem okoz a kliensnél téves „hálózati hiba" üzenetet.
+respondAndContinue(json_encode(['success' => true], JSON_UNESCAPED_UNICODE));
+@set_time_limit(60);
+
+// ── Emails (optional, a válasz után) ─────────────────────────────────
 try {
     require_once __DIR__ . '/../includes/app-settings-schema.php';
     require_once __DIR__ . '/../includes/mailer.php';
@@ -191,5 +196,4 @@ try {
 } catch (Throwable $ex) {
     error_log('join-tour-submit email: ' . $ex->getMessage());
 }
-
-echo json_encode(['success' => true], JSON_UNESCAPED_UNICODE);
+exit;

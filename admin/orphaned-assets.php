@@ -73,6 +73,7 @@ $doScan  = isset($_GET['scan']);
 $results = [];
 $totalFiles = $totalOrphans = $totalOrphanBytes = 0;
 $scanError = '';
+$dbQueryErrors = [];
 
 if ($doScan) {
     set_time_limit(120);
@@ -111,26 +112,35 @@ if ($doScan) {
         $scanError = 'Forrásfájlok olvasása sikertelen: ' . $ex->getMessage();
     }
 
-    // DB filenames
+    // DB filenames — minden olyan oszlop, ami fájlnévre hivatkozhat (a body/leírás mezők a
+    // beágyazott képeket is tartalmazzák, pl. a TinyMCE-vel feltöltött bejegyzés-képeket).
     $dbContent = '';
     $dbQueries = [
-        "SELECT avatar         FROM users            WHERE avatar         IS NOT NULL AND avatar         != ''",
-        "SELECT gpx_file       FROM tours            WHERE gpx_file       IS NOT NULL AND gpx_file       != ''",
-        "SELECT filename       FROM tour_gpx_files",
-        "SELECT filename       FROM future_tour_gpx_files",
-        "SELECT cover_img      FROM future_tours     WHERE cover_img      IS NOT NULL AND cover_img      != ''",
-        "SELECT cover_img      FROM posts            WHERE cover_img      IS NOT NULL AND cover_img      != ''",
-        "SELECT filename       FROM documents        WHERE filename       IS NOT NULL AND filename       != ''",
-        "SELECT flag_filename  FROM countries        WHERE flag_filename  IS NOT NULL AND flag_filename  != ''",
-        "SELECT body           FROM pages            WHERE slug = 'hero-image' AND body IS NOT NULL AND body != ''",
+        "SELECT profile_picture FROM users         WHERE profile_picture IS NOT NULL AND profile_picture != ''",
+        "SELECT gpx_file        FROM tours          WHERE gpx_file   IS NOT NULL AND gpx_file   != ''",
+        "SELECT filename        FROM tour_gpx_files",
+        "SELECT filename        FROM future_tour_gpx_files",
+        "SELECT gpx_file        FROM future_tours   WHERE gpx_file   IS NOT NULL AND gpx_file   != ''",
+        "SELECT filename        FROM future_tour_gallery_images",
+        "SELECT cover_img       FROM future_tours   WHERE cover_img  IS NOT NULL AND cover_img  != ''",
+        "SELECT cover_img       FROM posts          WHERE cover_img  IS NOT NULL AND cover_img  != ''",
+        "SELECT body            FROM posts          WHERE body       IS NOT NULL AND body       != ''",
+        "SELECT body            FROM pages          WHERE body       IS NOT NULL AND body       != ''",
+        "SELECT filename        FROM documents      WHERE filename   IS NOT NULL AND filename   != ''",
+        "SELECT flag_filename   FROM countries      WHERE flag_filename IS NOT NULL AND flag_filename != ''",
     ];
+    $dbQueryErrors = [];
     foreach ($dbQueries as $sql) {
         try {
             $stmt = $pdo->query($sql);
             foreach ($stmt->fetchAll(PDO::FETCH_COLUMN) as $val) {
                 $dbContent .= $val . "\n";
             }
-        } catch (Throwable) {}
+        } catch (Throwable $ex) {
+            // Fail-safe: egy hibás lekérdezés (pl. átnevezett oszlop) miatt használt fájlok
+            // tévesen feleslegesnek tűnhetnének — ezt jelezzük, hogy ne töröljünk vakon.
+            $dbQueryErrors[] = $sql;
+        }
     }
 
     $combined = $sourceContent . $dbContent;
@@ -201,6 +211,15 @@ include __DIR__ . '/../includes/admin-header.php';
 <?php endif; ?>
 <?php if ($scanError): ?>
   <div class="alert alert-danger"><?= e($scanError) ?></div>
+<?php endif; ?>
+<?php if (!empty($dbQueryErrors)): ?>
+  <div class="alert alert-danger">
+    <strong>Figyelem:</strong> néhány adatbázis-hivatkozás lekérdezése nem sikerült, ezért a lista
+    hiányos lehet, és használt fájlok is megjelenhetnek feleslegesként. <strong>Ne törölj</strong>, amíg ez fennáll!
+    <div style="font-size:11.5px;margin-top:6px;opacity:.8;font-family:monospace;word-break:break-all;">
+      <?= e(implode(' | ', $dbQueryErrors)) ?>
+    </div>
+  </div>
 <?php endif; ?>
 
 <?php if (!$doScan): ?>

@@ -15,7 +15,13 @@ if (!$slug) {
     exit;
 }
 
-$stmt = $pdo->prepare("SELECT * FROM posts WHERE slug = ? AND published = 1 LIMIT 1");
+$stmt = $pdo->prepare("
+    SELECT p.*, TRIM(CONCAT(COALESCE(au.lastname, ''), ' ', COALESCE(au.firstname, ''))) AS author_name,
+           au.profile_picture AS author_avatar
+    FROM posts p
+    LEFT JOIN users au ON au.id = COALESCE(p.author_id, p.created_by)
+    WHERE p.slug = ? AND p.published = 1 LIMIT 1
+");
 $stmt->execute([$slug]);
 $post = $stmt->fetch();
 if (!$post) {
@@ -63,9 +69,21 @@ include __DIR__ . '/../includes/public-header.php';
     <span><?= date('Y. F j.', strtotime($post['created_at'])) ?></span>
   </div>
 
-  <h1 style="font-size:clamp(22px,4vw,34px);font-weight:800;color:var(--sidebar-bg);letter-spacing:-.3px;margin-bottom:20px;line-height:1.3;">
-    <?= e($post['title']) ?>
-  </h1>
+  <?php $hasAuthor = !empty(trim($post['author_name'] ?? '')); ?>
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:24px;">
+    <h1 style="flex:1 1 300px;min-width:0;font-size:clamp(22px,4vw,34px);font-weight:800;color:var(--sidebar-bg);letter-spacing:-.3px;margin:0;line-height:1.3;overflow-wrap:break-word;">
+      <?= e($post['title']) ?>
+    </h1>
+    <?php if ($hasAuthor): ?>
+    <div style="flex:0 0 auto;display:flex;align-items:center;gap:12px;">
+      <div style="line-height:1.45;text-align:right;">
+        <div style="font-size:11px;color:var(--text-muted,#7a7269);text-transform:uppercase;letter-spacing:.06em;font-weight:600;">Szerző</div>
+        <div style="font-weight:800;font-size:16px;color:var(--sidebar-bg,#1a3d39);white-space:nowrap;"><?= e(trim($post['author_name'])) ?></div>
+      </div>
+      <img src="<?= e(getAvatarUrl($post['author_avatar'] ?? null)) ?>" alt="" style="width:46px;height:46px;border-radius:50%;object-fit:cover;flex-shrink:0;">
+    </div>
+    <?php endif; ?>
+  </div>
 
   <?php if (!empty($post['excerpt'])): ?>
     <p style="font-size:17px;color:var(--text-muted);line-height:1.7;margin-bottom:28px;border-left:4px solid var(--primary);padding-left:16px;">

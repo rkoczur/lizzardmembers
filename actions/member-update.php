@@ -37,6 +37,12 @@ $newPassword2= $_POST['new_password2']  ?? '';
 $roleInput   = $_POST['role'] ?? 'user';
 $role        = in_array($roleInput, ['admin', 'user', 'vezeto', 'helyettes', 'penzugyi', 'jogi', 'kommunikacios'], true) ? $roleInput : 'user';
 
+// Egyéni jogosultságok (csak az engedélyezett kulcsok)
+$allowedPerms  = array_keys(customPermissionLabels());
+$permsInput    = is_array($_POST['permissions'] ?? null) ? $_POST['permissions'] : [];
+$permissions   = array_values(array_intersect($allowedPerms, $permsInput));
+$permissionsJson = $permissions ? json_encode($permissions, JSON_UNESCAPED_UNICODE) : null;
+
 // Prevent self-demotion
 if ($memberId === getCurrentUserId() && $role !== 'admin') {
     $role = 'admin';
@@ -117,13 +123,13 @@ $before = $beforeStmt->fetch();
 $fields = ['firstname=?','lastname=?','username=?','email=?',
            'dateofbirth=?','zipcode=?','city=?','address=?','phone=?',
            'tshirt_size=?','emergency_name=?','emergency_relation=?','emergency_phone=?',
-           'member_since=?','role=?'];
+           'member_since=?','role=?','permissions=?'];
 $params = [$firstname, $lastname, $username, $email,
            $dateofbirth ?: null, $zipcode ?: null, $city ?: null,
            $address ?: null, $phone ?: null, $tshirtSize ?: null,
            $emergencyName ?: null, $emergencyRelation ?: null, $emergencyPhone ?: null,
            $memberSince ?: null,
-           $role];
+           $role, $permissionsJson];
 
 if ($avatarFilename) {
     $fields[] = 'profile_picture=?';

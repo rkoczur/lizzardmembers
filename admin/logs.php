@@ -144,7 +144,7 @@ $allowedETypes = ['tour_added','tour_submitted','tour_rejected',
     'join_confirm','join_admin_notify','welcome',
     'future_tour_application','future_tour_guest_application',
     'future_tour_new_application_admin','future_tour_guest_application_admin',
-    'future_tour_waitlist_promoted','future_tour_guest_approved','future_tour_guest_rejected'];
+    'future_tour_waitlist_promoted','future_tour_guest_approved','future_tour_guest_rejected','future_tour_accepted','post_pending_approval'];
 $eType       = in_array($_GET['etype2'] ?? '', $allowedETypes, true) ? $_GET['etype2'] : '';
 $eDays       = max(1, min(365, (int)($_GET['edays'] ?? 30)));
 
@@ -183,6 +183,8 @@ $emailTypeLabels = [
     'future_tour_waitlist_promoted'    => 'Meghirdetett túra – várólistáról előre',
     'future_tour_guest_approved'       => 'Meghirdetett túra – vendég jóváhagyva',
     'future_tour_guest_rejected'       => 'Meghirdetett túra – vendég elutasítva',
+    'future_tour_accepted'             => 'Meghirdetett túra – jelentkezés elfogadva',
+    'post_pending_approval'            => 'Bejegyzés jóváhagyásra beküldve',
 ];
 
 $pageTitle  = 'Naplók';
@@ -478,6 +480,10 @@ include __DIR__ . '/../includes/admin-header.php';
         <option value="future_tour_waitlist_promoted"     <?= $eType==='future_tour_waitlist_promoted'    ?'selected':'' ?>>Várólistáról előre lépett</option>
         <option value="future_tour_guest_approved"        <?= $eType==='future_tour_guest_approved'       ?'selected':'' ?>>Vendég jóváhagyva</option>
         <option value="future_tour_guest_rejected"        <?= $eType==='future_tour_guest_rejected'       ?'selected':'' ?>>Vendég elutasítva</option>
+        <option value="future_tour_accepted"              <?= $eType==='future_tour_accepted'             ?'selected':'' ?>>Jelentkezés elfogadva</option>
+      </optgroup>
+      <optgroup label="Bejegyzések">
+        <option value="post_pending_approval"             <?= $eType==='post_pending_approval'            ?'selected':'' ?>>Jóváhagyásra beküldve</option>
       </optgroup>
     </select>
     <select name="estatus" class="form-control" style="width:auto;min-width:150px;">

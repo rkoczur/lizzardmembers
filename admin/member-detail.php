@@ -257,6 +257,20 @@ include __DIR__ . '/../includes/admin-header.php';
           </div>
         </div>
 
+        <?php if (!$isSelf): $memberPerms = json_decode($member['permissions'] ?? '[]', true) ?: []; ?>
+        <h3 style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin:24px 0 14px;padding-top:20px;border-top:1px solid var(--border);">Egyéni jogosultságok</h3>
+        <div class="notif-list">
+          <?php foreach (customPermissionLabels() as $permKey => $permLabel): ?>
+          <label class="notif-row">
+            <input type="checkbox" name="permissions[]" value="<?= e($permKey) ?>" <?= in_array($permKey, $memberPerms, true) ? 'checked' : '' ?> <?= $ro ? 'disabled' : '' ?>>
+            <span class="notif-slider"></span>
+            <span><?= e($permLabel) ?></span>
+          </label>
+          <?php endforeach; ?>
+        </div>
+        <p style="font-size:12px;color:var(--text-muted);margin:6px 0 0;">A szerepkörből adódó jogokon felül adott külön engedélyek. A „Bejegyzés létrehozása” a tagoknak a tag-portálon ad szerkesztőt; a „Meghirdetett túra létrehozása” a vezetőknek ad jogot.</p>
+        <?php endif; ?>
+
         <h3 style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin:24px 0 14px;padding-top:20px;border-top:1px solid var(--border);">Értesítések</h3>
         <div class="notif-list">
           <label class="notif-row">

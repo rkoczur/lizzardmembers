@@ -101,10 +101,10 @@ $fullName   = ($user['lastname'] ?? '') . ' ' . ($user['firstname'] ?? '');
 
 if ($appStatus === 'confirmed') {
     $subject     = 'Sikeres jelentkezés – ' . $tour['name'];
-    $statusText  = '<strong style="color:#29776F;">Státusz: Megerősített</strong>';
+    $statusText  = '<strong style="color:#29776F;">Sikeresen jelentkeztél – a helyedet fenntartjuk.</strong>';
     $paymentText = (float)($tour['participation_fee'] ?? 0) > 0
       ? '<div style="background:#fffbeb;border:1px solid #f59e0b;border-radius:6px;padding:12px 16px;margin-top:16px;font-size:13.5px;color:#b45309;">
-        ⚠ Kérjük, a részvételi díjat <strong>14 napon belül</strong> utald el. Ha ez nem történik meg, a rendszer automatikusan feloldja a foglalásodat, és amennyiben van várólistán lévő, annak adja tovább.
+        ⚠ A részvételi díjat kérjük, <strong>14 napon belül</strong> utald el — eddig a helyedet fenntartjuk. Ha a befizetés a határidőig nem érkezik meg, a helyedet a várólistán következő jelentkező kapja meg.
       </div>'
       : '';
 } else {
@@ -138,12 +138,16 @@ $applicantHtml = '<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body 
   </td></tr>
 </table></td></tr></table></body></html>';
 
-try {
-    $mailer = new SmtpMailer($smtp);
-    $mailer->send($user['email'], $fullName, $subject, $applicantHtml);
-    logEmailEntry($pdo, $userId, $user['email'], $fullName, $subject, $applicantHtml, 'future_tour_application', 'sent');
-} catch (Throwable $e) {
-    logEmailEntry($pdo, $userId, $user['email'], $fullName, $subject, $applicantHtml, 'future_tour_application', 'failed', $e->getMessage());
+// A megerősített (helyet kapott) jelentkező csak az admin „Jelentkezés elfogadása” gombja után
+// kap e-mailt. A várólistás jelentkező továbbra is automatikusan értesül.
+if ($appStatus === 'waitlist') {
+    try {
+        $mailer = new SmtpMailer($smtp);
+        $mailer->send($user['email'], $fullName, $subject, $applicantHtml);
+        logEmailEntry($pdo, $userId, $user['email'], $fullName, $subject, $applicantHtml, 'future_tour_application', 'sent');
+    } catch (Throwable $e) {
+        logEmailEntry($pdo, $userId, $user['email'], $fullName, $subject, $applicantHtml, 'future_tour_application', 'failed', $e->getMessage());
+    }
 }
 
 // Email to all active admins
@@ -186,7 +190,7 @@ foreach ($admins as $admin) {
 }
 
 if ($appStatus === 'confirmed') {
-    flash('success', 'Sikeresen jelentkeztél a túrára! Hamarosan e-mail értesítőt kapsz.');
+    flash('success', 'Sikeresen jelentkeztél a túrára! A szervező jóváhagyása után e-mailben értesítünk.');
 } else {
     flash('success', 'Feliratkoztál a várólistára! Ha felszabadul egy hely, értesítünk.');
 }

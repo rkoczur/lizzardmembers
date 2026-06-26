@@ -10,6 +10,10 @@ requireAdminOrVezeto();
 $pdo = getDb();
 ensureFutureToursSchema($pdo);
 
+// Nézet: aktív (nem lezárt) túrák, vagy az archívum (lezárt túrák)
+$view = ($_GET['view'] ?? 'active') === 'archive' ? 'archive' : 'active';
+$statusFilter = $view === 'archive' ? "ft.status = 'closed'" : "ft.status != 'closed'";
+
 $tours = $pdo->query("
     SELECT ft.*,
            c.name_hu AS country_name, c.flag_filename AS country_flag,
@@ -19,8 +23,12 @@ $tours = $pdo->query("
            (SELECT COUNT(*) FROM future_tour_applications fta WHERE fta.future_tour_id = ft.id AND fta.status = 'pending') AS pending_count
     FROM future_tours ft
     LEFT JOIN countries c ON c.code = ft.country
+    WHERE $statusFilter
     ORDER BY ft.start_date ASC, ft.created_at DESC
 ")->fetchAll();
+
+$activeCount  = (int)$pdo->query("SELECT COUNT(*) FROM future_tours WHERE status != 'closed'")->fetchColumn();
+$archiveCount = (int)$pdo->query("SELECT COUNT(*) FROM future_tours WHERE status = 'closed'")->fetchColumn();
 
 $flash_success = getFlash('success');
 $flash_error   = getFlash('error');
@@ -60,7 +68,7 @@ include __DIR__ . '/../includes/admin-header.php';
 
 <div class="page-header">
   <h1>Túrák</h1>
-  <?php if (isAdmin()): ?>
+  <?php if (canCreateFutureTours()): ?>
   <a href="<?= BASE_URL ?>/admin/future-tour-detail.php?new=1" class="btn btn-primary btn-sm">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" width="15" height="15">
       <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
@@ -78,6 +86,18 @@ include __DIR__ . '/../includes/admin-header.php';
     <?php if ($newAppsCount > 0): ?>
       <span class="badge-counter badge-counter-danger"><?= $newAppsCount ?></span>
     <?php endif; ?>
+  </a>
+</div>
+
+<!-- Aktív / Archív váltó -->
+<div class="tab-nav tab-nav-sub" style="margin-bottom:16px;">
+  <a href="<?= BASE_URL ?>/admin/future-tours.php?view=active" class="tab-link<?= $view === 'active' ? ' active' : '' ?>">
+    Aktív túrák
+    <?php if ($activeCount > 0): ?><span class="badge-counter badge-counter-primary"><?= $activeCount ?></span><?php endif; ?>
+  </a>
+  <a href="<?= BASE_URL ?>/admin/future-tours.php?view=archive" class="tab-link<?= $view === 'archive' ? ' active' : '' ?>">
+    Archívum (lezárt)
+    <?php if ($archiveCount > 0): ?><span class="badge-counter"><?= $archiveCount ?></span><?php endif; ?>
   </a>
 </div>
 
@@ -172,7 +192,7 @@ include __DIR__ . '/../includes/admin-header.php';
                 <?php endif; ?>
               </a>
               <a href="<?= BASE_URL ?>/admin/future-tour-detail.php?id=<?= (int)$t['id'] ?>" class="btn btn-ghost btn-sm">
-                <?= isAdmin() ? 'Szerkesztés' : 'Megtekintés' ?>
+                <?= canCreateFutureTours() ? 'Szerkesztés' : 'Megtekintés' ?>
               </a>
             </div>
           </td>
@@ -182,7 +202,11 @@ include __DIR__ . '/../includes/admin-header.php';
         <tr><td colspan="8">
           <div class="empty-state">
             <div class="empty-icon">🗓️</div>
-            <p>Még nincs meghirdetett túra. Kattints az „Új Esemény" gombra az első létrehozásához.</p>
+            <?php if ($view === 'archive'): ?>
+              <p>Nincs lezárt túra az archívumban.</p>
+            <?php else: ?>
+              <p>Még nincs meghirdetett túra. Kattints az „Új Esemény" gombra az első létrehozásához.</p>
+            <?php endif; ?>
           </div>
         </td></tr>
         <?php endif; ?>

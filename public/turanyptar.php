@@ -9,15 +9,21 @@ require_once __DIR__ . '/../includes/future-tours-schema.php';
 $pdo = getDb();
 ensureFutureToursSchema($pdo);
 
+// Nézet: aktuális (nyitott) túrák, vagy a régebbi (lezárt) túrák
+$showArchive = !empty($_GET['regi']);
+$statusFilter = $showArchive ? "ft.status = 'closed'" : "ft.status = 'open'";
+
 $tours = $pdo->query("
     SELECT ft.*, c.name_hu AS country_name, c.flag_filename AS country_flag,
            (SELECT COUNT(*) FROM future_tour_applications fta WHERE fta.future_tour_id = ft.id AND fta.status = 'confirmed') AS confirmed_count,
            (SELECT COUNT(*) FROM future_tour_applications fta WHERE fta.future_tour_id = ft.id AND fta.status = 'waitlist')  AS waitlist_count
     FROM future_tours ft
     LEFT JOIN countries c ON c.code = ft.country
-    WHERE ft.status != 'cancelled'
-    ORDER BY ft.start_date ASC, ft.created_at DESC
+    WHERE $statusFilter
+    ORDER BY ft.start_date " . ($showArchive ? "DESC" : "ASC") . ", ft.created_at DESC
 ")->fetchAll();
+
+$archiveCount = (int)$pdo->query("SELECT COUNT(*) FROM future_tours WHERE status = 'closed'")->fetchColumn();
 
 $HU_MONTHS = ['január','február','március','április','május','június','július','augusztus','szeptember','október','november','december'];
 function huDateRange(string $startYmd, int $numDays, array $m): string {
@@ -48,24 +54,59 @@ include __DIR__ . '/../includes/public-header.php';
 
 <div class="pub-wrap">
   <div class="pub-page-header">
-    <h1>Túranaptár</h1>
-    <p>Közelgő és meghirdetett túrák. Jelentkezz még ma!</p>
+    <h1><?= $showArchive ? 'Régebbi túrák' : 'Túranaptár' ?></h1>
+    <p>
+      <?= $showArchive
+            ? 'Korábbi, már lezárt túráink.'
+            : 'Közelgő és meghirdetett túrák. Jelentkezz még ma!' ?>
+    </p>
   </div>
+
+  <?php if ($showArchive): ?>
+    <div style="margin-bottom:20px;">
+      <a href="<?= BASE_URL ?>/public/turanyptar.php" class="btn btn-ghost btn-sm">← Vissza az aktuális túrákhoz</a>
+    </div>
+  <?php endif; ?>
 
   <?php if (empty($tours)): ?>
     <div class="pub-empty-state">
       <div style="font-size:48px;margin-bottom:12px;">🗓️</div>
-      <p>Jelenleg nincs meghirdetett túra. Kövess minket Facebookon az első értesítésekért!</p>
+      <?php if ($showArchive): ?>
+        <p>Nincs régebbi, lezárt túra.</p>
+      <?php else: ?>
+        <p>Jelenleg nincs meghirdetett túra. Kövess minket Facebookon az első értesítésekért!</p>
+      <?php endif; ?>
     </div>
   <?php else: ?>
-    <div class="pub-tour-cards">
-      <?php foreach ($tours as $t): ?>
+    <?php $currentMonthKey = null; ?>
+    <?php foreach ($tours as $t): ?>
       <?php
       $confirmed = (int)$t['confirmed_count'];
       $maxSlots  = (int)$t['max_attendees'];
       $spotsLeft = max(0, $maxSlots - $confirmed);
       $huDateRange = $t['start_date'] ? huDateRange($t['start_date'], (int)$t['num_days'], $HU_MONTHS) : '—';
+      $ts        = $t['start_date'] ? strtotime($t['start_date']) : false;
+      $monthKey  = $ts ? date('Y-n', $ts) : 'unknown';
+      $monthYear = $ts ? date('Y', $ts) : '';
+      $monthName = $ts ? $HU_MONTHS[(int)date('n', $ts) - 1] : 'Időpont nélkül';
       ?>
+      <?php if ($monthKey !== $currentMonthKey): ?>
+        <?php if ($currentMonthKey !== null): ?>
+          </div>
+        <?php endif; ?>
+        <div class="pub-tour-month">
+          <div class="pub-tour-month-label">
+            <svg class="pub-tour-month-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20l6-11 4 6 2-3 6 8z"/><circle cx="17" cy="6" r="2"/></svg>
+            <?php if ($monthYear !== ''): ?>
+              <span class="pub-tour-month-year"><?= e($monthYear) ?></span>
+            <?php endif; ?>
+            <span class="pub-tour-month-name"><?= e($monthName) ?></span>
+          </div>
+          <span class="pub-tour-month-line"></span>
+        </div>
+        <div class="pub-tour-cards">
+        <?php $currentMonthKey = $monthKey; ?>
+      <?php endif; ?>
       <a href="<?= BASE_URL ?>/public/tour-detail.php?id=<?= (int)$t['id'] ?>" class="pub-tour-card">
         <div class="pub-tour-card-img-wrap">
           <?php if (!empty($t['cover_img'])): ?>
@@ -118,6 +159,12 @@ include __DIR__ . '/../includes/public-header.php';
         </div>
       </a>
       <?php endforeach; ?>
+    </div>
+  <?php endif; ?>
+
+  <?php if (!$showArchive && $archiveCount > 0): ?>
+    <div style="text-align:center;margin-top:32px;">
+      <a href="<?= BASE_URL ?>/public/turanyptar.php?regi=1" class="btn btn-secondary">Régebbi túrák megtekintése (<?= $archiveCount ?>)</a>
     </div>
   <?php endif; ?>
 </div>

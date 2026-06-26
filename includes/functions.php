@@ -366,6 +366,38 @@ function getFlagUrl(?string $filename): string
     return FLAG_URL . $filename;
 }
 
+/**
+ * Elküldi a választ a kliensnek és lezárja a kapcsolatot, majd a háttérben folytatja a futást
+ * (pl. lassú SMTP e-mail-küldés). Így a kliens (fetch) nem fut hálózati hibába / időtúllépésbe,
+ * miközben a háttérmunka még zajlik. FPM/LiteSpeed alatt finish_request, mod_php alatt
+ * Content-Length + kapcsolat lezárása.
+ */
+function respondAndContinue(string $body, string $contentType = 'application/json; charset=utf-8'): void
+{
+    ignore_user_abort(true);
+    if (!headers_sent()) {
+        header('Content-Type: ' . $contentType);
+    }
+    if (function_exists('fastcgi_finish_request')) {
+        echo $body;
+        fastcgi_finish_request();
+        return;
+    }
+    if (function_exists('litespeed_finish_request')) {
+        echo $body;
+        litespeed_finish_request();
+        return;
+    }
+    // Fallback (Apache mod_php): tartalomhossz + kapcsolat lezárása, majd a pufferek ürítése
+    if (!headers_sent() && !ini_get('zlib.output_compression')) {
+        header('Connection: close');
+        header('Content-Length: ' . strlen($body));
+    }
+    echo $body;
+    while (ob_get_level() > 0) { @ob_end_flush(); }
+    @flush();
+}
+
 function generateMemberPassword(): string
 {
     $words = ['turist','hegyes','erdos','szikla','kaland','termek','kavics',

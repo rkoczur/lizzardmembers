@@ -72,15 +72,24 @@ include __DIR__ . '/../includes/admin-header.php';
             </span>
           </td>
           <td>
-            <?php if ($p['published']): ?>
-              <span class="badge badge-active">Publikált</span>
-            <?php else: ?>
-              <span class="badge badge-inactive">Vázlat</span>
-            <?php endif; ?>
+            <?php
+              $st = $p['approval_status'] ?? 'approved';
+              if ($st === 'pending')                              echo '<span class="badge badge-overdue">Jóváhagyásra vár</span>';
+              elseif ($p['published'])                            echo '<span class="badge badge-active">Publikált</span>';
+              elseif ($st === 'draft')                            echo '<span class="badge badge-inactive">Tag piszkozata</span>';
+              else                                                echo '<span class="badge badge-inactive">Vázlat</span>';
+            ?>
           </td>
           <td><?= e(trim(($p['lastname'] ?? '') . ' ' . ($p['firstname'] ?? ''))) ?: '—' ?></td>
           <td style="white-space:nowrap;"><?= formatDate($p['created_at']) ?></td>
           <td class="td-actions" style="white-space:nowrap;">
+            <?php if (!$ro && ($p['approval_status'] ?? 'approved') === 'pending'): ?>
+              <form method="post" action="<?= BASE_URL ?>/actions/post-approve.php" style="display:inline;margin:0;">
+                <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
+                <input type="hidden" name="id" value="<?= (int)$p['id'] ?>">
+                <button type="submit" class="btn btn-primary btn-sm">Jóváhagyás</button>
+              </form>
+            <?php endif; ?>
             <?php if (!$ro): ?>
               <a href="<?= BASE_URL ?>/admin/post-detail.php?id=<?= (int)$p['id'] ?>" class="btn btn-ghost btn-sm">Szerkesztés</a>
             <?php endif; ?>

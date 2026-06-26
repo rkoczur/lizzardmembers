@@ -180,7 +180,7 @@ include __DIR__ . '/../includes/admin-header.php';
   var note    = document.getElementById('send-progress-note');
   var failUl  = document.getElementById('send-failed-list');
 
-  var total = 0, processed = 0, sentOk = 0, failedItems = [];
+  var total = 0, processed = 0, sentOk = 0, failedItems = [], aborted = false, abortError = '';
 
   function setProgress() {
     count.textContent = processed + '/' + total;
@@ -199,11 +199,10 @@ include __DIR__ . '/../includes/admin-header.php';
       .then(function (r) { return r.json(); });
   }
 
-  // countProgress=false a 30 mp utáni újraküldési körben (a sáv már 100%)
   function sendBatches(token, ids, countProgress) {
     var i = 0;
     function next() {
-      if (i >= ids.length) return Promise.resolve();
+      if (i >= ids.length || aborted) return Promise.resolve();
       var slice = ids.slice(i, i + BATCH_SIZE);
       i += BATCH_SIZE;
       return postJson(BASE + '/actions/bulk-email-batch.php', { token: token, batch_ids: slice })
@@ -214,6 +213,8 @@ include __DIR__ . '/../includes/admin-header.php';
             if (r.ok) sentOk++; else failedItems.push(r);
           });
           if (countProgress) setProgress();
+          // Első SMTP-hiba → leállítjuk a kiküldést, nincs újrapróbálkozás
+          if (res.stopped) { aborted = true; abortError = res.stopError || 'SMTP hiba'; return Promise.resolve(); }
           return next();
         });
     }
@@ -228,24 +229,6 @@ include __DIR__ . '/../includes/admin-header.php';
       var li = document.createElement('li');
       li.textContent = (f.name || ('#' + f.id)) + ' — ' + (f.error || 'sikertelen');
       failUl.appendChild(li);
-    });
-  }
-
-  function retryAfterWait(token) {
-    return new Promise(function (resolve) {
-      var retryIds = failedItems.map(function (f) { return f.id; });
-      failedItems = [];                 // a kör új hibákat gyűjt
-      renderFailures();
-      var left = RETRY_WAIT;
-      label.textContent = 'Szerverhiba — a sikertelen címzettek újraküldése';
-      note.textContent = 'Újrapróbálkozás ' + left + ' mp múlva…';
-      var t = setInterval(function () {
-        left--;
-        if (left > 0) { note.textContent = 'Újrapróbálkozás ' + left + ' mp múlva…'; return; }
-        clearInterval(t);
-        note.textContent = 'Újraküldés folyamatban…';
-        sendBatches(token, retryIds, false).then(resolve);
-      }, 1000);
     });
   }
 
@@ -270,18 +253,22 @@ include __DIR__ . '/../includes/admin-header.php';
     postJson(BASE + '/actions/bulk-email-prepare.php', { member_ids: ids, subject: subject, body: body })
       .then(function (res) {
         if (!res.ok) throw new Error(res.error || 'Az előkészítés sikertelen.');
-        total = res.total; processed = 0; sentOk = 0; failedItems = [];
+        total = res.total; processed = 0; sentOk = 0; failedItems = []; aborted = false; abortError = '';
         label.textContent = 'Küldés folyamatban…';
         setProgress();
-        return sendBatches(res.token, res.ids, true).then(function () {
-          if (failedItems.length) return retryAfterWait(res.token);
-        });
+        return sendBatches(res.token, res.ids, true);
       })
       .then(function () {
         renderFailures();
-        label.textContent = 'Kész';
-        fill.classList.add(failedItems.length ? 'is-warn' : 'is-done');
-        note.textContent = sentOk + ' sikeres küldés' + (failedItems.length ? (', ' + failedItems.length + ' sikertelen.') : '.');
+        if (aborted) {
+          label.textContent = 'Megszakadt';
+          fill.classList.add('is-warn');
+          note.textContent = 'A küldés leállt egy SMTP-hiba miatt: ' + abortError + '. Eddig ' + sentOk + ' e-mail ment ki.';
+        } else {
+          label.textContent = 'Kész';
+          fill.classList.add(failedItems.length ? 'is-warn' : 'is-done');
+          note.textContent = sentOk + ' sikeres küldés' + (failedItems.length ? (', ' + failedItems.length + ' sikertelen.') : '.');
+        }
       })
       .catch(function (err) {
         label.textContent = 'Hiba';
