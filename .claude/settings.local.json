@@ -59,7 +59,28 @@
       "Bash(grep -rn \"\\\\`body\\\\`\\\\|body \" includes/public-schema.php)",
       "Bash(php -r 'require \"includes/config.php\"; require \"includes/db.php\"; var_dump\\(canConnectToServer\\(\\)\\);')",
       "Read(//c/xampp/mysql/bin/**)",
-      "PowerShell(Start-Process -FilePath \"C:\\\\xampp\\\\mysql\\\\bin\\\\mysqld.exe\" -ArgumentList \"--defaults-file=C:\\\\xampp\\\\mysql\\\\bin\\\\my.ini\",\"--standalone\" -WindowStyle Hidden; Start-Sleep -Seconds 6; \\(Test-NetConnection -ComputerName 127.0.0.1 -Port 3306 -WarningAction SilentlyContinue\\).TcpTestSucceeded)"
+      "PowerShell(Start-Process -FilePath \"C:\\\\xampp\\\\mysql\\\\bin\\\\mysqld.exe\" -ArgumentList \"--defaults-file=C:\\\\xampp\\\\mysql\\\\bin\\\\my.ini\",\"--standalone\" -WindowStyle Hidden; Start-Sleep -Seconds 6; \\(Test-NetConnection -ComputerName 127.0.0.1 -Port 3306 -WarningAction SilentlyContinue\\).TcpTestSucceeded)",
+      "Bash(php -l public/egyesuleti-turanaplo.php)",
+      "Bash(php -l public/mtsz-turanaplo.php)",
+      "Bash(curl -s -o /dev/null -w \"home:%{http_code}\\\\n\" -A \"Mozilla/5.0 \\(Windows NT 10.0\\) Gecko/20100101 Firefox/123.0\" \"http://localhost/lizzardmembers/public/index.php\")",
+      "Bash(curl -s -c /tmp/vc_cookies.txt -b /tmp/vc_cookies.txt -o /dev/null -A \"Mozilla/5.0 \\(Windows NT 10.0\\) Firefox/123.0\" \"http://localhost/lizzardmembers/public/hirek.php\")",
+      "Bash(curl -s -c /tmp/vc_cookies.txt -b /tmp/vc_cookies.txt -o /dev/null -A \"Mozilla/5.0 \\(Windows NT 10.0\\) Firefox/123.0\" \"http://localhost/lizzardmembers/public/turanyptar.php\")",
+      "Bash(curl -s -o /dev/null -A \"Googlebot/2.1 \\(+http://www.google.com/bot.html\\)\" \"http://localhost/lizzardmembers/public/rolunk.php\")",
+      "Bash(curl -s -A \"Mozilla/5.0\" \"http://localhost/lizzardmembers/__vstat_check.php\")",
+      "Bash(rm -f c:/xampp/htdocs/lizzardmembers/__vstat_check.php /tmp/vc_cookies.txt && echo \"temp script removed\"; ls c:/xampp/htdocs/lizzardmembers/__vstat_check.php 2>&1 | head -1)",
+      "Bash(php -l includes/visit-stats-schema.php)",
+      "Bash(php -l includes/public-footer.php)",
+      "Bash(php -l public/cookie-tajekoztato.php)",
+      "Bash(curl -s http://localhost/lizzardmembers/__vstat_check.php)",
+      "Bash(curl -s -o /dev/null -A 'Mozilla/5.0 \\(Windows NT 10.0\\) Firefox/123.0' http://localhost/lizzardmembers/public/hirek.php)",
+      "Bash(curl -s -o /dev/null -A 'Mozilla/5.0 \\(Windows NT 10.0\\) Firefox/123.0' -H 'Cookie: lo_consent=1; lo_vid=abc12300000000000000000000000000' http://localhost/lizzardmembers/public/hirek.php)",
+      "Bash(curl -s -o /dev/null -w '%{http_code}\\\\n' -A 'Mozilla/5.0 \\(Windows NT 10.0\\) Firefox/123.0' http://localhost/lizzardmembers/public/cookie-tajekoztato.php)",
+      "Bash(/c/xampp/php/php.exe \"C:/Users/User/AppData/Local/Temp/claude/c--xampp-htdocs-lizzardmembers/8725e55d-5a3a-4ea6-a34f-6d79a6e3e7dd/scratchpad/test_visits.php\")",
+      "Read(//c/xampp/htdocs/**)",
+      "Bash(/c/xampp/php/php.exe -S 127.0.0.1:8899 -t /c/xampp/htdocs)"
+    ],
+    "additionalDirectories": [
+      "\\tmp"
     ]
   }
 }

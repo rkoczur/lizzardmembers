@@ -1,6 +1,10 @@
 <?php
 require_once __DIR__ . '/version.php';
 
+// ── Látogatottság-mérés (csak publikus oldalak; setcookie még a HTML-kimenet előtt) ──
+require_once __DIR__ . '/visit-stats-schema.php';
+try { trackPageView(); } catch (Throwable) {}
+
 // ── SEO meta — oldalanként felülírható: $metaDescription, $metaKeywords, $ogImage, $ogType ──
 $seoScheme    = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
 $seoRoot      = $seoScheme . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost');

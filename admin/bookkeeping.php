@@ -129,14 +129,14 @@ include __DIR__ . '/../includes/admin-header.php';
           <label>Partner <span style="color:var(--danger)">*</span></label>
           <select name="partner" required>
             <option value="">— válassz —</option>
-            <?php if ($partnerPresets): ?>
-            <optgroup label="Rögzített partnerek">
-              <?php foreach ($partnerPresets as $v): ?><option value="<?= e($v) ?>"><?= e($v) ?></option><?php endforeach; ?>
-            </optgroup>
-            <?php endif; ?>
             <?php if ($memberNames): ?>
             <optgroup label="Tagok">
               <?php foreach ($memberNames as $v): ?><option value="<?= e($v) ?>"><?= e($v) ?></option><?php endforeach; ?>
+            </optgroup>
+            <?php endif; ?>
+            <?php if ($partnerPresets): ?>
+            <optgroup label="Rögzített partnerek">
+              <?php foreach ($partnerPresets as $v): ?><option value="<?= e($v) ?>"><?= e($v) ?></option><?php endforeach; ?>
             </optgroup>
             <?php endif; ?>
           </select>
@@ -330,8 +330,8 @@ include __DIR__ . '/../includes/admin-header.php';
             <label>Partner <span style="color:var(--danger)">*</span></label>
             <select name="partner" required>
               <option value="">— válassz —</option>
-              <?php if ($partnerPresets): ?><optgroup label="Rögzített partnerek"><?php foreach ($partnerPresets as $v): ?><option value="<?= e($v) ?>"><?= e($v) ?></option><?php endforeach; ?></optgroup><?php endif; ?>
               <?php if ($memberNames): ?><optgroup label="Tagok"><?php foreach ($memberNames as $v): ?><option value="<?= e($v) ?>"><?= e($v) ?></option><?php endforeach; ?></optgroup><?php endif; ?>
+              <?php if ($partnerPresets): ?><optgroup label="Rögzített partnerek"><?php foreach ($partnerPresets as $v): ?><option value="<?= e($v) ?>"><?= e($v) ?></option><?php endforeach; ?></optgroup><?php endif; ?>
             </select>
           </div>
           <div class="form-group">

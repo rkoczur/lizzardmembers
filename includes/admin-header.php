@@ -75,6 +75,12 @@
         </svg>
         Statisztikák
       </a>
+      <a href="<?= BASE_URL ?>/admin/visitor-stats.php" class="<?= ($activePage ?? '') === 'visitors' ? 'active' : '' ?>">
+        <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/>
+        </svg>
+        Látogatottság
+      </a>
       <?php if (canManageFinances()): ?>
       <a href="<?= BASE_URL ?>/admin/bookkeeping.php" class="<?= ($activePage ?? '') === 'bookkeeping' ? 'active' : '' ?>">
         <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">

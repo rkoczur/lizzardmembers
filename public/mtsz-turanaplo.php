@@ -63,6 +63,15 @@ include __DIR__ . '/../includes/public-header.php';
     <div class="pub-prose" style="margin-bottom:32px;"><?= $page['body'] ?></div>
   <?php endif; ?>
 
+  <div style="text-align:center;margin:8px 0 34px;">
+    <a href="<?= BASE_URL ?>/public/egyesuleti-turanaplo.php" class="btn-club-log">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+      </svg>
+      Egyesületi túranapló megnyitása
+    </a>
+  </div>
+
   <?php if ($loggedIn): ?>
 
     <?php if (!empty($flash_error)): ?>

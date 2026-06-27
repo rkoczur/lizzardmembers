@@ -921,15 +921,216 @@
   color: rgba(143,181,178,.55);
 }
 
+/* ── Süti-hozzájárulás (minimál, nem tolakodó alsó sáv) ── */
+.cookie-consent {
+  position: fixed;
+  left: 16px; right: 16px; bottom: 16px;
+  z-index: 400;
+  max-width: 760px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  background: #F4E7CF;
+  color: var(--sidebar-bg);
+  padding: 12px 16px;
+  border: 1px solid #e3d4b4;
+  border-radius: 10px;
+  box-shadow: 0 8px 28px rgba(0,0,0,.22);
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+.cookie-consent-text { flex: 1; min-width: 220px; }
+.cookie-consent-text a { color: var(--primary); text-decoration: underline; font-weight: 600; }
+.cookie-consent-actions { display: flex; gap: 8px; flex-shrink: 0; }
+.cookie-btn {
+  padding: 7px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background .15s;
+}
+.cookie-btn-accept { background: var(--sidebar-bg); color: #F4E7CF; }
+.cookie-btn-accept:hover { background: var(--primary); }
+.cookie-btn-ghost { background: transparent; color: var(--sidebar-bg); border-color: rgba(26,61,57,.35); }
+.cookie-btn-ghost:hover { background: rgba(26,61,57,.08); }
+.cookie-consent-hidden { display: none !important; }
+@media (max-width: 560px) {
+  .cookie-consent { left: 8px; right: 8px; bottom: 8px; padding: 11px 13px; }
+}
+
+/* ── Egyesületi túranapló: kiemelt gomb ── */
+.btn-club-log {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #DD9933 0%, #c8881e 100%);
+  color: #1a3d39 !important;
+  font-weight: 800;
+  font-size: 16px;
+  padding: 15px 30px;
+  border-radius: 10px;
+  text-decoration: none;
+  box-shadow: 0 6px 18px rgba(221,153,51,.38);
+  transition: transform .15s, box-shadow .15s, filter .15s;
+}
+.btn-club-log:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(221,153,51,.48);
+  filter: brightness(1.04);
+  text-decoration: none;
+  color: #1a3d39;
+}
+.btn-club-log svg { flex-shrink: 0; }
+
+/* ── Egyesületi túranapló: szűrő/kereső sáv ── */
+.pub-log-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 18px;
+}
+.pub-log-search {
+  position: relative;
+  flex: 1;
+  min-width: 220px;
+}
+.pub-log-search svg {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  pointer-events: none;
+}
+.pub-log-search input {
+  width: 100%;
+  padding: 10px 14px 10px 38px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  background: var(--card);
+  color: inherit;
+}
+.pub-log-search input:focus { outline: none; border-color: var(--primary); }
+.pub-log-controls select {
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  background: var(--card);
+  color: inherit;
+  cursor: pointer;
+}
+.pub-log-controls select:focus { outline: none; border-color: var(--primary); }
+.pub-log-empty { text-align: center; color: var(--text-muted); padding: 32px 16px; }
+
+/* ── Egyesületi túranapló: táblázat ── */
+.pub-log-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  background: var(--card);
+  -webkit-overflow-scrolling: touch;
+}
+.pub-log-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+  min-width: 680px;
+}
+.pub-log-table thead th {
+  background: linear-gradient(180deg, var(--sidebar-bg) 0%, #1d5750 100%);
+  color: #F4E7CF;
+  font-weight: 700;
+  text-align: left;
+  padding: 10px 12px;
+  white-space: nowrap;
+  letter-spacing: .2px;
+}
+.pub-log-table thead th.right { text-align: right; }
+.pub-log-table .col-code { width: 1%; white-space: nowrap; }
+.pub-log-table tbody td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+/* a rövid (szám) oszlopok egy sorban maradnak; az Elnevezés/Ország oszlop tördelhet */
+.pub-log-table tbody td.right { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.pub-log-table tbody tr:nth-child(even) { background: rgba(26,61,57,.025); }
+.pub-log-table tbody tr:hover { background: rgba(41,119,111,.08); }
+.pub-log-table tbody tr:last-child td { border-bottom: none; }
+.pub-log-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-weight: 700;
+  font-size: 11.5px;
+  color: var(--primary);
+  background: #eaf3f1;
+  padding: 2px 7px;
+  border-radius: 5px;
+  white-space: nowrap;
+}
+.pub-log-name { font-weight: 700; color: var(--sidebar-bg); }
+.pub-log-country {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 2px;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+.pub-log-country img { width: 16px; height: auto; border-radius: 2px; flex-shrink: 0; }
+.pub-log-pts { font-weight: 800; color: var(--primary); }
+@media (max-width: 700px) {
+  .pub-log-table { font-size: 11.5px; }
+  .pub-log-table thead th, .pub-log-table tbody td { padding: 7px 9px; }
+}
+
 /* ── Promo strip ── */
 .pub-strip {
-  background: var(--primary);
-  color: #fff;
+  position: relative;
+  overflow: hidden;
   text-align: center;
-  padding: 56px 20px;
+  padding: 64px 20px;
+  color: #fff;
+  background: radial-gradient(135% 120% at 88% -15%, rgb(0 0 0 / 67%) 0%, rgba(221, 153, 51, 0) 48%), radial-gradient(120% 130% at 5% 115%, rgba(221, 153, 51, .10) 0%, rgba(221, 153, 51, 0) 45%), linear-gradient(135deg, var(--sidebar-bg) 0%, #1d5750 55%, var(--primary) 100%);
 }
-.pub-strip h2 { font-size: 24px; font-weight: 800; color: #F4E7CF; margin-bottom: 12px; }
-.pub-strip p  { font-size: 15px; color: rgba(255,255,255,.85); margin-bottom: 24px; }
+/* felső arany kiemelő-csík */
+.pub-strip::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--warning), transparent);
+}
+.pub-strip > div { position: relative; z-index: 1; }
+.pub-strip h2 {
+  position: relative;
+  display: inline-block;
+  font-size: 26px;
+  font-weight: 800;
+  color: #F4E7CF;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+}
+.pub-strip h2::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 56px;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--warning);
+}
+.pub-strip p  { font-size: 15.5px; line-height: 1.75; color: rgba(255,255,255,.88); margin-bottom: 26px; }
 
 /* ── Tour cards (horizontal) ── */
 /* Hónap-elválasztó fejléc — kiemelt, gradiens „címke" + elhalványuló vonal */
