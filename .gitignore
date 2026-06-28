@@ -21,3 +21,7 @@ gpx-maptest.php
 /admin/CLAUDE.md
 /actions/CLAUDE.md
 /.verify/*
+
+# Dokumentáció / kódellenőrzés (nem kerül verziókövetésbe)
+/docs/
+/docs/*

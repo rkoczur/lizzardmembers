@@ -173,6 +173,23 @@ function getMemberStatusClass(string $status): string
     };
 }
 
+/**
+ * Egy hitelesített (finfo) kép-MIME típushoz a biztonságos fájlkiterjesztést adja vissza.
+ * A feltöltött eredeti fájlnévre SOHA nem szabad támaszkodni a kiterjesztésnél (RCE-kockázat),
+ * mindig ezt a függvényt használd a validált MIME alapján.
+ * Ismeretlen/nem engedélyezett MIME esetén null.
+ */
+function imageMimeToExt(string $mime): ?string
+{
+    return match($mime) {
+        'image/jpeg' => 'jpg',
+        'image/png'  => 'png',
+        'image/gif'  => 'gif',
+        'image/webp' => 'webp',
+        default      => null,
+    };
+}
+
 function getAvatarUrl(?string $filename): string
 {
     if ($filename && file_exists(AVATAR_DIR . $filename)) {

@@ -82,8 +82,14 @@ if (!empty($_FILES['avatar']['name'])) {
         exit;
     }
 
-    $ext            = pathinfo($file['name'], PATHINFO_EXTENSION);
-    $avatarFilename = 'avatar_' . $userId . '_' . time() . '.' . strtolower($ext);
+    // A kiterjesztést a hitelesített MIME-ből származtatjuk, NEM a feltöltött fájlnévből (RCE-védelem).
+    $ext = imageMimeToExt($mimeType);
+    if ($ext === null) {
+        flash('error', 'Érvénytelen képtípus. Megengedett: JPG, PNG, GIF, WEBP.');
+        header('Location: ' . $redirectTo);
+        exit;
+    }
+    $avatarFilename = 'avatar_' . $userId . '_' . time() . '.' . $ext;
 
     if (!is_dir(AVATAR_DIR)) {
         mkdir(AVATAR_DIR, 0755, true);

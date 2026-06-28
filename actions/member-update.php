@@ -37,15 +37,35 @@ $newPassword2= $_POST['new_password2']  ?? '';
 $roleInput   = $_POST['role'] ?? 'user';
 $role        = in_array($roleInput, ['admin', 'user', 'vezeto', 'helyettes', 'penzugyi', 'jogi', 'kommunikacios'], true) ? $roleInput : 'user';
 
+// A célfelhasználó jelenlegi szerepköre — a szerepkör-módosítás jogosultsági döntéseihez kell.
+$existingRoleStmt = $pdo->prepare("SELECT role FROM users WHERE id = ?");
+$existingRoleStmt->execute([$memberId]);
+$existingRole = $existingRoleStmt->fetchColumn();
+if ($existingRole === false) {
+    flash('error', 'A megadott tag nem található.');
+    header('Location: ' . BASE_URL . '/admin/members.php');
+    exit;
+}
+
 // Egyéni jogosultságok (csak az engedélyezett kulcsok)
 $allowedPerms  = array_keys(customPermissionLabels());
 $permsInput    = is_array($_POST['permissions'] ?? null) ? $_POST['permissions'] : [];
 $permissions   = array_values(array_intersect($allowedPerms, $permsInput));
 $permissionsJson = $permissions ? json_encode($permissions, JSON_UNESCAPED_UNICODE) : null;
 
-// Prevent self-demotion
-if ($memberId === getCurrentUserId() && $role !== 'admin') {
-    $role = 'admin';
+// ── Szerepkör-módosítás jogosultsági korlátai ──────────────────────────────────
+// M-1: Saját szerepkör nem módosítható (sem le-, sem felfokozás). Egy helyettes így nem
+//      léptetheti elő magát adminná a saját profilja mentésekor, és az admin sem
+//      fokozhatja le véletlenül önmagát.
+if ($memberId === getCurrentUserId()) {
+    $role = $existingRole;
+}
+// M-2: A vezetői szerepkörök (admin, helyettes) kiosztása és elvétele KIZÁRÓLAG az
+//      Egyesületvezető (root admin) joga. A helyettes — bár átjut a requireAdmin()-on —
+//      nem adhat és nem vehet el admin/helyettes szerepkört senkitől.
+$privilegedRoles = ['admin', 'helyettes'];
+if (!isRootAdmin() && (in_array($role, $privilegedRoles, true) || in_array($existingRole, $privilegedRoles, true))) {
+    $role = $existingRole; // a meglévő szerepkört érintetlenül hagyjuk
 }
 
 if (!$firstname || !$lastname || !$username || !$email) {
@@ -93,8 +113,14 @@ if (!empty($_FILES['avatar']['name'])) {
         exit;
     }
 
-    $ext            = pathinfo($file['name'], PATHINFO_EXTENSION);
-    $avatarFilename = 'avatar_' . $memberId . '_' . time() . '.' . strtolower($ext);
+    // A kiterjesztést a hitelesített MIME-ből származtatjuk, NEM a feltöltött fájlnévből (RCE-védelem).
+    $ext = imageMimeToExt($mimeType);
+    if ($ext === null) {
+        flash('error', 'Érvénytelen képtípus.');
+        header('Location: ' . $redirectTo);
+        exit;
+    }
+    $avatarFilename = 'avatar_' . $memberId . '_' . time() . '.' . $ext;
 
     if (!is_dir(AVATAR_DIR)) {
         mkdir(AVATAR_DIR, 0755, true);
