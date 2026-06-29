@@ -99,7 +99,7 @@ include __DIR__ . '/../includes/public-header.php';
                 </div>
                 <div class="tour-hero-stat">
                   <span class="ths-label">Helyek</span>
-                  <span class="ths-value"><?= $spotsLeft > 0 ? $spotsLeft . ' / ' . (int)$tour['max_attendees'] : 'Betelt' ?></span>
+                  <span class="ths-value"><?= $spotsLeft > 0 ? $spotsLeft . ' / ' . (int)$tour['max_attendees'] : 'Várólista' ?></span>
                 </div>
                 <?php if ($tour['lizzardier_points'] !== null): ?>
                 <div class="tour-hero-stat">
@@ -170,7 +170,7 @@ include __DIR__ . '/../includes/public-header.php';
 
           <?php else: ?>
             <div style="font-size:40px;margin-bottom:12px;">📋</div>
-            <div style="font-weight:700;font-size:17px;margin-bottom:4px;">A túra betelt</div>
+            <div style="font-weight:700;font-size:17px;margin-bottom:4px;">Várólistára jelentkezés</div>
             <div style="color:var(--text-muted);font-size:13px;margin-bottom:20px;">Várólistás feliratkozás lehetséges</div>
           <?php endif; ?>
 

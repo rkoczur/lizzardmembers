@@ -124,7 +124,7 @@ include __DIR__ . '/../includes/user-header.php';
               </div>
               <div class="tour-hero-stat">
                 <span class="ths-label">Helyek</span>
-                <span class="ths-value"><?= $spotsLeft > 0 ? $spotsLeft . ' / ' . (int)$tour['max_attendees'] : 'Betelt' ?></span>
+                <span class="ths-value"><?= $spotsLeft > 0 ? $spotsLeft . ' / ' . (int)$tour['max_attendees'] : 'Várólista' ?></span>
               </div>
               <?php if ($tour['lizzardier_points'] !== null): ?>
               <div class="tour-hero-stat">
@@ -305,7 +305,7 @@ include __DIR__ . '/../includes/user-header.php';
           <div style="font-weight:700;font-size:17px;margin-bottom:4px;">Még <?= $spotsLeft ?> szabad hely</div>
           <div style="color:var(--text-muted);font-size:13px;margin-bottom:20px;"><?= (int)$tour['max_attendees'] ?> főre van tervezve</div>
         <?php else: ?>
-          <div style="font-weight:700;font-size:17px;margin-bottom:4px;">A túra betelt</div>
+          <div style="font-weight:700;font-size:17px;margin-bottom:4px;">Várólistára jelentkezés</div>
           <div style="color:var(--text-muted);font-size:13px;margin-bottom:20px;">Feliratkozhatsz a várólistára</div>
         <?php endif; ?>
         <button type="button" id="open-apply-modal" class="btn btn-primary" style="width:100%;padding:12px;font-size:15px;">

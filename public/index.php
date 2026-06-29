@@ -130,7 +130,7 @@ $upcomingTours = $pdo->query("
             <?php elseif ($spotsLeft > 0): ?>
               <span class="badge badge-active"><?= $spotsLeft ?> szabad hely</span>
             <?php else: ?>
-              <span class="badge badge-overdue">Betelt</span>
+              <span class="badge badge-overdue">Várólistára jelentkezés</span>
             <?php endif; ?>
           </div>
         </div>

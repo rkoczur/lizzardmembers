@@ -120,7 +120,7 @@ include __DIR__ . '/../includes/user-header.php';
               <span style="color:var(--primary);font-weight:600;"><?= $spotsLeft ?></span>
               <span style="color:var(--text-muted);font-size:12px;">/ <?= $maxSlots ?> szabad</span>
             <?php else: ?>
-              <span style="color:var(--danger);font-weight:600;">Betelt</span>
+              <span style="color:var(--danger);font-weight:600;">Várólistára jelentkezés</span>
               <?php if ((int)$t['waitlist_count'] > 0): ?>
                 <span style="color:var(--text-muted);font-size:11px;">(+<?= (int)$t['waitlist_count'] ?> várólistán)</span>
               <?php endif; ?>

@@ -139,7 +139,7 @@ include __DIR__ . '/../includes/public-header.php';
             <?php elseif ($spotsLeft > 0): ?>
               <span class="badge badge-active"><?= $spotsLeft ?> szabad hely</span>
             <?php else: ?>
-              <span class="badge badge-overdue">Betelt</span>
+              <span class="badge badge-overdue">Várólistára jelentkezés</span>
             <?php endif; ?>
             <?php if ((int)$t['waitlist_count'] > 0): ?>
               <span style="font-size:11px;color:var(--text-muted);">+<?= (int)$t['waitlist_count'] ?> várólistán</span>
