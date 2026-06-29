@@ -117,8 +117,7 @@ include __DIR__ . '/../includes/user-header.php';
           </td>
           <td>
             <?php if ($spotsLeft > 0): ?>
-              <span style="color:var(--primary);font-weight:600;"><?= $spotsLeft ?></span>
-              <span style="color:var(--text-muted);font-size:12px;">/ <?= $maxSlots ?> szabad</span>
+              <span style="white-space:nowrap;"><span style="color:var(--primary);font-weight:600;"><?= $spotsLeft ?></span> <span style="color:var(--text-muted);font-size:12px;">/ <?= $maxSlots ?> szabad</span></span>
             <?php else: ?>
               <span style="color:var(--danger);font-weight:600;">Várólistára jelentkezés</span>
               <?php if ((int)$t['waitlist_count'] > 0): ?>
