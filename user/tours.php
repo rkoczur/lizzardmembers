@@ -84,7 +84,7 @@ include __DIR__ . '/../includes/user-header.php';
         ?>
         <tr data-mine="<?= $isMine ? '1' : '0' ?>">
           <td><code style="font-size:.85em;white-space:nowrap;"><?= e($t['tour_code'] ?? '—') ?></code></td>
-          <td>
+          <td class="td-tour-main">
             <div class="td-name"><?= $t['name'] ? e($t['name']) : e($t['country_name'] ?? $t['country']) ?></div>
             <div class="td-sub">
               <?php if (!empty($t['country_flag'])): ?>
