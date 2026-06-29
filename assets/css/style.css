@@ -1140,7 +1140,18 @@ body.embed-mode .card-body { padding-top: 12px !important; }
 /* min-width:0 — különben a széles táblázat szétfeszíti az oszlopot (mobilon kilóg) */
 .dash-col-left  { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
 .dash-col-right { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
-@media (max-width: 760px) { .dash-grid { grid-template-columns: 1fr; } }
+@media (max-width: 760px) {
+  /* Egy oszlop + kártya-sorrend: jelentkezések és tartozások előre, info-kártyák a végére */
+  .dash-grid { display: flex; flex-direction: column; gap: 16px; align-items: stretch; }
+  .dash-col-left, .dash-col-right { display: contents; }
+  .dash-card-applications { order: 1; }
+  .dash-card-debts        { order: 2; }
+  .dash-card-level        { order: 3; }
+  .dash-card-progress     { order: 4; }
+  .dash-card-payment      { order: 5; }
+  .dash-card-status       { order: 6; }
+  .dash-card-since        { order: 7; }
+}
 
 /* Széles táblázat vízszintesen görgethető a kártyán belül (nem lóg ki) */
 .table-scroll-x { overflow-x: auto; -webkit-overflow-scrolling: touch; }

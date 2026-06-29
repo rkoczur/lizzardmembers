@@ -91,7 +91,7 @@ include __DIR__ . '/../includes/user-header.php';
 
     <!-- Fokozat + pontok -->
     <?php $lvlImg = getLevelImageFilename($currentLevel); ?>
-    <div class="stat-card" style="display:flex;align-items:stretch;padding:0;overflow:hidden;">
+    <div class="stat-card dash-card-level" style="display:flex;align-items:stretch;padding:0;overflow:hidden;">
       <div style="flex:1;min-width:0;padding:20px;">
         <div class="stat-icon">🏅</div>
         <div class="stat-label">Fokozat</div>
@@ -107,14 +107,14 @@ include __DIR__ . '/../includes/user-header.php';
     </div>
 
     <!-- Utolsó fizetés -->
-    <div class="stat-card">
+    <div class="stat-card dash-card-payment">
       <div class="stat-icon">💳</div>
       <div class="stat-label">Utolsó fizetés</div>
       <div class="stat-value" style="font-size:16px;"><?= formatDate($user['last_payment']) ?></div>
     </div>
 
     <!-- Tagság státusza -->
-    <div class="stat-card">
+    <div class="stat-card dash-card-status">
       <div class="stat-icon"><?= $memberStatus === 'active' ? '✅' : ($memberStatus === 'overdue' ? '⚠️' : '❌') ?></div>
       <div class="stat-label">Tagság státusza</div>
       <div class="stat-value" style="font-size:14px;">
@@ -123,7 +123,7 @@ include __DIR__ . '/../includes/user-header.php';
     </div>
 
     <!-- Tagság kezdete -->
-    <div class="stat-card">
+    <div class="stat-card dash-card-since">
       <div class="stat-icon">📅</div>
       <div class="stat-label">Tagság kezdete</div>
       <div class="stat-value" style="font-size:16px;"><?= formatDate($user['member_since']) ?></div>
@@ -135,7 +135,7 @@ include __DIR__ . '/../includes/user-header.php';
   <div class="dash-col-right">
 
 <!-- Level Progress -->
-<div class="card">
+<div class="card dash-card-progress">
   <div class="card-header">
     <h2>Szint előrehaladás</h2>
     <span class="level-badge <?= getLevelClass($currentLevel) ?>"><?= getLevelLabel($currentLevel) ?> — <?= $currentLevel ?>. szint</span>
@@ -201,7 +201,7 @@ include __DIR__ . '/../includes/user-header.php';
 
 <!-- Applied future tours tile -->
 <?php if (!empty($myFutureTours)): ?>
-<div class="card">
+<div class="card dash-card-applications">
   <div class="card-header" style="display:flex;justify-content:space-between;align-items:center;">
     <h2>
       Jelentkezéseim a meghirdetett túrákra
@@ -291,7 +291,7 @@ include __DIR__ . '/../includes/user-header.php';
 <?php endif; ?>
 
     <!-- Tartozásaim -->
-    <div class="card">
+    <div class="card dash-card-debts">
       <div class="card-header"><h2>Tartozásaim</h2></div>
       <div class="card-body" style="padding:0;">
         <?php if (empty($debts)): ?>
