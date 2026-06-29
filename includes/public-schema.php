@@ -99,6 +99,8 @@ function ensurePublicSchema(PDO $pdo): void
         ['ado1',                   'Adó 1%',                    ''],
         ['penzugyek',              'Pénzügyek',                 ''],
         ['klubelet',               'Klubélet – események',      ''],
+        ['adatkezelesi-tajekoztato','Adatkezelési tájékoztató',  ''],
+        ['magatartasi-iranytu',    'Magatartási iránytű',       ''],
         ['hero-image',             'Hero háttérkép',            ''],
     ];
     $ins = $pdo->prepare("INSERT IGNORE INTO pages (slug, title, body) VALUES (?, ?, ?)");

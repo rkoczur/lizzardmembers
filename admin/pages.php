@@ -22,7 +22,7 @@ if ($editSlug) {
     $editPage = $stmt->fetch();
 }
 $ro = $editPage ? !canManagePages($editSlug) : false;
-$tinyMceSlugs = ['ado1', 'penzugyek', 'rolunk', 'kapcsolat', 'klubelet', 'lizzardier', 'mtsz-turanaplo', 'reszveteli-feltetelek', 'tagsag'];
+$tinyMceSlugs = ['ado1', 'penzugyek', 'rolunk', 'kapcsolat', 'klubelet', 'lizzardier', 'mtsz-turanaplo', 'reszveteli-feltetelek', 'tagsag', 'adatkezelesi-tajekoztato', 'magatartasi-iranytu'];
 $useTinyMce   = $editSlug && in_array($editSlug, $tinyMceSlugs, true) && !$ro;
 
 $allPages = $pdo->query("SELECT * FROM pages ORDER BY slug ASC")->fetchAll();

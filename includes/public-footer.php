@@ -21,7 +21,9 @@
   <div class="pub-footer-bottom">
     <span>© <?= date('Y') ?> Leguán Osztag Természetjáró Egyesület — Minden jog fenntartva</span>
     <span>
-      <a href="<?= BASE_URL ?>/public/cookie-tajekoztato.php" style="color:inherit;">Süti tájékoztató</a>
+      <a href="<?= BASE_URL ?>/public/adatkezelesi-tajekoztato.php" style="color:inherit;">Adatkezelési tájékoztató</a>
+      · <a href="<?= BASE_URL ?>/public/magatartasi-iranytu.php" style="color:inherit;">Magatartási iránytű</a>
+      · <a href="<?= BASE_URL ?>/public/cookie-tajekoztato.php" style="color:inherit;">Süti tájékoztató</a>
       · v<?= APP_VERSION ?> · Copyright © Koczur Richárd
     </span>
   </div>
