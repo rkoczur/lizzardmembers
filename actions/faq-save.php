@@ -11,10 +11,11 @@ if (!canManageFaq()) { flash('error', 'Nincs jogosultságod ehhez.'); header('Lo
 $pdo       = getDb();
 ensurePublicSchema($pdo);
 
-$id        = (int)($_POST['id']         ?? 0);
-$question  = trim($_POST['question']  ?? '');
-$answer    = trim($_POST['answer']    ?? '');
-$sortOrder = max(0, (int)($_POST['sort_order'] ?? 0));
+$id         = (int)($_POST['id']         ?? 0);
+$question   = trim($_POST['question']  ?? '');
+$answer     = trim($_POST['answer']    ?? '');
+$sortOrder  = max(0, (int)($_POST['sort_order'] ?? 0));
+$categoryId = (int)($_POST['category_id'] ?? 0) ?: null;
 
 if (!$question || !$answer) {
     flash('error', 'Kérdés és válasz megadása kötelező.');
@@ -23,12 +24,12 @@ if (!$question || !$answer) {
 }
 
 if ($id) {
-    $pdo->prepare("UPDATE faq SET question=?, answer=?, sort_order=? WHERE id=?")
-        ->execute([$question, $answer, $sortOrder, $id]);
+    $pdo->prepare("UPDATE faq SET question=?, answer=?, sort_order=?, category_id=? WHERE id=?")
+        ->execute([$question, $answer, $sortOrder, $categoryId, $id]);
     flash('success', 'Kérdés frissítve.');
 } else {
-    $pdo->prepare("INSERT INTO faq (question, answer, sort_order) VALUES (?,?,?)")
-        ->execute([$question, $answer, $sortOrder]);
+    $pdo->prepare("INSERT INTO faq (question, answer, sort_order, category_id) VALUES (?,?,?,?)")
+        ->execute([$question, $answer, $sortOrder, $categoryId]);
     flash('success', 'Kérdés hozzáadva.');
 }
 

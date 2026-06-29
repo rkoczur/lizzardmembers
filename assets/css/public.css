@@ -1177,6 +1177,43 @@
   .pub-tour-month-label { padding: 9px 16px; }
   .pub-tour-month-name { font-size: 18px; }
 }
+/* GYIK kategória-fejléc (a túra hónap-fejléc mintájára) */
+.pub-faq-category {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 40px 0 18px;
+}
+.pub-faq-category:first-of-type { margin-top: 8px; }
+.pub-faq-category-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 22px 9px 18px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--sidebar-bg) 0%, #1d5750 60%, var(--primary) 100%);
+  box-shadow: 0 6px 18px rgba(26, 61, 57, .28);
+  white-space: nowrap;
+}
+.pub-faq-category-icon { color: var(--warning); flex-shrink: 0; }
+.pub-faq-category-name {
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: -.3px;
+  color: #fff;
+}
+.pub-faq-category-line {
+  flex: 1;
+  height: 3px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--warning) 0%, var(--border) 35%, transparent 100%);
+}
+@media (max-width: 560px) {
+  .pub-faq-category { gap: 10px; margin: 30px 0 14px; }
+  .pub-faq-category-label { padding: 8px 16px; }
+  .pub-faq-category-name { font-size: 17px; }
+}
+
 .pub-tour-cards { display: flex; flex-direction: column; gap: 16px; }
 .pub-tour-card {
   background: var(--card);

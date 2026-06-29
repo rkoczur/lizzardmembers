@@ -64,6 +64,15 @@ function ensurePublicSchema(PDO $pdo): void
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
     ");
 
+    // FAQ kategóriák (kezelt lista)
+    $pdo->exec("
+        CREATE TABLE IF NOT EXISTS faq_categories (
+            id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            name        VARCHAR(150) NOT NULL,
+            sort_order  INT NOT NULL DEFAULT 0
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+    ");
+
     // SEO mezők migrációja meglévő telepítésekhez
     foreach ([
         "ALTER TABLE posts ADD COLUMN cover_alt VARCHAR(255) DEFAULT NULL AFTER cover_img",
@@ -72,6 +81,7 @@ function ensurePublicSchema(PDO $pdo): void
         "ALTER TABLE posts ADD COLUMN approval_status ENUM('approved','pending','draft') NOT NULL DEFAULT 'approved' AFTER published",
         "ALTER TABLE pages ADD COLUMN meta_description VARCHAR(500) DEFAULT NULL AFTER body",
         "ALTER TABLE pages ADD COLUMN meta_keywords VARCHAR(500) DEFAULT NULL AFTER meta_description",
+        "ALTER TABLE faq ADD COLUMN category_id INT UNSIGNED DEFAULT NULL AFTER id",
     ] as $sql) {
         try { $pdo->exec($sql); } catch (PDOException) {}
     }

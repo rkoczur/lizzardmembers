@@ -22,7 +22,21 @@ if ($editId) {
     $editRow = $s->fetch();
 }
 
-$items = $pdo->query("SELECT * FROM faq ORDER BY sort_order ASC, id ASC")->fetchAll();
+$editCatId = (int)($_GET['editcat'] ?? 0);
+$editCat = null;
+if ($editCatId) {
+    $s = $pdo->prepare("SELECT * FROM faq_categories WHERE id = ? LIMIT 1");
+    $s->execute([$editCatId]);
+    $editCat = $s->fetch();
+}
+
+$items = $pdo->query("
+    SELECT f.*, c.name AS category_name
+    FROM faq f
+    LEFT JOIN faq_categories c ON c.id = f.category_id
+    ORDER BY f.sort_order ASC, f.id ASC
+")->fetchAll();
+$categories = $pdo->query("SELECT * FROM faq_categories ORDER BY sort_order ASC, name ASC")->fetchAll();
 
 $pageTitle  = 'Weboldal – GYIK';
 $activePage = 'website';
@@ -54,13 +68,14 @@ include __DIR__ . '/../includes/admin-header.php';
     <div class="table-wrap">
       <table>
         <thead>
-          <tr><th>#</th><th>Kérdés</th><th>Sorrend</th><th></th></tr>
+          <tr><th>#</th><th>Kérdés</th><th>Kategória</th><th>Sorrend</th><th></th></tr>
         </thead>
         <tbody>
           <?php foreach ($items as $row): ?>
           <tr>
             <td><?= (int)$row['id'] ?></td>
             <td style="font-size:13.5px;"><?= e(mb_strimwidth($row['question'], 0, 80, '…')) ?></td>
+            <td style="font-size:13px;<?= $row['category_name'] ? '' : 'color:var(--text-muted);' ?>"><?= $row['category_name'] ? e($row['category_name']) : 'Egyéb' ?></td>
             <td><?= (int)$row['sort_order'] ?></td>
             <td class="td-actions" style="white-space:nowrap;">
               <?php if (!$ro): ?>
@@ -99,6 +114,15 @@ include __DIR__ . '/../includes/admin-header.php';
           <label>Válasz <span style="color:var(--danger)">*</span></label>
           <textarea name="answer" rows="6" required><?= e($editRow['answer'] ?? '') ?></textarea>
         </div>
+        <div class="form-group" style="margin-bottom:12px;">
+          <label>Kategória</label>
+          <select name="category_id">
+            <option value="0">— Nincs (Egyéb) —</option>
+            <?php foreach ($categories as $cat): ?>
+              <option value="<?= (int)$cat['id'] ?>"<?= ((int)($editRow['category_id'] ?? 0) === (int)$cat['id']) ? ' selected' : '' ?>><?= e($cat['name']) ?></option>
+            <?php endforeach; ?>
+          </select>
+        </div>
         <div class="form-group" style="margin-bottom:20px;">
           <label>Sorrend</label>
           <input type="number" name="sort_order" value="<?= (int)($editRow['sort_order'] ?? 0) ?>" min="0">
@@ -114,6 +138,80 @@ include __DIR__ . '/../includes/admin-header.php';
   </div>
   <?php endif; ?>
 
+</div>
+
+<!-- Kategóriák kezelése -->
+<div class="card" style="margin-top:20px;">
+  <div class="card-header"><h2>Kategóriák</h2></div>
+  <div class="card-body">
+    <p style="color:var(--text-muted);font-size:13px;margin-bottom:16px;">
+      A nyilvános GYIK oldalon a kérdések kategóriánként, sorrend szerint csoportosítva jelennek meg. A besorolatlan kérdések az „Egyéb" csoportba kerülnek.
+    </p>
+    <div style="display:grid;grid-template-columns:1fr 380px;gap:20px;align-items:start;">
+
+      <!-- Kategória lista -->
+      <div>
+        <?php if (empty($categories)): ?>
+          <p style="color:var(--text-muted);">Még nincs kategória felvéve.</p>
+        <?php else: ?>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Kategória</th><th>Sorrend</th><th></th></tr></thead>
+            <tbody>
+              <?php foreach ($categories as $cat): ?>
+              <tr>
+                <td style="font-size:13.5px;"><?= e($cat['name']) ?></td>
+                <td><?= (int)$cat['sort_order'] ?></td>
+                <td class="td-actions" style="white-space:nowrap;">
+                  <?php if (!$ro): ?>
+                  <a href="?editcat=<?= (int)$cat['id'] ?>" class="btn btn-ghost btn-sm">Szerkesztés</a>
+                  <form method="post" action="<?= BASE_URL ?>/actions/faq-category-delete.php" style="display:inline;margin:0;"
+                        onsubmit="return confirm('Törlöd ezt a kategóriát? A hozzá tartozó kérdések besorolatlanná válnak.')">
+                    <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
+                    <input type="hidden" name="id" value="<?= (int)$cat['id'] ?>">
+                    <button type="submit" class="btn btn-danger btn-sm">Törlés</button>
+                  </form>
+                  <?php endif; ?>
+                </td>
+              </tr>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
+        </div>
+        <?php endif; ?>
+      </div>
+
+      <!-- Kategória hozzáadás / szerkesztés -->
+      <?php if (!$ro): ?>
+      <div class="card" style="background:var(--bg);">
+        <div class="card-header"><h2><?= $editCat ? 'Kategória szerkesztése' : 'Új kategória' ?></h2></div>
+        <div class="card-body">
+          <form method="post" action="<?= BASE_URL ?>/actions/faq-category-save.php">
+            <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
+            <?php if ($editCat): ?>
+              <input type="hidden" name="id" value="<?= (int)$editCat['id'] ?>">
+            <?php endif; ?>
+            <div class="form-group" style="margin-bottom:12px;">
+              <label>Név <span style="color:var(--danger)">*</span></label>
+              <input type="text" name="name" value="<?= e($editCat['name'] ?? '') ?>" required>
+            </div>
+            <div class="form-group" style="margin-bottom:20px;">
+              <label>Sorrend</label>
+              <input type="number" name="sort_order" value="<?= (int)($editCat['sort_order'] ?? 0) ?>" min="0">
+            </div>
+            <div style="display:flex;gap:10px;">
+              <button type="submit" class="btn btn-primary"><?= $editCat ? 'Mentés' : 'Hozzáadás' ?></button>
+              <?php if ($editCat): ?>
+                <a href="<?= BASE_URL ?>/admin/faq.php" class="btn btn-ghost">Mégse</a>
+              <?php endif; ?>
+            </div>
+          </form>
+        </div>
+      </div>
+      <?php endif; ?>
+
+    </div>
+  </div>
 </div>
 
 <?php include __DIR__ . '/../includes/admin-footer.php'; ?>
