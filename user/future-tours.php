@@ -11,6 +11,10 @@ $pdo    = getDb();
 ensureFutureToursSchema($pdo);
 $userId = getCurrentUserId();
 
+// Nézet: aktív (nyitott) túrák, vagy az archívum (lezárt túrák). A törölt túrák egyik nézetben sem jelennek meg.
+$view         = ($_GET['view'] ?? 'active') === 'archive' ? 'archive' : 'active';
+$statusFilter = $view === 'archive' ? "ft.status = 'closed'" : "ft.status = 'open'";
+
 $tours = $pdo->query("
     SELECT ft.*,
            c.name_hu AS country_name, c.flag_filename AS country_flag,
@@ -18,9 +22,12 @@ $tours = $pdo->query("
            (SELECT COUNT(*) FROM future_tour_applications fta WHERE fta.future_tour_id = ft.id AND fta.status = 'waitlist')  AS waitlist_count
     FROM future_tours ft
     LEFT JOIN countries c ON c.code = ft.country
-    WHERE ft.status != 'cancelled'
+    WHERE $statusFilter
     ORDER BY ft.start_date ASC, ft.created_at DESC
 ")->fetchAll();
+
+$activeCount  = (int)$pdo->query("SELECT COUNT(*) FROM future_tours WHERE status = 'open'")->fetchColumn();
+$archiveCount = (int)$pdo->query("SELECT COUNT(*) FROM future_tours WHERE status = 'closed'")->fetchColumn();
 
 $myApplicationStmt = $pdo->prepare("SELECT future_tour_id, status FROM future_tour_applications WHERE user_id = ? AND status != 'cancelled'");
 $myApplicationStmt->execute([$userId]);
@@ -43,6 +50,18 @@ include __DIR__ . '/../includes/user-header.php';
 
 <div class="page-header">
   <h1>Meghirdetett Túrák</h1>
+</div>
+
+<!-- Aktív / Archív váltó -->
+<div class="tab-nav tab-nav-sub" style="margin-bottom:16px;">
+  <a href="<?= BASE_URL ?>/user/future-tours.php?view=active" class="tab-link<?= $view === 'active' ? ' active' : '' ?>">
+    Aktuális túrák
+    <?php if ($activeCount > 0): ?><span class="badge-counter badge-counter-primary"><?= $activeCount ?></span><?php endif; ?>
+  </a>
+  <a href="<?= BASE_URL ?>/user/future-tours.php?view=archive" class="tab-link<?= $view === 'archive' ? ' active' : '' ?>">
+    Archívum (lezárt)
+    <?php if ($archiveCount > 0): ?><span class="badge-counter"><?= $archiveCount ?></span><?php endif; ?>
+  </a>
 </div>
 
 <div class="card">
@@ -125,7 +144,7 @@ include __DIR__ . '/../includes/user-header.php';
         <tr><td colspan="8">
           <div class="empty-state">
             <div class="empty-icon">🗓️</div>
-            <p>Jelenleg nincs meghirdetett túra.</p>
+            <p><?= $view === 'archive' ? 'Nincs lezárt túra az archívumban.' : 'Jelenleg nincs meghirdetett túra.' ?></p>
           </div>
         </td></tr>
         <?php endif; ?>
