@@ -25,3 +25,4 @@ gpx-maptest.php
 # Dokumentáció / kódellenőrzés (nem kerül verziókövetésbe)
 /docs/
 /docs/*
+.claude/PLAN.md

@@ -1,31 +1,42 @@
 <footer class="pub-footer">
-  <div class="pub-footer-inner" style="grid-template-columns:1fr 1fr;">
-    <div>
-      <h4>Lizzard Outdoor</h4>
-      <p>Leguán Osztag Természetjáró Egyesület</p>
+  <div class="pub-footer-inner">
+    <div class="pub-footer-brand">
+      <p class="pub-footer-org">Leguán Osztag Természetjáró Egyesület</p>
       <p>1041 Budapest, Rózsa u. 59. III/9.</p>
       <p>Adószám: 18902622-1-41</p>
       <p>Bankszámla: 16200120-18542675</p>
     </div>
-    <div>
-      <h4>Kapcsolat</h4>
-      <a href="mailto:info@lizzard.hu">info@lizzard.hu</a>
-      <a href="tel:+36203961021">+36 (20) 396-1021</a>
+
+    <div class="pub-footer-col pub-footer-col-center">
+      <a href="mailto:info@lizzard.hu" class="pub-footer-contact">
+        <span class="pub-footer-ico">✉</span> info@lizzard.hu
+      </a>
+      <a href="tel:+36203961021" class="pub-footer-contact">
+        <span class="pub-footer-ico">☎</span> +36 (20) 396-1021
+      </a>
       <div class="pub-social-links">
         <a href="https://www.facebook.com/lizzardoutdoor/" target="_blank" rel="noopener" class="pub-social-btn pub-social-fb">Facebook</a>
         <a href="https://www.instagram.com/lizzardoutdoor/" target="_blank" rel="noopener" class="pub-social-btn pub-social-ig">Instagram</a>
         <a href="https://www.youtube.com/@lizzardhu" target="_blank" rel="noopener" class="pub-social-btn pub-social-yt">YouTube</a>
       </div>
     </div>
+
+    <div class="pub-footer-col">
+      <a href="<?= BASE_URL ?>/public/adatkezelesi-tajekoztato.php" class="pub-footer-doc">
+        <span class="pub-footer-doc-ico">🛡</span> Adatkezelési tájékoztató
+      </a>
+      <a href="<?= BASE_URL ?>/public/magatartasi-iranytu.php" class="pub-footer-doc">
+        <span class="pub-footer-doc-ico">🧭</span> Magatartási iránytű
+      </a>
+      <a href="<?= BASE_URL ?>/public/cookie-tajekoztato.php" class="pub-footer-doc">
+        <span class="pub-footer-doc-ico">🍪</span> Süti tájékoztató
+      </a>
+    </div>
   </div>
+
   <div class="pub-footer-bottom">
     <span>© <?= date('Y') ?> Leguán Osztag Természetjáró Egyesület — Minden jog fenntartva</span>
-    <span>
-      <a href="<?= BASE_URL ?>/public/adatkezelesi-tajekoztato.php" style="color:inherit;">Adatkezelési tájékoztató</a>
-      · <a href="<?= BASE_URL ?>/public/magatartasi-iranytu.php" style="color:inherit;">Magatartási iránytű</a>
-      · <a href="<?= BASE_URL ?>/public/cookie-tajekoztato.php" style="color:inherit;">Süti tájékoztató</a>
-      · v<?= APP_VERSION ?> · Copyright © Koczur Richárd
-    </span>
+    <span class="pub-footer-meta">v<?= APP_VERSION ?> · Copyright © Koczur Richárd</span>
   </div>
 </footer>
 

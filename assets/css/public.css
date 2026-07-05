@@ -875,42 +875,100 @@
 
 /* ── Footer ── */
 .pub-footer {
-  background: var(--sidebar-bg);
+  background:
+    radial-gradient(120% 140% at 100% 0%, rgba(41,119,111,.35) 0%, rgba(41,119,111,0) 55%),
+    linear-gradient(180deg, var(--primary-dark) 0%, var(--sidebar-bg) 100%);
   color: var(--sidebar-text);
-  padding: 40px 20px 24px;
+  padding: 52px 24px 22px;
   margin-top: auto;
+  border-top: 3px solid var(--primary);
 }
 .pub-footer-inner {
   width: 100%;
-  max-width: 940px;
+  max-width: 1040px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 32px;
-  padding-bottom: 28px;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 40px;
+  padding-bottom: 30px;
   border-bottom: 1px solid rgba(255,255,255,.08);
 }
 .pub-footer h4 {
   font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: .08em;
+  letter-spacing: .1em;
   color: #F4E7CF;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  position: relative;
 }
-.pub-footer a {
-  display: block;
+.pub-footer h4::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 26px; height: 2px;
+  background: var(--primary);
+  border-radius: 2px;
+}
+.pub-footer p { font-size: 13px; line-height: 1.7; margin-bottom: 5px; color: rgba(143,181,178,.85); }
+
+/* Brand column */
+.pub-footer-org { font-size: 14px !important; font-weight: 700; color: #F4E7CF !important; margin-bottom: 10px !important; }
+
+/* Center the whole contact column block within its grid track (text stays left) */
+.pub-footer-col-center { justify-self: center; }
+
+/* Contact links */
+.pub-footer-contact {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
   color: var(--sidebar-text);
-  font-size: 13px;
-  margin-bottom: 8px;
+  font-size: 13.5px;
+  margin-bottom: 10px;
   text-decoration: none;
   transition: color .15s;
 }
-.pub-footer a:hover { color: #F4E7CF; text-decoration: none; }
-.pub-footer p { font-size: 13px; line-height: 1.7; margin-bottom: 6px; }
+.pub-footer-contact:hover { color: #F4E7CF; text-decoration: none; }
+.pub-footer-ico {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px; height: 26px;
+  border-radius: 7px;
+  background: rgba(255,255,255,.06);
+  font-size: 13px;
+}
+
+/* Highlighted document links */
+.pub-footer-doc {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  margin-bottom: 8px;
+  border: 1px solid rgba(244,231,207,.14);
+  border-radius: 9px;
+  background: rgba(255,255,255,.03);
+  color: #dfe9e7;
+  font-size: 13.5px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background .16s, border-color .16s, transform .16s, color .16s;
+}
+.pub-footer-doc:hover {
+  background: rgba(41,119,111,.28);
+  border-color: var(--primary);
+  color: #fff;
+  transform: translateX(3px);
+  text-decoration: none;
+}
+.pub-footer-doc-ico { font-size: 15px; line-height: 1; }
+
 .pub-footer-bottom {
   width: 100%;
-  max-width: 940px;
+  max-width: 1040px;
   margin: 20px auto 0;
   display: flex;
   align-items: center;
@@ -920,6 +978,7 @@
   font-size: 12px;
   color: rgba(143,181,178,.55);
 }
+.pub-footer-meta { color: rgba(143,181,178,.45); }
 
 /* ── Süti-hozzájárulás (minimál, nem tolakodó alsó sáv) ── */
 .cookie-consent {
@@ -1411,7 +1470,8 @@
   .pub-tour-card-spots { align-items: flex-start; }
   .pub-contact-grid { grid-template-columns: 1fr; }
   .pub-form-grid { grid-template-columns: 1fr; }
-  .pub-footer-inner { grid-template-columns: 1fr 1fr; }
+  .pub-footer-inner { grid-template-columns: 1fr 1fr; gap: 28px; }
+  .pub-footer-brand { grid-column: 1 / -1; }
   /* Toplista mobilon — override style.css .table-wrap card format */
   .pub-toplist-table thead { display: none !important; }
   .pub-toplist-table,
@@ -1480,5 +1540,6 @@
   }
 }
 @media (max-width: 480px) {
-  .pub-footer-inner { grid-template-columns: 1fr; }
+  .pub-footer-inner { grid-template-columns: 1fr; gap: 28px; }
+  .pub-footer-bottom { flex-direction: column; align-items: flex-start; }
 }

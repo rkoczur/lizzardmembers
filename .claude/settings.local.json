@@ -77,7 +77,8 @@
       "Bash(curl -s -o /dev/null -w '%{http_code}\\\\n' -A 'Mozilla/5.0 \\(Windows NT 10.0\\) Firefox/123.0' http://localhost/lizzardmembers/public/cookie-tajekoztato.php)",
       "Bash(/c/xampp/php/php.exe \"C:/Users/User/AppData/Local/Temp/claude/c--xampp-htdocs-lizzardmembers/8725e55d-5a3a-4ea6-a34f-6d79a6e3e7dd/scratchpad/test_visits.php\")",
       "Read(//c/xampp/htdocs/**)",
-      "Bash(/c/xampp/php/php.exe -S 127.0.0.1:8899 -t /c/xampp/htdocs)"
+      "Bash(/c/xampp/php/php.exe -S 127.0.0.1:8899 -t /c/xampp/htdocs)",
+      "Bash(php *)"
     ],
     "additionalDirectories": [
       "\\tmp"

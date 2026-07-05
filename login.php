@@ -40,6 +40,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 <div class="login-page">
   <div class="login-card">
+    <div style="text-align:center;margin-bottom:18px;">
+      <a href="<?= BASE_URL ?>/public/index.php"
+         style="display:inline-flex;align-items:center;gap:7px;padding:7px 16px;font-size:13px;font-weight:600;color:var(--text-muted);background:var(--bg-subtle,#f5f5f7);border:1px solid var(--border);border-radius:999px;text-decoration:none;transition:background .18s,color .18s,border-color .18s;"
+         onmouseover="this.style.background='var(--primary)';this.style.color='#fff';this.style.borderColor='var(--primary)';"
+         onmouseout="this.style.background='var(--bg-subtle,#f5f5f7)';this.style.color='var(--text-muted)';this.style.borderColor='var(--border)';">
+        <span style="font-size:15px;line-height:1;">←</span> Vissza a főoldalra
+      </a>
+    </div>
+    <img src="<?= BASE_URL ?>/assets/img/logo_black.png" alt="<?= APP_NAME ?> logó"
+         style="display:block;margin:0 auto 18px;max-width:120px;width:40%;height:auto;">
     <div class="login-logo">
       <div class="app-name"><?= APP_NAME ?></div>
       <div class="app-sub">Tagságkezelés</div>

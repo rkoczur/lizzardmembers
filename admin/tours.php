@@ -28,14 +28,29 @@ $orderBy = match($sortBy) {
 $tours = $pdo->query("
     SELECT t.*, COUNT(tm.user_id) AS member_count,
            c.name_hu AS country_name, c.flag_filename AS country_flag,
-           CONCAT(u.lastname, ' ', u.firstname) AS submitter_name
+           CONCAT(u.lastname, ' ', u.firstname) AS submitter_name,
+           GROUP_CONCAT(DISTINCT CONCAT(mu.lastname, ' ', mu.firstname) SEPARATOR '|') AS attendant_names
     FROM tours t
     LEFT JOIN tour_members tm ON tm.tour_id = t.id
+    LEFT JOIN users mu ON mu.id = tm.user_id
     LEFT JOIN countries c ON c.code = t.country
     LEFT JOIN users u ON u.id = t.submitted_by
     GROUP BY t.id
     ORDER BY FIELD(t.status, 'pending', 'approved') ASC, $orderBy
 ")->fetchAll();
+
+// Résztvevők egyedi listája az automatikus kiegészítéshez
+$attendantSet = [];
+foreach ($tours as $t) {
+    if (!empty($t['attendant_names'])) {
+        foreach (explode('|', $t['attendant_names']) as $n) {
+            $n = trim($n);
+            if ($n !== '') $attendantSet[$n] = true;
+        }
+    }
+}
+$attendantList = array_keys($attendantSet);
+sort($attendantList, SORT_LOCALE_STRING);
 
 // Csak a ténylegesen szereplő országok a szűrőmenühöz
 $tourCountries = $pdo->query("
@@ -75,6 +90,17 @@ include __DIR__ . '/../includes/admin-header.php';
         <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
       </svg>
       <input type="text" id="tour-search" placeholder="Túrák keresése…">
+    </div>
+    <div class="attendant-search-wrap">
+      <div class="search-bar" title="Keresés résztvevő szerint">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+        <input type="text" id="tour-attendant-search" placeholder="Keresés résztvevő szerint…"
+               autocomplete="off" data-suggestions="<?= e(json_encode($attendantList, JSON_UNESCAPED_UNICODE)) ?>">
+      </div>
+      <ul id="attendant-suggest" class="attendant-suggest"></ul>
     </div>
     <select id="tour-sort-select" onchange="location.href='?sort='+this.value"
             style="height:32px;padding:0 8px;border:1px solid var(--border);border-radius:6px;background:var(--bg);font-size:13px;color:inherit;cursor:pointer;width: 200px;">
@@ -154,7 +180,7 @@ include __DIR__ . '/../includes/admin-header.php';
       </thead>
       <tbody>
         <?php foreach ($tours as $t): ?>
-        <tr data-type="<?= e($t['tour_type'] ?? 'gyalogos') ?>" data-country="<?= e($t['country'] ?? '') ?>" <?= ($t['status'] ?? 'approved') === 'pending' ? 'style="background:var(--warning-bg,#fffbeb);"' : '' ?>>
+        <tr data-type="<?= e($t['tour_type'] ?? 'gyalogos') ?>" data-country="<?= e($t['country'] ?? '') ?>" data-attendants="<?= e($t['attendant_names'] ?? '') ?>" <?= ($t['status'] ?? 'approved') === 'pending' ? 'style="background:var(--warning-bg,#fffbeb);"' : '' ?>>
           <td><code style="font-size:.85em;white-space:nowrap;"><?= e($t['tour_code'] ?? '—') ?></code></td>
           <td>
             <div class="td-name"><?= $t['name'] ? e($t['name']) : e($t['country_name'] ?? $t['country']) ?></div>

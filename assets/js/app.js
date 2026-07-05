@@ -198,9 +198,11 @@ const _tourFilters = {};
 
 function filterTourRows() {
   const q = (document.getElementById('tour-search')?.value || '').toLowerCase();
+  const aq = (document.getElementById('tour-attendant-search')?.value || '').toLowerCase();
   document.querySelectorAll('#tour-table tbody tr').forEach(row => {
     if (!row.dataset.mine && !row.dataset.type) return;
     let show = !q || row.textContent.toLowerCase().includes(q);
+    if (show && aq) show = (row.dataset.attendants || '').toLowerCase().includes(aq);
     if (show && _tourMineOnly && row.dataset.mine !== '1') show = false;
     if (show) {
       for (const [key, val] of Object.entries(_tourFilters)) {
@@ -213,8 +215,44 @@ function filterTourRows() {
 
 function initTourSearch() {
   const input = document.getElementById('tour-search');
-  if (!input) return;
-  input.addEventListener('input', filterTourRows);
+  if (input) input.addEventListener('input', filterTourRows);
+  initAttendantSearch();
+}
+
+function initAttendantSearch() {
+  const input = document.getElementById('tour-attendant-search');
+  const menu  = document.getElementById('attendant-suggest');
+  if (!input || !menu) return;
+
+  let suggestions = [];
+  try { suggestions = JSON.parse(input.dataset.suggestions || '[]'); } catch (e) { suggestions = []; }
+
+  function renderSuggestions() {
+    const q = input.value.trim().toLowerCase();
+    menu.innerHTML = '';
+    if (!q) { menu.classList.remove('open'); return; }
+    const matches = suggestions.filter(n => n.toLowerCase().includes(q)).slice(0, 8);
+    if (matches.length === 0) { menu.classList.remove('open'); return; }
+    matches.forEach(name => {
+      const li = document.createElement('li');
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.textContent = name;
+      btn.addEventListener('mousedown', ev => {
+        ev.preventDefault();
+        input.value = name;
+        menu.classList.remove('open');
+        filterTourRows();
+      });
+      li.appendChild(btn);
+      menu.appendChild(li);
+    });
+    menu.classList.add('open');
+  }
+
+  input.addEventListener('input', () => { renderSuggestions(); filterTourRows(); });
+  input.addEventListener('focus', renderSuggestions);
+  input.addEventListener('blur', () => setTimeout(() => menu.classList.remove('open'), 150));
 }
 
 function initTourMineFilter() {
