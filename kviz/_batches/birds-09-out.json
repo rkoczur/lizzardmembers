@@ -1,0 +1,230 @@
+[
+  {
+    "name": "Pirossapkás cinegelégykapó",
+    "latin_name": "Petroica goodenovii",
+    "diet": "Rovarokkal és azok lárváival táplálkozik, amelyeket egy leshelyről indulva, a talaj közelében kapdos el.",
+    "fun_fact": "A hím fejtetőjén és mellén élénkpiros folt díszlik, amellyel a szürkésbarna tollazatú tojótól könnyen megkülönböztethető, és Ausztrália egyik legkisebb testű énekesmadara."
+  },
+  {
+    "name": "Pirosszemű lombgébics",
+    "latin_name": "Vireo olivaceus",
+    "diet": "Főként rovarokkal és pókokkal táplálkozik a lombkoronában, ősszel pedig bogyókkal egészíti ki étrendjét.",
+    "fun_fact": "Az egyik legkitartóbb énekesmadár: egyetlen hím akár napi több ezer, egymást szinte szünet nélkül követő énekstrófát is elénekelhet."
+  },
+  {
+    "name": "Pirosvállú csiröge",
+    "latin_name": "Agelaius phoeniceus",
+    "diet": "Mindenevő: magvakkal, gabonával és rovarokkal táplálkozik, amelyeket nádasok és mocsarak növényzetéről szed össze.",
+    "fun_fact": "A hím territóriumvédő ösztöne annyira erős, hogy a fészke közelébe tévedő, nála jóval nagyobb állatokat - akár lovat vagy embert - is megtámad."
+  },
+  {
+    "name": "Pompás lantfarkúmadár",
+    "latin_name": "Menura novaehollandiae",
+    "diet": "A talaj avarját túrva rovarokkal, gilisztákkal és pókokkal táplálkozik.",
+    "fun_fact": "A hím udvarlás közben legalább húsz másik madárfaj hangját képes tökéletesen utánozni, sőt megfigyelték, hogy fényképezőgép zárszerkezetét és láncfűrészt is lemásolt."
+  },
+  {
+    "name": "Prérisirály",
+    "latin_name": "Leucophaeus pipixcan",
+    "diet": "Elsősorban rovarokkal táplálkozik, amelyeket a szántóföldeken a traktor nyomában vagy repülés közben kapdos el.",
+    "fun_fact": "Vonulása során mindkét féltekén átkel: Észak-Amerika prérijein költ, majd Dél-Amerika csendes-óceáni partjainál telel, így az egyik leghosszabb utat teszi meg a sirályok között."
+  },
+  {
+    "name": "Prériölyv",
+    "latin_name": "Buteo swainsoni",
+    "diet": "Költési időszakban kisemlősökre és madarakra vadászik, telelőterületén és vonulás közben viszont elsősorban rovarokkal, főleg sáskákkal táplálkozik.",
+    "fun_fact": "Hatalmas, akár több ezer példányból álló csapatokban vonul egészen Dél-Amerikáig, ahol az argentin pampákon teleli át az évet."
+  },
+  {
+    "name": "Pulykakeselyű",
+    "latin_name": "Cathartes aura",
+    "diet": "Dögevő: kizárólag elhullott állatok tetemeivel táplálkozik, amelyeket kiváló szaglása segítségével talál meg.",
+    "fun_fact": "Az újvilági keselyűk közül szinte egyedüliként szaglására hagyatkozik zsákmánykereséskor, csupasz feje pedig azért maradt tollatlan, hogy dögevés közben ne szennyeződjön be."
+  },
+  {
+    "name": "Pápapinty",
+    "latin_name": "Passerina ciris",
+    "diet": "Elsősorban magvakkal táplálkozik, fiókáit azonban rovarokkal eteti.",
+    "fun_fact": "A hím tollazata - kék fej, zöld hát és piros mellkas - olyan színpompás, hogy sokan Észak-Amerika legszebb madarának tartják, ezt a díszes ruhát azonban csak életének második évétől viseli."
+  },
+  {
+    "name": "Pápaszemes lombjáró",
+    "latin_name": "Icteria virens",
+    "diet": "Rovarokkal, pókokkal, valamint bogyókkal és vadszőlővel táplálkozik.",
+    "fun_fact": "Furcsa, gurgulázó, fütyülő és nyávogó hangokból álló énekét gyakran éjszaka is hallatja, territóriumát védve pedig akár függőlegesen a magasba is felrepül közben."
+  },
+  {
+    "name": "Pápua szarvascsőrű",
+    "latin_name": "Rhyticeros plicatus",
+    "diet": "Elsősorban gyümölcsökkel és fügékkel táplálkozik, de rovarokat és kisebb gerinceseket is elfogyaszt.",
+    "fun_fact": "A tojó a fészkelés idejére csőrével szinte befalazza magát a faodúba, és csak egy keskeny résen át kapja a hímtől az élelmet, míg fiókái ki nem nőnek."
+  },
+  {
+    "name": "Pásztormadár",
+    "latin_name": "Pastor roseus",
+    "diet": "Elsősorban rovarokkal táplálkozik, különösen sáskákkal és szöcskékkel, amelyekből hatalmas mennyiséget képes elfogyasztani.",
+    "fun_fact": "A sáskajárások nyomában hatalmas, akár több tízezres kolóniákban jelenik meg, ezért Ázsia egyes vidékein természetes növényvédőként tisztelik."
+  },
+  {
+    "name": "Pásztormejnó",
+    "latin_name": "Acridotheres tristis",
+    "diet": "Mindenevő: rovarokkal, gyümölcsökkel, magvakkal és emberi hulladékkal egyaránt táplálkozik.",
+    "fun_fact": "Betelepítése miatt ma a világ 100 legveszélyesebb invazív fajának egyikeként tartják számon, mivel odúlakó honos madaraktól hódítja el a fészkelőhelyeket."
+  },
+  {
+    "name": "Raggi-paradicsommadár",
+    "latin_name": "Paradisaea raggiana",
+    "diet": "Gyümölcsökkel táplálkozik, de rovarokkal és más kisebb ízeltlábúakkal is kiegészíti étrendjét.",
+    "fun_fact": "Pápua Új-Guinea nemzeti madara, amelynek pompás narancssárga oldaltollait az ország zászlaján is megjelenítik."
+  },
+  {
+    "name": "Reznek",
+    "latin_name": "Tetrax tetrax",
+    "diet": "Növényi hajtásokkal, magvakkal és rovarokkal, elsősorban szöcskékkel táplálkozik.",
+    "fun_fact": "A hím udvarláskor mély, morajló hangot hallat, miközben lábával dobog és nyakát felfújja, ez a rituálé pedig messziről is jól hallható."
+  },
+  {
+    "name": "Rozsdacsíkos mézevő",
+    "latin_name": "Conopophila albogularis",
+    "diet": "Virágnektárral táplálkozik, amelyet kefeszerű nyelvével szív fel, de rovarokat is fogyaszt.",
+    "fun_fact": "Gyakran mangroveerdőkben és városi kertekben is megtelepszik, ahol virágzó fák koronájában fürge, mozgékony csapatokban keresi táplálékát."
+  },
+  {
+    "name": "Rozsdás héjabagoly",
+    "latin_name": "Ninox rufa",
+    "diet": "Éjszaka vadászik: kisemlősökre, madarakra és nagyobb rovarokra csap le erős karmaival.",
+    "fun_fact": "Ausztrália egyik legnagyobb termetű baglyaként akár repülő denevéreket is képes elkapni röptében."
+  },
+  {
+    "name": "Rókafejű réce",
+    "latin_name": "Aythya valisineria",
+    "diet": "Elsősorban vízinövények gumóival és magvaival táplálkozik, amelyekért a víz alá bukik.",
+    "fun_fact": "A neve a kedvenc táplálékául szolgáló Vallisneria vízinövényre utal, amelynek gyökereiért mélyre bukik a tavak fenekére."
+  },
+  {
+    "name": "Rózsás flamingó",
+    "latin_name": "Phoenicopterus roseus",
+    "diet": "Iszapból szűri ki apró rákokat, algákat és más gerincteleneket sajátos, fejjel lefelé fordított csőrével.",
+    "fun_fact": "Rózsaszín tollazatát a táplálékában található karotinoid pigmentek okozzák, fogságban tartott egyedei ezért gyakran elhalványulnak, ha nem kapnak megfelelő étrendet."
+  },
+  {
+    "name": "Rózsás kakadu",
+    "latin_name": "Eolophus roseicapilla",
+    "diet": "Magvakkal, gumókkal és zöld hajtásokkal táplálkozik, amelyeket gyakran nagy csapatokban a földön keresgél.",
+    "fun_fact": "Ausztrália egyik leggyakoribb kakadufaja, amely a mezőgazdasági területek terjeszkedésével valósággal berobbant, és ma már a kontinens szinte teljes területén megtalálható."
+  },
+  {
+    "name": "Rózsás kanalasgém",
+    "latin_name": "Platalea ajaja",
+    "diet": "Lapátszerű csőrét féloldalasan a vízbe mártva, oldalirányú mozdulatokkal szűri ki a kisebb halakat és rákokat.",
+    "fun_fact": "Rózsaszín tollazatát - a flamingóhoz hasonlóan - a táplálékául szolgáló rákfélékben található karotinoid pigmentek adják."
+  },
+  {
+    "name": "Rózsásmellű magvágó",
+    "latin_name": "Pheucticus ludovicianus",
+    "diet": "Erőteljes, kúp alakú csőrével magvakat, bogyókat és rovarokat is elfogyaszt.",
+    "fun_fact": "Neve ellenére nem kizárólag magvakkal táplálkozik, sőt a kártevő rovarok, köztük a burgonyabogár pusztításában is jelentős szerepet játszik."
+  },
+  {
+    "name": "Rövidkarmú fakusz",
+    "latin_name": "Certhia brachydactyla",
+    "diet": "Fakérgen kúszva, hegyes, lefelé görbülő csőrével repedésekből böki ki a rovarokat és pókokat.",
+    "fun_fact": "Kúszás közben mereven tartott, kihegyezett faroktollaira támaszkodik, akárcsak egy harkály, hogy stabilan tudjon a törzsön felfelé haladni."
+  },
+  {
+    "name": "Rőtfarkú ölyv",
+    "latin_name": "Buteo jamaicensis",
+    "diet": "Elsősorban kisemlősökre, például mezei pockokra és mókusokra vadászik, de madarakat és hüllőket is zsákmányol.",
+    "fun_fact": "Éles, rikoltó hangját a filmipar annyira jellegzetesnek találta, hogy szinte minden sasábrázoláshoz - a valódi faj hangja helyett is - ezt a felvételt használják."
+  },
+  {
+    "name": "Sarki búvár",
+    "latin_name": "Gavia arctica",
+    "diet": "Kiváló búvár: halakra vadászik, amelyeket a víz alatt, gyors úszással kerget be.",
+    "fun_fact": "Csontjai a legtöbb repülő madárral ellentétben tömörek, nem üregesek, ami megkönnyíti a mélyre buvárkodást, ugyanakkor szárazföldön szinte mozgásképtelenné teszi."
+  },
+  {
+    "name": "Sarki partfutó",
+    "latin_name": "Calidris canutus",
+    "diet": "Kagylókkal és más kagylós puhatestűekkel táplálkozik, amelyeket csőrével a tengerparti iszapból túr ki.",
+    "fun_fact": "Az egyik leghosszabb vonulóutat teszi meg a partimadarak közül, és a klímaváltozás miatt egyre korábban nyíló kagylóállományok súlyosan veszélyeztetik utódai túlélési esélyeit."
+  },
+  {
+    "name": "Sarlósfecske",
+    "latin_name": "Apus apus",
+    "diet": "Repülés közben nyitott csőrével fogja be a levegőben szálló rovarokat és pókokat.",
+    "fun_fact": "Életének szinte egészét repülve tölti: alszik, párzik és táplálkozik is a levegőben, és megfigyelték, hogy egyes egyedek akár tíz hónapig sem érnek talajt."
+  },
+  {
+    "name": "Say-légykapótirannusz",
+    "latin_name": "Sayornis saya",
+    "diet": "Repülő rovarokra vadászik, amelyeket egy leshelyről indulva kapdos el a levegőben.",
+    "fun_fact": "Az egyik legészakabbra fészkelő tirannuszféle Észak-Amerikában, és fészkét gyakran emberi építmények, hidak vagy elhagyatott épületek gerendáira rakja."
+  },
+  {
+    "name": "Schiller-fácán",
+    "latin_name": "Phasianus versicolor",
+    "diet": "Magvakkal, bogyókkal, rügyekkel és rovarokkal táplálkozik, amelyeket a talajon kapirgálva keres.",
+    "fun_fact": "Japán nemzeti madara, fémesen csillogó zöld tollazata pedig annyira jellegzetes, hogy elsősorban erről különböztethető meg a hagyományos japán fácántól."
+  },
+  {
+    "name": "Seregély",
+    "latin_name": "Sturnus vulgaris",
+    "diet": "Mindenevő: rovarokkal, férgekkel, magvakkal és gyümölcsökkel egyaránt táplálkozik.",
+    "fun_fact": "Kiváló hangutánzó, amely akár emberi beszédet vagy más madarak énekét is képes utánozni, esténként pedig több tízezres, látványosan alakot váltó rajokban gyülekezik éjszakázás előtt."
+  },
+  {
+    "name": "Sirató gerle",
+    "latin_name": "Zenaida macroura",
+    "diet": "Szinte kizárólag magvakkal táplálkozik, amelyeket a talajon, csapatosan keresgél.",
+    "fun_fact": "Bánatosan búgó hangja miatt kapta magyar nevét, szárnya pedig felszálláskor jellegzetes, sípoló hangot ad, amely riasztásként szolgál a csapat többi tagja számára."
+  },
+  {
+    "name": "Sisakos kazuár",
+    "latin_name": "Casuarius casuarius",
+    "diet": "Elsősorban lehullott gyümölcsökkel táplálkozik, de gombákat, magvakat és kisebb állatokat is elfogyaszt.",
+    "fun_fact": "Erős, tőrszerű középső karma miatt az egyik legveszélyesebb madárnak tartják, feje tetején lévő szaruszerű \"sisakja\" pedig sűrű aljnövényzetben védi fejét mozgás közben."
+  },
+  {
+    "name": "Sitta",
+    "latin_name": "Sitta europaea",
+    "diet": "Rovarokkal és pókokkal táplálkozik, ősszel és télen pedig magvakkal és mogyoróval egészíti ki étrendjét.",
+    "fun_fact": "Az egyetlen európai madárfaj, amely fejjel lefelé is képes lekúszni a fatörzsön, téli táplálékfeleslegét pedig a kéreg repedéseibe rejti el."
+  },
+  {
+    "name": "Sivatagi hantmadár",
+    "latin_name": "Oenanthe deserti",
+    "diet": "Elsősorban rovarokkal és pókokkal táplálkozik, amelyeket a talajról vagy egy leshelyről indulva kapdos el.",
+    "fun_fact": "A sivatagi élethez alkalmazkodva rendkívül halvány, homokszínű tollazatot visel, amely tökéletes álcázást biztosít a kopár, sziklás tájakon."
+  },
+  {
+    "name": "Skarlátdalnok",
+    "latin_name": "Epthianura tricolor",
+    "diet": "Rovarokkal táplálkozik, amelyeket az ausztrál száraz füves és cserjés területeken a talaj közelében vadász le.",
+    "fun_fact": "A hím tollazata Ausztrália belsejének vörös földjéhez hasonló élénkpiros színben pompázik, a faj pedig az esőzéseket követően nomád módon vándorol az újonnan kizöldülő területek felé."
+  },
+  {
+    "name": "Skarlátszárnyú remetepapagáj",
+    "latin_name": "Aprosmictus erythropterus",
+    "diet": "Magvakkal, gyümölcsökkel, bogyókkal, virágokkal és rügyekkel táplálkozik.",
+    "fun_fact": "A párok életük végéig hűségesek maradnak egymáshoz, a hím szárnyán található élénkpiros folt pedig a fiatal madaraknál csak a harmadik évre alakul ki teljesen."
+  },
+  {
+    "name": "Sprague-pityer",
+    "latin_name": "Anthus spragueii",
+    "diet": "Rovarokkal és magvakkal táplálkozik, amelyeket az észak-amerikai préri fűcsomói között a talajon keresgél.",
+    "fun_fact": "Éneklő hímje olyan magasra száll fel a levegőbe - akár 100 méter fölé -, hogy onnan gyakran szabad szemmel is alig látható, miközben akár órákig kitartóan zeng."
+  },
+  {
+    "name": "Srí lankai békaszájú",
+    "latin_name": "Batrachostomus moniliger",
+    "diet": "Éjszaka vadászik: rovarokra és más kisebb gerinctelenekre csap le egy ágról indulva.",
+    "fun_fact": "Széles, békaszerű csőréről kapta a nevét, nappal pedig mozdulatlanul, egy száraz ághoz simulva rejtőzik el, így szinte tökéletesen összeolvad a környezetével."
+  },
+  {
+    "name": "Stephánia-paradicsommadár",
+    "latin_name": "Astrapia stephaniae",
+    "diet": "Gyümölcsökkel táplálkozik, de rovarokat és más kis ízeltlábúakat is fogyaszt.",
+    "fun_fact": "A hím rendkívül hosszú, akár testénél is hosszabb farktollakkal rendelkezik, amelyeket az udvarlási tánc során látványosan mutogat a tojónak."
+  }
+]

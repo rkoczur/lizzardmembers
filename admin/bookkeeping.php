@@ -30,6 +30,19 @@ $memberNames = $pdo->query("
     ORDER BY lastname ASC, firstname ASC
 ")->fetchAll(PDO::FETCH_COLUMN);
 
+// Partner → tag adatok (név, cím) — a táblázatban a tag nevére kattintva felugró ablakban jelenik meg
+$memberDirectory = [];
+$memberRows = $pdo->query("
+    SELECT TRIM(CONCAT(COALESCE(lastname,''), ' ', COALESCE(firstname,''))) AS full_name,
+           zipcode, city, address
+    FROM users
+    WHERE active = 1
+    HAVING full_name <> ''
+")->fetchAll();
+foreach ($memberRows as $mr) {
+    $memberDirectory[$mr['full_name']] = $mr;
+}
+
 // Esemény-választó forrásai
 $pastTours   = $pdo->query("SELECT id, COALESCE(NULLIF(name,''), CONCAT(country,' túra')) AS label, tour_date FROM tours ORDER BY tour_date DESC, id DESC")->fetchAll();
 $futureTours = $pdo->query("SELECT id, name, start_date FROM future_tours ORDER BY start_date DESC, id DESC")->fetchAll();
@@ -258,7 +271,18 @@ include __DIR__ . '/../includes/admin-header.php';
             <?php if ($hl): ?><span class="badge badge-overdue" style="font-size:10px;margin-left:4px;white-space:nowrap;">⏳ Folyamatban</span><?php endif; ?>
           </td>
           <td style="font-size:13px;color:var(--text-muted);"><?= $tx['event_label'] ? e($tx['event_label']) : '—' ?></td>
-          <td style="font-size:13px;"><?= e($tx['partner']) ?></td>
+          <td style="font-size:13px;">
+            <?php if ($tx['partner'] !== '' && isset($memberDirectory[$tx['partner']])): $md = $memberDirectory[$tx['partner']]; ?>
+              <a href="#" class="partner-link"
+                 data-partner-name="<?= e($tx['partner']) ?>"
+                 data-partner-zip="<?= e($md['zipcode'] ?? '') ?>"
+                 data-partner-city="<?= e($md['city'] ?? '') ?>"
+                 data-partner-address="<?= e($md['address'] ?? '') ?>"
+                 title="Tag adatainak megtekintése"><?= e($tx['partner']) ?></a>
+            <?php else: ?>
+              <?= e($tx['partner']) ?>
+            <?php endif; ?>
+          </td>
           <td style="font-size:13px;"><?= e($tx['account']) ?></td>
           <td style="font-size:13px;color:var(--text-muted);"><?= $tx['invoice_number'] ? e($tx['invoice_number']) : '—' ?></td>
           <td style="text-align:right;font-weight:600;white-space:nowrap;color:<?= $tx['tx_type']==='income' ? 'var(--primary)' : 'var(--danger)' ?>;">
@@ -383,6 +407,59 @@ include __DIR__ . '/../includes/admin-header.php';
     </div>
   </div>
 </div>
+
+<!-- ══════════════════ PARTNER (TAG) ADATLAP OVERLAY ══════════════════ -->
+<div id="partner-detail-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:9500;align-items:center;justify-content:center;padding:16px;">
+  <div style="background:var(--card-bg,#fff);border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.18);width:100%;max-width:420px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid var(--border);">
+      <h2 style="font-size:16px;font-weight:700;margin:0;">Tag adatai</h2>
+      <button type="button" id="partner-detail-close" style="background:none;border:none;cursor:pointer;color:var(--text-muted);padding:4px;" aria-label="Bezárás">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div style="padding:20px 22px;">
+      <div id="partner-detail-name" style="font-size:16px;font-weight:700;margin-bottom:8px;"></div>
+      <div id="partner-detail-address" style="font-size:14px;color:var(--text-muted);"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var pOverlay = document.getElementById('partner-detail-overlay');
+  var pName    = document.getElementById('partner-detail-name');
+  var pAddress = document.getElementById('partner-detail-address');
+  if (!pOverlay) return;
+
+  function closePartnerOverlay() {
+    pOverlay.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('click', function (e) {
+    var link = e.target.closest('.partner-link');
+    if (link) {
+      e.preventDefault();
+      var zip  = link.dataset.partnerZip || '';
+      var city = link.dataset.partnerCity || '';
+      var addr = link.dataset.partnerAddress || '';
+      var line = [zip, city].filter(Boolean).join(' ');
+      var full = [line, addr].filter(Boolean).join(', ');
+      pName.textContent = link.dataset.partnerName || '';
+      pAddress.textContent = full || 'Nincs megadva cím.';
+      pOverlay.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      return;
+    }
+    if (e.target === pOverlay || e.target.closest('#partner-detail-close')) {
+      closePartnerOverlay();
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && pOverlay.style.display === 'flex') closePartnerOverlay();
+  });
+})();
+</script>
 
 <script>
 (function () {

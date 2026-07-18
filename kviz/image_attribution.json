@@ -1,0 +1,3282 @@
+{
+  "Vízityúk": {
+    "image": "images/vizityuk.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/V%C3%ADzity%C3%BAk",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Gallinula_galeata_at_Squaw_Creek_NWR.jpg/960px-Gallinula_galeata_at_Squaw_Creek_NWR.jpg",
+    "file_name": "Gallinula_galeata_at_Squaw_Creek_NWR.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Vízityúk"
+  },
+  "Pásztormejnó": {
+    "image": "images/pasztormejno.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/P%C3%A1sztormejn%C3%B3",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Indian-Mynah444.jpg/960px-Indian-Mynah444.jpg",
+    "file_name": "Indian-Mynah444.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Pásztormejnó"
+  },
+  "Estifecske": {
+    "image": "images/estifecske.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Estifecske",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Common_Nighthawk_%2814585240355%29.jpg/960px-Common_Nighthawk_%2814585240355%29.jpg",
+    "file_name": "Common_Nighthawk_(14585240355).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Estifecske"
+  },
+  "Fülemüle": {
+    "image": "images/fulemule.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/F%C3%BClem%C3%BCle",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/83/Luscinia_megarhynchos_Istria_01.jpg",
+    "file_name": "Luscinia_megarhynchos_Istria_01.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Fülemüle"
+  },
+  "Holló": {
+    "image": "images/hollo.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Holl%C3%B3",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/83/Corvuscorax001.jpg",
+    "file_name": "Corvuscorax001.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Holló"
+  },
+  "Billegetőcankó": {
+    "image": "images/billegetocanko.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Billeget%C5%91cank%C3%B3",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Common_Sandpiper_Thailand.jpg/960px-Common_Sandpiper_Thailand.jpg",
+    "file_name": "Common_Sandpiper_Thailand.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Billegetőcankó"
+  },
+  "Seregély": {
+    "image": "images/seregely.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Sereg%C3%A9ly",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/7/75/Sturnus_vulgaris.jpg",
+    "file_name": "Sturnus_vulgaris.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Seregély"
+  },
+  "Sarlósfecske": {
+    "image": "images/sarlosfecske.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Sarl%C3%B3sfecske",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Common_Swift_2025_07_18_02_%28cropped%29.jpg/960px-Common_Swift_2025_07_18_02_%28cropped%29.jpg",
+    "file_name": "Common_Swift_2025_07_18_02_(cropped).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Sarlósfecske"
+  },
+  "Varrómadár": {
+    "image": "images/varromadar.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Varr%C3%B3mad%C3%A1r",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/7/73/Orthotomus_sutorius.jpg",
+    "file_name": "Orthotomus_sutorius.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Varrómadár"
+  },
+  "Csörgő réce": {
+    "image": "images/csorgo-rece.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Cs%C3%B6rg%C5%91_r%C3%A9ce",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/1/1d/Sarcelleh_1.jpg",
+    "file_name": "Sarcelleh_1.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Csörgő réce"
+  },
+  "Sárgatorkú földiposzáta": {
+    "image": "images/sargatorku-foldiposzata.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Common_yellowthroat",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Common_yellowthroat_in_PP_%2814155%29.jpg/960px-Common_yellowthroat_in_PP_%2814155%29.jpg",
+    "file_name": "Common_yellowthroat_in_PP_(14155).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Common yellowthroat"
+  },
+  "Cooper-héja": {
+    "image": "images/cooper-heja.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/H%C3%A9jaform%C3%A1k",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/81/Northern_Goshawk_ad_M2.jpg",
+    "file_name": "Northern_Goshawk_ad_M2.jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Héjaformák"
+  },
+  "Sárgatorkú bajszika": {
+    "image": "images/sargatorku-bajszika.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Alcippe_cinerea",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Schoeniparus_cinereus_94293059.jpg/960px-Schoeniparus_cinereus_94293059.jpg",
+    "file_name": "Schoeniparus_cinereus_94293059.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Alcippe cinerea"
+  },
+  "Sitta": {
+    "image": "images/sitta.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Csuszka_(mad%C3%A1r)",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/f/f6/Sitta_europaea_wildlife_2_1.jpg",
+    "file_name": "Sitta_europaea_wildlife_2_1.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Csuszka (madár)"
+  },
+  "Raggi-paradicsommadár": {
+    "image": "images/raggi-paradicsommadar.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Raggi-paradicsommad%C3%A1r",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Raggiana_Bird-of-Paradise_wild_5.jpg/960px-Raggiana_Bird-of-Paradise_wild_5.jpg",
+    "file_name": "Raggiana_Bird-of-Paradise_wild_5.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Raggi-paradicsommadár"
+  },
+  "Nipponíbisz": {
+    "image": "images/nipponibisz.png",
+    "source_url": "https://hu.wikipedia.org/wiki/Nippon%C3%ADbisz",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/3/33/Nipponia_nippon.png",
+    "file_name": "Nipponia_nippon.png",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Nipponíbisz"
+  },
+  "Búbospacsirta": {
+    "image": "images/bubospacsirta.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/B%C3%BAbospacsirta",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/29/Crested_Lark_I_IMG_9948.jpg",
+    "file_name": "Crested_Lark_I_IMG_9948.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Búbospacsirta"
+  },
+  "Kontyos galamb": {
+    "image": "images/kontyos-galamb.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Kontyos_galamb",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Ocyphaps_lophotes_-_Lake_Parramatta_Reserve.jpg/960px-Ocyphaps_lophotes_-_Lake_Parramatta_Reserve.jpg",
+    "file_name": "Ocyphaps_lophotes_-_Lake_Parramatta_Reserve.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Kontyos galamb"
+  },
+  "Skarlátdalnok": {
+    "image": "images/skarlatdalnok.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Skarl%C3%A1tdalnok",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/22/Crimson_Chat.jpg",
+    "file_name": "Crimson_Chat.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Skarlátdalnok"
+  },
+  "Téli sármánypinty": {
+    "image": "images/teli-sarmanypinty.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/T%C3%A9li_s%C3%A1rm%C3%A1nypinty",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/0/09/Dark_Eyed_Junco_005.jpg",
+    "file_name": "Dark_Eyed_Junco_005.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Téli sármánypinty"
+  },
+  "Feketecsőrű sivatagipinty": {
+    "image": "images/feketecsoru-sivatagipinty.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Feketecs%C5%91r%C5%B1_sivatagipinty",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Desert_Finch_-_Uzbekistan_S4E7626-2_%2823039952955%29.jpg/960px-Desert_Finch_-_Uzbekistan_S4E7626-2_%2823039952955%29.jpg",
+    "file_name": "Desert_Finch_-_Uzbekistan_S4E7626-2_(23039952955).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Feketecsőrű sivatagipinty"
+  },
+  "Sivatagi hantmadár": {
+    "image": "images/sivatagi-hantmadar.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Sivatagi_hantmad%C3%A1r",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Desert_Wheatear_Oenanthe_deserti_by_Dr._Raju_Kasambe_DSCN9430_%281%29.jpg/960px-Desert_Wheatear_Oenanthe_deserti_by_Dr._Raju_Kasambe_DSCN9430_%281%29.jpg",
+    "file_name": "Desert_Wheatear_Oenanthe_deserti_by_Dr._Raju_Kasambe_DSCN9430_(1).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Sivatagi hantmadár"
+  },
+  "Dikcisszel": {
+    "image": "images/dikcisszel.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Dikcisszel",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Dickcissel_-_27093762117.jpg/960px-Dickcissel_-_27093762117.jpg",
+    "file_name": "Dickcissel_-_27093762117.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Dikcisszel"
+  },
+  "Füles kárókatona": {
+    "image": "images/fules-karokatona.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/F%C3%BCles_k%C3%A1r%C3%B3katona",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Phalacrocorax-auritus-007.jpg/960px-Phalacrocorax-auritus-007.jpg",
+    "file_name": "Phalacrocorax-auritus-007.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Füles kárókatona"
+  },
+  "Pehelyharkály": {
+    "image": "images/pehelyharkaly.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Dryobates",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/9/97/Dendrocopos_minor_291108.jpg",
+    "file_name": "Dendrocopos_minor_291108.jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Dryobates"
+  },
+  "Erdei szürkebegy": {
+    "image": "images/erdei-szurkebegy.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Erdei_sz%C3%BCrkebegy",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Acentor_com%C3%BAn23_by_Paco_G%C3%B3mez.jpg/960px-Acentor_com%C3%BAn23_by_Paco_G%C3%B3mez.jpg",
+    "file_name": "Acentor_común23_by_Paco_Gómez.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Erdei szürkebegy"
+  },
+  "Vörösbegyű kékmadár": {
+    "image": "images/vorosbegyu-kekmadar.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/V%C3%B6r%C3%B6sbegy%C5%B1_k%C3%A9kmad%C3%A1r",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/6/63/Eastern_Bluebird_5.jpg",
+    "file_name": "Eastern_Bluebird_5.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Vörösbegyű kékmadár"
+  },
+  "Parlagi sas": {
+    "image": "images/parlagi-sas.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Parlagi_sas",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Kaiseradler_Aquila_heliaca_amk.jpg/960px-Kaiseradler_Aquila_heliaca_amk.jpg",
+    "file_name": "Kaiseradler_Aquila_heliaca_amk.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Parlagi sas"
+  },
+  "Keleti királygébics": {
+    "image": "images/keleti-kiralygebics.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Keleti_kir%C3%A1lyg%C3%A9bics",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Eastern_Kingbird_%2834425607481%29.jpg/960px-Eastern_Kingbird_%2834425607481%29.jpg",
+    "file_name": "Eastern_Kingbird_(34425607481).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Keleti királygébics"
+  },
+  "Szürke légykapótirannusz": {
+    "image": "images/szurke-legykapotirannusz.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Tyrannus_dominicensis",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Tyrannus_dominicensis_-Dominican_Republic-8.jpg/960px-Tyrannus_dominicensis_-Dominican_Republic-8.jpg",
+    "file_name": "Tyrannus_dominicensis_-Dominican_Republic-8.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Tyrannus dominicensis"
+  },
+  "Keleti rozella": {
+    "image": "images/keleti-rozella.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Keleti_rozella",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Platycercus_eximius_diemenensis_male.jpg/960px-Platycercus_eximius_diemenensis_male.jpg",
+    "file_name": "Platycercus_eximius_diemenensis_male.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Keleti rozella"
+  },
+  "Keleti lármáskuvik": {
+    "image": "images/keleti-larmaskuvik.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Keleti_l%C3%A1rm%C3%A1skuvik",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Eastern_Screech_Owl.jpg/960px-Eastern_Screech_Owl.jpg",
+    "file_name": "Eastern_Screech_Owl.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Keleti lármáskuvik"
+  },
+  "Keleti ostormadár": {
+    "image": "images/keleti-ostormadar.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Keleti_ostormad%C3%A1r",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Eastern_Whipbird.jpg/960px-Eastern_Whipbird.jpg",
+    "file_name": "Eastern_Whipbird.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Keleti ostormadár"
+  },
+  "Eleonóra-sólyom": {
+    "image": "images/eleonora-solyom.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Eleon%C3%B3ra-s%C3%B3lyom",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/3/31/Falke_san_telmo.jpg",
+    "file_name": "Falke_san_telmo.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Eleonóra-sólyom"
+  },
+  "Emu": {
+    "image": "images/emu.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Emu",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/2008-06-21_Artis_09_Dromaius_novaehollandiae.jpg/960px-2008-06-21_Artis_09_Dromaius_novaehollandiae.jpg",
+    "file_name": "2008-06-21_Artis_09_Dromaius_novaehollandiae.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Emu"
+  },
+  "Balkáni gerle": {
+    "image": "images/balkani-gerle.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Balk%C3%A1ni_gerle",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Eurasian_collared_dove_%28Streptopelia_decaocto%29_Rajasthan.jpg/960px-Eurasian_collared_dove_%28Streptopelia_decaocto%29_Rajasthan.jpg",
+    "file_name": "Eurasian_collared_dove_(Streptopelia_decaocto)_Rajasthan.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Balkáni gerle"
+  },
+  "Szárcsa": {
+    "image": "images/szarcsa.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Sz%C3%A1rcsa_(mad%C3%A1r)",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/%D0%9B%D1%8B%D1%81%D1%83%D1%85%D0%B0_%28Fulica_atra%29%2C_%D0%9A%D0%B0%D0%BB%D0%B8%D0%BD%D0%B8%D0%BD%D0%B3%D1%80%D0%B0%D0%B4.jpg/960px-%D0%9B%D1%8B%D1%81%D1%83%D1%85%D0%B0_%28Fulica_atra%29%2C_%D0%9A%D0%B0%D0%BB%D0%B8%D0%BD%D0%B8%D0%BD%D0%B3%D1%80%D0%B0%D0%B4.jpg",
+    "file_name": "Лысуха_(Fulica_atra),_Калининград.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Szárcsa (madár)"
+  },
+  "Uhu": {
+    "image": "images/uhu.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Uhu",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/c/ca/Bubo_bubo_1_%28Martin_Mecnarowski%29.jpg",
+    "file_name": "Bubo_bubo_1_(Martin_Mecnarowski).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Uhu"
+  },
+  "Sárgarigó": {
+    "image": "images/sargarigo.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/S%C3%A1rgarig%C3%B3",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/d/d2/Oriole_2.jpg",
+    "file_name": "Oriole_2.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Sárgarigó"
+  },
+  "Zöld küllő": {
+    "image": "images/zold-kullo.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Z%C3%B6ld_k%C3%BCll%C5%91",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/In_the_garden_%2826811441450%29.jpg/960px-In_the_garden_%2826811441450%29.jpg",
+    "file_name": "In_the_garden_(26811441450).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Zöld küllő"
+  },
+  "Kabasólyom": {
+    "image": "images/kabasolyom.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/K%C3%A9k_v%C3%A9rcse",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/6/62/Red-footed_Falcon.jpg",
+    "file_name": "Red-footed_Falcon.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Kék vércse"
+  },
+  "Búbos banka": {
+    "image": "images/bubos-banka.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/B%C3%BAbos_banka",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/b/be/DSC_3974_Huppe_fasci%C3%A9e_Upupa_epops_%2850064878941%29.jpg",
+    "file_name": "DSC_3974_Huppe_fasciée_Upupa_epops_(50064878941).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Búbos banka"
+  },
+  "Szajkó": {
+    "image": "images/szajko.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Szajk%C3%B3",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Garrulus_glandarius_1_Luc_Viatour.jpg/960px-Garrulus_glandarius_1_Luc_Viatour.jpg",
+    "file_name": "Garrulus_glandarius_1_Luc_Viatour.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Szajkó"
+  },
+  "Vörös vércse": {
+    "image": "images/voros-vercse.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/V%C3%B6r%C3%B6s_v%C3%A9rcse",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Common_kestrel_falco_tinnunculus.jpg/960px-Common_kestrel_falco_tinnunculus.jpg",
+    "file_name": "Common_kestrel_falco_tinnunculus.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Vörös vércse"
+  },
+  "Szarka": {
+    "image": "images/szarka.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Szarka",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/%D0%A1%D0%BE%D1%80%D0%BE%D0%BA%D0%B0_%28Pica_pica%29%2C_%D0%9A%D0%B0%D0%BB%D0%B8%D0%BD%D0%B8%D0%BD%D0%B3%D1%80%D0%B0%D0%B4.jpg/960px-%D0%A1%D0%BE%D1%80%D0%BE%D0%BA%D0%B0_%28Pica_pica%29%2C_%D0%9A%D0%B0%D0%BB%D0%B8%D0%BD%D0%B8%D0%BD%D0%B3%D1%80%D0%B0%D0%B4.jpg",
+    "file_name": "Сорока_(Pica_pica),_Калининград.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Szarka"
+  },
+  "Barna rétihéja": {
+    "image": "images/barna-retiheja.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Barna_r%C3%A9tih%C3%A9ja",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Circus_aeruginosus_Valencia_3.jpeg/960px-Circus_aeruginosus_Valencia_3.jpeg",
+    "file_name": "Circus_aeruginosus_Valencia_3.jpeg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Barna rétihéja"
+  },
+  "Fenyőszajkó": {
+    "image": "images/fenyoszajko.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Feny%C5%91szajk%C3%B3",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Nucifraga_caryocatactes_japonica_s2.jpg/960px-Nucifraga_caryocatactes_japonica_s2.jpg",
+    "file_name": "Nucifraga_caryocatactes_japonica_s2.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Fenyőszajkó"
+  },
+  "Csuszka": {
+    "image": "images/csuszka.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Csuszka_(mad%C3%A1r)",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/f/f6/Sitta_europaea_wildlife_2_1.jpg",
+    "file_name": "Sitta_europaea_wildlife_2_1.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Csuszka (madár)"
+  },
+  "Karvaly": {
+    "image": "images/karvaly.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Karvaly_(mad%C3%A1r)",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Accipiter_nisus_edit.jpg/960px-Accipiter_nisus_edit.jpg",
+    "file_name": "Accipiter_nisus_edit.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Karvaly (madár)"
+  },
+  "Mezei veréb": {
+    "image": "images/mezei-vereb.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Mezei_ver%C3%A9b",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Mezei_ver%C3%A9b.jpg/960px-Mezei_ver%C3%A9b.jpg",
+    "file_name": "Mezei_veréb.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mezei veréb"
+  },
+  "Hegyi fakusz": {
+    "image": "images/hegyi-fakusz.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Hegyi_fakusz",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/1/14/Certhia_familiaris_1_%28Martin_Mecnarowski%29.jpg",
+    "file_name": "Certhia_familiaris_1_(Martin_Mecnarowski).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Hegyi fakusz"
+  },
+  "Gyurgyalag": {
+    "image": "images/gyurgyalag.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Gyurgyalag",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/%C5%9Eahl%C3%BBr-33.jpg/960px-%C5%9Eahl%C3%BBr-33.jpg",
+    "file_name": "Şahlûr-33.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Gyurgyalag"
+  },
+  "Tengelic": {
+    "image": "images/tengelic.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Tengelic_(mad%C3%A1r)",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Gold_Finch.jpg/960px-Gold_Finch.jpg",
+    "file_name": "Gold_Finch.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Tengelic (madár)"
+  },
+  "Darázsölyv": {
+    "image": "images/darazsolyv.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Dar%C3%A1zs%C3%B6lyv",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Wespenbussard_European_honey_buzzard_Pernis_apivorus%2C_crop.jpg/960px-Wespenbussard_European_honey_buzzard_Pernis_apivorus%2C_crop.jpg",
+    "file_name": "Wespenbussard_European_honey_buzzard_Pernis_apivorus,_crop.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Darázsölyv"
+  },
+  "Vörösbegy": {
+    "image": "images/vorosbegy.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/V%C3%B6r%C3%B6sbegy",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/%D0%97%D0%B0%D1%80%D1%8F%D0%BD%D0%BA%D0%B0_-_%D0%BC%D0%B0%D0%BB%D0%B8%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0_%28Erithacus_rubecula%29%2C_%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0.jpg/960px-%D0%97%D0%B0%D1%80%D1%8F%D0%BD%D0%BA%D0%B0_-_%D0%BC%D0%B0%D0%BB%D0%B8%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0_%28Erithacus_rubecula%29%2C_%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0.jpg",
+    "file_name": "Зарянка_-_малиновка_(Erithacus_rubecula),_Москва.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Vörösbegy"
+  },
+  "Európai szalakóta": {
+    "image": "images/europai-szalakota.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Eur%C3%B3pai_szalak%C3%B3ta",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Coracias_garrulus_-_European_roller_05.jpg/960px-Coracias_garrulus_-_European_roller_05.jpg",
+    "file_name": "Coracias_garrulus_-_European_roller_05.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Európai szalakóta"
+  },
+  "Vadgerle": {
+    "image": "images/vadgerle.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Vadgerle",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Streptopelia_turtur01.JPG/960px-Streptopelia_turtur01.JPG",
+    "file_name": "Streptopelia_turtur01.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Vadgerle"
+  },
+  "Királyölyv": {
+    "image": "images/kiralyolyv.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Kir%C3%A1ly%C3%B6lyv",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Ferruginous_Hawk_Captivity.jpg/960px-Ferruginous_Hawk_Captivity.jpg",
+    "file_name": "Ferruginous_Hawk_Captivity.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Királyölyv"
+  },
+  "Vöröshomlokú csicsörke": {
+    "image": "images/voroshomloku-csicsorke.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/V%C3%B6r%C3%B6shomlok%C3%BA_csics%C3%B6rke",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/5/5f/Fire-fronted_Serin_Nainital_Uttarakhand_India_31.01.2015.jpg",
+    "file_name": "Fire-fronted_Serin_Nainital_Uttarakhand_India_31.01.2015.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Vöröshomlokú csicsörke"
+  },
+  "Halászvarjú": {
+    "image": "images/halaszvarju.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Hal%C3%A1szvarj%C3%BA",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Fish_crow_in_Red_Hook_%2842712%29.jpg/960px-Fish_crow_in_Red_Hook_%2842712%29.jpg",
+    "file_name": "Fish_crow_in_Red_Hook_(42712).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Halászvarjú"
+  },
+  "Erdei kuvik": {
+    "image": "images/erdei-kuvik.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Erdei_kuvik",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/83/Forest_Owlet_Athene_blewitti_by_Ashahar_alias_Krishna_Khan.jpeg",
+    "file_name": "Forest_Owlet_Athene_blewitti_by_Ashahar_alias_Krishna_Khan.jpeg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Erdei kuvik"
+  },
+  "Tavi csér": {
+    "image": "images/tavi-cser.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Fatty%C3%BAszerk%C5%91",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Chlidonias_hybrida_3_%28Marek_Szczepanek%29.jpg",
+    "file_name": "Chlidonias_hybrida_3_(Marek_Szczepanek).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Fattyúszerkő"
+  },
+  "Prérisirály": {
+    "image": "images/prerisiraly.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Pr%C3%A9risir%C3%A1ly",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/4/4a/Franklin%27s_Gull_Brisbane98.jpg",
+    "file_name": "Franklin's_Gull_Brisbane98.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Prérisirály"
+  },
+  "Rózsás kakadu": {
+    "image": "images/rozsas-kakadu.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/R%C3%B3zs%C3%A1s_kakadu",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/9/90/Rosakakadu_ts2.jpg",
+    "file_name": "Rosakakadu_ts2.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Rózsás kakadu"
+  },
+  "Sárgafejű királyka": {
+    "image": "images/sargafeju-kiralyka.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/S%C3%A1rgafej%C5%B1_kir%C3%A1lyka",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/%D0%96%D0%B5%D0%BB%D1%82%D0%BE%D0%B3%D0%BE%D0%BB%D0%BE%D0%B2%D1%8B%D0%B9_%D0%BA%D0%BE%D1%80%D0%BE%D0%BB%D1%91%D0%BA_%28Regulus_regulus%29%2C_%D0%91%D0%B8%D1%82%D1%86%D0%B5%D0%B2%D1%81%D0%BA%D0%B8%D0%B9_%D0%BB%D0%B5%D1%81.jpg/960px-%D0%96%D0%B5%D0%BB%D1%82%D0%BE%D0%B3%D0%BE%D0%BB%D0%BE%D0%B2%D1%8B%D0%B9_%D0%BA%D0%BE%D1%80%D0%BE%D0%BB%D1%91%D0%BA_%28Regulus_regulus%29%2C_%D0%91%D0%B8%D1%82%D1%86%D0%B5%D0%B2%D1%81%D0%BA%D0%B8%D0%B9_%D0%BB%D0%B5%D1%81.jpg",
+    "file_name": "Желтоголовый_королёк_(Regulus_regulus),_Битцевский_лес.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Sárgafejű királyka"
+  },
+  "Szirti sas": {
+    "image": "images/szirti-sas.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Szirti_sas",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Golden_Eagle_4a_%286022930748%29.jpg/960px-Golden_Eagle_4a_%286022930748%29.jpg",
+    "file_name": "Golden_Eagle_4a_(6022930748).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Szirti sas"
+  },
+  "Aranyfácán": {
+    "image": "images/aranyfacan.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Aranyf%C3%A1c%C3%A1n",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Chrysolophus_pictus_-walking-8.jpg/960px-Chrysolophus_pictus_-walking-8.jpg",
+    "file_name": "Chrysolophus_pictus_-walking-8.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Aranyfácán"
+  },
+  "Aranyfejű cisztikola": {
+    "image": "images/aranyfeju-cisztikola.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Golden-headed_cisticola",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Cisticola_exilis_-_Cornwallis_Rd.jpg/960px-Cisticola_exilis_-_Cornwallis_Rd.jpg",
+    "file_name": "Cisticola_exilis_-_Cornwallis_Rd.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Golden-headed cisticola"
+  },
+  "Gould-amandina": {
+    "image": "images/gould-amandina.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Gould-amandina",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Erythrura_gouldiae_-Artis_Zoo_-Netherlands_-male-8a.jpg/960px-Erythrura_gouldiae_-Artis_Zoo_-Netherlands_-male-8a.jpg",
+    "file_name": "Erythrura_gouldiae_-Artis_Zoo_-Netherlands_-male-8a.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Gould-amandina"
+  },
+  "Kecses prínia": {
+    "image": "images/kecses-prinia.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/B%C3%A1nki_%C3%89va",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/B%C3%A1nki_%C3%89va_portr%C3%A9_2.jpg/960px-B%C3%A1nki_%C3%89va_portr%C3%A9_2.jpg",
+    "file_name": "Bánki_Éva_portré_2.jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Bánki Éva"
+  },
+  "Grandala coelicolor": {
+    "image": "images/grandala-coelicolor.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Grandala_coelicolor",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Grandalas_in_Nepal_%28altered%29.jpg/960px-Grandalas_in_Nepal_%28altered%29.jpg",
+    "file_name": "Grandalas_in_Nepal_(altered).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Grandala coelicolor"
+  },
+  "Szöcske verébsármány": {
+    "image": "images/szocske-verebsarmany.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Ammodramus",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Grasshopper_Sparrow.jpg/960px-Grasshopper_Sparrow.jpg",
+    "file_name": "Grasshopper_Sparrow.jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Ammodramus"
+  },
+  "Macskamadár": {
+    "image": "images/macskamadar.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Macskamad%C3%A1r",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Dumetella_carolinensis_-Brendan_T._Byrne_State_Forest%2C_New_Jersey%2C_USA-8.jpg/960px-Dumetella_carolinensis_-Brendan_T._Byrne_State_Forest%2C_New_Jersey%2C_USA-8.jpg",
+    "file_name": "Dumetella_carolinensis_-Brendan_T._Byrne_State_Forest,_New_Jersey,_USA-8.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Macskamadár"
+  },
+  "Hegyi billegető": {
+    "image": "images/hegyi-billegeto.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Hegyi_billeget%C5%91",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Alpispa_%28Motacilla_cinerea_canariensis%29%E2%99%82_%287198941784%29.jpg/960px-Alpispa_%28Motacilla_cinerea_canariensis%29%E2%99%82_%287198941784%29.jpg",
+    "file_name": "Alpispa_(Motacilla_cinerea_canariensis)♂_(7198941784).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Hegyi billegető"
+  },
+  "Királygém": {
+    "image": "images/kiralygem.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Kir%C3%A1lyg%C3%A9m",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Great_Blue_Heron_%2823556014071%29.jpg/960px-Great_Blue_Heron_%2823556014071%29.jpg",
+    "file_name": "Great_Blue_Heron_(23556014071).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Királygém"
+  },
+  "Nagy kárókatona": {
+    "image": "images/nagy-karokatona.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Nagy_k%C3%A1r%C3%B3katona",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Phalacrocorax_carbo_%282005_08_28%29.jpg/960px-Phalacrocorax_carbo_%282005_08_28%29.jpg",
+    "file_name": "Phalacrocorax_carbo_(2005_08_28).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Nagy kárókatona"
+  },
+  "Nagy rozsdafarktirannusz": {
+    "image": "images/nagy-rozsdafarktirannusz.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Nagy_rozsdafarktirannusz",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Myiarchus_crinitus_SamSmith_Park_Toronto.jpg/960px-Myiarchus_crinitus_SamSmith_Park_Toronto.jpg",
+    "file_name": "Myiarchus_crinitus_SamSmith_Park_Toronto.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Nagy rozsdafarktirannusz"
+  },
+  "Búbos vöcsök": {
+    "image": "images/bubos-vocsok.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/B%C3%BAbos_v%C3%B6cs%C3%B6k",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Podiceps_cristatus_1_%28Lukasz_Lukasik%29.jpg/960px-Podiceps_cristatus_1_%28Lukasz_Lukasik%29.jpg",
+    "file_name": "Podiceps_cristatus_1_(Lukasz_Lukasik).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Búbos vöcsök"
+  },
+  "Nagy kócsag": {
+    "image": "images/nagy-kocsag.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Nagy_k%C3%B3csag",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/89/Lightmatter_egret.jpg",
+    "file_name": "Lightmatter_egret.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Nagy kócsag"
+  },
+  "Nagy szarvascsőrűmadár": {
+    "image": "images/nagy-szarvascsorumadar.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Nagy_szarvascs%C5%91r%C5%B1mad%C3%A1r",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/7/70/Doppelhornvogel-09.jpg",
+    "file_name": "Doppelhornvogel-09.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Nagy szarvascsőrűmadár"
+  },
+  "Amerikai uhu": {
+    "image": "images/amerikai-uhu.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Amerikai_uhu",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Great_Horned_Owl_%281_of_2%29%2C_Creekside_Park%2C_7_May_2014_%2814142522721%29.jpg/960px-Great_Horned_Owl_%281_of_2%29%2C_Creekside_Park%2C_7_May_2014_%2814142522721%29.jpg",
+    "file_name": "Great_Horned_Owl_(1_of_2),_Creekside_Park,_7_May_2014_(14142522721).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Amerikai uhu"
+  },
+  "Indiai túzok": {
+    "image": "images/indiai-tuzok.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Indiai_t%C3%BAzok",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Ardeotis_nigriceps%2C_Desert_National_Park%2C_Rajasthan%2C_India_1.jpg/960px-Ardeotis_nigriceps%2C_Desert_National_Park%2C_Rajasthan%2C_India_1.jpg",
+    "file_name": "Ardeotis_nigriceps,_Desert_National_Park,_Rajasthan,_India_1.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Indiai túzok"
+  },
+  "Nagy fakopáncs": {
+    "image": "images/nagy-fakopancs.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Nagy_fakop%C3%A1ncs",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/%D0%91%D0%BE%D0%BB%D1%8C%D1%88%D0%BE%D0%B9_%D0%BF%D1%91%D1%81%D1%82%D1%80%D1%8B%D0%B9_%D0%B4%D1%8F%D1%82%D0%B5%D0%BB_%D1%81_%D0%A3%D1%81%D1%8B%D0%BD%D0%B8%D0%BD%D1%81%D0%BA%D0%BE%D0%B9_%D0%BF%D0%BE%D0%BB%D1%8F%D0%BD%D1%8B.jpg/960px-%D0%91%D0%BE%D0%BB%D1%8C%D1%88%D0%BE%D0%B9_%D0%BF%D1%91%D1%81%D1%82%D1%80%D1%8B%D0%B9_%D0%B4%D1%8F%D1%82%D0%B5%D0%BB_%D1%81_%D0%A3%D1%81%D1%8B%D0%BD%D0%B8%D0%BD%D1%81%D0%BA%D0%BE%D0%B9_%D0%BF%D0%BE%D0%BB%D1%8F%D0%BD%D1%8B.jpg",
+    "file_name": "Большой_пёстрый_дятел_с_Усынинской_поляны.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Nagy fakopáncs"
+  },
+  "Széncinege": {
+    "image": "images/szencinege.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Sz%C3%A9ncinege",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/%D0%A1%D0%B8%D0%BD%D0%B8%D1%86%D0%B0_%28Parus_major%2C_fem%29%2C_%D0%91%D0%B8%D1%82%D1%86%D0%B5%D0%B2%D1%81%D0%BA%D0%B8%D0%B9_%D0%BB%D0%B5%D1%81.jpg/960px-%D0%A1%D0%B8%D0%BD%D0%B8%D1%86%D0%B0_%28Parus_major%2C_fem%29%2C_%D0%91%D0%B8%D1%82%D1%86%D0%B5%D0%B2%D1%81%D0%BA%D0%B8%D0%B9_%D0%BB%D0%B5%D1%81.jpg",
+    "file_name": "Синица_(Parus_major,_fem),_Битцевский_лес.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Széncinege"
+  },
+  "Sárgafejű marabu": {
+    "image": "images/sargafeju-marabu.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Indiai_marabu",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/83/Leptoptilos_javanicus.jpg",
+    "file_name": "Leptoptilos_javanicus.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Indiai marabu"
+  },
+  "Rózsás flamingó": {
+    "image": "images/rozsas-flamingo.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/R%C3%B3zs%C3%A1s_flaming%C3%B3",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Greater_Flamingo_654.jpg/960px-Greater_Flamingo_654.jpg",
+    "file_name": "Greater_Flamingo_654.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Rózsás flamingó"
+  },
+  "Nagy prérityúk": {
+    "image": "images/nagy-prerityuk.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Nagy_pr%C3%A9rity%C3%BAk",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Attwater%27s_Prairie_Chicken.jpg/960px-Attwater%27s_Prairie_Chicken.jpg",
+    "file_name": "Attwater's_Prairie_Chicken.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Nagy prérityúk"
+  },
+  "Kaliforniai földikakukk": {
+    "image": "images/kaliforniai-foldikakukk.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Kaliforniai_f%C3%B6ldikakukk",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Beep_Beep%21_%2812447545494%29.jpg/960px-Beep_Beep%21_%2812447545494%29.jpg",
+    "file_name": "Beep_Beep!_(12447545494).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Kaliforniai földikakukk"
+  },
+  "Gyurgyalagfélék": {
+    "image": "images/gyurgyalagfelek.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Smaragdgyurgyalag",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Green_Bee-eater_%28Merops_orientalis%29_in_Tirunelveli.jpg/960px-Green_Bee-eater_%28Merops_orientalis%29_in_Tirunelveli.jpg",
+    "file_name": "Green_Bee-eater_(Merops_orientalis)_in_Tirunelveli.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Smaragdgyurgyalag"
+  },
+  "Zöld gém": {
+    "image": "images/zold-gem.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Z%C3%B6ld_g%C3%A9m",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Butorides_virescens2.jpg/960px-Butorides_virescens2.jpg",
+    "file_name": "Butorides_virescens2.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Zöld gém"
+  },
+  "Schiller-fácán": {
+    "image": "images/schiller-facan.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Schiller-f%C3%A1c%C3%A1n",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Phasianus_versicolor_in_field.JPG/960px-Phasianus_versicolor_in_field.JPG",
+    "file_name": "Phasianus_versicolor_in_field.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Schiller-fácán"
+  },
+  "Kendermagos törpelúd": {
+    "image": "images/kendermagos-torpelud.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Kendermagos_t%C3%B6rpel%C3%BAd",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Green_Pygmy_Goose_SMTC.jpg/960px-Green_Pygmy_Goose_SMTC.jpg",
+    "file_name": "Green_Pygmy_Goose_SMTC.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Kendermagos törpelúd"
+  },
+  "Örvös fojtógébics": {
+    "image": "images/orvos-fojtogebics.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/%C3%96rv%C3%B6s_fojt%C3%B3g%C3%A9bics",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Cracticus_torquatus_-Brisbane_-garden_fence-8.jpg/960px-Cracticus_torquatus_-Brisbane_-garden_fence-8.jpg",
+    "file_name": "Cracticus_torquatus_-Brisbane_-garden_fence-8.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Örvös fojtógébics"
+  },
+  "Szürke gém": {
+    "image": "images/szurke-gem.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Sz%C3%BCrke_g%C3%A9m",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/7/76/Grey_Heron_%28Ardea_cinerea%29_in_AP_W_IMG_4038.jpg",
+    "file_name": "Grey_Heron_(Ardea_cinerea)_in_AP_W_IMG_4038.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Szürke gém"
+  },
+  "Szürkebegyű gébicsrigó": {
+    "image": "images/szurkebegyu-gebicsrigo.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Sz%C3%BCrkebegy%C5%B1_g%C3%A9bicsrig%C3%B3",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Colluricincla_harmonica_mortimer.jpg/960px-Colluricincla_harmonica_mortimer.jpg",
+    "file_name": "Colluricincla_harmonica_mortimer.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Szürkebegyű gébicsrigó"
+  },
+  "Szürke réce": {
+    "image": "images/szurke-rece.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Sz%C3%BCrke_r%C3%A9ce",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Grey_Teal.jpg/960px-Grey_Teal.jpg",
+    "file_name": "Grey_Teal.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Szürke réce"
+  },
+  "Szürke bokormadár": {
+    "image": "images/szurke-bokormadar.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Boz%C3%B3tcinege",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Psaltriparus_minimus_-Chilliwack%2C_British_Columbia%2C_Canada_-male-8.jpg/960px-Psaltriparus_minimus_-Chilliwack%2C_British_Columbia%2C_Canada_-male-8.jpg",
+    "file_name": "Psaltriparus_minimus_-Chilliwack,_British_Columbia,_Canada_-male-8.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Bozótcinege"
+  },
+  "Szürkefejű amandina": {
+    "image": "images/szurkefeju-amandina.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Sz%C3%BCrkefej%C5%B1_amandina",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Grey-headed_Silverbill%2C_Samburu%2C_Kenya_S4E5260_%2822973951312%29.jpg/960px-Grey-headed_Silverbill%2C_Samburu%2C_Kenya_S4E5260_%2822973951312%29.jpg",
+    "file_name": "Grey-headed_Silverbill,_Samburu,_Kenya_S4E5260_(22973951312).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Szürkefejű amandina"
+  },
+  "Nyári lúd": {
+    "image": "images/nyari-lud.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Ny%C3%A1ri_l%C3%BAd",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Greylag_Goose_-_St_James%27s_Park%2C_London_-_Nov_2006.jpg/960px-Greylag_Goose_-_St_James%27s_Park%2C_London_-_Nov_2006.jpg",
+    "file_name": "Greylag_Goose_-_St_James's_Park,_London_-_Nov_2006.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Nyári lúd"
+  },
+  "Fakó keselyű": {
+    "image": "images/fako-keselyu.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Fak%C3%B3_kesely%C5%B1",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Gyps_fulvus_01_by_Line1.jpg/960px-Gyps_fulvus_01_by_Line1.jpg",
+    "file_name": "Gyps_fulvus_01_by_Line1.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Fakó keselyű"
+  },
+  "Meggyvágó": {
+    "image": "images/meggyvago.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Meggyv%C3%A1g%C3%B3",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/6/67/Coccothraustes_coccothraustes_1_%28Marek_Szczepanek%29.jpg",
+    "file_name": "Coccothraustes_coccothraustes_1_(Marek_Szczepanek).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Meggyvágó"
+  },
+  "Pettyes fülemülerigó": {
+    "image": "images/pettyes-fulemulerigo.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Pettyesmell%C5%B1_f%C3%BClem%C3%BClerig%C3%B3",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/7/77/Catharus_dryas_2.jpg",
+    "file_name": "Catharus_dryas_2.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Pettyesmellű fülemülerigó"
+  },
+  "Himalájai fényfácán": {
+    "image": "images/himalajai-fenyfacan.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Himal%C3%A1jai_f%C3%A9nyf%C3%A1c%C3%A1n",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/9/92/Himalayan_Monal%2C_Male_%2828466143101%29.jpg",
+    "file_name": "Himalayan_Monal,_Male_(28466143101).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Himalájai fényfácán"
+  },
+  "Dolmányos varjú": {
+    "image": "images/dolmanyos-varju.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Dolm%C3%A1nyos_varj%C3%BA",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/%D0%9F%D1%80%D0%BE%D1%81%D1%82%D0%BE_%D1%81%D0%B5%D1%80%D0%B0%D1%8F_%D0%B2%D0%BE%D1%80%D0%BE%D0%BD%D0%B0_%28Corvus_cornix%29%2C_%D0%9A%D1%80%D1%8B%D0%BB%D0%B0%D1%82%D1%81%D0%BA%D0%BE%D0%B5.jpg/960px-%D0%9F%D1%80%D0%BE%D1%81%D1%82%D0%BE_%D1%81%D0%B5%D1%80%D0%B0%D1%8F_%D0%B2%D0%BE%D1%80%D0%BE%D0%BD%D0%B0_%28Corvus_cornix%29%2C_%D0%9A%D1%80%D1%8B%D0%BB%D0%B0%D1%82%D1%81%D0%BA%D0%BE%D0%B5.jpg",
+    "file_name": "Просто_серая_ворона_(Corvus_cornix),_Крылатское.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Dolmányos varjú"
+  },
+  "Csuklyás bukó": {
+    "image": "images/csuklyas-buko.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Csukly%C3%A1s_buk%C3%B3",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Kappens%C3%A4ger_m%C3%A4nnlich_seitlich_050501.jpg/960px-Kappens%C3%A4ger_m%C3%A4nnlich_seitlich_050501.jpg",
+    "file_name": "Kappensäger_männlich_seitlich_050501.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Csuklyás bukó"
+  },
+  "Csuklyás lombjáró": {
+    "image": "images/csuklyas-lombjaro.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Csukly%C3%A1s_lombj%C3%A1r%C3%B3",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Hooded_Warbler.jpg/960px-Hooded_Warbler.jpg",
+    "file_name": "Hooded_Warbler.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Csuklyás lombjáró"
+  },
+  "Havasi fülespacsirta": {
+    "image": "images/havasi-fulespacsirta.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Havasi_f%C3%BClespacsirta",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Horned_Lark_%28Eremophila_alpestris%29_%2829093743195%29_%28cropped%29.jpg/960px-Horned_Lark_%28Eremophila_alpestris%29_%2829093743195%29_%28cropped%29.jpg",
+    "file_name": "Horned_Lark_(Eremophila_alpestris)_(29093743195)_(cropped).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Havasi fülespacsirta"
+  },
+  "Horsfield-rézkakukk": {
+    "image": "images/horsfield-rezkakukk.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Horsfield-r%C3%A9zkakukk",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/88/Horsfield%27s_Bronze_Cuckoo_%28Chrysococcyx_basalis%29_%288079614225%29.jpg",
+    "file_name": "Horsfield's_Bronze_Cuckoo_(Chrysococcyx_basalis)_(8079614225).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Horsfield-rézkakukk"
+  },
+  "Mirafra cantillans": {
+    "image": "images/mirafra-cantillans.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Mirafra_cantillans",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Singing_Bushlark_-_Tanzania_0143_%2816325062104%29.jpg/960px-Singing_Bushlark_-_Tanzania_0143_%2816325062104%29.jpg",
+    "file_name": "Singing_Bushlark_-_Tanzania_0143_(16325062104).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mirafra cantillans"
+  },
+  "Indiai varjú": {
+    "image": "images/indiai-varju.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Indiai_varj%C3%BA",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/House_crow_Bangalore_India_wb.jpg/960px-House_crow_Bangalore_India_wb.jpg",
+    "file_name": "House_crow_Bangalore_India_wb.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Indiai varjú"
+  },
+  "Házi pirók": {
+    "image": "images/hazi-pirok.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/H%C3%A1zi_pir%C3%B3k",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/House_Finch-27527.jpg/960px-House_Finch-27527.jpg",
+    "file_name": "House_Finch-27527.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Házi pirók"
+  },
+  "Házi veréb": {
+    "image": "images/hazi-vereb.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/H%C3%A1zi_ver%C3%A9b",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Huismus%2C_man.jpg/960px-Huismus%2C_man.jpg",
+    "file_name": "Huismus,_man.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Házi veréb"
+  },
+  "Házi ökörszem": {
+    "image": "images/hazi-okorszem.png",
+    "source_url": "https://hu.wikipedia.org/wiki/Indi%C3%A1n%C3%B6k%C3%B6rszem",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/c/c3/House_wren_in_full_song_cropped.png",
+    "file_name": "House_wren_in_full_song_cropped.png",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Indiánökörszem"
+  },
+  "Kardcsőrű töcs": {
+    "image": "images/kardcsoru-tocs.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Kardcs%C5%91r%C5%B1_t%C3%B6cs",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/b/b8/JC_Ibisbill.jpg",
+    "file_name": "JC_Ibisbill.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Kardcsőrű töcs"
+  },
+  "Inkagalambocska": {
+    "image": "images/inkagalambocska.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Inkagalambocska",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/e/e6/IncaDove.jpg",
+    "file_name": "IncaDove.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Inkagalambocska"
+  },
+  "Kék páva": {
+    "image": "images/kek-pava.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/K%C3%A9k_p%C3%A1va",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Carnavalesco.jpg/960px-Carnavalesco.jpg",
+    "file_name": "Carnavalesco.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Kék páva"
+  },
+  "Hosszúcsőrű keselyű": {
+    "image": "images/hosszucsoru-keselyu.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Hossz%C3%BAcs%C5%91r%C5%B1_kesely%C5%B1",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/d/d2/Indian_Vulture-_Gyps_indicus.jpg",
+    "file_name": "Indian_Vulture-_Gyps_indicus.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Hosszúcsőrű keselyű"
+  },
+  "Indigópinty": {
+    "image": "images/indigopinty.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Indig%C3%B3pinty",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Indigo_bunting_%2823987050631%29.jpg/960px-Indigo_bunting_%2823987050631%29.jpg",
+    "file_name": "Indigo_bunting_(23987050631).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Indigópinty"
+  },
+  "Borókacinege": {
+    "image": "images/borokacinege.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Bor%C3%B3kacinege",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/d/d0/Juniper_Titmouse2.jpg",
+    "file_name": "Juniper_Titmouse2.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Borókacinege"
+  },
+  "Hegyi kea": {
+    "image": "images/hegyi-kea.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Hegyi_kea",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Kea.jpg/960px-Kea.jpg",
+    "file_name": "Kea.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Hegyi kea"
+  },
+  "Hínársirály": {
+    "image": "images/hinarsiraly.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Kelp_gull",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/SouthShetland-2016-Livingston_Island_%28Hannah_Point%29%E2%80%93Kelp_gull_%28Larus_dominicanus%29.jpg/960px-SouthShetland-2016-Livingston_Island_%28Hannah_Point%29%E2%80%93Kelp_gull_%28Larus_dominicanus%29.jpg",
+    "file_name": "SouthShetland-2016-Livingston_Island_(Hannah_Point)–Kelp_gull_(Larus_dominicanus).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Kelp gull"
+  },
+  "Óriás-gyümölcsgalamb": {
+    "image": "images/orias-gyumolcsgalamb.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/%C3%93ri%C3%A1s-gy%C3%BCm%C3%B6lcsgalamb",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Kereru_perched_on_thin_branch.jpg/960px-Kereru_perched_on_thin_branch.jpg",
+    "file_name": "Kereru_perched_on_thin_branch.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Óriás-gyümölcsgalamb"
+  },
+  "Ékfarkú lile": {
+    "image": "images/ekfarku-lile.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/%C3%89kfark%C3%BA_lile",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Killdeer_%28Charadrius_vociferus%29.jpg/960px-Killdeer_%28Charadrius_vociferus%29.jpg",
+    "file_name": "Killdeer_(Charadrius_vociferus).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Ékfarkú lile"
+  },
+  "Királyguvat": {
+    "image": "images/kiralyguvat.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Kir%C3%A1lyguvat",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/c/ca/King_Rail.jpg",
+    "file_name": "King_Rail.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Királyguvat"
+  },
+  "Csengőmadár": {
+    "image": "images/csengomadar.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Cseng%C5%91mad%C3%A1r",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Bellbird_feeding_on_mountain_beech_honeydew.jpg/960px-Bellbird_feeding_on_mountain_beech_honeydew.jpg",
+    "file_name": "Bellbird_feeding_on_mountain_beech_honeydew.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Csengőmadár"
+  },
+  "Kakapó": {
+    "image": "images/kakapo.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Kakap%C3%B3",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/a/aa/Sirocco_full_length_portrait.jpg",
+    "file_name": "Sirocco_full_length_portrait.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Kakapó"
+  },
+  "Dzsungelvarjú": {
+    "image": "images/dzsungelvarju.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Dzsungelvarj%C3%BA",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/LbCrow_DSC_0165.jpg/960px-LbCrow_DSC_0165.jpg",
+    "file_name": "LbCrow_DSC_0165.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Dzsungelvarjú"
+  },
+  "Kacagójancsi": {
+    "image": "images/kacagojancsi.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Kacag%C3%B3jancsi",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Kookaburra_1_%2831132896171%29.jpg/960px-Kookaburra_1_%2831132896171%29.jpg",
+    "file_name": "Kookaburra_1_(31132896171).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Kacagójancsi"
+  },
+  "Azúrpinty": {
+    "image": "images/azurpinty.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Az%C3%BArpinty",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/8f/Lazuli_Bunting.jpg",
+    "file_name": "Lazuli_Bunting.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Azúrpinty"
+  },
+  "Kis fregattmadár": {
+    "image": "images/kis-fregattmadar.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Ascension-szigeti_fregattmad%C3%A1r",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Ascension_Frigatebird.jpg/960px-Ascension_Frigatebird.jpg",
+    "file_name": "Ascension_Frigatebird.jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Ascension-szigeti fregattmadár"
+  },
+  "Kis poszáta": {
+    "image": "images/kis-poszata.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Kis_posz%C3%A1ta",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Klappergrasmuecke_%28Sylvia_curruca%29.JPG/960px-Klappergrasmuecke_%28Sylvia_curruca%29.JPG",
+    "file_name": "Klappergrasmuecke_(Sylvia_curruca).JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Kis poszáta"
+  },
+  "Aranyfülű mézevő": {
+    "image": "images/aranyfulu-mezevo.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Aranyf%C3%BCl%C5%B1_m%C3%A9zev%C5%91",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/6/60/Lewins_Honeyeater_kobble_apr06.jpg",
+    "file_name": "Lewins_Honeyeater_kobble_apr06.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Aranyfülű mézevő"
+  },
+  "Lincoln-sármány": {
+    "image": "images/lincoln-sarmany.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Lincoln-s%C3%A1rm%C3%A1ny",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/LincolnsSparrow-30DEC2017.jpg/960px-LincolnsSparrow-30DEC2017.jpg",
+    "file_name": "LincolnsSparrow-30DEC2017.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Lincoln-sármány"
+  },
+  "Reznek": {
+    "image": "images/reznek.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Reznek",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Tetrax_tetrax%2C_Castuera%2C_Estremadura%2C_Spain_1.jpg/960px-Tetrax_tetrax%2C_Castuera%2C_Estremadura%2C_Spain_1.jpg",
+    "file_name": "Tetrax_tetrax,_Castuera,_Estremadura,_Spain_1.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Reznek"
+  },
+  "Kis kócsag": {
+    "image": "images/kis-kocsag.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Kis_k%C3%B3csag",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/3/36/Little_Egret_%28Egretta_garzetta%29-_Breeding_plumage-_in_Hyderabad%2C_AP_W_IMG_7671.jpg",
+    "file_name": "Little_Egret_(Egretta_garzetta)-_Breeding_plumage-_in_Hyderabad,_AP_W_IMG_7671.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Kis kócsag"
+  },
+  "Kis vöcsök": {
+    "image": "images/kis-vocsok.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Kis_v%C3%B6cs%C3%B6k",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Tachybaptus_ruficollis_ruficollis.jpg/960px-Tachybaptus_ruficollis_ruficollis.jpg",
+    "file_name": "Tachybaptus_ruficollis_ruficollis.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Kis vöcsök"
+  },
+  "Kuvik": {
+    "image": "images/kuvik.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Kuvik",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Posing_%2819312516733%29.jpg/960px-Posing_%2819312516733%29.jpg",
+    "file_name": "Posing_(19312516733).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Kuvik"
+  },
+  "Kék pingvin": {
+    "image": "images/kek-pingvin.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/K%C3%A9k_pingvin",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Fairy_penguin.jpg/960px-Fairy_penguin.jpg",
+    "file_name": "Fairy_penguin.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Kék pingvin"
+  },
+  "Kis kormorán": {
+    "image": "images/kis-kormoran.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Kis_k%C3%A1r%C3%B3katona",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Pygmy_Cormorant_%2819511279462%29.jpg/960px-Pygmy_Cormorant_%2819511279462%29.jpg",
+    "file_name": "Pygmy_Cormorant_(19511279462).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Kis kárókatona"
+  },
+  "Kis lile": {
+    "image": "images/kis-lile.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Kis_lile",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/a/a9/Kis_lile.jpg",
+    "file_name": "Kis_lile.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Kis lile"
+  },
+  "Indiángébics": {
+    "image": "images/indiangebics.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Indi%C3%A1ng%C3%A9bics",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Loggerhead_Shrike_molting.jpg/960px-Loggerhead_Shrike_molting.jpg",
+    "file_name": "Loggerhead_Shrike_molting.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Indiángébics"
+  },
+  "Őszapó": {
+    "image": "images/oszapo.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/%C5%90szap%C3%B3_(mad%C3%A1rfaj)",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/%D0%94%D0%BB%D0%B8%D0%BD%D0%BD%D0%BE%D1%85%D0%B2%D0%BE%D1%81%D1%82%D0%B0%D1%8F_%D1%81%D0%B8%D0%BD%D0%B8%D1%86%D0%B0_%28Aegithalos_caudatus%29.jpg/960px-%D0%94%D0%BB%D0%B8%D0%BD%D0%BD%D0%BE%D1%85%D0%B2%D0%BE%D1%81%D1%82%D0%B0%D1%8F_%D1%81%D0%B8%D0%BD%D0%B8%D1%86%D0%B0_%28Aegithalos_caudatus%29.jpg",
+    "file_name": "Длиннохвостая_синица_(Aegithalos_caudatus).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Őszapó (madárfaj)"
+  },
+  "Szarkapacsirta": {
+    "image": "images/szarkapacsirta.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Szarkapacsirta",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Magpie-Lark_male_kobble_aug06.jpg/960px-Magpie-Lark_male_kobble_aug06.jpg",
+    "file_name": "Magpie-Lark_male_kobble_aug06.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Szarkapacsirta"
+  },
+  "Inkakakadu": {
+    "image": "images/inkakakadu.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Inkakakadu",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Cacatua_leadbeateri_-SW_Queensland-8.jpg/960px-Cacatua_leadbeateri_-SW_Queensland-8.jpg",
+    "file_name": "Cacatua_leadbeateri_-SW_Queensland-8.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Inkakakadu"
+  },
+  "Tőkés réce": {
+    "image": "images/tokes-rece.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/T%C5%91k%C3%A9s_r%C3%A9ce",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Anas_platyrhynchos_male_female_quadrat.jpg/960px-Anas_platyrhynchos_male_female_quadrat.jpg",
+    "file_name": "Anas_platyrhynchos_male_female_quadrat.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Tőkés réce"
+  },
+  "Homoki ásótyúk": {
+    "image": "images/homoki-asotyuk.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Homoki_%C3%A1s%C3%B3ty%C3%BAk",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Leipoa_ocellata.jpg/960px-Leipoa_ocellata.jpg",
+    "file_name": "Leipoa_ocellata.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Homoki ásótyúk"
+  },
+  "Mandarinréce": {
+    "image": "images/mandarinrece.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Mandarinr%C3%A9ce",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/e/e0/Mandarin-Ente.jpg",
+    "file_name": "Mandarin-Ente.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mandarinréce"
+  },
+  "Sörényes lúd": {
+    "image": "images/sorenyes-lud.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/S%C3%B6r%C3%A9nyes_l%C3%BAd",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/e/e3/Chenonetta_jubata1.jpg",
+    "file_name": "Chenonetta_jubata1.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Sörényes lúd"
+  },
+  "Sárgás gyümölcsgalamb": {
+    "image": "images/sargas-gyumolcsgalamb.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/S%C3%A1rgamell%C5%B1_gy%C3%BCm%C3%B6lcsgalamb",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Ptilinopus_occipitalis_-zoo_-adult-8a.jpg/960px-Ptilinopus_occipitalis_-zoo_-adult-8a.jpg",
+    "file_name": "Ptilinopus_occipitalis_-zoo_-adult-8a.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Sárgamellű gyümölcsgalamb"
+  },
+  "Álarcos bíbic": {
+    "image": "images/alarcos-bibic.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/%C3%81larcos_b%C3%ADbic",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Masked_Lapwing_portlandrds08.JPG/960px-Masked_Lapwing_portlandrds08.JPG",
+    "file_name": "Masked_Lapwing_portlandrds08.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Álarcos bíbic"
+  },
+  "Mississippi-sólyomhéja": {
+    "image": "images/mississippi-solyomheja.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Mississippi-s%C3%B3lyomh%C3%A9ja",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Mississippi_Kite.jpg/960px-Mississippi_Kite.jpg",
+    "file_name": "Mississippi_Kite.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mississippi-sólyomhéja"
+  },
+  "Fecskefejű virágjáró": {
+    "image": "images/fecskefeju-viragjaro.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Fecskefej%C5%B1_vir%C3%A1gj%C3%A1r%C3%B3",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Mistletoebird_-_Round_Hill_Nature_Reserve.jpg/960px-Mistletoebird_-_Round_Hill_Nature_Reserve.jpg",
+    "file_name": "Mistletoebird_-_Round_Hill_Nature_Reserve.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Fecskefejű virágjáró"
+  },
+  "Moltoni-geze": {
+    "image": "images/moltoni-geze.png",
+    "source_url": "https://en.wikipedia.org/wiki/Moltoni%27s_warbler",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Curruca_subalpina_74746110.png/960px-Curruca_subalpina_74746110.png",
+    "file_name": "Curruca_subalpina_74746110.png",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Moltoni's warbler"
+  },
+  "Hamvas rétihéja": {
+    "image": "images/hamvas-retiheja.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Hamvas_r%C3%A9tih%C3%A9ja",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Montagu%27s_harrier_%28Circus_pygargus%29.jpg/960px-Montagu%27s_harrier_%28Circus_pygargus%29.jpg",
+    "file_name": "Montagu's_harrier_(Circus_pygargus).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Hamvas rétihéja"
+  },
+  "Hegyi kékmadár": {
+    "image": "images/hegyi-kekmadar.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Hegyi_k%C3%A9kmad%C3%A1r",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/0/03/Mountain_Bluebird.jpg",
+    "file_name": "Mountain_Bluebird.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Hegyi kékmadár"
+  },
+  "Gambel-cinege": {
+    "image": "images/gambel-cinege.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Gambel-cinege",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/6/64/Poecile_gambeli1.jpg",
+    "file_name": "Poecile_gambeli1.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Gambel-cinege"
+  },
+  "Sirató gerle": {
+    "image": "images/sirato-gerle.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Sirat%C3%B3_gerle",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Mourning_Dove_Image_002.jpg/960px-Mourning_Dove_Image_002.jpg",
+    "file_name": "Mourning_Dove_Image_002.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Sirató gerle"
+  },
+  "Lebernyeges réce": {
+    "image": "images/lebernyeges-rece.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Lebernyeges_r%C3%A9ce",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Musk_Duck.JPG/960px-Musk_Duck.JPG",
+    "file_name": "Musk_Duck.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Lebernyeges réce"
+  },
+  "Bütykös hattyú": {
+    "image": "images/butykos-hattyu.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/B%C3%BCtyk%C3%B6s_hatty%C3%BA",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Mute_Swan-Mindaugas_Urbonas.jpg/960px-Mute_Swan-Mindaugas_Urbonas.jpg",
+    "file_name": "Mute_Swan-Mindaugas_Urbonas.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Bütykös hattyú"
+  },
+  "Fehérszemű mézevő": {
+    "image": "images/feherszemu-mezevo.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Feh%C3%A9rszem%C5%B1_m%C3%A9zev%C5%91",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/9/99/Phylidonyris_novaehollandiae_1.jpg",
+    "file_name": "Phylidonyris_novaehollandiae_1.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Fehérszemű mézevő"
+  },
+  "Feketehomlokú mézmadár": {
+    "image": "images/feketehomloku-mezmadar.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/S%C3%A1rga%C3%BCst%C3%B6k%C5%B1_m%C3%A9zev%C5%91",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Lichenostomus_melanops_-_Glen_Davis.jpg/960px-Lichenostomus_melanops_-_Glen_Davis.jpg",
+    "file_name": "Lichenostomus_melanops_-_Glen_Davis.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Sárgaüstökű mézevő"
+  },
+  "Északi-szigeti barna kivi": {
+    "image": "images/eszaki-szigeti-barna-kivi.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/%C3%89szaki-szigeti_barna_kivi",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/TeTuatahianui.jpg/960px-TeTuatahianui.jpg",
+    "file_name": "TeTuatahianui.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Északi-szigeti barna kivi"
+  },
+  "Virginiai fogasfürj": {
+    "image": "images/virginiai-fogasfurj.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Virginiai_fogasf%C3%BCrj",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Virginia-Wachtel_2007-06-16_059.jpg/960px-Virginia-Wachtel_2007-06-16_059.jpg",
+    "file_name": "Virginia-Wachtel_2007-06-16_059.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Virginiai fogasfürj"
+  },
+  "Vörös kardinálispinty": {
+    "image": "images/voros-kardinalispinty.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/V%C3%B6r%C3%B6s_kardin%C3%A1lispinty",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Cardinal_birding_NC_11.2018_backyard_parents_4.29.18_DSC_0185.jpg/960px-Cardinal_birding_NC_11.2018_backyard_parents_4.29.18_DSC_0185.jpg",
+    "file_name": "Cardinal_birding_NC_11.2018_backyard_parents_4.29.18_DSC_0185.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Vörös kardinálispinty"
+  },
+  "Aranyküllő": {
+    "image": "images/aranykullo.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Aranyk%C3%BCll%C5%91",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/4/40/Northern_Flicker.jpg",
+    "file_name": "Northern_Flicker.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Aranyküllő"
+  },
+  "Szula": {
+    "image": "images/szula.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Szula_(mad%C3%A1r)",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Morus_bassanus_adu.jpg/960px-Morus_bassanus_adu.jpg",
+    "file_name": "Morus_bassanus_adu.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Szula (madár)"
+  },
+  "Héja": {
+    "image": "images/heja.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/H%C3%A9ja",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/81/Northern_Goshawk_ad_M2.jpg",
+    "file_name": "Northern_Goshawk_ad_M2.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Héja"
+  },
+  "Amerikai rétihéja": {
+    "image": "images/amerikai-retiheja.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/R%C3%A9tih%C3%A9jaform%C3%A1k",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/6/62/Circus_aeruginosus_samiec2.jpg",
+    "file_name": "Circus_aeruginosus_samiec2.jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Rétihéjaformák"
+  },
+  "Énekes gezerigó": {
+    "image": "images/enekes-gezerigo.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/%C3%89nekes_gezerig%C3%B3",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Mockingbird%2C_Northern_SunsetBeach.jpg/960px-Mockingbird%2C_Northern_SunsetBeach.jpg",
+    "file_name": "Mockingbird,_Northern_SunsetBeach.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Énekes gezerigó"
+  },
+  "Kanalas réce": {
+    "image": "images/kanalas-rece.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Kanalas_r%C3%A9ce",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Anas_clypeata_00864t.jpg/960px-Anas_clypeata_00864t.jpg",
+    "file_name": "Anas_clypeata_00864t.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Kanalas réce"
+  },
+  "Olívahátú napmadár": {
+    "image": "images/olivahatu-napmadar.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Garden_sunbird",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Olive-backed_Sunbird_male%2C_Misamis_Oriental%2C_Philippines_1.jpg/960px-Olive-backed_Sunbird_male%2C_Misamis_Oriental%2C_Philippines_1.jpg",
+    "file_name": "Olive-backed_Sunbird_male,_Misamis_Oriental,_Philippines_1.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Garden sunbird"
+  },
+  "Narancssárgalábú ásótyúk": {
+    "image": "images/narancssargalabu-asotyuk.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Narancss%C3%A1rgal%C3%A1b%C3%BA_%C3%A1s%C3%B3ty%C3%BAk",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Megapodius_reinwardt_Cairns.jpg/960px-Megapodius_reinwardt_Cairns.jpg",
+    "file_name": "Megapodius_reinwardt_Cairns.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Narancssárgalábú ásótyúk"
+  },
+  "Álarcos bagoly": {
+    "image": "images/alarcos-bagoly.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/%C3%81larcos_bagoly",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Oriental_bay_owl%2C_Phodilus_badius_-_Khao_Yai_National_Park.jpg/960px-Oriental_bay_owl%2C_Phodilus_badius_-_Khao_Yai_National_Park.jpg",
+    "file_name": "Oriental_bay_owl,_Phodilus_badius_-_Khao_Yai_National_Park.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Álarcos bagoly"
+  },
+  "Dayal-rigó": {
+    "image": "images/dayal-rigo.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Dayal-rig%C3%B3",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/8b/Oriental_Magpie_Robin_%28Copsychus_saularis%29-_Male_calling_in_the_rain_at_Kolkata_I_IMG_3746.jpg",
+    "file_name": "Oriental_Magpie_Robin_(Copsychus_saularis)-_Male_calling_in_the_rain_at_Kolkata_I_IMG_3746.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Dayal-rigó"
+  },
+  "Halászsas": {
+    "image": "images/halaszsas.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Hal%C3%A1szsas",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Osprey_mg_9605.jpg/960px-Osprey_mg_9605.jpg",
+    "file_name": "Osprey_mg_9605.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Halászsas"
+  },
+  "Szemöldökös réce": {
+    "image": "images/szemoldokos-rece.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Szem%C3%B6ld%C3%B6k%C3%B6s_r%C3%A9ce",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Anas_superciliosa_%28Pacific_Black_Duck%29.jpg/960px-Anas_superciliosa_%28Pacific_Black_Duck%29.jpg",
+    "file_name": "Anas_superciliosa_(Pacific_Black_Duck).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Szemöldökös réce"
+  },
+  "Pápapinty": {
+    "image": "images/papapinty.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/P%C3%A1papinty",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Passerina_ciris_ciris%2C_Merritt_Island%2C_Florida_1.jpg/960px-Passerina_ciris_ciris%2C_Merritt_Island%2C_Florida_1.jpg",
+    "file_name": "Passerina_ciris_ciris,_Merritt_Island,_Florida_1.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Pápapinty"
+  },
+  "Festett fehérfarkú": {
+    "image": "images/festett-feherfarku.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Festett_feh%C3%A9rfark%C3%BA",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Painted_Redstart.jpg/960px-Painted_Redstart.jpg",
+    "file_name": "Painted_Redstart.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Festett fehérfarkú"
+  },
+  "Nagy keresztcsőrű": {
+    "image": "images/nagy-keresztcsoru.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Nagy_keresztcs%C5%91r%C5%B1",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/1/18/Loxia_pytyopsittacus071021.jpg",
+    "file_name": "Loxia_pytyopsittacus071021.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Nagy keresztcsőrű"
+  },
+  "Békés gerle": {
+    "image": "images/bekes-gerle.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Gerla_(Magyarorsz%C3%A1g)",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Gerla_-_panoramio.jpg/960px-Gerla_-_panoramio.jpg",
+    "file_name": "Gerla_-_panoramio.jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Gerla (Magyarország)"
+  },
+  "Vándorsólyom": {
+    "image": "images/vandorsolyom.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/V%C3%A1ndors%C3%B3lyom",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Falco_peregrinus_-_01.jpg/960px-Falco_peregrinus_-_01.jpg",
+    "file_name": "Falco_peregrinus_-_01.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Vándorsólyom"
+  },
+  "Sörtésfejű papagáj": {
+    "image": "images/sortesfeju-papagaj.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/S%C3%B6rt%C3%A9sfej%C5%B1_g%C3%A9bics",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Barite_chauve.JPG/960px-Barite_chauve.JPG",
+    "file_name": "Barite_chauve.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Sörtésfejű gébics"
+  },
+  "Fácánfarkú bozótkakukk": {
+    "image": "images/facanfarku-bozotkakukk.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/F%C3%A1c%C3%A1nfark%C3%BA_boz%C3%B3tkakukk",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/9/95/Centropus_phasianinus_-Queensland%2C_Australia-8.jpg",
+    "file_name": "Centropus_phasianinus_-Queensland,_Australia-8.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Fácánfarkú bozótkakukk"
+  },
+  "Majomevő sas": {
+    "image": "images/majomevo-sas.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Majomev%C5%91_sas",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Philippines_Eagle.jpg/960px-Philippines_Eagle.jpg",
+    "file_name": "Philippines_Eagle.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Majomevő sas"
+  },
+  "Gyűrűscsőrű vöcsök": {
+    "image": "images/gyuruscsoru-vocsok.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Gy%C5%B1r%C5%B1scs%C5%91r%C5%B1_v%C3%B6cs%C3%B6k",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Pied-billed_Grebe_0561.jpg/960px-Pied-billed_Grebe_0561.jpg",
+    "file_name": "Pied-billed_Grebe_0561.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Gyűrűscsőrű vöcsök"
+  },
+  "Kontyos feketeharkály": {
+    "image": "images/kontyos-feketeharkaly.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Kontyos_feketehark%C3%A1ly",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/PileatedWoodpeckerFeedingonTree.jpg/960px-PileatedWoodpeckerFeedingonTree.jpg",
+    "file_name": "PileatedWoodpeckerFeedingonTree.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Kontyos feketeharkály"
+  },
+  "Fenyőcsíz": {
+    "image": "images/fenyocsiz.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Spinus",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/d/dd/Cucullatamachocolombia.jpg",
+    "file_name": "Cucullatamachocolombia.jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Spinus"
+  },
+  "Lapátcsőrű réce": {
+    "image": "images/lapatcsoru-rece.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Kanalas_r%C3%A9ce",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Anas_clypeata_00864t.jpg/960px-Anas_clypeata_00864t.jpg",
+    "file_name": "Anas_clypeata_00864t.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Kanalas réce"
+  },
+  "Sztyeppefutó": {
+    "image": "images/sztyeppefuto.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Fut%C3%B3mad%C3%A1r",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Cream-coloured_Courser.jpg/960px-Cream-coloured_Courser.jpg",
+    "file_name": "Cream-coloured_Courser.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Futómadár"
+  },
+  "Tonkini vízirozsdafarkú": {
+    "image": "images/tonkini-vizirozsdafarku.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Tonkini_v%C3%ADzirozsdafark%C3%BA",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Rhyacornis_fuliginosus_-_Doi_Inthanon.jpg/960px-Rhyacornis_fuliginosus_-_Doi_Inthanon.jpg",
+    "file_name": "Rhyacornis_fuliginosus_-_Doi_Inthanon.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Tonkini vízirozsdafarkú"
+  },
+  "Stephánia-paradicsommadár": {
+    "image": "images/stephania-paradicsommadar.png",
+    "source_url": "https://hu.wikipedia.org/wiki/Habsburg%E2%80%93Lotaringiai_Rudolf_osztr%C3%A1k%E2%80%93magyar_tr%C3%B3n%C3%B6r%C3%B6k%C3%B6s",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/a/aa/Habsburg%E2%80%93Lotaringiai_Rudolf_%281887%29.png",
+    "file_name": "Habsburg–Lotaringiai_Rudolf_(1887).png",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Habsburg–Lotaringiai Rudolf osztrák–magyar trónörökös"
+  },
+  "Citromlombjáró": {
+    "image": "images/citromlombjaro.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Citromlombj%C3%A1r%C3%B3",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Prothonotary_Warbler.jpg/960px-Prothonotary_Warbler.jpg",
+    "file_name": "Prothonotary_Warbler.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Citromlombjáró"
+  },
+  "Amerikai szultántyúk": {
+    "image": "images/amerikai-szultantyuk.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Amerikai_szult%C3%A1nty%C3%BAk",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/29/PurpleGallinule.jpg",
+    "file_name": "PurpleGallinule.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Amerikai szultántyúk"
+  },
+  "Vörös gém": {
+    "image": "images/voros-gem.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/V%C3%B6r%C3%B6s_g%C3%A9m",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Ardea_purpurea%2C_Tarn%2C_France%2C_2012.jpg/960px-Ardea_purpurea%2C_Tarn%2C_France%2C_2012.jpg",
+    "file_name": "Ardea_purpurea,_Tarn,_France,_2012.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Vörös gém"
+  },
+  "Északi bíborfecske": {
+    "image": "images/eszaki-biborfecske.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/%C3%89szaki_b%C3%ADborfecske",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Progne_subis%2C_St_George%27s_Island%2C_Maryland_4.jpg/960px-Progne_subis%2C_St_George%27s_Island%2C_Maryland_4.jpg",
+    "file_name": "Progne_subis,_St_George's_Island,_Maryland_4.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Északi bíborfecske"
+  },
+  "Törpecsuszka": {
+    "image": "images/torpecsuszka.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/T%C3%B6rpecsuszka",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/f/f4/Zwergkleiber.jpg",
+    "file_name": "Zwergkleiber.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Törpecsuszka"
+  },
+  "Ausztrál szultántyúk": {
+    "image": "images/ausztral-szultantyuk.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Porphyrio_(mad%C3%A1rnem)",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Purpurhuhn.jpg/960px-Purpurhuhn.jpg",
+    "file_name": "Purpurhuhn.jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Porphyrio (madárnem)"
+  },
+  "Szivárványlóri": {
+    "image": "images/szivarvanylori.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/B%C3%ADborhas%C3%BA_sziv%C3%A1rv%C3%A1nyl%C3%B3ri",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Rainbow_Lorikeet_Trichoglossus_haematodus_Perched_1900px.jpg/960px-Rainbow_Lorikeet_Trichoglossus_haematodus_Perched_1900px.jpg",
+    "file_name": "Rainbow_Lorikeet_Trichoglossus_haematodus_Perched_1900px.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Bíborhasú szivárványlóri"
+  },
+  "Tigrispinty": {
+    "image": "images/tigrispinty.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Tigrispinty",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/a/ab/Amandava_amandava_%28VijayCavale%29.jpg",
+    "file_name": "Amandava_amandava_(VijayCavale).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Tigrispinty"
+  },
+  "Keresztcsőrű": {
+    "image": "images/keresztcsoru.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Keresztcs%C5%91r%C5%B1",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Red_Crossbills_%28Male%29.jpg/960px-Red_Crossbills_%28Male%29.jpg",
+    "file_name": "Red_Crossbills_(Male).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Keresztcsőrű"
+  },
+  "Bankivatyúk": {
+    "image": "images/bankivatyuk.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Bankivaty%C3%BAk",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/24/Gallus_gallus_male_Kaziranga_0.jpg",
+    "file_name": "Gallus_gallus_male_Kaziranga_0.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Bankivatyúk"
+  },
+  "Vörös kánya": {
+    "image": "images/voros-kanya.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/V%C3%B6r%C3%B6s_k%C3%A1nya",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Milvus_milvus_Jura.jpg/960px-Milvus_milvus_Jura.jpg",
+    "file_name": "Milvus_milvus_Jura.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Vörös kánya"
+  },
+  "Sarki partfutó": {
+    "image": "images/sarki-partfuto.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Sarki_partfut%C3%B3",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Red_knot_Delaware.jpg/960px-Red_knot_Delaware.jpg",
+    "file_name": "Red_knot_Delaware.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Sarki partfutó"
+  },
+  "Piroscsüngős lebenyesmadár": {
+    "image": "images/piroscsungos-lebenyesmadar.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Piroscs%C3%BCng%C5%91s_lebenyesmad%C3%A1r",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Red_wattlebird.jpg/960px-Red_wattlebird.jpg",
+    "file_name": "Red_wattlebird.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Piroscsüngős lebenyesmadár"
+  },
+  "Piroshátú tündérmadár": {
+    "image": "images/piroshatu-tundermadar.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Pirosh%C3%A1t%C3%BA_t%C3%BCnd%C3%A9rmad%C3%A1r",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/27/Red_Backed_fairy_wren_noosa_29_july_06_053x.jpg",
+    "file_name": "Red_Backed_fairy_wren_noosa_29_july_06_053x.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Piroshátú tündérmadár"
+  },
+  "Tövisszúró gébics": {
+    "image": "images/tovisszuro-gebics.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/T%C3%B6vissz%C3%BAr%C3%B3_g%C3%A9bics",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Lanius_collurio_-_Red-backed_shrike_12.jpg/960px-Lanius_collurio_-_Red-backed_shrike_12.jpg",
+    "file_name": "Lanius_collurio_-_Red-backed_shrike_12.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Tövisszúró gébics"
+  },
+  "Karolinai küllő": {
+    "image": "images/karolinai-kullo.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Karolinai_k%C3%BCll%C5%91",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/9/99/Red-bellied_woodpecker_on_railing.JPG",
+    "file_name": "Red-bellied_woodpecker_on_railing.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Karolinai küllő"
+  },
+  "Örvös bukó": {
+    "image": "images/orvos-buko.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/%C3%96rv%C3%B6s_buk%C3%B3",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Mergus_serrator_%28cropped%29.jpg/960px-Mergus_serrator_%28cropped%29.jpg",
+    "file_name": "Mergus_serrator_(cropped).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Örvös bukó"
+  },
+  "Kanadai csuszka": {
+    "image": "images/kanadai-csuszka.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Kanadai_csuszka",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Red-breasted-Nuthatch.jpg/960px-Red-breasted-Nuthatch.jpg",
+    "file_name": "Red-breasted-Nuthatch.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Kanadai csuszka"
+  },
+  "Pirossapkás cinegelégykapó": {
+    "image": "images/pirossapkas-cinegelegykapo.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Pirossapk%C3%A1s_cinegel%C3%A9gykap%C3%B3",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/5/53/Red-capped_Robin_%28Petroica_goodenovii%29_%2815541763675%29.jpg",
+    "file_name": "Red-capped_Robin_(Petroica_goodenovii)_(15541763675).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Pirossapkás cinegelégykapó"
+  },
+  "Kokárdás harkály": {
+    "image": "images/kokardas-harkaly.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Leuconotopicus",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/7/72/Woodpecker.jpg",
+    "file_name": "Woodpecker.jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Leuconotopicus"
+  },
+  "Mandzsu daru": {
+    "image": "images/mandzsu-daru.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Mandzsu_daru",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/a/ac/Mandschurenkranich.jpg",
+    "file_name": "Mandschurenkranich.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mandzsu daru"
+  },
+  "Pirosszemű lombgébics": {
+    "image": "images/pirosszemu-lombgebics.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Pirosszem%C5%B1_lombg%C3%A9bics",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Vireo_olivaceus_-Madison_-Wisconsin_-USA-8.jpg/960px-Vireo_olivaceus_-Madison_-Wisconsin_-USA-8.jpg",
+    "file_name": "Vireo_olivaceus_-Madison_-Wisconsin_-USA-8.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Pirosszemű lombgébics"
+  },
+  "Vörösfejű küllő": {
+    "image": "images/vorosfeju-kullo.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/V%C3%B6r%C3%B6sfej%C5%B1_k%C3%BCll%C5%91",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Melanerpes-erythrocephalus-003.jpg/960px-Melanerpes-erythrocephalus-003.jpg",
+    "file_name": "Melanerpes-erythrocephalus-003.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Vörösfejű küllő"
+  },
+  "Vörös fogoly": {
+    "image": "images/voros-fogoly.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/V%C3%B6r%C3%B6s_fogoly",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Perdiz_roja.jpg/960px-Perdiz_roja.jpg",
+    "file_name": "Perdiz_roja.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Vörös fogoly"
+  },
+  "Vörösfejű gulipán": {
+    "image": "images/vorosfeju-gulipan.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/V%C3%B6r%C3%B6sfej%C5%B1_gulip%C3%A1n",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Recurvirostra_novaehollandiae_3_-_Sydney_Olympic_Park.jpg/960px-Recurvirostra_novaehollandiae_3_-_Sydney_Olympic_Park.jpg",
+    "file_name": "Recurvirostra_novaehollandiae_3_-_Sydney_Olympic_Park.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Vörösfejű gulipán"
+  },
+  "Vörösvállú ölyv": {
+    "image": "images/vorosvallu-olyv.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/V%C3%B6r%C3%B6sv%C3%A1ll%C3%BA_%C3%B6lyv",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Red-shouldered_Hawk_%28Buteo_lineatus%29_-_Blue_Cypress_Lake%2C_Florida.jpg/960px-Red-shouldered_Hawk_%28Buteo_lineatus%29_-_Blue_Cypress_Lake%2C_Florida.jpg",
+    "file_name": "Red-shouldered_Hawk_(Buteo_lineatus)_-_Blue_Cypress_Lake,_Florida.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Vörösvállú ölyv"
+  },
+  "Rőtfarkú ölyv": {
+    "image": "images/rotfarku-olyv.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/R%C5%91tfark%C3%BA_%C3%B6lyv",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Buteo_jamaicensis_-John_Heinz_National_Wildlife_Refuge_at_Tinicum%2C_Pennsylvania%2C_USA-8.jpg/960px-Buteo_jamaicensis_-John_Heinz_National_Wildlife_Refuge_at_Tinicum%2C_Pennsylvania%2C_USA-8.jpg",
+    "file_name": "Buteo_jamaicensis_-John_Heinz_National_Wildlife_Refuge_at_Tinicum,_Pennsylvania,_USA-8.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Rőtfarkú ölyv"
+  },
+  "Kormos bülbül": {
+    "image": "images/kormos-bulbul.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Kormos_b%C3%BClb%C3%BCl",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Red-vented_Bulbul_%28Pycnonotus_cafer%29-_nominated_race_at_Hodal_I_IMG_9743.jpg",
+    "file_name": "Red-vented_Bulbul_(Pycnonotus_cafer)-_nominated_race_at_Hodal_I_IMG_9743.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Kormos bülbül"
+  },
+  "Bibircses bíbic": {
+    "image": "images/bibircses-bibic.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Bibircses_b%C3%ADbic",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/3/34/Red_wattled_Lapwing_I_IMG_0596.jpg",
+    "file_name": "Red_wattled_Lapwing_I_IMG_0596.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Bibircses bíbic"
+  },
+  "Pirosvállú csiröge": {
+    "image": "images/pirosvallu-csiroge.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Pirosv%C3%A1ll%C3%BA_csir%C3%B6ge",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/8b/Agelaius_phoeniceus1.jpg",
+    "file_name": "Agelaius_phoeniceus1.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Pirosvállú csiröge"
+  },
+  "Skarlátszárnyú remetepapagáj": {
+    "image": "images/skarlatszarnyu-remetepapagaj.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Skarl%C3%A1tsz%C3%A1rny%C3%BA_remetepapag%C3%A1j",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Aprosmictus_erythropterus_-Mareeba_Wetlands_-Queensland-8.jpg/960px-Aprosmictus_erythropterus_-Mareeba_Wetlands_-Queensland-8.jpg",
+    "file_name": "Aprosmictus_erythropterus_-Mareeba_Wetlands_-Queensland-8.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Skarlátszárnyú remetepapagáj"
+  },
+  "Bársonyos aranymadár": {
+    "image": "images/barsonyos-aranymadar.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/B%C3%A1rsonyos_aranymad%C3%A1r",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/6/63/Regentbowerbirdmale.jpg",
+    "file_name": "Regentbowerbirdmale.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Bársonyos aranymadár"
+  },
+  "Orrszarvú alka": {
+    "image": "images/orrszarvu-alka.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Orrszarv%C3%BA_alka",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Wiki-utou2.jpg/960px-Wiki-utou2.jpg",
+    "file_name": "Wiki-utou2.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Orrszarvú alka"
+  },
+  "Gyűrűscsőrű sirály": {
+    "image": "images/gyuruscsoru-siraly.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Gy%C5%B1r%C5%B1scs%C5%91r%C5%B1_sir%C3%A1ly",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Larus-delawarensis-021.jpg/960px-Larus-delawarensis-021.jpg",
+    "file_name": "Larus-delawarensis-021.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Gyűrűscsőrű sirály"
+  },
+  "Szirti galamb": {
+    "image": "images/szirti-galamb.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Szirti_galamb",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Rock_dove_-_natures_pics.jpg/960px-Rock_dove_-_natures_pics.jpg",
+    "file_name": "Rock_dove_-_natures_pics.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Szirti galamb"
+  },
+  "Vetési varjú": {
+    "image": "images/vetesi-varju.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Vet%C3%A9si_varj%C3%BA",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Corvus_Frugilegus_Berlin-2.jpg/960px-Corvus_Frugilegus_Berlin-2.jpg",
+    "file_name": "Corvus_Frugilegus_Berlin-2.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Vetési varjú"
+  },
+  "Rózsásmellű magvágó": {
+    "image": "images/rozsasmellu-magvago.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/R%C3%B3zs%C3%A1smell%C5%B1_magv%C3%A1g%C3%B3",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Rose-breasted_Grosbeak_%287093900369%29.jpg/960px-Rose-breasted_Grosbeak_%287093900369%29.jpg",
+    "file_name": "Rose-breasted_Grosbeak_(7093900369).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Rózsásmellű magvágó"
+  },
+  "Kis sándorpapagáj": {
+    "image": "images/kis-sandorpapagaj.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Kis_s%C3%A1ndorpapag%C3%A1j",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/85/Rose-ringed_Parakeets_%28Male_%26_Female%29-_Foreplay_at_Hodal_I_Picture_0075.jpg",
+    "file_name": "Rose-ringed_Parakeets_(Male_&_Female)-_Foreplay_at_Hodal_I_Picture_0075.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Kis sándorpapagáj"
+  },
+  "Rózsás kanalasgém": {
+    "image": "images/rozsas-kanalasgem.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/R%C3%B3zs%C3%A1s_kanalasg%C3%A9m",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/86/Roseate_Spoonbill_balancing_KSC99pp0364.jpg",
+    "file_name": "Roseate_Spoonbill_balancing_KSC99pp0364.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Rózsás kanalasgém"
+  },
+  "Pásztormadár": {
+    "image": "images/pasztormadar.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/P%C3%A1sztormad%C3%A1r",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/e/ed/Rosy_Starling_%28Pastor_roseus%29.jpg",
+    "file_name": "Rosy_Starling_(Pastor_roseus).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Pásztormadár"
+  },
+  "Királykanalasgém": {
+    "image": "images/kiralykanalasgem.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Kir%C3%A1lykanalasg%C3%A9m",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Royal_Spoonbill_mouth_open.jpg/960px-Royal_Spoonbill_mouth_open.jpg",
+    "file_name": "Royal_Spoonbill_mouth_open.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Királykanalasgém"
+  },
+  "Alaszkai királyka": {
+    "image": "images/alaszkai-kiralyka.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Alaszkai_kir%C3%A1lyka",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Regulus_calendula1.jpg/960px-Regulus_calendula1.jpg",
+    "file_name": "Regulus_calendula1.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Alaszkai királyka"
+  },
+  "Tüzestorkú kolibri": {
+    "image": "images/tuzestorku-kolibri.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/L%C3%A1ngfoltos_kolibri",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Fiery_throated_Hummingbird_JCB2.jpg/960px-Fiery_throated_Hummingbird_JCB2.jpg",
+    "file_name": "Fiery_throated_Hummingbird_JCB2.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Lángfoltos kolibri"
+  },
+  "Halcsontfarkú réce": {
+    "image": "images/halcsontfarku-rece.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Halcsontfark%C3%BA_r%C3%A9ce",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/ERISMATURE_ROUX_D%27AMERIQUE.jpg/960px-ERISMATURE_ROUX_D%27AMERIQUE.jpg",
+    "file_name": "ERISMATURE_ROUX_D'AMERIQUE.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Halcsontfarkú réce"
+  },
+  "Vörös ásólúd": {
+    "image": "images/voros-asolud.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/V%C3%B6r%C3%B6s_%C3%A1s%C3%B3l%C3%BAd",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Ruddy_Shelduck_489.jpg/960px-Ruddy_Shelduck_489.jpg",
+    "file_name": "Ruddy_Shelduck_489.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Vörös ásólúd"
+  },
+  "Pajzsoscankó": {
+    "image": "images/pajzsoscanko.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Pajzsos_cank%C3%B3",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/20130428T132506_-_Blijdorp_-_600mm_-_ISO_200_-_F8.0_-_1_500s_-_DMC-G2.jpg/960px-20130428T132506_-_Blijdorp_-_600mm_-_ISO_200_-_F8.0_-_1_500s_-_DMC-G2.jpg",
+    "file_name": "20130428T132506_-_Blijdorp_-_600mm_-_ISO_200_-_F8.0_-_1_500s_-_DMC-G2.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Pajzsos cankó"
+  },
+  "Kaledón bakcsó": {
+    "image": "images/kaledon-bakcso.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Kaled%C3%B3n_bakcs%C3%B3",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Nankeen_Night_Herons.jpg/960px-Nankeen_Night_Herons.jpg",
+    "file_name": "Nankeen_Night_Herons.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Kaledón bakcsó"
+  },
+  "Rozsdás héjabagoly": {
+    "image": "images/rozsdas-hejabagoly.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Rozsd%C3%A1s_h%C3%A9jabagoly",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Rufous_Owl_7373.jpg/960px-Rufous_Owl_7373.jpg",
+    "file_name": "Rufous_Owl_7373.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Rozsdás héjabagoly"
+  },
+  "Rozsdacsíkos mézevő": {
+    "image": "images/rozsdacsikos-mezevo.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Rozsdacs%C3%ADkos_m%C3%A9zev%C5%91",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Rufous-banded_Honeyeater_1220.jpg/960px-Rufous-banded_Honeyeater_1220.jpg",
+    "file_name": "Rufous-banded_Honeyeater_1220.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Rozsdacsíkos mézevő"
+  },
+  "Szent halción": {
+    "image": "images/szent-halcion.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Szent_halci%C3%B3n",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Sacred_kingfisher_nov08.jpg/960px-Sacred_kingfisher_nov08.jpg",
+    "file_name": "Sacred_kingfisher_nov08.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Szent halción"
+  },
+  "Kanadai daru": {
+    "image": "images/kanadai-daru.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Kanadai_daru",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Grus_canadensis-nbii_m00554A.jpg/960px-Grus_canadensis-nbii_m00554A.jpg",
+    "file_name": "Grus_canadensis-nbii_m00554A.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Kanadai daru"
+  },
+  "Antigoné-daru": {
+    "image": "images/antigone-daru.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Antigon%C3%A9-daru",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Grus_antigone_-Denver_Zoo%2C_Colorado%2C_USA-8a.jpg/960px-Grus_antigone_-Denver_Zoo%2C_Colorado%2C_USA-8a.jpg",
+    "file_name": "Grus_antigone_-Denver_Zoo,_Colorado,_USA-8a.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Antigoné-daru"
+  },
+  "Szatírtragopán": {
+    "image": "images/szatirtragopan.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Szat%C3%ADrtragop%C3%A1n",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/20140417_Satyr-Tragopan_02.jpg/960px-20140417_Satyr-Tragopan_02.jpg",
+    "file_name": "20140417_Satyr-Tragopan_02.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Szatírtragopán"
+  },
+  "Szavanna verébsármány": {
+    "image": "images/szavanna-verebsarmany.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Savannah_sparrow",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Passerculus_sandwichensis_crop.jpg/960px-Passerculus_sandwichensis_crop.jpg",
+    "file_name": "Passerculus_sandwichensis_crop.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Savannah sparrow"
+  },
+  "Nádi tücsökmadár": {
+    "image": "images/nadi-tucsokmadar.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/N%C3%A1di_t%C3%BCcs%C3%B6kmad%C3%A1r",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/84/Locustellaluscinioides.jpg",
+    "file_name": "Locustellaluscinioides.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Nádi tücsökmadár"
+  },
+  "Say-légykapótirannusz": {
+    "image": "images/say-legykapotirannusz.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Say-l%C3%A9gykap%C3%B3tirannusz",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Sayornis_saya.jpg/960px-Sayornis_saya.jpg",
+    "file_name": "Sayornis_saya.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Say-légykapótirannusz"
+  },
+  "Pikkelyes fogasfürj": {
+    "image": "images/pikkelyes-fogasfurj.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Pikkelyes_fogasf%C3%BCrj",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/068_-_SCALED_QUAIL_%281-15-09%29_falcon_lake_st_park%2C_tx_%288719265562%29.jpg/960px-068_-_SCALED_QUAIL_%281-15-09%29_falcon_lake_st_park%2C_tx_%288719265562%29.jpg",
+    "file_name": "068_-_SCALED_QUAIL_(1-15-09)_falcon_lake_st_park,_tx_(8719265562).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Pikkelyes fogasfürj"
+  },
+  "Muskátpinty": {
+    "image": "images/muskatpinty.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Tigrispinty",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/a/ab/Amandava_amandava_%28VijayCavale%29.jpg",
+    "file_name": "Amandava_amandava_(VijayCavale).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Tigrispinty"
+  },
+  "Ollósfarkú tirannusz": {
+    "image": "images/ollosfarku-tirannusz.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Oll%C3%B3sfark%C3%BA_tirannusz",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Scissor-tailed_Flycatcher_RWD7.jpg/960px-Scissor-tailed_Flycatcher_RWD7.jpg",
+    "file_name": "Scissor-tailed_Flycatcher_RWD7.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Ollósfarkú tirannusz"
+  },
+  "Rövidkarmú fakusz": {
+    "image": "images/rovidkarmu-fakusz.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/R%C3%B6vidkarm%C3%BA_fakusz",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/2016.09.28.-10-Vogelstangsee_Mannheim--Gartenbaumlaeufer.jpg/960px-2016.09.28.-10-Vogelstangsee_Mannheim--Gartenbaumlaeufer.jpg",
+    "file_name": "2016.09.28.-10-Vogelstangsee_Mannheim--Gartenbaumlaeufer.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Rövidkarmú fakusz"
+  },
+  "Ezüstös pápaszemesmadár": {
+    "image": "images/ezustos-papaszemesmadar.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Ez%C3%BCst%C3%B6s_p%C3%A1paszemesmad%C3%A1r",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Silvereye.jpg/960px-Silvereye.jpg",
+    "file_name": "Silvereye.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Ezüstös pápaszemesmadár"
+  },
+  "Fahéjszínű sáfránymadár": {
+    "image": "images/fahejszinu-safranymadar.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Fah%C3%A9jsz%C3%ADn%C5%B1_s%C3%A1fr%C3%A1nymad%C3%A1r",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Pericrocotus_cinnamomeus_%28male%29_-Sri_Lanka-8.jpg/960px-Pericrocotus_cinnamomeus_%28male%29_-Sri_Lanka-8.jpg",
+    "file_name": "Pericrocotus_cinnamomeus_(male)_-Sri_Lanka-8.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Fahéjszínű sáfránymadár"
+  },
+  "Kis bukó": {
+    "image": "images/kis-buko.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Kis_buk%C3%B3",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/c/ca/Smew.both.arp.600pix.jpg",
+    "file_name": "Smew.both.arp.600pix.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Kis bukó"
+  },
+  "Hósármány": {
+    "image": "images/hosarmany.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/H%C3%B3s%C3%A1rm%C3%A1ny",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Plectrophenax_nivalis1.jpg/960px-Plectrophenax_nivalis1.jpg",
+    "file_name": "Plectrophenax_nivalis1.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Hósármány"
+  },
+  "Hókócsag": {
+    "image": "images/hokocsag.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/H%C3%B3k%C3%B3csag",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Snowy_Egret_HMB_RWD.jpg/960px-Snowy_Egret_HMB_RWD.jpg",
+    "file_name": "Snowy_Egret_HMB_RWD.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Hókócsag"
+  },
+  "Hóbagoly": {
+    "image": "images/hobagoly.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/H%C3%B3bagoly",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Bubo_scandiacus_Delta_2.jpg/960px-Bubo_scandiacus_Delta_2.jpg",
+    "file_name": "Bubo_scandiacus_Delta_2.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Hóbagoly"
+  },
+  "Énekes verébsármány": {
+    "image": "images/enekes-verebsarmany.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/%C3%89nekes_ver%C3%A9bs%C3%A1rm%C3%A1ny",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Song_Sparrow_02.jpg/960px-Song_Sparrow_02.jpg",
+    "file_name": "Song_Sparrow_02.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Énekes verébsármány"
+  },
+  "Petroica australis": {
+    "image": "images/petroica-australis.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Petroica_australis",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Bush_Robin._%28Petroica_australis%29_%288177491891%29.jpg/960px-Bush_Robin._%28Petroica_australis%29_%288177491891%29.jpg",
+    "file_name": "Bush_Robin._(Petroica_australis)_(8177491891).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Petroica australis"
+  },
+  "Sisakos kazuár": {
+    "image": "images/sisakos-kazuar.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Sisakos_kazu%C3%A1r",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/5/5f/Casuarius_casuariusAdjC1616.jpg",
+    "file_name": "Casuarius_casuariusAdjC1616.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Sisakos kazuár"
+  },
+  "Flitteres drongó": {
+    "image": "images/flitteres-drongo.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Flitteres_drong%C3%B3",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Dicrurus_bracteatus_-_Wonga.jpg/960px-Dicrurus_bracteatus_-_Wonga.jpg",
+    "file_name": "Dicrurus_bracteatus_-_Wonga.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Flitteres drongó"
+  },
+  "Tengerkék tündérmadár": {
+    "image": "images/tengerkek-tundermadar.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Tengerk%C3%A9k_t%C3%BCnd%C3%A9rmad%C3%A1r",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Splendid_fairywren_male_cunnamulla.JPG/960px-Splendid_fairywren_male_cunnamulla.JPG",
+    "file_name": "Splendid_fairywren_male_cunnamulla.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Tengerkék tündérmadár"
+  },
+  "Lapátcsőrű partfutó": {
+    "image": "images/lapatcsoru-partfuto.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Spoon-billed_sandpiper",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Eurynorhynchus_pygmeus_2_-_Pak_Thale.jpg/960px-Eurynorhynchus_pygmeus_2_-_Pak_Thale.jpg",
+    "file_name": "Eurynorhynchus_pygmeus_2_-_Pak_Thale.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Spoon-billed sandpiper"
+  },
+  "Pettyezetlen vízicsibe": {
+    "image": "images/pettyezetlen-vizicsibe.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Spotless_crake",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Porzana_tabuensis_-Crop.jpg/960px-Porzana_tabuensis_-Crop.jpg",
+    "file_name": "Porzana_tabuensis_-Crop.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Spotless crake"
+  },
+  "Gyöngyösnyakú gerle": {
+    "image": "images/gyongyosnyaku-gerle.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Gy%C3%B6ngy%C3%B6snyak%C3%BA_gerle",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/f/f7/Spotted_Dove_I-_Puri_IMG_9243.jpg",
+    "file_name": "Spotted_Dove_I-_Puri_IMG_9243.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Gyöngyösnyakú gerle"
+  },
+  "Nyugati erdeibagoly": {
+    "image": "images/nyugati-erdeibagoly.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Nyugati_erdeibagoly",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Northern_Spotted_Owl.USFWS.jpg/960px-Northern_Spotted_Owl.USFWS.jpg",
+    "file_name": "Northern_Spotted_Owl.USFWS.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Nyugati erdeibagoly"
+  },
+  "Pettyes billegetőcankó": {
+    "image": "images/pettyes-billegetocanko.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Pettyes_billeget%C5%91cank%C3%B3",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Actitis_macularia_-Alaska-8.jpg/960px-Actitis_macularia_-Alaska-8.jpg",
+    "file_name": "Actitis_macularia_-Alaska-8.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Pettyes billegetőcankó"
+  },
+  "Foltos földiveréb": {
+    "image": "images/foltos-foldivereb.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Spotted_towhee",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Spotted_Towhee_%2832684403303%29.jpg/960px-Spotted_Towhee_%2832684403303%29.jpg",
+    "file_name": "Spotted_Towhee_(32684403303).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Spotted towhee"
+  },
+  "Sprague-pityer": {
+    "image": "images/sprague-pityer.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Sprague%27s_pipit",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/5/5c/Spragues_Pipit_%28Anthus_spragueii%29.jpg",
+    "file_name": "Spragues_Pipit_(Anthus_spragueii).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Sprague's pipit"
+  },
+  "Üstökösgém": {
+    "image": "images/ustokosgem.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/%C3%9Cst%C3%B6k%C3%B6sg%C3%A9m",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/82/Ardeola_ralloides.%C3%BCst%C3%B6k%C3%B6sg%C3%A9m.jpg",
+    "file_name": "Ardeola_ralloides.üstökösgém.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Üstökösgém"
+  },
+  "Díszes kitta": {
+    "image": "images/diszes-kitta.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/D%C3%ADszes_kitta",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Sri_Lanka_blue_magpie_%28Urocissa_ornata%29.jpg/960px-Sri_Lanka_blue_magpie_%28Urocissa_ornata%29.jpg",
+    "file_name": "Sri_Lanka_blue_magpie_(Urocissa_ornata).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Díszes kitta"
+  },
+  "Srí lankai békaszájú": {
+    "image": "images/sri-lankai-bekaszaju.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Bagolyfecskef%C3%A9l%C3%A9k",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Podargus_strigoides_Bonorong.jpg/960px-Podargus_strigoides_Bonorong.jpg",
+    "file_name": "Podargus_strigoides_Bonorong.jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Bagolyfecskefélék"
+  },
+  "Bóbitás szajkó": {
+    "image": "images/bobitas-szajko.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/B%C3%B3bit%C3%A1s_szajk%C3%B3",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Steller%27s_Jay_DSC1327.jpg/960px-Steller%27s_Jay_DSC1327.jpg",
+    "file_name": "Steller's_Jay_DSC1327.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Bóbitás szajkó"
+  },
+  "Gólyacsőrű halción": {
+    "image": "images/golyacsoru-halcion.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/G%C3%B3lyacs%C5%91r%C5%B1_halci%C3%B3n",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/c/cc/Stork-billed_Kingfisher_I_IMG_7407.jpg",
+    "file_name": "Stork-billed_Kingfisher_I_IMG_7407.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Gólyacsőrű halción"
+  },
+  "Feketemellű fürj": {
+    "image": "images/feketemellu-furj.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Feketemell%C5%B1_f%C3%BCrj",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/b/b8/Head_of_Coturnix_pectoralis_-_Herbert_Goodchild.jpg",
+    "file_name": "Head_of_Coturnix_pectoralis_-_Herbert_Goodchild.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Feketemellű fürj"
+  },
+  "Sárgabóbitás kakadu": {
+    "image": "images/sargabobitas-kakadu.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/S%C3%A1rgab%C3%B3bit%C3%A1s_kakadu",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/a/a9/Cacatua_galerita_Tas_2.jpg",
+    "file_name": "Cacatua_galerita_Tas_2.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Sárgabóbitás kakadu"
+  },
+  "Pompás lantfarkúmadár": {
+    "image": "images/pompas-lantfarkumadar.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Pomp%C3%A1s_lantfark%C3%BAmad%C3%A1r",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Superb_lyrbird_in_scrub-E.jpg/960px-Superb_lyrbird_in_scrub-E.jpg",
+    "file_name": "Superb_lyrbird_in_scrub-E.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Pompás lantfarkúmadár"
+  },
+  "Prériölyv": {
+    "image": "images/preriolyv.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Pr%C3%A9ri%C3%B6lyv",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Buteo_swainsoni01.jpg/960px-Buteo_swainsoni01.jpg",
+    "file_name": "Buteo_swainsoni01.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Prériölyv"
+  },
+  "Bagolyfecske": {
+    "image": "images/bagolyfecske.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Bagolyfecske",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Tawny_frogmouth_wholebody444.jpg/960px-Tawny_frogmouth_wholebody444.jpg",
+    "file_name": "Tawny_frogmouth_wholebody444.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Bagolyfecske"
+  },
+  "Kövi pacsirta": {
+    "image": "images/kovi-pacsirta.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/K%C3%B6vi_pacsirta",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Cochevis_de_Th%C3%A9kla_Ichkeul.jpg/960px-Cochevis_de_Th%C3%A9kla_Ichkeul.jpg",
+    "file_name": "Cochevis_de_Thékla_Ichkeul.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Kövi pacsirta"
+  },
+  "Odúfecske": {
+    "image": "images/odufecske.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Od%C3%BAfecske",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Tachycineta_bicolor.jpg/960px-Tachycineta_bicolor.jpg",
+    "file_name": "Tachycineta_bicolor.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Odúfecske"
+  },
+  "Trombitás sivatagipinty": {
+    "image": "images/trombitas-sivatagipinty.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Trombit%C3%A1s_sivatagipinty",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Trumpeter_Finch_-_Morocco_07_2921_%2823051137061%29.jpg/960px-Trumpeter_Finch_-_Morocco_07_2921_%2823051137061%29.jpg",
+    "file_name": "Trumpeter_Finch_-_Morocco_07_2921_(23051137061).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Trombitás sivatagipinty"
+  },
+  "Trombitás hattyú": {
+    "image": "images/trombitas-hattyu.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Trombit%C3%A1s_hatty%C3%BA",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/NPS_Wildlife._Trumpeter_Swan_on_Nest.jpg/960px-NPS_Wildlife._Trumpeter_Swan_on_Nest.jpg",
+    "file_name": "NPS_Wildlife._Trumpeter_Swan_on_Nest.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Trombitás hattyú"
+  },
+  "Indiáncinege": {
+    "image": "images/indiancinege.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Indi%C3%A1ncinege",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Baeolophus_bicolor_garyirwin.jpg/960px-Baeolophus_bicolor_garyirwin.jpg",
+    "file_name": "Baeolophus_bicolor_garyirwin.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Indiáncinege"
+  },
+  "Pulykakeselyű": {
+    "image": "images/pulykakeselyu.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Pulykakesely%C5%B1",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/b/b2/Turkey_Vulture.jpg",
+    "file_name": "Turkey_Vulture.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Pulykakeselyű"
+  },
+  "Sárgacsőrű kenderike": {
+    "image": "images/sargacsoru-kenderike.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/S%C3%A1rgacs%C5%91r%C5%B1_kenderike",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/1/1d/Twite_%28Carduelis_flavirostris%29_-_geograph.org.uk_-_676590.jpg",
+    "file_name": "Twite_(Carduelis_flavirostris)_-_geograph.org.uk_-_676590.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Sárgacsőrű kenderike"
+  },
+  "Tui": {
+    "image": "images/tui.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Tui",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Tui_on_flax.jpg/960px-Tui_on_flax.jpg",
+    "file_name": "Tui_on_flax.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Tui"
+  },
+  "Vaux-sarlósfecske": {
+    "image": "images/vaux-sarlosfecske.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Vaux-sarl%C3%B3sfecske",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Dead_Chaetura_vauxi_318498609.jpg/960px-Dead_Chaetura_vauxi_318498609.jpg",
+    "file_name": "Dead_Chaetura_vauxi_318498609.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Vaux-sarlósfecske"
+  },
+  "Eumyias thalassinus": {
+    "image": "images/eumyias-thalassinus.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Eumyias_thalassinus",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/4/41/Verditer_Flycatcher_%28Eumyias_thalassinus%29_Photograph_by_Shantanu_Kuveskar.jpg",
+    "file_name": "Verditer_Flycatcher_(Eumyias_thalassinus)_Photograph_by_Shantanu_Kuveskar.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Eumyias thalassinus"
+  },
+  "Ibolyaszínű rézkakukk": {
+    "image": "images/ibolyaszinu-rezkakukk.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Ibolyasz%C3%ADn%C5%B1_r%C3%A9zkakukk",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Violet_Cuckoo.jpg",
+    "file_name": "Violet_Cuckoo.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Ibolyaszínű rézkakukk"
+  },
+  "Karolinai fecske": {
+    "image": "images/karolinai-fecske.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Karolinai_fecske",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Violet-green_Swallow_%28m%29_perching_on_Tufa_%2834982762205%29.jpg/960px-Violet-green_Swallow_%28m%29_perching_on_Tufa_%2834982762205%29.jpg",
+    "file_name": "Violet-green_Swallow_(m)_perching_on_Tufa_(34982762205).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Karolinai fecske"
+  },
+  "Ékfarkú sas": {
+    "image": "images/ekfarku-sas.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/%C3%89kfark%C3%BA_sas",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/a/a5/Wedge-tailed_Eagle_%28Aquila_audax%29_3.jpg",
+    "file_name": "Wedge-tailed_Eagle_(Aquila_audax)_3.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Ékfarkú sas"
+  },
+  "Ausztrál fecske": {
+    "image": "images/ausztral-fecske.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Ausztr%C3%A1l_fecske",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Hirundo_neoxena_risdon.jpg/960px-Hirundo_neoxena_risdon.jpg",
+    "file_name": "Hirundo_neoxena_risdon.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Ausztrál fecske"
+  },
+  "Nyugati réticsiröge": {
+    "image": "images/nyugati-reticsiroge.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Nyugati_r%C3%A9ticsir%C3%B6ge",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Western_Meadowlark.jpg/960px-Western_Meadowlark.jpg",
+    "file_name": "Western_Meadowlark.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Nyugati réticsiröge"
+  },
+  "Sáfránytangara": {
+    "image": "images/safranytangara.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/S%C3%A1fr%C3%A1nypinty",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/0/07/Saffron_finch_%28Sicalis_flaveola%29_27.jpg",
+    "file_name": "Saffron_finch_(Sicalis_flaveola)_27.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Sáfránypinty"
+  },
+  "Fehér gólya": {
+    "image": "images/feher-golya.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Feh%C3%A9r_g%C3%B3lya",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Ciconia_ciconia_qtl2.jpg/960px-Ciconia_ciconia_qtl2.jpg",
+    "file_name": "Ciconia_ciconia_qtl2.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Fehér gólya"
+  },
+  "Barázdabillegető": {
+    "image": "images/barazdabillegeto.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Bar%C3%A1zdabilleget%C5%91",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Motacilla_alba_alba.JPG/960px-Motacilla_alba_alba.JPG",
+    "file_name": "Motacilla_alba_alba.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Barázdabillegető"
+  },
+  "Fehérhátú fakopáncs": {
+    "image": "images/feherhatu-fakopancs.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Feh%C3%A9rh%C3%A1t%C3%BA_fakop%C3%A1ncs",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/c/c5/White-backed_Woodpecker_-_Slovakia_Image1_%2816384548906%29.jpg",
+    "file_name": "White-backed_Woodpecker_-_Slovakia_Image1_(16384548906).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Fehérhátú fakopáncs"
+  },
+  "Fehérhasú rétisas": {
+    "image": "images/feherhasu-retisas.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Feh%C3%A9rhas%C3%BA_r%C3%A9tisas",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/White_Bellied_Sea_Eagle_070531b.jpg/960px-White_Bellied_Sea_Eagle_070531b.jpg",
+    "file_name": "White_Bellied_Sea_Eagle_070531b.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Fehérhasú rétisas"
+  },
+  "Barátcsuszka": {
+    "image": "images/baratcsuszka.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Bar%C3%A1tcsuszka",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/White-breasted_Nuthatch_%28Sitta_carolinensis%293_-on_branch.jpg/960px-White-breasted_Nuthatch_%28Sitta_carolinensis%293_-on_branch.jpg",
+    "file_name": "White-breasted_Nuthatch_(Sitta_carolinensis)3_-on_branch.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Barátcsuszka"
+  },
+  "Fehérhasú fecskeseregély": {
+    "image": "images/feherhasu-fecskeseregely.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Feh%C3%A9rhas%C3%BA_fecskesereg%C3%A9ly",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/White-breasted_Woodswallow_Samcem.JPG/960px-White-breasted_Woodswallow_Samcem.JPG",
+    "file_name": "White-breasted_Woodswallow_Samcem.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Fehérhasú fecskeseregély"
+  },
+  "Bíborkirályka": {
+    "image": "images/biborkiralyka.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/B%C3%ADborkir%C3%A1lyka",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/White-browed_Tit_Warbler_male_at_Panamic%2C_Nubra_Valley%2C_Ladakh%2C_India.jpg/960px-White-browed_Tit_Warbler_male_at_Panamic%2C_Nubra_Valley%2C_Ladakh%2C_India.jpg",
+    "file_name": "White-browed_Tit_Warbler_male_at_Panamic,_Nubra_Valley,_Ladakh,_India.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Bíborkirályka"
+  },
+  "Fehérfejű álszajkó": {
+    "image": "images/feherfeju-alszajko.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Feh%C3%A9rfej%C5%B1_%C3%A1lszajk%C3%B3",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Garrulax_leucolophus_-_Kent_Ridge_Park.jpg/960px-Garrulax_leucolophus_-_Kent_Ridge_Park.jpg",
+    "file_name": "Garrulax_leucolophus_-_Kent_Ridge_Park.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Fehérfejű álszajkó"
+  },
+  "Koronás verébsármány": {
+    "image": "images/koronas-verebsarmany.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Koron%C3%A1s_ver%C3%A9bs%C3%A1rm%C3%A1ny",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/White-crowned-Sparrow.jpg/960px-White-crowned-Sparrow.jpg",
+    "file_name": "White-crowned-Sparrow.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Koronás verébsármány"
+  },
+  "Fehérarcú gém": {
+    "image": "images/feherarcu-gem.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Feh%C3%A9rarc%C3%BA_g%C3%A9m",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/White_faced_heron03.jpg/960px-White_faced_heron03.jpg",
+    "file_name": "White_faced_heron03.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Fehérarcú gém"
+  },
+  "Fehérarcú batla": {
+    "image": "images/feherarcu-batla.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Feh%C3%A9rarc%C3%BA_batla",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Plegadis_chihi_-California%2C_USA-8.jpg/960px-Plegadis_chihi_-California%2C_USA-8.jpg",
+    "file_name": "Plegadis_chihi_-California,_USA-8.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Fehérarcú batla"
+  },
+  "Kékcsőrű réce": {
+    "image": "images/kekcsoru-rece.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/K%C3%A9kcs%C5%91r%C5%B1_r%C3%A9ce",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Wei%C3%9Fkopfruderente_Oxyura_leucocephala_0505059_Wikiausschnit.jpg/960px-Wei%C3%9Fkopfruderente_Oxyura_leucocephala_0505059_Wikiausschnit.jpg",
+    "file_name": "Weißkopfruderente_Oxyura_leucocephala_0505059_Wikiausschnit.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Kékcsőrű réce"
+  },
+  "Vízirigó": {
+    "image": "images/vizirigo.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/V%C3%ADzirig%C3%B3",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Eurasian_White-fronted_Dipper%2C_C_cinclus.JPG/960px-Eurasian_White-fronted_Dipper%2C_C_cinclus.JPG",
+    "file_name": "Eurasian_White-fronted_Dipper,_C_cinclus.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Vízirigó"
+  },
+  "Barna halkapó": {
+    "image": "images/barna-halkapo.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Barna_halkap%C3%B3",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/3/34/Halcyon_smyrnensis_-Pune%2C_Maharashtra%2C_India-8.jpg",
+    "file_name": "Halcyon_smyrnensis_-Pune,_Maharashtra,_India-8.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Barna halkapó"
+  },
+  "Fehérmellű sarlósfecske": {
+    "image": "images/fehermellu-sarlosfecske.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Feh%C3%A9rmell%C5%B1_sarl%C3%B3sfecske",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/b/b7/White-throated_Swift_%28Aeronautes_saxatalis%29_in_flight.jpg",
+    "file_name": "White-throated_Swift_(Aeronautes_saxatalis)_in_flight.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Fehérmellű sarlósfecske"
+  },
+  "Lármás daru": {
+    "image": "images/larmas-daru.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/L%C3%A1rm%C3%A1s_daru",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Grus_americana_Sasata.jpg/960px-Grus_americana_Sasata.jpg",
+    "file_name": "Grus_americana_Sasata.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Lármás daru"
+  },
+  "Vadpulyka": {
+    "image": "images/vadpulyka.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Vadpulyka",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/4/4d/Wild_turkey_eastern_us.jpg",
+    "file_name": "Wild_turkey_eastern_us.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Vadpulyka"
+  },
+  "Lármás cankó": {
+    "image": "images/larmas-canko.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/L%C3%A1rm%C3%A1s_cank%C3%B3",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Catoptrophorus_semipalmatus_edit.jpg/960px-Catoptrophorus_semipalmatus_edit.jpg",
+    "file_name": "Catoptrophorus_semipalmatus_edit.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Lármás cankó"
+  },
+  "Fehérhasú legyezőfarok": {
+    "image": "images/feherhasu-legyezofarok.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Feh%C3%A9rhas%C3%BA_legyez%C5%91farok",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Willy_wag_tail.jpg/960px-Willy_wag_tail.jpg",
+    "file_name": "Willy_wag_tail.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Fehérhasú legyezőfarok"
+  },
+  "Kormosfejű cinege": {
+    "image": "images/kormosfeju-cinege.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Kormosfej%C5%B1_cinege",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Poecile_atricapillus_CT3.jpg/960px-Poecile_atricapillus_CT3.jpg",
+    "file_name": "Poecile_atricapillus_CT3.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Kormosfejű cinege"
+  },
+  "Amerikai sárszalonka": {
+    "image": "images/amerikai-sarszalonka.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/S%C3%A1rszalonka",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/a/aa/Gallinago_gallinago_1_%28Marek_Szczepanek%29.jpg",
+    "file_name": "Gallinago_gallinago_1_(Marek_Szczepanek).jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Sárszalonka"
+  },
+  "Wilson-viharfecske": {
+    "image": "images/wilson-viharfecske.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Wilson-viharfecske",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/6/61/Oceanites_oceanicusPCCA20070623-3634B.jpg",
+    "file_name": "Oceanites_oceanicusPCCA20070623-3634B.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Wilson-viharfecske"
+  },
+  "Karolinai réce": {
+    "image": "images/karolinai-rece.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Karolinai_r%C3%A9ce",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Brautente_m%C3%A4nnlich.jpg/960px-Brautente_m%C3%A4nnlich.jpg",
+    "file_name": "Brautente_männlich.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Karolinai réce"
+  },
+  "Erdei gólya": {
+    "image": "images/erdei-golya.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Erdei_g%C3%B3lya",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/WoodStorkWhole.JPG/960px-WoodStorkWhole.JPG",
+    "file_name": "WoodStorkWhole.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Erdei gólya"
+  },
+  "Ferdecsőrű lile": {
+    "image": "images/ferdecsoru-lile.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Ferdecs%C5%91r%C5%B1_lile",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Wrybill_Anarhynchus_frontalis%2C_New_Zealand.jpg/960px-Wrybill_Anarhynchus_frontalis%2C_New_Zealand.jpg",
+    "file_name": "Wrybill_Anarhynchus_frontalis,_New_Zealand.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Ferdecsőrű lile"
+  },
+  "Sárga törpegém": {
+    "image": "images/sarga-torpegem.png",
+    "source_url": "https://hu.wikipedia.org/wiki/Szaporcai-%C5%90s-Dr%C3%A1va",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Hungary_location_map.svg/960px-Hungary_location_map.svg.png",
+    "file_name": "Hungary_location_map.svg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Szaporcai-Ős-Dráva"
+  },
+  "Sárgahasú cukorharkály": {
+    "image": "images/sargahasu-cukorharkaly.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/S%C3%A1rgahas%C3%BA_cukorhark%C3%A1ly",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Sphyrapicus_varius.jpg/960px-Sphyrapicus_varius.jpg",
+    "file_name": "Sphyrapicus_varius.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Sárgahasú cukorharkály"
+  },
+  "Sárgacsőrű esőkakukk": {
+    "image": "images/sargacsoru-esokakukk.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/S%C3%A1rgacs%C5%91r%C5%B1_es%C5%91kakukk",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Coccyzus-americanus-001.jpg/960px-Coccyzus-americanus-001.jpg",
+    "file_name": "Coccyzus-americanus-001.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Sárgacsőrű esőkakukk"
+  },
+  "Pápaszemes lombjáró": {
+    "image": "images/papaszemes-lombjaro.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/P%C3%A1paszemes_lombj%C3%A1r%C3%B3",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Icteria_virens%2C_Port_Aransas%2C_Nueces%2C_Texas_1.jpg/960px-Icteria_virens%2C_Port_Aransas%2C_Nueces%2C_Texas_1.jpg",
+    "file_name": "Icteria_virens,_Port_Aransas,_Nueces,_Texas_1.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Pápaszemes lombjáró"
+  },
+  "Sárgafejű csiröge": {
+    "image": "images/sargafeju-csiroge.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/S%C3%A1rgafej%C5%B1_csir%C3%B6ge",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Yellow-headed_blackbird_landing_on_barbed_wire.jpg/960px-Yellow-headed_blackbird_landing_on_barbed_wire.jpg",
+    "file_name": "Yellow-headed_blackbird_landing_on_barbed_wire.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Sárgafejű csiröge"
+  },
+  "Koronás erdeiposzáta": {
+    "image": "images/koronas-erdeiposzata.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Eastern_crowned_warbler",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Eastern_crowned_warbler.jpg/960px-Eastern_crowned_warbler.jpg",
+    "file_name": "Eastern_crowned_warbler.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Eastern crowned warbler"
+  },
+  "Citromsármány": {
+    "image": "images/citromsarmany.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Citroms%C3%A1rm%C3%A1ny",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/9/93/Emberiza_citrinella_1_%28Marek_Szczepanek%29.jpg",
+    "file_name": "Emberiza_citrinella_1_(Marek_Szczepanek).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Citromsármány"
+  },
+  "Csíkos gerle": {
+    "image": "images/csikos-gerle.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Sivatagi_bagoly",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Strix_butleri_1.jpg/960px-Strix_butleri_1.jpg",
+    "file_name": "Strix_butleri_1.jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Sivatagi bagoly"
+  }
+}

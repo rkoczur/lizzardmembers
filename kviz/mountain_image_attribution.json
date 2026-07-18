@@ -1,0 +1,3592 @@
+{
+  "Everest": {
+    "image": "images/mountains/everest.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Everest",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Mt._Everest_from_Gokyo_Ri_November_5%2C_2012.jpg/960px-Mt._Everest_from_Gokyo_Ri_November_5%2C_2012.jpg",
+    "file_name": "Mt._Everest_from_Gokyo_Ri_November_5,_2012.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Everest"
+  },
+  "K2": {
+    "image": "images/mountains/k2.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/K2",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Chogori.jpg/960px-Chogori.jpg",
+    "file_name": "Chogori.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "K2"
+  },
+  "Kangchenjunga": {
+    "image": "images/mountains/kangchenjunga.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Kangchenjunga",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Kangchenjunga_PangPema.JPG/960px-Kangchenjunga_PangPema.JPG",
+    "file_name": "Kangchenjunga_PangPema.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Kangchenjunga"
+  },
+  "Lhotse": {
+    "image": "images/mountains/lhotse.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Lhotse",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Lhotse-fromChukhungRi.jpg/960px-Lhotse-fromChukhungRi.jpg",
+    "file_name": "Lhotse-fromChukhungRi.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Lhotse"
+  },
+  "Makalu": {
+    "image": "images/mountains/makalu.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Makalu",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Makalu.jpg/960px-Makalu.jpg",
+    "file_name": "Makalu.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Makalu"
+  },
+  "Cho Oyu": {
+    "image": "images/mountains/cho-oyu.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Cho_Oyu",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Chooyu.jpg/960px-Chooyu.jpg",
+    "file_name": "Chooyu.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Cho Oyu"
+  },
+  "Dhaulagiri I": {
+    "image": "images/mountains/dhaulagiri-i.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Dhaulagiri",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Dhaulagiri_-_view_from_aircraft.jpg/960px-Dhaulagiri_-_view_from_aircraft.jpg",
+    "file_name": "Dhaulagiri_-_view_from_aircraft.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Dhaulagiri"
+  },
+  "Manaslu": {
+    "image": "images/mountains/manaslu.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Manaslu",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Sunrise%2C_Manaslu.jpg/960px-Sunrise%2C_Manaslu.jpg",
+    "file_name": "Sunrise,_Manaslu.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Manaslu"
+  },
+  "Nanga Parbat": {
+    "image": "images/mountains/nanga-parbat.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Nanga_Parbat",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Fairy_Meadows_and_the_view_of_Nanga_Parbat.jpg/960px-Fairy_Meadows_and_the_view_of_Nanga_Parbat.jpg",
+    "file_name": "Fairy_Meadows_and_the_view_of_Nanga_Parbat.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Nanga Parbat"
+  },
+  "Annapurna I": {
+    "image": "images/mountains/annapurna-i.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Annapurna",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/South_Face_of_Annapurna_I_%28Main%29.jpg/960px-South_Face_of_Annapurna_I_%28Main%29.jpg",
+    "file_name": "South_Face_of_Annapurna_I_(Main).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Annapurna"
+  },
+  "Gasherbrum I": {
+    "image": "images/mountains/gasherbrum-i.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Gasherbrum_I",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/6/6f/HiddenPeak.jpg",
+    "file_name": "HiddenPeak.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Gasherbrum I"
+  },
+  "Broad Peak": {
+    "image": "images/mountains/broad-peak.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Broad_Peak",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/7_15_BroadPeak.jpg/960px-7_15_BroadPeak.jpg",
+    "file_name": "7_15_BroadPeak.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Broad Peak"
+  },
+  "Gasherbrum II": {
+    "image": "images/mountains/gasherbrum-ii.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Gasherbrum_II",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/3/37/Gasherbrum2.jpg",
+    "file_name": "Gasherbrum2.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Gasherbrum II"
+  },
+  "Shishapangma": {
+    "image": "images/mountains/shishapangma.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Shishapangma",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/8%2C013m_Shishapangma_Tibet_China_%E8%A5%BF%E8%97%8F_%E5%B8%8C%E5%A4%8F%E9%82%A6%E9%A9%AC%E5%B3%B0_-_panoramio.jpg/960px-8%2C013m_Shishapangma_Tibet_China_%E8%A5%BF%E8%97%8F_%E5%B8%8C%E5%A4%8F%E9%82%A6%E9%A9%AC%E5%B3%B0_-_panoramio.jpg",
+    "file_name": "8,013m_Shishapangma_Tibet_China_西藏_希夏邦马峰_-_panoramio.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Shishapangma"
+  },
+  "Gyachung Kang": {
+    "image": "images/mountains/gyachung-kang.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Gyachung_Kang",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Gyachung_Kang.jpg/960px-Gyachung_Kang.jpg",
+    "file_name": "Gyachung_Kang.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Gyachung Kang"
+  },
+  "Annapurna II": {
+    "image": "images/mountains/annapurna-ii.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Annapurna_II",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Annapurna_II_north.jpg/960px-Annapurna_II_north.jpg",
+    "file_name": "Annapurna_II_north.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Annapurna II"
+  },
+  "Gasherbrum IV": {
+    "image": "images/mountains/gasherbrum-iv.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Gasherbrum_IV",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Gasherbrum_IV.JPG/960px-Gasherbrum_IV.JPG",
+    "file_name": "Gasherbrum_IV.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Gasherbrum IV"
+  },
+  "Himalchuli": {
+    "image": "images/mountains/himalchuli.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Himalchuli",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Himalchuli_from_south.jpg/960px-Himalchuli_from_south.jpg",
+    "file_name": "Himalchuli_from_south.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Himalchuli"
+  },
+  "Distaghil Sar": {
+    "image": "images/mountains/distaghil-sar.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Falak_Sar",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Falak_Sher.jpg/960px-Falak_Sher.jpg",
+    "file_name": "Falak_Sher.jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Falak Sar"
+  },
+  "Ngadi Chuli": {
+    "image": "images/mountains/ngadi-chuli.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Ngadi_Chuli",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Ngadi_Chuli.jpg/960px-Ngadi_Chuli.jpg",
+    "file_name": "Ngadi_Chuli.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Ngadi Chuli"
+  },
+  "Khunyang Chhish": {
+    "image": "images/mountains/khunyang-chhish.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Kunyang_Chhish_East",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Kunyang_Pumari_Chhish.JPG/960px-Kunyang_Pumari_Chhish.JPG",
+    "file_name": "Kunyang_Pumari_Chhish.JPG",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Kunyang Chhish East"
+  },
+  "Masherbrum": {
+    "image": "images/mountains/masherbrum.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Masherbrum",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/3/30/Masherbrum.jpg",
+    "file_name": "Masherbrum.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Masherbrum"
+  },
+  "Nanda Devi": {
+    "image": "images/mountains/nanda-devi.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Nanda_Devi",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Mt._Nanda_Devi.jpg/960px-Mt._Nanda_Devi.jpg",
+    "file_name": "Mt._Nanda_Devi.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Nanda Devi"
+  },
+  "Chomo Lonzo": {
+    "image": "images/mountains/chomo-lonzo.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Chomo_Lonzo",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/c/c9/Everest_Region_in_Tibet.jpg",
+    "file_name": "Everest_Region_in_Tibet.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Chomo Lonzo"
+  },
+  "Batura Sar": {
+    "image": "images/mountains/batura-sar.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Batura_Sar",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Batura_Sar_%287795m%29_%2825570898320%29.jpg/960px-Batura_Sar_%287795m%29_%2825570898320%29.jpg",
+    "file_name": "Batura_Sar_(7795m)_(25570898320).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Batura Sar"
+  },
+  "Rakaposhi": {
+    "image": "images/mountains/rakaposhi.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Rakaposhi",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Rakaposhi_%26_Autumn.jpg/960px-Rakaposhi_%26_Autumn.jpg",
+    "file_name": "Rakaposhi_&_Autumn.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Rakaposhi"
+  },
+  "Namcha Barwa": {
+    "image": "images/mountains/namcha-barwa.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Namcha_Barwa",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Namcha_Barwa_from_the_west.jpg/960px-Namcha_Barwa_from_the_west.jpg",
+    "file_name": "Namcha_Barwa_from_the_west.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Namcha Barwa"
+  },
+  "Kanjut Sar": {
+    "image": "images/mountains/kanjut-sar.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Kanjut_Sar",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Kanjut_Sar.jpg/960px-Kanjut_Sar.jpg",
+    "file_name": "Kanjut_Sar.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Kanjut Sar"
+  },
+  "Kamet": {
+    "image": "images/mountains/kamet.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Kamet",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Kamet_Closeup.jpg/960px-Kamet_Closeup.jpg",
+    "file_name": "Kamet_Closeup.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Kamet"
+  },
+  "Dhaulagiri II": {
+    "image": "images/mountains/dhaulagiri-ii.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Dhaulagiri",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Dhaulagiri_-_view_from_aircraft.jpg/960px-Dhaulagiri_-_view_from_aircraft.jpg",
+    "file_name": "Dhaulagiri_-_view_from_aircraft.jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Dhaulagiri"
+  },
+  "Saltoro Kangri": {
+    "image": "images/mountains/saltoro-kangri.png",
+    "source_url": "https://en.wikipedia.org/wiki/Saltoro_Mountains",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Un-kashmir-jammu.png/960px-Un-kashmir-jammu.png",
+    "file_name": "Un-kashmir-jammu.png",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Saltoro Mountains"
+  },
+  "Kumbhakarna (Jannu)": {
+    "image": "images/mountains/kumbhakarna-jannu.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Kumbhakarna_Mountain",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Jannu_from_the_Sinelapche_Pass.jpg/960px-Jannu_from_the_Sinelapche_Pass.jpg",
+    "file_name": "Jannu_from_the_Sinelapche_Pass.jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Kumbhakarna Mountain"
+  },
+  "Tirich Mir": {
+    "image": "images/mountains/tirich-mir.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Terich_Mir",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Tirich_Mir_%28The_Kingdom_Of_Djinns_And_Fairies%29.jpg/960px-Tirich_Mir_%28The_Kingdom_Of_Djinns_And_Fairies%29.jpg",
+    "file_name": "Tirich_Mir_(The_Kingdom_Of_Djinns_And_Fairies).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Terich Mir"
+  },
+  "Gurla Mandhata": {
+    "image": "images/mountains/gurla-mandhata.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Gurla_Mandhata",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Mt_Gurla_Mandhata_and_wild_Donkeys.jpg/960px-Mt_Gurla_Mandhata_and_wild_Donkeys.jpg",
+    "file_name": "Mt_Gurla_Mandhata_and_wild_Donkeys.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Gurla Mandhata"
+  },
+  "Saser Kangri I": {
+    "image": "images/mountains/saser-kangri-i.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Saser_Kangri",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/SaserKangri1.jpg/960px-SaserKangri1.jpg",
+    "file_name": "SaserKangri1.jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Saser Kangri"
+  },
+  "Chogolisa": {
+    "image": "images/mountains/chogolisa.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Chogolisa",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Chogolisa.jpg/960px-Chogolisa.jpg",
+    "file_name": "Chogolisa.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Chogolisa"
+  },
+  "Kongur Tagh": {
+    "image": "images/mountains/kongur-tagh.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Kongur_Tagh",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/4/49/Kongur_south.jpg",
+    "file_name": "Kongur_south.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Kongur Tagh"
+  },
+  "Shispare": {
+    "image": "images/mountains/shispare.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Shispare",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Shispare_above_Passu_glacier.jpg/960px-Shispare_above_Passu_glacier.jpg",
+    "file_name": "Shispare_above_Passu_glacier.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Shispare"
+  },
+  "Trivor": {
+    "image": "images/mountains/trivor.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Trivor",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Trivor_%287577m%29_%2825571147500%29_%283to4%29.jpg/960px-Trivor_%287577m%29_%2825571147500%29_%283to4%29.jpg",
+    "file_name": "Trivor_(7577m)_(25571147500)_(3to4).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Trivor"
+  },
+  "Gongga Shan": {
+    "image": "images/mountains/gongga-shan.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Gongga",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/%E8%B4%A1%E5%98%8E.jpg/960px-%E8%B4%A1%E5%98%8E.jpg",
+    "file_name": "贡嘎.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Gongga"
+  },
+  "Annapurna III": {
+    "image": "images/mountains/annapurna-iii.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Annapurna_III",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Annapurna_Three.jpg/960px-Annapurna_Three.jpg",
+    "file_name": "Annapurna_Three.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Annapurna III"
+  },
+  "Skyang Kangri": {
+    "image": "images/mountains/skyang-kangri.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Skyang_Kangri",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Skyang_Kangri.jpg/960px-Skyang_Kangri.jpg",
+    "file_name": "Skyang_Kangri.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Skyang Kangri"
+  },
+  "Changtse": {
+    "image": "images/mountains/changtse.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Changtse",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Changtse-from-KalaPattar.jpg/960px-Changtse-from-KalaPattar.jpg",
+    "file_name": "Changtse-from-KalaPattar.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Changtse"
+  },
+  "Kula Kangri": {
+    "image": "images/mountains/kula-kangri.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Kula_Kangri",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Kulakangri200811nwj.jpg/960px-Kulakangri200811nwj.jpg",
+    "file_name": "Kulakangri200811nwj.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Kula Kangri"
+  },
+  "Kongur Tiube": {
+    "image": "images/mountains/kongur-tiube.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Kongur_Tiube",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Kongur_II_Range.jpg/960px-Kongur_II_Range.jpg",
+    "file_name": "Kongur_II_Range.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Kongur Tiube"
+  },
+  "Mamostong Kangri": {
+    "image": "images/mountains/mamostong-kangri.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Saser_Kangri",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/SaserKangri1.jpg/960px-SaserKangri1.jpg",
+    "file_name": "SaserKangri1.jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Saser Kangri"
+  },
+  "Saser Kangri II E": {
+    "image": "images/mountains/saser-kangri-ii-e.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Saser_Kangri",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/SaserKangri1.jpg/960px-SaserKangri1.jpg",
+    "file_name": "SaserKangri1.jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Saser Kangri"
+  },
+  "Muztagh Ata": {
+    "image": "images/mountains/muztagh-ata.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Muztagh_Ata",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/f/fd/Muztagh_Ata_Xinjiang_China.jpg",
+    "file_name": "Muztagh_Ata_Xinjiang_China.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Muztagh Ata"
+  },
+  "Ismoil Somoni Peak": {
+    "image": "images/mountains/ismoil-somoni-peak.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Ismoil_Somoni_Peak",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Pik_Kommunizma.jpg/960px-Pik_Kommunizma.jpg",
+    "file_name": "Pik_Kommunizma.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Ismoil Somoni Peak"
+  },
+  "Saser Kangri III": {
+    "image": "images/mountains/saser-kangri-iii.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Saser_Kangri",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/SaserKangri1.jpg/960px-SaserKangri1.jpg",
+    "file_name": "SaserKangri1.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Saser Kangri"
+  },
+  "Noshaq": {
+    "image": "images/mountains/noshaq.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Noshaq",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/b/bf/Noszak.jpg",
+    "file_name": "Noszak.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Noshaq"
+  },
+  "Pumari Chhish": {
+    "image": "images/mountains/pumari-chhish.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/List_of_highest_mountains_on_Earth",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Mount_Everest_as_seen_from_Drukair2_PLW_edit.jpg/960px-Mount_Everest_as_seen_from_Drukair2_PLW_edit.jpg",
+    "file_name": "Mount_Everest_as_seen_from_Drukair2_PLW_edit.jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "List of highest mountains on Earth"
+  },
+  "Passu Sar": {
+    "image": "images/mountains/passu-sar.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Passu_Sar",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/88/Batura_valley_Passu.jpg",
+    "file_name": "Batura_valley_Passu.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Passu Sar"
+  },
+  "Yukshin Gardan Sar": {
+    "image": "images/mountains/yukshin-gardan-sar.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Yukshin_Gardan_Sar",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Kanjut_Sar.jpg/960px-Kanjut_Sar.jpg",
+    "file_name": "Kanjut_Sar.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Yukshin Gardan Sar"
+  },
+  "Teram Kangri I": {
+    "image": "images/mountains/teram-kangri-i.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Teram_Kangri",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/ISS-Karakoram.JPG/960px-ISS-Karakoram.JPG",
+    "file_name": "ISS-Karakoram.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Teram Kangri"
+  },
+  "Jongsong Peak": {
+    "image": "images/mountains/jongsong-peak.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/List_of_highest_mountains_on_Earth",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Mount_Everest_as_seen_from_Drukair2_PLW_edit.jpg/960px-Mount_Everest_as_seen_from_Drukair2_PLW_edit.jpg",
+    "file_name": "Mount_Everest_as_seen_from_Drukair2_PLW_edit.jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "List of highest mountains on Earth"
+  },
+  "Malubiting": {
+    "image": "images/mountains/malubiting.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Malubiting",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Malubiting_from_Skardu-Gilgit_road_at_sunset.jpg/960px-Malubiting_from_Skardu-Gilgit_road_at_sunset.jpg",
+    "file_name": "Malubiting_from_Skardu-Gilgit_road_at_sunset.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Malubiting"
+  },
+  "Gangapurna": {
+    "image": "images/mountains/gangapurna.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Gangapurna",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Gangapurna_Glacier.jpg/960px-Gangapurna_Glacier.jpg",
+    "file_name": "Gangapurna_Glacier.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Gangapurna"
+  },
+  "Jengish Chokusu": {
+    "image": "images/mountains/jengish-chokusu.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Jengish_Chokusu",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Jengish_Chokusu_%28Victory_Peak%2C_Pik_Pobeda%29%2C_Southern_Inylchek_Glacier%2C_Tien_Shan_%E2%80%94_Golden_Hour.jpg/960px-Jengish_Chokusu_%28Victory_Peak%2C_Pik_Pobeda%29%2C_Southern_Inylchek_Glacier%2C_Tien_Shan_%E2%80%94_Golden_Hour.jpg",
+    "file_name": "Jengish_Chokusu_(Victory_Peak,_Pik_Pobeda),_Southern_Inylchek_Glacier,_Tien_Shan_—_Golden_Hour.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Jengish Chokusu"
+  },
+  "K12": {
+    "image": "images/mountains/k12.png",
+    "source_url": "https://en.wikipedia.org/wiki/K12_(mountain)",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/3/3c/K12_viewed_from_K2.png",
+    "file_name": "K12_viewed_from_K2.png",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "K12 (mountain)"
+  },
+  "Yangra (Ganesh I)": {
+    "image": "images/mountains/yangra-ganesh-i.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Yangra",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Langtang_range_%2825%29.JPG/960px-Langtang_range_%2825%29.JPG",
+    "file_name": "Langtang_range_(25).JPG",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Yangra"
+  },
+  "Sia Kangri": {
+    "image": "images/mountains/sia-kangri.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Sia_Kangri",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Siachin20.JPG/960px-Siachin20.JPG",
+    "file_name": "Siachin20.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Sia Kangri"
+  },
+  "Momhil Sar": {
+    "image": "images/mountains/momhil-sar.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Momhil_Sar",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Momhil_Sar_%287343m%29_%2825871754125%29.jpg/960px-Momhil_Sar_%287343m%29_%2825871754125%29.jpg",
+    "file_name": "Momhil_Sar_(7343m)_(25871754125).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Momhil Sar"
+  },
+  "Kabru North": {
+    "image": "images/mountains/kabru-north.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Kabru",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Kanchenjungha.jpg/960px-Kanchenjungha.jpg",
+    "file_name": "Kanchenjungha.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Kabru"
+  },
+  "Skil Brum": {
+    "image": "images/mountains/skil-brum.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Skil_Brum",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Muztagh_tower_-_skil_brum_1909_sella.jpg/960px-Muztagh_tower_-_skil_brum_1909_sella.jpg",
+    "file_name": "Muztagh_tower_-_skil_brum_1909_sella.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Skil Brum"
+  },
+  "Haramosh Peak": {
+    "image": "images/mountains/haramosh-peak.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Haramosh_Peak",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Haramosh_from_Nanga_Parbat.jpg/960px-Haramosh_from_Nanga_Parbat.jpg",
+    "file_name": "Haramosh_from_Nanga_Parbat.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Haramosh Peak"
+  },
+  "Istor-o-Nal": {
+    "image": "images/mountains/istor-o-nal.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Istor-o-Nal",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Tirich_Mir_and_Falakser_Peaks_%28Aerial%29.jpg/960px-Tirich_Mir_and_Falakser_Peaks_%28Aerial%29.jpg",
+    "file_name": "Tirich_Mir_and_Falakser_Peaks_(Aerial).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Istor-o-Nal"
+  },
+  "Ghent Kangri": {
+    "image": "images/mountains/ghent-kangri.png",
+    "source_url": "https://en.wikipedia.org/wiki/Ghent_Kangri",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/0/0e/Ghent_Kangri_from_K2.png",
+    "file_name": "Ghent_Kangri_from_K2.png",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Ghent Kangri"
+  },
+  "Ultar": {
+    "image": "images/mountains/ultar.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Ultar",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/4/4c/Ultar_sar.jpg",
+    "file_name": "Ultar_sar.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Ultar"
+  },
+  "Rimo I": {
+    "image": "images/mountains/rimo-i.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Rimo_Massif",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/ISS014-E-6863_-_View_of_India.jpg/960px-ISS014-E-6863_-_View_of_India.jpg",
+    "file_name": "ISS014-E-6863_-_View_of_India.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Rimo Massif"
+  },
+  "Churen Himal": {
+    "image": "images/mountains/churen-himal.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Churen_Himal",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Churen_Himal.jpg/960px-Churen_Himal.jpg",
+    "file_name": "Churen_Himal.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Churen Himal"
+  },
+  "Teram Kangri III": {
+    "image": "images/mountains/teram-kangri-iii.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Teram_Kangri",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/ISS-Karakoram.JPG/960px-ISS-Karakoram.JPG",
+    "file_name": "ISS-Karakoram.JPG",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Teram Kangri"
+  },
+  "Sherpi Kangri": {
+    "image": "images/mountains/sherpi-kangri.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Sherpi_Kangri",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/4/41/Saltoro_Kangri.jpg",
+    "file_name": "Saltoro_Kangri.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Sherpi Kangri"
+  },
+  "Labuche Kang": {
+    "image": "images/mountains/labuche-kang.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Labuche_Kang",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Labuche_Kang_and_Shishapangma_from_Cho_Oyu.jpg/960px-Labuche_Kang_and_Shishapangma_from_Cho_Oyu.jpg",
+    "file_name": "Labuche_Kang_and_Shishapangma_from_Cho_Oyu.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Labuche Kang"
+  },
+  "Kirat Chuli": {
+    "image": "images/mountains/kirat-chuli.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Kirat_Chuli",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/NepalPeak_TentPeak.jpg/960px-NepalPeak_TentPeak.jpg",
+    "file_name": "NepalPeak_TentPeak.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Kirat Chuli"
+  },
+  "Saraghrar": {
+    "image": "images/mountains/saraghrar.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Saraghrar",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Saraghrar.JPG/960px-Saraghrar.JPG",
+    "file_name": "Saraghrar.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Saraghrar"
+  },
+  "Jomolhari": {
+    "image": "images/mountains/jomolhari.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Jomolhari",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/5/59/Bundesarchiv_Bild_135-KA-06-039%2C_Tibetexpedition%2C_Landschaftsaufnahme.jpg",
+    "file_name": "Bundesarchiv_Bild_135-KA-06-039,_Tibetexpedition,_Landschaftsaufnahme.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Jomolhari"
+  },
+  "Chamlang": {
+    "image": "images/mountains/chamlang.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Chamlang",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Makalu_and_Chamlang.jpg/960px-Makalu_and_Chamlang.jpg",
+    "file_name": "Makalu_and_Chamlang.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Chamlang"
+  },
+  "Chongtar": {
+    "image": "images/mountains/chongtar.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Highest_unclimbed_mountain",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Kailash_Tibet.jpg/960px-Kailash_Tibet.jpg",
+    "file_name": "Kailash_Tibet.jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Highest unclimbed mountain"
+  },
+  "Khan Tengri": {
+    "image": "images/mountains/khan-tengri.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Khan_Tengri",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Vue_globale_du_versant_N_du_khan_Tengri.jpg/960px-Vue_globale_du_versant_N_du_khan_Tengri.jpg",
+    "file_name": "Vue_globale_du_versant_N_du_khan_Tengri.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Khan Tengri"
+  },
+  "Machapuchare": {
+    "image": "images/mountains/machapuchare.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Machapuchare",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Machapuchare_close-up_of_summit_ridge.jpg/960px-Machapuchare_close-up_of_summit_ridge.jpg",
+    "file_name": "Machapuchare_close-up_of_summit_ridge.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Machapuchare"
+  },
+  "Aconcagua": {
+    "image": "images/mountains/aconcagua.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Aconcagua",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Aconcagua2016.jpg/960px-Aconcagua2016.jpg",
+    "file_name": "Aconcagua2016.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Aconcagua"
+  },
+  "Ojos del Salado": {
+    "image": "images/mountains/ojos-del-salado.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Ojos_del_Salado",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Ojos_del_Salado_looming_big_on_the_horizon.jpg/960px-Ojos_del_Salado_looming_big_on_the_horizon.jpg",
+    "file_name": "Ojos_del_Salado_looming_big_on_the_horizon.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Ojos del Salado"
+  },
+  "Ama Dablam": {
+    "image": "images/mountains/ama-dablam.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Ama_Dablam",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Himalayas%2C_Ama_Dablam%2C_Nepal.jpg/960px-Himalayas%2C_Ama_Dablam%2C_Nepal.jpg",
+    "file_name": "Himalayas,_Ama_Dablam,_Nepal.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Ama Dablam"
+  },
+  "Huascarán": {
+    "image": "images/mountains/huascaran.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Huascar%C3%A1n",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Nevado_Huascar%C3%A1n_%28south_view%29.jpg/960px-Nevado_Huascar%C3%A1n_%28south_view%29.jpg",
+    "file_name": "Nevado_Huascarán_(south_view).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Huascarán"
+  },
+  "Mount Kailash": {
+    "image": "images/mountains/mount-kailash.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Kailash",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Kailash_north.JPG/960px-Kailash_north.JPG",
+    "file_name": "Kailash_north.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Kailash"
+  },
+  "Sajama": {
+    "image": "images/mountains/sajama.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Nevado_Sajama",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Sajama_National_Park.jpg/960px-Sajama_National_Park.jpg",
+    "file_name": "Sajama_National_Park.jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Nevado Sajama"
+  },
+  "Illimani": {
+    "image": "images/mountains/illimani.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Illimani",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/1/10/Illimani2.JPG",
+    "file_name": "Illimani2.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Illimani"
+  },
+  "Chimborazo": {
+    "image": "images/mountains/chimborazo.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Chimborazo",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Chimborazo%2C_aspecto_norte%2C_Ecuador._%2826354503702%29.jpg/960px-Chimborazo%2C_aspecto_norte%2C_Ecuador._%2826354503702%29.jpg",
+    "file_name": "Chimborazo,_aspecto_norte,_Ecuador._(26354503702).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Chimborazo"
+  },
+  "Denali": {
+    "image": "images/mountains/denali.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Denali",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Wonder_Lake_and_Denali.jpg/960px-Wonder_Lake_and_Denali.jpg",
+    "file_name": "Wonder_Lake_and_Denali.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Denali"
+  },
+  "Mount Logan": {
+    "image": "images/mountains/mount-logan.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Logan",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Mount_Logan.jpg/960px-Mount_Logan.jpg",
+    "file_name": "Mount_Logan.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Logan"
+  },
+  "Alpamayo": {
+    "image": "images/mountains/alpamayo.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Alpamayo",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Alpamayo.jpg/960px-Alpamayo.jpg",
+    "file_name": "Alpamayo.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Alpamayo"
+  },
+  "Cotopaxi": {
+    "image": "images/mountains/cotopaxi.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Cotopaxi",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/20/Cotopaxi_volcano_2008-06-27T1322.jpg",
+    "file_name": "Cotopaxi_volcano_2008-06-27T1322.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Cotopaxi"
+  },
+  "Kilimanjaro": {
+    "image": "images/mountains/kilimanjaro.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Kilimanjaro",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Kilimanjaro_from_Amboseli.jpg/960px-Kilimanjaro_from_Amboseli.jpg",
+    "file_name": "Kilimanjaro_from_Amboseli.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Kilimanjaro"
+  },
+  "Hkakabo Razi": {
+    "image": "images/mountains/hkakabo-razi.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Hkakabo_Razi",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Khakaborazi_southview-m_ft.jpg/960px-Khakaborazi_southview-m_ft.jpg",
+    "file_name": "Khakaborazi_southview-m_ft.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Hkakabo Razi"
+  },
+  "El Misti": {
+    "image": "images/mountains/el-misti.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Misti",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Volcano_Misti%2C_Peru.jpg/960px-Volcano_Misti%2C_Peru.jpg",
+    "file_name": "Volcano_Misti,_Peru.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Misti"
+  },
+  "Pico Cristóbal Colón": {
+    "image": "images/mountains/pico-cristobal-colon.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Pico_Crist%C3%B3bal_Col%C3%B3n",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Pico_Cristobal_Colon.jpg/960px-Pico_Cristobal_Colon.jpg",
+    "file_name": "Pico_Cristobal_Colon.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Pico Cristóbal Colón"
+  },
+  "Mount Elbrus": {
+    "image": "images/mountains/mount-elbrus.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Elbrus",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Mount_Elbrus_%28cropped%29.jpg/960px-Mount_Elbrus_%28cropped%29.jpg",
+    "file_name": "Mount_Elbrus_(cropped).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Elbrus"
+  },
+  "Pico de Orizaba": {
+    "image": "images/mountains/pico-de-orizaba.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Pico_de_Orizaba",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Pico_de_Orizaba_desde_Hidalgo%2C_Puebla.jpg/960px-Pico_de_Orizaba_desde_Hidalgo%2C_Puebla.jpg",
+    "file_name": "Pico_de_Orizaba_desde_Hidalgo,_Puebla.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Pico de Orizaba"
+  },
+  "Damavand": {
+    "image": "images/mountains/damavand.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Damavand",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/981012-Damavand-South-IMG_9861-2.jpg/960px-981012-Damavand-South-IMG_9861-2.jpg",
+    "file_name": "981012-Damavand-South-IMG_9861-2.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Damavand"
+  },
+  "Popocatépetl": {
+    "image": "images/mountains/popocatepetl.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Popocat%C3%A9petl",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Mexico-Popocatepetl.jpg/960px-Mexico-Popocatepetl.jpg",
+    "file_name": "Mexico-Popocatepetl.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Popocatépetl"
+  },
+  "Iztaccíhuatl": {
+    "image": "images/mountains/iztaccihuatl.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Iztaccihuatl",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/IztaccihualtSacromonte1.JPG/960px-IztaccihualtSacromonte1.JPG",
+    "file_name": "IztaccihualtSacromonte1.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Iztaccihuatl"
+  },
+  "Shkhara": {
+    "image": "images/mountains/shkhara.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Shkhara",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Mt_Shkhara_as_seen_from_Khalde_%28Photo_A._Muhranoff%2C_2011%29.jpg/960px-Mt_Shkhara_as_seen_from_Khalde_%28Photo_A._Muhranoff%2C_2011%29.jpg",
+    "file_name": "Mt_Shkhara_as_seen_from_Khalde_(Photo_A._Muhranoff,_2011).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Shkhara"
+  },
+  "Mount Kenya": {
+    "image": "images/mountains/mount-kenya.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Kenya",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/MtKenya.jpg/960px-MtKenya.jpg",
+    "file_name": "MtKenya.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Kenya"
+  },
+  "Mount Ararat": {
+    "image": "images/mountains/mount-ararat.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Ararat",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Mount_Ararat_and_the_Yerevan_skyline_in_spring_%2850mm%29.jpg/960px-Mount_Ararat_and_the_Yerevan_skyline_in_spring_%2850mm%29.jpg",
+    "file_name": "Mount_Ararat_and_the_Yerevan_skyline_in_spring_(50mm).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Ararat"
+  },
+  "Margherita Peak": {
+    "image": "images/mountains/margherita-peak.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Stanley",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/MtStanley_2.JPG/960px-MtStanley_2.JPG",
+    "file_name": "MtStanley_2.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Stanley"
+  },
+  "Mount Stanley": {
+    "image": "images/mountains/mount-stanley.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Stanley",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/MtStanley_2.JPG/960px-MtStanley_2.JPG",
+    "file_name": "MtStanley_2.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Stanley"
+  },
+  "Pico Bolívar": {
+    "image": "images/mountains/pico-bolivar.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Pico_Bol%C3%ADvar",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/0/0f/PicoBolivar2.jpg",
+    "file_name": "PicoBolivar2.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Pico Bolívar"
+  },
+  "Vinson Massif": {
+    "image": "images/mountains/vinson-massif.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Vinson_Massif",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Mount_Vinson_from_NW_at_Vinson_Plateau_by_Christian_Stangl_%28flickr%29.jpg/960px-Mount_Vinson_from_NW_at_Vinson_Plateau_by_Christian_Stangl_%28flickr%29.jpg",
+    "file_name": "Mount_Vinson_from_NW_at_Vinson_Plateau_by_Christian_Stangl_(flickr).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Vinson Massif"
+  },
+  "Puncak Jaya": {
+    "image": "images/mountains/puncak-jaya.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Puncak_Jaya",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Carstenzs_Piramida_Mountain.jpg/960px-Carstenzs_Piramida_Mountain.jpg",
+    "file_name": "Carstenzs_Piramida_Mountain.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Puncak Jaya"
+  },
+  "Mont Blanc": {
+    "image": "images/mountains/mont-blanc.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mont_Blanc",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Mont_Blanc_Aiguille.jpg/960px-Mont_Blanc_Aiguille.jpg",
+    "file_name": "Mont_Blanc_Aiguille.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mont Blanc"
+  },
+  "Klyuchevskaya Sopka": {
+    "image": "images/mountains/klyuchevskaya-sopka.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Klyuchevskaya_Sopka",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Klju%C4%8Devskaja_za_v%C3%BDchodu_slunce.jpg/960px-Klju%C4%8Devskaja_za_v%C3%BDchodu_slunce.jpg",
+    "file_name": "Ključevskaja_za_východu_slunce.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Klyuchevskaya Sopka"
+  },
+  "Khazret Sultan": {
+    "image": "images/mountains/khazret-sultan.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Hazrat_Sultan_Mosque",
+    "image_url": "https://upload.wikimedia.org/wikipedia/en/thumb/5/5c/Khazret_Sultan_Mosque_2_%28cropped%29.jpg/960px-Khazret_Sultan_Mosque_2_%28cropped%29.jpg",
+    "file_name": "Khazret_Sultan_Mosque_2_(cropped).jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Hazrat Sultan Mosque"
+  },
+  "Dufourspitze": {
+    "image": "images/mountains/dufourspitze.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Dufourspitze",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Monte_Rosa_summit.jpg/960px-Monte_Rosa_summit.jpg",
+    "file_name": "Monte_Rosa_summit.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Dufourspitze"
+  },
+  "Ras Dashen": {
+    "image": "images/mountains/ras-dashen.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Ras_Dashen",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Dejen_misura_da_cima_W.jpg/960px-Dejen_misura_da_cima_W.jpg",
+    "file_name": "Dejen_misura_da_cima_W.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Ras Dashen"
+  },
+  "Dom": {
+    "image": "images/mountains/dom.png",
+    "source_url": "https://en.wikipedia.org/wiki/Document_Object_Model",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/DOM-model.svg/960px-DOM-model.svg.png",
+    "file_name": "DOM-model.svg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Document Object Model"
+  },
+  "Mount Wilhelm": {
+    "image": "images/mountains/mount-wilhelm.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Wilhelm",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Mount_Wilhelm.jpg/960px-Mount_Wilhelm.jpg",
+    "file_name": "Mount_Wilhelm.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Wilhelm"
+  },
+  "Mount Karisimbi": {
+    "image": "images/mountains/mount-karisimbi.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Karisimbi",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Karisimbi2.jpg/960px-Karisimbi2.jpg",
+    "file_name": "Karisimbi2.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Karisimbi"
+  },
+  "Weisshorn": {
+    "image": "images/mountains/weisshorn.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Weisshorn",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Alps.jpg/960px-Alps.jpg",
+    "file_name": "Alps.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Weisshorn"
+  },
+  "Matterhorn": {
+    "image": "images/mountains/matterhorn.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Matterhorn",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Matterhorn_from_Domh%C3%BCtte_-_2.jpg/960px-Matterhorn_from_Domh%C3%BCtte_-_2.jpg",
+    "file_name": "Matterhorn_from_Domhütte_-_2.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Matterhorn"
+  },
+  "Bazardüzü": {
+    "image": "images/mountains/bazarduzu.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Bazard%C3%BCz%C3%BC",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Bazarduzu_detail.JPG/960px-Bazarduzu_detail.JPG",
+    "file_name": "Bazarduzu_detail.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Bazardüzü"
+  },
+  "Mount Whitney": {
+    "image": "images/mountains/mount-whitney.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Whitney",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Mount_Whitney_2003-03-25.jpg/960px-Mount_Whitney_2003-03-25.jpg",
+    "file_name": "Mount_Whitney_2003-03-25.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Whitney"
+  },
+  "Mount Elbert": {
+    "image": "images/mountains/mount-elbert.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Elbert",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Mt._Elbert.jpg/960px-Mt._Elbert.jpg",
+    "file_name": "Mt._Elbert.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Elbert"
+  },
+  "Mount Rainier": {
+    "image": "images/mountains/mount-rainier.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Rainier",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Rainier20200906.jpg/960px-Rainier20200906.jpg",
+    "file_name": "Rainier20200906.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Rainier"
+  },
+  "Khüiten Peak": {
+    "image": "images/mountains/khuiten-peak.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Kh%C3%BCiten_Peak",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Ukok_Plateau_2.jpg/960px-Ukok_Plateau_2.jpg",
+    "file_name": "Ukok_Plateau_2.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Khüiten Peak"
+  },
+  "Longs Peak": {
+    "image": "images/mountains/longs-peak.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Longs_Peak",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Fall05-LongsPeakCU_JPG_RSZ_md.jpg/960px-Fall05-LongsPeakCU_JPG_RSZ_md.jpg",
+    "file_name": "Fall05-LongsPeakCU_JPG_RSZ_md.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Longs Peak"
+  },
+  "Grand Combin": {
+    "image": "images/mountains/grand-combin.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Grand_Combin",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Aerial_image_of_Grand_Combin_%28view_from_the_southwest%29.jpg/960px-Aerial_image_of_Grand_Combin_%28view_from_the_southwest%29.jpg",
+    "file_name": "Aerial_image_of_Grand_Combin_(view_from_the_southwest).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Grand Combin"
+  },
+  "Pikes Peak": {
+    "image": "images/mountains/pikes-peak.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Pikes_Peak",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Beautiful_Image_of_Pikes_Peak_%28IMG_0136%29.jpg/960px-Beautiful_Image_of_Pikes_Peak_%28IMG_0136%29.jpg",
+    "file_name": "Beautiful_Image_of_Pikes_Peak_(IMG_0136).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Pikes Peak"
+  },
+  "Mauna Kea": {
+    "image": "images/mountains/mauna-kea.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mauna_Kea",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Mauna_Kea_from_the_ocean.jpg/960px-Mauna_Kea_from_the_ocean.jpg",
+    "file_name": "Mauna_Kea_from_the_ocean.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mauna Kea"
+  },
+  "Volcán Tajumulco": {
+    "image": "images/mountains/volcan-tajumulco.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Volc%C3%A1n_Tajumulco",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Tajumulco_Volcano.JPG/960px-Tajumulco_Volcano.JPG",
+    "file_name": "Tajumulco_Volcano.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Volcán Tajumulco"
+  },
+  "Grand Teton": {
+    "image": "images/mountains/grand-teton.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Grand_Teton",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Grand_Teton_GTNP1.jpg/960px-Grand_Teton_GTNP1.jpg",
+    "file_name": "Grand_Teton_GTNP1.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Grand Teton"
+  },
+  "Mauna Loa": {
+    "image": "images/mountains/mauna-loa.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mauna_Loa",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/e/e0/Mauna_Loa_Volcano.jpg",
+    "file_name": "Mauna_Loa_Volcano.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mauna Loa"
+  },
+  "Jbel Toubkal": {
+    "image": "images/mountains/jbel-toubkal.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Toubkal",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/My_Toubkal.jpg/960px-My_Toubkal.jpg",
+    "file_name": "My_Toubkal.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Toubkal"
+  },
+  "Jungfrau": {
+    "image": "images/mountains/jungfrau.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Jungfrau",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/d/d7/Jungfrau03.jpg",
+    "file_name": "Jungfrau03.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Jungfrau"
+  },
+  "Mönch": {
+    "image": "images/mountains/monch.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/M%C3%B6nch",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/M%C3%B6nch_and_Eigergletscher.jpg/960px-M%C3%B6nch_and_Eigergletscher.jpg",
+    "file_name": "Mönch_and_Eigergletscher.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mönch"
+  },
+  "Gunung Kinabalu": {
+    "image": "images/mountains/gunung-kinabalu.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Kinabalu",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Kinabalu_Sabah_Borneo_Kampong_Kundasang_panorama_2.jpg/960px-Kinabalu_Sabah_Borneo_Kampong_Kundasang_panorama_2.jpg",
+    "file_name": "Kinabalu_Sabah_Borneo_Kampong_Kundasang_panorama_2.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Kinabalu"
+  },
+  "Mount Aragats": {
+    "image": "images/mountains/mount-aragats.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Aragats",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Mount_Aragats_2020-05-11.jpg/960px-Mount_Aragats_2020-05-11.jpg",
+    "file_name": "Mount_Aragats_2020-05-11.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Aragats"
+  },
+  "Gran Paradiso": {
+    "image": "images/mountains/gran-paradiso.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Gran_Paradiso",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/f/f6/Gran_Paradiso.jpg",
+    "file_name": "Gran_Paradiso.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Gran Paradiso"
+  },
+  "Piz Bernina": {
+    "image": "images/mountains/piz-bernina.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Piz_Bernina",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/PizBernina3.jpg/960px-PizBernina3.jpg",
+    "file_name": "PizBernina3.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Piz Bernina"
+  },
+  "Mount Cameroon": {
+    "image": "images/mountains/mount-cameroon.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Cameroon",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Mount_Cameroon_view_from_Buea_%28Soppo%29.jpg/960px-Mount_Cameroon_view_from_Buea_%28Soppo%29.jpg",
+    "file_name": "Mount_Cameroon_view_from_Buea_(Soppo).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Cameroon"
+  },
+  "Eiger": {
+    "image": "images/mountains/eiger.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Eiger",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/North_face.jpg/960px-North_face.jpg",
+    "file_name": "North_face.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Eiger"
+  },
+  "Mount Robson": {
+    "image": "images/mountains/mount-robson.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Robson",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Mount_Robson_panorama_%28cropped%29.jpg/960px-Mount_Robson_panorama_%28cropped%29.jpg",
+    "file_name": "Mount_Robson_panorama_(cropped).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Robson"
+  },
+  "Yu Shan": {
+    "image": "images/mountains/yu-shan.png",
+    "source_url": "https://en.wikipedia.org/wiki/Yushan_(mountain)",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Yushan_main_east_peak%2BHuang_Chung_Yu%E9%BB%83%E4%B8%AD%E4%BD%91%2B9030.png/960px-Yushan_main_east_peak%2BHuang_Chung_Yu%E9%BB%83%E4%B8%AD%E4%BD%91%2B9030.png",
+    "file_name": "Yushan_main_east_peak+Huang_Chung_Yu黃中佑+9030.png",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Yushan (mountain)"
+  },
+  "Ortler": {
+    "image": "images/mountains/ortler.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Ortler",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/5/56/L%27Ortler.jpg",
+    "file_name": "L'Ortler.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Ortler"
+  },
+  "Cerro Chirripó": {
+    "image": "images/mountains/cerro-chirripo.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Cerro_Chirrip%C3%B3",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/3/3d/Chirrip%C3%B3_Grande_Costa_Rica_hogar_de_Sib%C3%BA.jpg",
+    "file_name": "Chirripó_Grande_Costa_Rica_hogar_de_Sibú.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Cerro Chirripó"
+  },
+  "Grossglockner": {
+    "image": "images/mountains/grossglockner.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Grossglockner",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Gro%C3%9Fglockner_from_behind_the_glass_panorama_tower.JPG/960px-Gro%C3%9Fglockner_from_behind_the_glass_panorama_tower.JPG",
+    "file_name": "Großglockner_from_behind_the_glass_panorama_tower.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Grossglockner"
+  },
+  "Mount Erebus": {
+    "image": "images/mountains/mount-erebus.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Erebus",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/4/4e/Mt_erebus.jpg",
+    "file_name": "Mt_erebus.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Erebus"
+  },
+  "Mount Fuji": {
+    "image": "images/mountains/mount-fuji.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Fuji",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/View_of_Mount_Fuji_from_%C5%8Cwakudani_20211202.jpg/960px-View_of_Mount_Fuji_from_%C5%8Cwakudani_20211202.jpg",
+    "file_name": "View_of_Mount_Fuji_from_Ōwakudani_20211202.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Fuji"
+  },
+  "Wildspitze": {
+    "image": "images/mountains/wildspitze.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Wildspitze",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Wildspitzefromtiefenbachkogel.JPG/960px-Wildspitzefromtiefenbachkogel.JPG",
+    "file_name": "Wildspitzefromtiefenbachkogel.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Wildspitze"
+  },
+  "Jabal an Nabi Shu'ayb": {
+    "image": "images/mountains/jabal-an-nabi-shu-ayb.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Jabal_An-Nabi_Shu%27ayb",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Haraz_200612_Yemen-117_%28353667919%29.jpg/960px-Haraz_200612_Yemen-117_%28353667919%29.jpg",
+    "file_name": "Haraz_200612_Yemen-117_(353667919).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Jabal An-Nabi Shu'ayb"
+  },
+  "Mount Assiniboine": {
+    "image": "images/mountains/mount-assiniboine.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Assiniboine",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Mount_Assiniboine_massif.jpg/960px-Mount_Assiniboine_massif.jpg",
+    "file_name": "Mount_Assiniboine_massif.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Assiniboine"
+  },
+  "Cheekha Dar": {
+    "image": "images/mountains/cheekha-dar.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Cheekha_Dar",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Cheekhedar.jpg/960px-Cheekhedar.jpg",
+    "file_name": "Cheekhedar.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Cheekha Dar"
+  },
+  "Thabana Ntlenyana": {
+    "image": "images/mountains/thabana-ntlenyana.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Thabana_Ntlenyana",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Thabana_Ntlenyana.jpeg/960px-Thabana_Ntlenyana.jpeg",
+    "file_name": "Thabana_Ntlenyana.jpeg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Thabana Ntlenyana"
+  },
+  "Volcán Barú": {
+    "image": "images/mountains/volcan-baru.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Volc%C3%A1n_Bar%C3%BA",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/7/7a/Volcan_baru.jpg",
+    "file_name": "Volcan_baru.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Volcán Barú"
+  },
+  "Mafadi": {
+    "image": "images/mountains/mafadi.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mafadi",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Mafadi_mountain_top.jpg/960px-Mafadi_mountain_top.jpg",
+    "file_name": "Mafadi_mountain_top.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mafadi"
+  },
+  "Emi Koussi": {
+    "image": "images/mountains/emi-koussi.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Emi_Koussi",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Emi_Koussi_Volcano%2C_Chad_From_ISS.JPG/960px-Emi_Koussi_Volcano%2C_Chad_From_ISS.JPG",
+    "file_name": "Emi_Koussi_Volcano,_Chad_From_ISS.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Emi Koussi"
+  },
+  "Mount Hood": {
+    "image": "images/mountains/mount-hood.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Hood",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Oregon_Mount_Hood_from_Trillium_Lake_2024.jpg/960px-Oregon_Mount_Hood_from_Trillium_Lake_2024.jpg",
+    "file_name": "Oregon_Mount_Hood_from_Trillium_Lake_2024.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Hood"
+  },
+  "Fitz Roy": {
+    "image": "images/mountains/fitz-roy.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Fitz_Roy",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/1952-01-31_-_Lionel_Terray%2C_Fitzroy%2C_d%C3%A9dicace_-_NB.jpg/960px-1952-01-31_-_Lionel_Terray%2C_Fitzroy%2C_d%C3%A9dicace_-_NB.jpg",
+    "file_name": "1952-01-31_-_Lionel_Terray,_Fitzroy,_dédicace_-_NB.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Fitz Roy"
+  },
+  "Etna": {
+    "image": "images/mountains/etna.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Etna",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/L%27Etna_vista_dalla_campagna_di_Randazzo.JPG/960px-L%27Etna_vista_dalla_campagna_di_Randazzo.JPG",
+    "file_name": "L'Etna_vista_dalla_campagna_di_Randazzo.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Etna"
+  },
+  "Marmolada": {
+    "image": "images/mountains/marmolada.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Marmolada",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Marmolata%2C_3343m.jpg/960px-Marmolata%2C_3343m.jpg",
+    "file_name": "Marmolata,_3343m.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Marmolada"
+  },
+  "Mount Kita": {
+    "image": "images/mountains/mount-kita.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Kita",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Mount_Kita_from_Mount_Nakashirane_2001-10-03.JPG/960px-Mount_Kita_from_Mount_Nakashirane_2001-10-03.JPG",
+    "file_name": "Mount_Kita_from_Mount_Nakashirane_2001-10-03.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Kita"
+  },
+  "Mount Hotaka": {
+    "image": "images/mountains/mount-hotaka.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Hotakadake",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Hotakadake_from_Tokugotoge_1994-4-30.jpg/960px-Hotakadake_from_Tokugotoge_1994-4-30.jpg",
+    "file_name": "Hotakadake_from_Tokugotoge_1994-4-30.jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Mount Hotakadake"
+  },
+  "Kinyeti": {
+    "image": "images/mountains/kinyeti.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Imatong_Mountains",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/1/17/Sudan_Kinyeti.jpg",
+    "file_name": "Sudan_Kinyeti.jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Imatong Mountains"
+  },
+  "Fansipan": {
+    "image": "images/mountains/fansipan.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Fansipan",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Fansipan_Summit.jpg/960px-Fansipan_Summit.jpg",
+    "file_name": "Fansipan_Summit.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Fansipan"
+  },
+  "Aýrybaba": {
+    "image": "images/mountains/ayrybaba.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Ayribobo",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Ayrybaba_massif.jpg/960px-Ayrybaba_massif.jpg",
+    "file_name": "Ayrybaba_massif.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Ayribobo"
+  },
+  "Cerro Torre": {
+    "image": "images/mountains/cerro-torre.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Cerro_Torre",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/f/f8/Cerro_torre_1987.jpg",
+    "file_name": "Cerro_torre_1987.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Cerro Torre"
+  },
+  "Pico Duarte": {
+    "image": "images/mountains/pico-duarte.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Pico_Duarte",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Hispaniolanpineforest.jpg/960px-Hispaniolanpineforest.jpg",
+    "file_name": "Hispaniolanpineforest.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Pico Duarte"
+  },
+  "Qurnat as Sawda'": {
+    "image": "images/mountains/qurnat-as-sawda.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Qurnat_as_Sawda%27",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Qurnat_as_sawda_early_summer.jpg/960px-Qurnat_as_sawda_early_summer.jpg",
+    "file_name": "Qurnat_as_sawda_early_summer.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Qurnat as Sawda'"
+  },
+  "Piton des Neiges": {
+    "image": "images/mountains/piton-des-neiges.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Piton_des_Neiges",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/PitonDesNeiges.JPG/960px-PitonDesNeiges.JPG",
+    "file_name": "PitonDesNeiges.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Piton des Neiges"
+  },
+  "Jabal Marrah": {
+    "image": "images/mountains/jabal-marrah.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Jebel_Marra",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Sudan_Jebel_Marra_Deriba_Lakes_edited.jpg/960px-Sudan_Jebel_Marra_Deriba_Lakes_edited.jpg",
+    "file_name": "Sudan_Jebel_Marra_Deriba_Lakes_edited.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Jebel Marra"
+  },
+  "Emba Soira": {
+    "image": "images/mountains/emba-soira.png",
+    "source_url": "https://en.wikipedia.org/wiki/Eritrea",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Flag_of_Eritrea.svg/960px-Flag_of_Eritrea.svg.png",
+    "file_name": "Flag_of_Eritrea.svg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Eritrea"
+  },
+  "Jabal Shams": {
+    "image": "images/mountains/jabal-shams.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Jebel_Shams",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Jebel_Shams.jpg/960px-Jebel_Shams.jpg",
+    "file_name": "Jebel_Shams.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Jebel Shams"
+  },
+  "Jabal Soudah": {
+    "image": "images/mountains/jabal-soudah.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Jabal_as-S%C5%ABda",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Al_Sawda_peak.jpg/960px-Al_Sawda_peak.jpg",
+    "file_name": "Al_Sawda_peak.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Jabal as-Sūda"
+  },
+  "Pico Basilé": {
+    "image": "images/mountains/pico-basile.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Pico_Basil%C3%A9",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Pico_Basil%C3%A9.jpg/960px-Pico_Basil%C3%A9.jpg",
+    "file_name": "Pico_Basilé.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Pico Basilé"
+  },
+  "Mount Mulanje": {
+    "image": "images/mountains/mount-mulanje.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mulanje_Massif",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Mulanje_ETM_26may02.jpg/960px-Mulanje_ETM_26may02.jpg",
+    "file_name": "Mulanje_ETM_26may02.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mulanje Massif"
+  },
+  "Pico da Neblina": {
+    "image": "images/mountains/pico-da-neblina.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Pico_da_Neblina",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Pico_da_Neblina_%28FAB%29.jpg/960px-Pico_da_Neblina_%28FAB%29.jpg",
+    "file_name": "Pico_da_Neblina_(FAB).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Pico da Neblina"
+  },
+  "Zugspitze": {
+    "image": "images/mountains/zugspitze.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Zugspitze",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Zugspitze_2.JPG/960px-Zugspitze_2.JPG",
+    "file_name": "Zugspitze_2.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Zugspitze"
+  },
+  "Mount Apo": {
+    "image": "images/mountains/mount-apo.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Apo",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Tuktok_ng_Pilipinas.jpg/960px-Tuktok_ng_Pilipinas.jpg",
+    "file_name": "Tuktok_ng_Pilipinas.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Apo"
+  },
+  "Coma Pedrosa": {
+    "image": "images/mountains/coma-pedrosa.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Coma_Pedrosa",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Comapedrosa01.jpg/960px-Comapedrosa01.jpg",
+    "file_name": "Comapedrosa01.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Coma Pedrosa"
+  },
+  "Mount Paget": {
+    "image": "images/mountains/mount-paget.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Paget",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Mount_Paget.jpeg/960px-Mount_Paget.jpeg",
+    "file_name": "Mount_Paget.jpeg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Paget"
+  },
+  "Musala": {
+    "image": "images/mountains/musala.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Musala",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Musala_IMG_1447.jpg/960px-Musala_IMG_1447.jpg",
+    "file_name": "Musala_IMG_1447.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Musala"
+  },
+  "Mount Tahat": {
+    "image": "images/mountains/mount-tahat.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Tahat",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Tahat_matin.jpg/960px-Tahat_matin.jpg",
+    "file_name": "Tahat_matin.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Tahat"
+  },
+  "Maromokotro": {
+    "image": "images/mountains/maromokotro.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Maromokotro",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Maromokotro.jpg/960px-Maromokotro.jpg",
+    "file_name": "Maromokotro.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Maromokotro"
+  },
+  "Cerro Las Minas": {
+    "image": "images/mountains/cerro-las-minas.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Cerro_Las_Minas",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Celaque.JPG/960px-Celaque.JPG",
+    "file_name": "Celaque.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Cerro Las Minas"
+  },
+  "Triglav": {
+    "image": "images/mountains/triglav.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Triglav",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Triglav.jpg/960px-Triglav.jpg",
+    "file_name": "Triglav.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Triglav"
+  },
+  "Phou Bia": {
+    "image": "images/mountains/phou-bia.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Phou_Bia",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/PhouBia_from_Nam_Ngum_Lake.jpg/960px-PhouBia_from_Nam_Ngum_Lake.jpg",
+    "file_name": "PhouBia_from_Nam_Ngum_Lake.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Phou Bia"
+  },
+  "Pico do Fogo": {
+    "image": "images/mountains/pico-do-fogo.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Pico_do_Fogo",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Cape_Verde_Pico_do_Fogo_b.jpg/960px-Cape_Verde_Pico_do_Fogo_b.jpg",
+    "file_name": "Cape_Verde_Pico_do_Fogo_b.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Pico do Fogo"
+  },
+  "Jabal el-Sheikh": {
+    "image": "images/mountains/jabal-el-sheikh.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Hermon",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Hermonsnow.jpg/960px-Hermonsnow.jpg",
+    "file_name": "Hermonsnow.jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Mount Hermon"
+  },
+  "Mount Ruapehu": {
+    "image": "images/mountains/mount-ruapehu.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Ruapehu",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Mount_Ruapehu_October_9%2C_2023_%28cropped%29.jpg/960px-Mount_Ruapehu_October_9%2C_2023_%28cropped%29.jpg",
+    "file_name": "Mount_Ruapehu_October_9,_2023_(cropped).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Ruapehu"
+  },
+  "Mount Roraima": {
+    "image": "images/mountains/mount-roraima.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Roraima",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Roraima3_%2879%29.JPG/960px-Roraima3_%2879%29.JPG",
+    "file_name": "Roraima3_(79).JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Roraima"
+  },
+  "Golem Korab": {
+    "image": "images/mountains/golem-korab.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Korab",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Velky_Korab_2011.jpg/960px-Velky_Korab_2011.jpg",
+    "file_name": "Velky_Korab_2011.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Korab"
+  },
+  "Big Ben": {
+    "image": "images/mountains/big-ben.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Big_Ben",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Elizabeth_Tower%2C_June_2022.jpg/960px-Elizabeth_Tower%2C_June_2022.jpg",
+    "file_name": "Elizabeth_Tower,_June_2022.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Big Ben"
+  },
+  "Paektu-san": {
+    "image": "images/mountains/paektu-san.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Paektu",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Laika_ac_Mt._Paekdu_%287998657081%29.jpg/960px-Laika_ac_Mt._Paekdu_%287998657081%29.jpg",
+    "file_name": "Laika_ac_Mt._Paekdu_(7998657081).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Paektu"
+  },
+  "Cerro El Pital": {
+    "image": "images/mountains/cerro-el-pital.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Cerro_El_Pital",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/8d/Pital_nevada.jpg",
+    "file_name": "Pital_nevada.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Cerro El Pital"
+  },
+  "Watzmann": {
+    "image": "images/mountains/watzmann.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Watzmann",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Watzmann_von_Norden.jpg/960px-Watzmann_von_Norden.jpg",
+    "file_name": "Watzmann_von_Norden.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Watzmann"
+  },
+  "Maja Jezercë": {
+    "image": "images/mountains/maja-jezerce.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Jezerc%C3%AB",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Jezerski_Vrh_%282694%29_sa_Karanfila_%282480%29.jpg/960px-Jezerski_Vrh_%282694%29_sa_Karanfila_%282480%29.jpg",
+    "file_name": "Jezerski_Vrh_(2694)_sa_Karanfila_(2480).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Jezercë"
+  },
+  "Mount Heha": {
+    "image": "images/mountains/mount-heha.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Heha",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Mont_Heha_Cropped.jpg/960px-Mont_Heha_Cropped.jpg",
+    "file_name": "Mont_Heha_Cropped.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Heha"
+  },
+  "Pic la Selle": {
+    "image": "images/mountains/pic-la-selle.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Pic_la_Selle",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Pic_La_Selle%2C_point_culminant_d%27Ha%C3%AFti.jpg/960px-Pic_La_Selle%2C_point_culminant_d%27Ha%C3%AFti.jpg",
+    "file_name": "Pic_La_Selle,_point_culminant_d'Haïti.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Pic la Selle"
+  },
+  "Velika Rudoka": {
+    "image": "images/mountains/velika-rudoka.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Velika_Rudoka",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/%D0%A0%D1%83%D0%B4%D0%BE%D0%BA%D0%B0.jpg/960px-%D0%A0%D1%83%D0%B4%D0%BE%D0%BA%D0%B0.jpg",
+    "file_name": "Рудока.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Velika Rudoka"
+  },
+  "Mount Catherine": {
+    "image": "images/mountains/mount-catherine.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Catherine",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Sinai-Mosesberg-168-Blick_zum_Katharinenberg-2009-gje.jpg/960px-Sinai-Mosesberg-168-Blick_zum_Katharinenberg-2009-gje.jpg",
+    "file_name": "Sinai-Mosesberg-168-Blick_zum_Katharinenberg-2009-gje.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Catherine"
+  },
+  "Mount Moco": {
+    "image": "images/mountains/mount-moco.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Moco",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Moco.JPG/960px-Moco.JPG",
+    "file_name": "Moco.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Moco"
+  },
+  "Grauspitz": {
+    "image": "images/mountains/grauspitz.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Grauspitz",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Grauspitzen.JPG/960px-Grauspitzen.JPG",
+    "file_name": "Grauspitzen.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Grauspitz"
+  },
+  "Inyangani": {
+    "image": "images/mountains/inyangani.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Nyangani",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/3/3d/Nyangani.jpg",
+    "file_name": "Nyangani.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Nyangani"
+  },
+  "Königstein": {
+    "image": "images/mountains/konigstein.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/K%C3%B6nigstein_im_Taunus",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Koenigstein_im_Taunus_Stadt_von_Burg.jpg/960px-Koenigstein_im_Taunus_Stadt_von_Burg.jpg",
+    "file_name": "Koenigstein_im_Taunus_Stadt_von_Burg.jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Königstein im Taunus"
+  },
+  "Doi Inthanon": {
+    "image": "images/mountains/doi-inthanon.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Doi_Inthanon",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Naphamethinidon%2C_Naphaphonphumisiri_near_summit_of_Doi_Inthanon.jpg/960px-Naphamethinidon%2C_Naphaphonphumisiri_near_summit_of_Doi_Inthanon.jpg",
+    "file_name": "Naphamethinidon,_Naphaphonphumisiri_near_summit_of_Doi_Inthanon.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Doi Inthanon"
+  },
+  "Mount St. Helens": {
+    "image": "images/mountains/mount-st-helens.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_St._Helens",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/MSH82_st_helens_plume_from_harrys_ridge_05-19-82.jpg/960px-MSH82_st_helens_plume_from_harrys_ridge_05-19-82.jpg",
+    "file_name": "MSH82_st_helens_plume_from_harrys_ridge_05-19-82.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount St. Helens"
+  },
+  "Moldoveanu": {
+    "image": "images/mountains/moldoveanu.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Moldoveanu_Peak",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Moldoveanu_Peak_%28Romania%29.jpg/960px-Moldoveanu_Peak_%28Romania%29.jpg",
+    "file_name": "Moldoveanu_Peak_(Romania).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Moldoveanu Peak"
+  },
+  "Zla Kolata": {
+    "image": "images/mountains/zla-kolata.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Zla_Kolata",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Zla_Kolata.JPG/960px-Zla_Kolata.JPG",
+    "file_name": "Zla_Kolata.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Zla Kolata"
+  },
+  "Pidurutalagala": {
+    "image": "images/mountains/pidurutalagala.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Pidurutalagala",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/MountPedro-SriLanka02.jpg/960px-MountPedro-SriLanka02.jpg",
+    "file_name": "MountPedro-SriLanka02.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Pidurutalagala"
+  },
+  "Mount Taranaki": {
+    "image": "images/mountains/mount-taranaki.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Taranaki",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/b/b7/Mt_Taranaki.JPG",
+    "file_name": "Mt_Taranaki.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Taranaki"
+  },
+  "Rysy": {
+    "image": "images/mountains/rysy.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Rysy",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Rysy%2C_wierzcholek_slowacki.jpg/960px-Rysy%2C_wierzcholek_slowacki.jpg",
+    "file_name": "Rysy,_wierzcholek_slowacki.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Rysy"
+  },
+  "Galdhøpiggen": {
+    "image": "images/mountains/galdhpiggen.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Galdh%C3%B8piggen",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/9/98/Galdh%C3%B8piggenFromFannar%C3%A5ki.jpg",
+    "file_name": "GaldhøpiggenFromFannaråki.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Galdhøpiggen"
+  },
+  "Shimbiris": {
+    "image": "images/mountains/shimbiris.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Ogo_Mountains",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/e/e6/Ogo_mountains_map_1907.jpg",
+    "file_name": "Ogo_mountains_map_1907.jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Ogo Mountains"
+  },
+  "Monte Binga": {
+    "image": "images/mountains/monte-binga.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Monte_Binga",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Mt_Binga_Mozambique.JPG/960px-Mt_Binga_Mozambique.JPG",
+    "file_name": "Mt_Binga_Mozambique.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Monte Binga"
+  },
+  "Chappal Waddi": {
+    "image": "images/mountains/chappal-waddi.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Chappal_Waddi",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Chappal_Wadi.jpg/960px-Chappal_Wadi.jpg",
+    "file_name": "Chappal_Wadi.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Chappal Waddi"
+  },
+  "Maglić": {
+    "image": "images/mountains/maglic.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Magli%C4%87_(mountain)",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Np_sutjeska_maglic.JPG/960px-Np_sutjeska_maglic.JPG",
+    "file_name": "Np_sutjeska_maglic.JPG",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Maglić (mountain)"
+  },
+  "Mount Karthala": {
+    "image": "images/mountains/mount-karthala.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Karthala",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Mount_Karthala_%2811000398163%29.jpg/960px-Mount_Karthala_%2811000398163%29.jpg",
+    "file_name": "Mount_Karthala_(11000398163).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Karthala"
+  },
+  "Montanha do Pico": {
+    "image": "images/mountains/montanha-do-pico.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Pico",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/2010-08-09_Ponta_do_Pico_01.jpg/960px-2010-08-09_Ponta_do_Pico_01.jpg",
+    "file_name": "2010-08-09_Ponta_do_Pico_01.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Pico"
+  },
+  "Mount Popomanaseu": {
+    "image": "images/mountains/mount-popomanaseu.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Guadalcanal",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Visale%2C_Solomon_Islands.JPG/960px-Visale%2C_Solomon_Islands.JPG",
+    "file_name": "Visale,_Solomon_Islands.JPG",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Guadalcanal"
+  },
+  "Beerenberg": {
+    "image": "images/mountains/beerenberg.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Beerenberg",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Beerenberg_Jan_Mayen.JPG/960px-Beerenberg_Jan_Mayen.JPG",
+    "file_name": "Beerenberg_Jan_Mayen.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Beerenberg"
+  },
+  "Bikku Bitti": {
+    "image": "images/mountains/bikku-bitti.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Bikku_Bitti",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/0/0f/Bikku_Bitti_Summit.jpg",
+    "file_name": "Bikku_Bitti_Summit.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Bikku Bitti"
+  },
+  "Blue Mountain Peak": {
+    "image": "images/mountains/blue-mountain-peak.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Blue_Mountain_Peak",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Blue_Mountain_Peak.jpg/960px-Blue_Mountain_Peak.jpg",
+    "file_name": "Blue_Mountain_Peak.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Blue Mountain Peak"
+  },
+  "Mont Orohena": {
+    "image": "images/mountains/mont-orohena.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mont_Orohena",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/c/c9/Mont.Orohena.JPG",
+    "file_name": "Mont.Orohena.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mont Orohena"
+  },
+  "Mount Kosciuszko": {
+    "image": "images/mountains/mount-kosciuszko.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Kosciuszko",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Kosciusko_Mountain_view_from_the_track.jpg/960px-Kosciusko_Mountain_view_from_the_track.jpg",
+    "file_name": "Kosciusko_Mountain_view_from_the_track.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Kosciuszko"
+  },
+  "Midžor": {
+    "image": "images/mountains/midzor.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mid%C5%BEor",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Stara_planina%2C_vrh_Mid%C5%BEor.jpg/960px-Stara_planina%2C_vrh_Mid%C5%BEor.jpg",
+    "file_name": "Stara_planina,_vrh_Midžor.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Midžor"
+  },
+  "Hvannadalshnúkur": {
+    "image": "images/mountains/hvannadalshnukur.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Hvannadalshnj%C3%BAkur",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Oraefajokull-Vatnajokull_National_Park.JPG/960px-Oraefajokull-Vatnajokull_National_Park.JPG",
+    "file_name": "Oraefajokull-Vatnajokull_National_Park.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Hvannadalshnjúkur"
+  },
+  "Kebnekaise": {
+    "image": "images/mountains/kebnekaise.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Kebnekaise",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Kebnekaise_viewed_from_Tarfala_valley_-_narrower_crop.jpg/960px-Kebnekaise_viewed_from_Tarfala_valley_-_narrower_crop.jpg",
+    "file_name": "Kebnekaise_viewed_from_Tarfala_valley_-_narrower_crop.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Kebnekaise"
+  },
+  "Mogotón": {
+    "image": "images/mountains/mogoton.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/List_of_mountain_peaks_of_Central_America",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Envisat_image_of_Central_America_ESA238704.jpg/960px-Envisat_image_of_Central_America_ESA238704.jpg",
+    "file_name": "Envisat_image_of_Central_America_ESA238704.jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "List of mountain peaks of Central America"
+  },
+  "Queen Mary's Peak": {
+    "image": "images/mountains/queen-mary-s-peak.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Queen_Mary%27s_Peak",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Tristan_da_Cunha_ASTER.jpg/960px-Tristan_da_Cunha_ASTER.jpg",
+    "file_name": "Tristan_da_Cunha_ASTER.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Queen Mary's Peak"
+  },
+  "Hoverla": {
+    "image": "images/mountains/hoverla.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Hoverla",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/%D0%97%D0%B8%D0%BC%D0%BE%D0%B2%D0%B8%D0%B9_%D0%B2%D0%B8%D0%B4%D0%BD%D0%BE%D0%BA%D1%80%D0%B0%D0%B9.jpg/960px-%D0%97%D0%B8%D0%BC%D0%BE%D0%B2%D0%B8%D0%B9_%D0%B2%D0%B8%D0%B4%D0%BD%D0%BE%D0%BA%D1%80%D0%B0%D0%B9.jpg",
+    "file_name": "Зимовий_виднокрай.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Hoverla"
+  },
+  "Pico de São Tomé": {
+    "image": "images/mountains/pico-de-sao-tome.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Pico_de_S%C3%A3o_Tom%C3%A9",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Forte_de_Sao_Sebastiao_%2820026107129%29.jpg/960px-Forte_de_Sao_Sebastiao_%2820026107129%29.jpg",
+    "file_name": "Forte_de_Sao_Sebastiao_(20026107129).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Pico de São Tomé"
+  },
+  "Mont Idoukal-n-Taghès": {
+    "image": "images/mountains/mont-idoukal-n-taghes.png",
+    "source_url": "https://en.wikipedia.org/wiki/Niger",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Niger_%28orthographic_projection%29.svg/960px-Niger_%28orthographic_projection%29.svg.png",
+    "file_name": "Niger_(orthographic_projection).svg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Niger"
+  },
+  "Mousa Ali": {
+    "image": "images/mountains/mousa-ali.png",
+    "source_url": "https://en.wikipedia.org/wiki/Mousa_Ali",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/1/1e/Mousa_Ali.png",
+    "file_name": "Mousa_Ali.png",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mousa Ali"
+  },
+  "Halla-san": {
+    "image": "images/mountains/halla-san.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Hallasan",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Hallasan_Above.jpg/960px-Hallasan_Above.jpg",
+    "file_name": "Hallasan_Above.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Hallasan"
+  },
+  "Mount Bintumani": {
+    "image": "images/mountains/mount-bintumani.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Bintumani",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Mountain_Bintunami.jpg/960px-Mountain_Bintunami.jpg",
+    "file_name": "Mountain_Bintunami.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Bintumani"
+  },
+  "Jebel Jais": {
+    "image": "images/mountains/jebel-jais.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Jebel_Jais",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/View_from_Jebel_Jais_-_panoramio.jpg/960px-View_from_Jebel_Jais_-_panoramio.jpg",
+    "file_name": "View_from_Jebel_Jais_-_panoramio.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Jebel Jais"
+  },
+  "Mount Tabwemasana": {
+    "image": "images/mountains/mount-tabwemasana.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Mount_Tabwemasana",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/e/ed/Vanuatu_relief_location_map.jpg",
+    "file_name": "Vanuatu_relief_location_map.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Tabwemasana"
+  },
+  "Bukit Pagon": {
+    "image": "images/mountains/bukit-pagon.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Bukit_Pagon",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Bukit_Pagon.jpg/960px-Bukit_Pagon.jpg",
+    "file_name": "Bukit_Pagon.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Bukit Pagon"
+  },
+  "Emlembe": {
+    "image": "images/mountains/emlembe.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Emlembe",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Emlembe_%282%29.jpg/960px-Emlembe_%282%29.jpg",
+    "file_name": "Emlembe_(2).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Emlembe"
+  },
+  "Mauga Silisili": {
+    "image": "images/mountains/mauga-silisili.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Silisili",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Mauga_Silisili.jpg/960px-Mauga_Silisili.jpg",
+    "file_name": "Mauga_Silisili.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Silisili"
+  },
+  "Jabal Umm ad Dami": {
+    "image": "images/mountains/jabal-umm-ad-dami.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Wadi_Rum",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Mountain_in_Wadi_Rum%2C_Jordan.jpg/960px-Mountain_in_Wadi_Rum%2C_Jordan.jpg",
+    "file_name": "Mountain_in_Wadi_Rum,_Jordan.jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Wadi Rum"
+  },
+  "Mont Ross": {
+    "image": "images/mountains/mont-ross.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mont_Ross",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Kerguelen_MontRoss.JPG/960px-Kerguelen_MontRoss.JPG",
+    "file_name": "Kerguelen_MontRoss.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mont Ross"
+  },
+  "Dinara": {
+    "image": "images/mountains/dinara.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Dinara",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Cetina_%28HR%29%2C_Dinara_--_2022_--_0032.jpg/960px-Cetina_%28HR%29%2C_Dinara_--_2022_--_0032.jpg",
+    "file_name": "Cetina_(HR),_Dinara_--_2022_--_0032.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Dinara"
+  },
+  "Phnom Aural": {
+    "image": "images/mountains/phnom-aural.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Phnom_Aural",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Phom_Aoral.jpg/960px-Phom_Aoral.jpg",
+    "file_name": "Phom_Aoral.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Phnom Aural"
+  },
+  "Mont Nimba": {
+    "image": "images/mountains/mont-nimba.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Richard-Molard",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Mount_Nimba_Strict_Nature_Reserve-108445.jpg/960px-Mount_Nimba_Strict_Nature_Reserve-108445.jpg",
+    "file_name": "Mount_Nimba_Strict_Nature_Reserve-108445.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Richard-Molard"
+  },
+  "Mont Panié": {
+    "image": "images/mountains/mont-panie.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mont_Pani%C3%A9",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/0/0e/Montpanie.jpg",
+    "file_name": "Montpanie.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mont Panié"
+  },
+  "Sněžka": {
+    "image": "images/mountains/snezka.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Sn%C4%9B%C5%BEka",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/%C5%9Anie%C5%BCka_z_zachodu.jpg/960px-%C5%9Anie%C5%BCka_z_zachodu.jpg",
+    "file_name": "Śnieżka_z_zachodu.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Sněžka"
+  },
+  "Jebel ech Chambi": {
+    "image": "images/mountains/jebel-ech-chambi.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Jebel_ech_Chambi",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Chambi1.JPG/960px-Chambi1.JPG",
+    "file_name": "Chambi1.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Jebel ech Chambi"
+  },
+  "Otse Hill": {
+    "image": "images/mountains/otse-hill.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Monalanong_Hill",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Mannyelanong_Hill_20200721.jpg/960px-Mannyelanong_Hill_20200721.jpg",
+    "file_name": "Mannyelanong_Hill_20200721.jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Monalanong Hill"
+  },
+  "La Grande Soufrière": {
+    "image": "images/mountains/la-grande-soufriere.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/La_Grande_Soufri%C3%A8re",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Guadeloupe_114_-_Sommet_de_la_Soufri%C3%A8re_1467m_-_Guadeloupe.jpg/960px-Guadeloupe_114_-_Sommet_de_la_Soufri%C3%A8re_1467m_-_Guadeloupe.jpg",
+    "file_name": "Guadeloupe_114_-_Sommet_de_la_Soufrière_1467m_-_Guadeloupe.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "La Grande Soufrière"
+  },
+  "Mount Wuteve": {
+    "image": "images/mountains/mount-wuteve.png",
+    "source_url": "https://en.wikipedia.org/wiki/Liberia",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Flag_of_Liberia.svg/960px-Flag_of_Liberia.svg.png",
+    "file_name": "Flag_of_Liberia.svg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Liberia"
+  },
+  "Morne Diablotins": {
+    "image": "images/mountains/morne-diablotins.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Morne_Diablotins",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/1/16/Morne_Diablotins.jpg",
+    "file_name": "Morne_Diablotins.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Morne Diablotins"
+  },
+  "Mont Ngaoui": {
+    "image": "images/mountains/mont-ngaoui.png",
+    "source_url": "https://en.wikipedia.org/wiki/Mont_Ngaoui",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Mont_Ngaoui.webp/960px-Mont_Ngaoui.webp.png",
+    "file_name": "Mont_Ngaoui.webp",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mont Ngaoui"
+  },
+  "Mont Pelée": {
+    "image": "images/mountains/mont-pelee.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Pel%C3%A9e",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Ville_de_Saint-Pierre.jpg/960px-Ville_de_Saint-Pierre.jpg",
+    "file_name": "Ville_de_Saint-Pierre.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Pelée"
+  },
+  "Ben Nevis": {
+    "image": "images/mountains/ben-nevis.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Ben_Nevis",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/BenNevis2005.jpg/960px-BenNevis2005.jpg",
+    "file_name": "BenNevis2005.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Ben Nevis"
+  },
+  "Cerro de Punta": {
+    "image": "images/mountains/cerro-de-punta.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Cerro_de_Punta",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Cerro_de_Punta_as_seen_from_Museo_de_Arte_de_Ponce%2C_Ponce%2C_Puerto_Rico_%28DSC03460%29.jpg/960px-Cerro_de_Punta_as_seen_from_Museo_de_Arte_de_Ponce%2C_Ponce%2C_Puerto_Rico_%28DSC03460%29.jpg",
+    "file_name": "Cerro_de_Punta_as_seen_from_Museo_de_Arte_de_Ponce,_Ponce,_Puerto_Rico_(DSC03460).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Cerro de Punta"
+  },
+  "Tomanivi": {
+    "image": "images/mountains/tomanivi.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Tomanivi",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Vitilevu_topo.jpg/960px-Vitilevu_topo.jpg",
+    "file_name": "Vitilevu_topo.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Tomanivi"
+  },
+  "Halti": {
+    "image": "images/mountains/halti.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Halti",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Top_of_Halti_fjeld_-_Finland_-_07-09-2006.jpg/960px-Top_of_Halti_fjeld_-_Finland_-_07-09-2006.jpg",
+    "file_name": "Top_of_Halti_fjeld_-_Finland_-_07-09-2006.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Halti"
+  },
+  "Vesuvius": {
+    "image": "images/mountains/vesuvius.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Vesuvius",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Il_cratere_del_Vulcano_-_panoramio.jpg/960px-Il_cratere_del_Vulcano_-_panoramio.jpg",
+    "file_name": "Il_cratere_del_Vulcano_-_panoramio.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Vesuvius"
+  },
+  "Juliana Top": {
+    "image": "images/mountains/juliana-top.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Pia_Cayetano",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/2a/Senator_Pia_Cayetano_%282025%29_%28cropped%29.jpg",
+    "file_name": "Senator_Pia_Cayetano_(2025)_(cropped).jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Pia Cayetano"
+  },
+  "Mount Meron": {
+    "image": "images/mountains/mount-meron.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Meron",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Northern_slope_of_Mount_Meron.jpg/960px-Northern_slope_of_Mount_Meron.jpg",
+    "file_name": "Northern_slope_of_Mount_Meron.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Meron"
+  },
+  "Hombori Tondo": {
+    "image": "images/mountains/hombori-tondo.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Hombori",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/21/Hombori_Tondo_from_Hombori.JPG",
+    "file_name": "Hombori_Tondo_from_Hombori.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Hombori"
+  },
+  "Doyle's Delight": {
+    "image": "images/mountains/doyle-s-delight.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Doyle%27s_Delight",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/b/b2/Doyle%27s_Delight.jpg",
+    "file_name": "Doyle's_Delight.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Doyle's Delight"
+  },
+  "Snowdon": {
+    "image": "images/mountains/snowdon.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Snowdon",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Snowdon_massif.jpg/960px-Snowdon_massif.jpg",
+    "file_name": "Snowdon_massif.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Snowdon"
+  },
+  "Mont Bengoué": {
+    "image": "images/mountains/mont-bengoue.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mont_Bengou%C3%A9",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Mont_Bengou%C3%A9.jpg/960px-Mont_Bengou%C3%A9.jpg",
+    "file_name": "Mont_Bengoué.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mont Bengoué"
+  },
+  "Kao": {
+    "image": "images/mountains/kao.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Archie_Kao",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/4/42/Archie-Kao-Esquire-2016.jpg",
+    "file_name": "Archie-Kao-Esquire-2016.jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Archie Kao"
+  },
+  "Carrauntoohil": {
+    "image": "images/mountains/carrauntoohil.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Carrauntoohil",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/b/bb/Carrauntoohil_2016.JPG",
+    "file_name": "Carrauntoohil_2016.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Carrauntoohil"
+  },
+  "Mount Nabi Yunis": {
+    "image": "images/mountains/mount-nabi-yunis.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Nabi_Yunis,_Palestine",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Mount_Nabi_Yunis_in_Halhul%2C_Palestine.jpg/960px-Mount_Nabi_Yunis_in_Halhul%2C_Palestine.jpg",
+    "file_name": "Mount_Nabi_Yunis_in_Halhul,_Palestine.jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Mount Nabi Yunis, Palestine"
+  },
+  "Mont Nabemba": {
+    "image": "images/mountains/mont-nabemba.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Nabemba_Tower",
+    "image_url": "https://upload.wikimedia.org/wikipedia/en/thumb/b/b6/Pirogues_sur_le_fleuve_Congo.jpg/960px-Pirogues_sur_le_fleuve_Congo.jpg",
+    "file_name": "Pirogues_sur_le_fleuve_Congo.jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Nabemba Tower"
+  },
+  "Kékes": {
+    "image": "images/mountains/kekes.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/K%C3%A9kes",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/5/55/K%C3%A9kestet%C5%91%2C_t%C3%A9v%C3%A9torony_2.jpg",
+    "file_name": "Kékestető,_tévétorony_2.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Kékes"
+  },
+  "Mont Agou": {
+    "image": "images/mountains/mont-agou.png",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Agou",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/85/Mont_agou.png",
+    "file_name": "Mont_agou.png",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Agou"
+  },
+  "Scafell Pike": {
+    "image": "images/mountains/scafell-pike.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Scafell_Pike",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Scafell_massif.jpg/960px-Scafell_massif.jpg",
+    "file_name": "Scafell_massif.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Scafell Pike"
+  },
+  "Mount Gimie": {
+    "image": "images/mountains/mount-gimie.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Gimie",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Mt._Gimie.jpg/960px-Mt._Gimie.jpg",
+    "file_name": "Mt._Gimie.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Gimie"
+  },
+  "Cerro del Aripo": {
+    "image": "images/mountains/cerro-del-aripo.png",
+    "source_url": "https://en.wikipedia.org/wiki/Trinidad",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/8a/Td-map.png",
+    "file_name": "Td-map.png",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Trinidad"
+  },
+  "Stromboli": {
+    "image": "images/mountains/stromboli.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Stromboli",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Aerial_image_of_Stromboli_%28view_from_the_northeast%29.jpg/960px-Aerial_image_of_Stromboli_%28view_from_the_northeast%29.jpg",
+    "file_name": "Aerial_image_of_Stromboli_(view_from_the_northeast).jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Stromboli"
+  },
+  "Chances Peak": {
+    "image": "images/mountains/chances-peak.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Chances_Peak",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Soufriere_Hills.jpg/960px-Soufriere_Hills.jpg",
+    "file_name": "Soufriere_Hills.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Chances Peak"
+  },
+  "Kediet ej Jill": {
+    "image": "images/mountains/kediet-ej-jill.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Kediet_ej_Jill",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Kediet-ej-jill.jpg/960px-Kediet-ej-jill.jpg",
+    "file_name": "Kediet-ej-jill.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Kediet ej Jill"
+  },
+  "Morne Seychellois": {
+    "image": "images/mountains/morne-seychellois.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Morne_Seychellois",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Port_Victoria%2C_Seychelles_-_panoramio.jpg/960px-Port_Victoria%2C_Seychelles_-_panoramio.jpg",
+    "file_name": "Port_Victoria,_Seychelles_-_panoramio.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Morne Seychellois"
+  },
+  "Leklata": {
+    "image": "images/mountains/leklata.png",
+    "source_url": "https://en.wikipedia.org/wiki/List_of_elevation_extremes_by_country",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Countries_by_highest_point_map.PNG/960px-Countries_by_highest_point_map.PNG",
+    "file_name": "Countries_by_highest_point_map.PNG",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "List of elevation extremes by country"
+  },
+  "Slættaratindur": {
+    "image": "images/mountains/slttaratindur.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Sl%C3%A6ttaratindur",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Sl%C3%A6ttaratindur_summer_2018.jpg/960px-Sl%C3%A6ttaratindur_summer_2018.jpg",
+    "file_name": "Slættaratindur_summer_2018.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Slættaratindur"
+  },
+  "Mount Scenery": {
+    "image": "images/mountains/mount-scenery.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Scenery",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Saba_with_cloud_cover.jpg/960px-Saba_with_cloud_cover.jpg",
+    "file_name": "Saba_with_cloud_cover.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Scenery"
+  },
+  "Bellevue de l'Inini": {
+    "image": "images/mountains/bellevue-de-l-inini.png",
+    "source_url": "https://en.wikipedia.org/wiki/French_Guiana",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/French_Guiana_in_France_2016.svg/960px-French_Guiana_in_France_2016.svg.png",
+    "file_name": "French_Guiana_in_France_2016.svg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "French Guiana"
+  },
+  "Cerro Perő": {
+    "image": "images/mountains/cerro-pero.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Cerro_Tres_Kand%C3%BA",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/4/41/Cerro_Tres_Kandu_Paraguay.jpg",
+    "file_name": "Cerro_Tres_Kandu_Paraguay.jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Cerro Tres Kandú"
+  },
+  "Mount Saint Catherine": {
+    "image": "images/mountains/mount-saint-catherine.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Catherine",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Sinai-Mosesberg-168-Blick_zum_Katharinenberg-2009-gje.jpg/960px-Sinai-Mosesberg-168-Blick_zum_Katharinenberg-2009-gje.jpg",
+    "file_name": "Sinai-Mosesberg-168-Blick_zum_Katharinenberg-2009-gje.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Catherine"
+  },
+  "Piton de la Petite Rivière Noire": {
+    "image": "images/mountains/piton-de-la-petite-riviere-noire.png",
+    "source_url": "https://en.wikipedia.org/wiki/Geography_of_Mauritius",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Mauritius_island_location.svg/960px-Mauritius_island_location.svg.png",
+    "file_name": "Mauritius_island_location.svg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Geography of Mauritius"
+  },
+  "Nanlaud": {
+    "image": "images/mountains/nanlaud.png",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Nanlaud",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/c/cb/Pohnpei_Island.png",
+    "file_name": "Pohnpei_Island.png",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Nanlaud"
+  },
+  "Olavtoppen": {
+    "image": "images/mountains/olavtoppen.png",
+    "source_url": "https://en.wikipedia.org/wiki/Olavtoppen",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Bouvet_Map.png/960px-Bouvet_Map.png",
+    "file_name": "Bouvet_Map.png",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Olavtoppen"
+  },
+  "Mount Tenakourou": {
+    "image": "images/mountains/mount-tenakourou.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Tenakourou",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Tenakourou.jpg/960px-Tenakourou.jpg",
+    "file_name": "Tenakourou.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Tenakourou"
+  },
+  "Monte Titano": {
+    "image": "images/mountains/monte-titano.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Monte_Titano",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Monte_Titano_Panorama.jpg/960px-Monte_Titano_Panorama.jpg",
+    "file_name": "Monte_Titano_Panorama.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Monte Titano"
+  },
+  "Mount Usborne": {
+    "image": "images/mountains/mount-usborne.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Usborne",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Mount_Usborne_-_Flickr_-_chris_lovelock.jpg/960px-Mount_Usborne_-_Flickr_-_chris_lovelock.jpg",
+    "file_name": "Mount_Usborne_-_Flickr_-_chris_lovelock.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Usborne"
+  },
+  "Signal de Botrange": {
+    "image": "images/mountains/signal-de-botrange.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Signal_de_Botrange",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Belgium%2C_Botrange%2C_Monument.JPG/960px-Belgium%2C_Botrange%2C_Monument.JPG",
+    "file_name": "Belgium,_Botrange,_Monument.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Signal de Botrange"
+  },
+  "Benara": {
+    "image": "images/mountains/benara.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Noranda_railway_station",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Noranda_Station%2C_Western_Australia%2C_December_2024_29.jpg/960px-Noranda_Station%2C_Western_Australia%2C_December_2024_29.jpg",
+    "file_name": "Noranda_Station,_Western_Australia,_December_2024_29.jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Noranda railway station"
+  },
+  "Mont Sokbaro": {
+    "image": "images/mountains/mont-sokbaro.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mont_Sokbaro",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/d/db/Mont_Sokbaro_Cropped.jpg",
+    "file_name": "Mont_Sokbaro_Cropped.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mont Sokbaro"
+  },
+  "Te Manga": {
+    "image": "images/mountains/te-manga.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Te_Manga",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/CookIslands-Rarotonga-TeManga-mgl20030609-01.jpg/960px-CookIslands-Rarotonga-TeManga-mgl20030609-01.jpg",
+    "file_name": "CookIslands-Rarotonga-TeManga-mgl20030609-01.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Te Manga"
+  },
+  "Felo Barkere": {
+    "image": "images/mountains/felo-barkere.png",
+    "source_url": "https://en.wikipedia.org/wiki/List_of_elevation_extremes_by_country",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Countries_by_highest_point_map.PNG/960px-Countries_by_highest_point_map.PNG",
+    "file_name": "Countries_by_highest_point_map.PNG",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "List of elevation extremes by country"
+  },
+  "Kneiff": {
+    "image": "images/mountains/kneiff.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Kneiff",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/4/43/Kneiff.jpg",
+    "file_name": "Kneiff.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Kneiff"
+  },
+  "Cerro Catedral": {
+    "image": "images/mountains/cerro-catedral.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Cerro_Catedral",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/6/68/Basecat.JPG",
+    "file_name": "Basecat.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Cerro Catedral"
+  },
+  "Rock of Gibraltar": {
+    "image": "images/mountains/rock-of-gibraltar.png",
+    "source_url": "https://en.wikipedia.org/wiki/Rock_of_Gibraltar",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Gibraltar_map-en-edit2.svg/960px-Gibraltar_map-en-edit2.svg.png",
+    "file_name": "Gibraltar_map-en-edit2.svg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Rock of Gibraltar"
+  },
+  "Mount Lamlam": {
+    "image": "images/mountains/mount-lamlam.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Lamlam",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Mount_Lamlam.jpg/960px-Mount_Lamlam.jpg",
+    "file_name": "Mount_Lamlam.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Lamlam"
+  },
+  "Boggy Peak": {
+    "image": "images/mountains/boggy-peak.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Boggy_Peak",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/1/1d/Boggy_Peak.JPG",
+    "file_name": "Boggy_Peak.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Boggy Peak"
+  },
+  "Flagstaff Peak": {
+    "image": "images/mountains/flagstaff-peak.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Flagstaff,_Arizona",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/5/5a/Flagstaff_AZ_-_downtown_hotel.jpg",
+    "file_name": "Flagstaff_AZ_-_downtown_hotel.jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Flagstaff, Arizona"
+  },
+  "Sint Christoffelberg": {
+    "image": "images/mountains/sint-christoffelberg.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Christoffelberg",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/MT._CHRISTOFFEL_IN_CHRISTOFFEL_PARK.jpg/960px-MT._CHRISTOFFEL_IN_CHRISTOFFEL_PARK.jpg",
+    "file_name": "MT._CHRISTOFFEL_IN_CHRISTOFFEL_PARK.jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Christoffelberg"
+  },
+  "Murray Hill": {
+    "image": "images/mountains/murray-hill.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Murray_Hill,_Manhattan",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Lexington_and_E_36th.jpg/960px-Lexington_and_E_36th.jpg",
+    "file_name": "Lexington_and_E_36th.jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Murray Hill, Manhattan"
+  },
+  "Mount Hillaby": {
+    "image": "images/mountains/mount-hillaby.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Saint_Andrew,_Barbados",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Saint_Andrew%2C_Barbados_011.jpg/960px-Saint_Andrew%2C_Barbados_011.jpg",
+    "file_name": "Saint_Andrew,_Barbados_011.jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Saint Andrew, Barbados"
+  },
+  "Mount Bates": {
+    "image": "images/mountains/mount-bates.png",
+    "source_url": "https://en.wikipedia.org/wiki/Principality_of_Sealand",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Europe_location_SLD.png/960px-Europe_location_SLD.png",
+    "file_name": "Europe_location_SLD.png",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Principality of Sealand"
+  },
+  "Suur Munamägi": {
+    "image": "images/mountains/suur-munamagi.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Suur_Munam%C3%A4gi",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/c/cd/Suur_Munam%C3%A4gi_2014.jpg",
+    "file_name": "Suur_Munamägi_2014.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Suur Munamägi"
+  },
+  "Gaiziņkalns": {
+    "image": "images/mountains/gaizinkalns.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Gaizi%C5%86kalns",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Top_point_of_Gaizinkalns.jpg/960px-Top_point_of_Gaizinkalns.jpg",
+    "file_name": "Top_point_of_Gaizinkalns.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Gaiziņkalns"
+  },
+  "Aukštojas": {
+    "image": "images/mountains/aukstojas.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Auk%C5%A1tojas_Hill",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Aukstojo_kalnas.JPG/960px-Aukstojo_kalnas.JPG",
+    "file_name": "Aukstojo_kalnas.JPG",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Aukštojas Hill"
+  },
+  "Morne de Vitet": {
+    "image": "images/mountains/morne-de-vitet.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Morne_de_Vitet",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Saint_Barth_-_Vue_a%C3%A9rienne_%28Anse_de_Lorient%29_-_Octobre_2009.jpg/960px-Saint_Barth_-_Vue_a%C3%A9rienne_%28Anse_de_Lorient%29_-_Octobre_2009.jpg",
+    "file_name": "Saint_Barth_-_Vue_aérienne_(Anse_de_Lorient)_-_Octobre_2009.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Morne de Vitet"
+  },
+  "Dongol Rondè": {
+    "image": "images/mountains/dongol-ronde.png",
+    "source_url": "https://en.wikipedia.org/wiki/Geography_of_Guinea-Bissau",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Un-guinea-bissau.png/960px-Un-guinea-bissau.png",
+    "file_name": "Un-guinea-bissau.png",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Geography of Guinea-Bissau"
+  },
+  "Ta' Dmejrek": {
+    "image": "images/mountains/ta-dmejrek.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Ta%27_Dmejrek",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Dingli_-_Fifla.jpg/960px-Dingli_-_Fifla.jpg",
+    "file_name": "Dingli_-_Fifla.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Ta' Dmejrek"
+  },
+  "Mount Ngerchelchuus": {
+    "image": "images/mountains/mount-ngerchelchuus.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Ngerchelchuus",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Mount_Ngerchelchuus.JPG/960px-Mount_Ngerchelchuus.JPG",
+    "file_name": "Mount_Ngerchelchuus.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mount Ngerchelchuus"
+  },
+  "Mount Jamanota": {
+    "image": "images/mountains/mount-jamanota.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Jamanota",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/View_from_Mount_Jamanota.jpg/960px-View_from_Mount_Jamanota.jpg",
+    "file_name": "View_from_Mount_Jamanota.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Jamanota"
+  },
+  "Coloane Alto": {
+    "image": "images/mountains/coloane-alto.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Alto_de_Coloane",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Alto_de_Coloane.jpg/960px-Alto_de_Coloane.jpg",
+    "file_name": "Alto_de_Coloane.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Alto de Coloane"
+  },
+  "Møllehøj": {
+    "image": "images/mountains/mllehj.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/M%C3%B8lleh%C3%B8j",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/M%C3%B8lleh%C3%B8j_from_Ejer_Bavneh%C3%B8j.jpg/960px-M%C3%B8lleh%C3%B8j_from_Ejer_Bavneh%C3%B8j.jpg",
+    "file_name": "Møllehøj_from_Ejer_Bavnehøj.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Møllehøj"
+  },
+  "Bukit Timah Hill": {
+    "image": "images/mountains/bukit-timah-hill.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Bukit_Timah_Hill",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Bukit_Timah_Hill.jpg/960px-Bukit_Timah_Hill.jpg",
+    "file_name": "Bukit_Timah_Hill.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Bukit Timah Hill"
+  },
+  "Mont Agel": {
+    "image": "images/mountains/mont-agel.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mont_Agel",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Monaco_IMG_1183.jpg/960px-Monaco_IMG_1183.jpg",
+    "file_name": "Monaco_IMG_1183.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mont Agel"
+  },
+  "Les Platons": {
+    "image": "images/mountains/les-platons.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Les_Platons",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Les_Pliatons_J%C3%A8rri_Mai_2009.jpg/960px-Les_Pliatons_J%C3%A8rri_Mai_2009.jpg",
+    "file_name": "Les_Pliatons_Jèrri_Mai_2009.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Les Platons"
+  },
+  "Mountain of Smoke": {
+    "image": "images/mountains/mountain-of-smoke.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mountain_of_Smoke",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Jabal_Ad_Dukhan.jpg/960px-Jabal_Ad_Dukhan.jpg",
+    "file_name": "Jabal_Ad_Dukhan.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mountain of Smoke"
+  },
+  "Le Moulin": {
+    "image": "images/mountains/le-moulin.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Le_Moulin",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Moul%C3%AEn_%C3%A0_Vent_2%2C_S%C3%A8r.jpg/960px-Moul%C3%AEn_%C3%A0_Vent_2%2C_S%C3%A8r.jpg",
+    "file_name": "Moulîn_à_Vent_2,_Sèr.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Le Moulin"
+  },
+  "Qurayn Abu al Bawl": {
+    "image": "images/mountains/qurayn-abu-al-bawl.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Qurayn_Abu_al_Bawl",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Al-Qalail_Range_depuis_la_Route_Qatar-EAU.jpg/960px-Al-Qalail_Range_depuis_la_Route_Qatar-EAU.jpg",
+    "file_name": "Al-Qalail_Range_depuis_la_Route_Qatar-EAU.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Qurayn Abu al Bawl"
+  },
+  "Hármas-határ-hegy": {
+    "image": "images/mountains/harmas-hatar-hegy.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/A_fels%C5%91sz%C3%B6ln%C3%B6ki_h%C3%A1rmas_hat%C3%A1r",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Tromejnik-Trdkova.jpg/960px-Tromejnik-Trdkova.jpg",
+    "file_name": "Tromejnik-Trdkova.jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "A felsőszölnöki hármas határ"
+  },
+  "Galyatető": {
+    "image": "images/mountains/galyateto.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Galya-tet%C5%91",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Galya-tet%C5%91.jpg/960px-Galya-tet%C5%91.jpg",
+    "file_name": "Galya-tető.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Galya-tető"
+  },
+  "Istállós-kő": {
+    "image": "images/mountains/istallos-ko.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Ist%C3%A1ll%C3%B3s-k%C5%91",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Ist%C3%A1ll%C3%B3s-k%C5%91.JPG/960px-Ist%C3%A1ll%C3%B3s-k%C5%91.JPG",
+    "file_name": "Istállós-kő.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Istállós-kő"
+  },
+  "Bálvány": {
+    "image": "images/mountains/balvany.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/B%C3%A1lv%C3%A1ny",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/2f/Worshiping_the_golden_calf.jpg",
+    "file_name": "Worshiping_the_golden_calf.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Bálvány"
+  },
+  "Tar-kő": {
+    "image": "images/mountains/tar-ko.gif",
+    "source_url": "https://en.wikipedia.org/wiki/A_Portuguesa",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/2b/A_Portuguesa_music_sheet_%281957_official%29.gif",
+    "file_name": "A_Portuguesa_music_sheet_(1957_official).gif",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "A Portuguesa"
+  },
+  "Csóványos": {
+    "image": "images/mountains/csovanyos.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Cs%C3%B3v%C3%A1nyos",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Cs%C3%B3v%C3%A1nyos.JPG/960px-Cs%C3%B3v%C3%A1nyos.JPG",
+    "file_name": "Csóványos.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Csóványos"
+  },
+  "Nagy-Milic": {
+    "image": "images/mountains/nagy-milic.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Nagy-Milic",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Nagy_Milic_-_F%C3%BCz%C3%A9r%2C_2014.06.19_%281%29.JPG/960px-Nagy_Milic_-_F%C3%BCz%C3%A9r%2C_2014.06.19_%281%29.JPG",
+    "file_name": "Nagy_Milic_-_Füzér,_2014.06.19_(1).JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Nagy-Milic"
+  },
+  "Írott-kő": {
+    "image": "images/mountains/irott-ko.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Geschriebenstein",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Geschriebenstein_-_Aussichtswarte.JPG/960px-Geschriebenstein_-_Aussichtswarte.JPG",
+    "file_name": "Geschriebenstein_-_Aussichtswarte.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Geschriebenstein"
+  },
+  "Nagy-Hideg-hegy": {
+    "image": "images/mountains/nagy-hideg-hegy.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Nagy-Hideg-hegy",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Nagy-Hideg-hegy_tourist_house.JPG/960px-Nagy-Hideg-hegy_tourist_house.JPG",
+    "file_name": "Nagy-Hideg-hegy_tourist_house.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Nagy-Hideg-hegy"
+  },
+  "Bél-kő": {
+    "image": "images/mountains/bel-ko.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/B%C3%A9l-k%C5%91",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/B%C3%A9l-k%C5%91_2019_ny%C3%A1r_a_b%C3%A9lap%C3%A1tfalvai_t%C3%B3_fel%C5%91l.jpg/960px-B%C3%A9l-k%C5%91_2019_ny%C3%A1r_a_b%C3%A9lap%C3%A1tfalvai_t%C3%B3_fel%C5%91l.jpg",
+    "file_name": "Bél-kő_2019_nyár_a_bélapátfalvai_tó_felől.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Bél-kő"
+  },
+  "Muzsla": {
+    "image": "images/mountains/muzsla.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Mu%C5%BEla",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Muzsla_templom.JPG/960px-Muzsla_templom.JPG",
+    "file_name": "Muzsla_templom.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Mužla"
+  },
+  "Pilis": {
+    "image": "images/mountains/pilis.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Pilis",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/82/Pilis_-_Palace.jpg",
+    "file_name": "Pilis_-_Palace.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Pilis"
+  },
+  "Karancs": {
+    "image": "images/mountains/karancs.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Karancs",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Karanc_rozhledna.jpg/960px-Karanc_rozhledna.jpg",
+    "file_name": "Karanc_rozhledna.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Karancs"
+  },
+  "Kőris-hegy": {
+    "image": "images/mountains/koris-hegy.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/K%C5%91ris-hegy",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/A_K%C5%91ris-_hegy_Borzav%C3%A1r_fel%C5%91l.jpg/960px-A_K%C5%91ris-_hegy_Borzav%C3%A1r_fel%C5%91l.jpg",
+    "file_name": "A_Kőris-_hegy_Borzavár_felől.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Kőris-hegy"
+  },
+  "Dobogókő": {
+    "image": "images/mountains/dobogoko.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Dobog%C3%B3k%C5%91",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/23/Dobog%C3%B3k%C5%916.jpg",
+    "file_name": "Dobogókő6.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Dobogókő"
+  },
+  "Zengő": {
+    "image": "images/mountains/zengo.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Zeng%C5%91",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/8b/LefeleZengorol.JPG",
+    "file_name": "LefeleZengorol.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Zengő"
+  },
+  "Naszály": {
+    "image": "images/mountains/naszaly.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Nasz%C3%A1ly",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Nasz%C3%A1ly19.JPG/960px-Nasz%C3%A1ly19.JPG",
+    "file_name": "Naszály19.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Naszály"
+  },
+  "Prédikálószék": {
+    "image": "images/mountains/predikaloszek.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Pr%C3%A9dik%C3%A1l%C3%B3sz%C3%A9k",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Pr%C3%A9dik%C3%A1l%C3%B3sz%C3%A9ki-kil%C3%A1t%C3%B3_d%C3%A9l_fel%C5%91l.jpg/960px-Pr%C3%A9dik%C3%A1l%C3%B3sz%C3%A9ki-kil%C3%A1t%C3%B3_d%C3%A9l_fel%C5%91l.jpg",
+    "file_name": "Prédikálószéki-kilátó_dél_felől.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Prédikálószék"
+  },
+  "Nagy-Gerecse": {
+    "image": "images/mountains/nagy-gerecse.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Gerecse_Mountains",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Gerecse_l%C3%A1tk%C3%A9pe.jpg/960px-Gerecse_l%C3%A1tk%C3%A9pe.jpg",
+    "file_name": "Gerecse_látképe.jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Gerecse Mountains"
+  },
+  "Tubes": {
+    "image": "images/mountains/tubes.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Tubes",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/J%C3%A1nos-kil%C3%A1t%C3%B3_Tubes.JPG/960px-J%C3%A1nos-kil%C3%A1t%C3%B3_Tubes.JPG",
+    "file_name": "János-kilátó_Tubes.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Tubes"
+  },
+  "Nagy-Kopasz": {
+    "image": "images/mountains/nagy-kopasz.png",
+    "source_url": "https://en.wikipedia.org/wiki/Buda_Hills",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/HU_microregion_5.3.31._Budai-hegyek.png/960px-HU_microregion_5.3.31._Budai-hegyek.png",
+    "file_name": "HU_microregion_5.3.31._Budai-hegyek.png",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Buda Hills"
+  },
+  "János-hegy": {
+    "image": "images/mountains/janos-hegy.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/J%C3%A1nos-hegy",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/View_of_J%C3%A1nos_Hill_from_Kis-H%C3%A1rs_Hill.JPG/960px-View_of_J%C3%A1nos_Hill_from_Kis-H%C3%A1rs_Hill.JPG",
+    "file_name": "View_of_János_Hill_from_Kis-Hárs_Hill.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "János-hegy"
+  },
+  "Nagy-Hárs-hegy": {
+    "image": "images/mountains/nagy-hars-hegy.png",
+    "source_url": "https://hu.wikipedia.org/wiki/Nagy-H%C3%A1rs-hegy",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Buda_Hills_OSM_map_2.png/960px-Buda_Hills_OSM_map_2.png",
+    "file_name": "Buda_Hills_OSM_map_2.png",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Nagy-Hárs-hegy"
+  },
+  "Badacsony": {
+    "image": "images/mountains/badacsony.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Badacsony",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Badacsony_mountain_from_Balatonm%C3%A1riaf%C3%BCrd%C5%91%2C_Hungary.jpg/960px-Badacsony_mountain_from_Balatonm%C3%A1riaf%C3%BCrd%C5%91%2C_Hungary.jpg",
+    "file_name": "Badacsony_mountain_from_Balatonmáriafürdő,_Hungary.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Badacsony"
+  },
+  "Somló": {
+    "image": "images/mountains/somlo.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Soml%C3%B3",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/c/c8/Somlohegy.jpg",
+    "file_name": "Somlohegy.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Somló"
+  },
+  "Ság-hegy": {
+    "image": "images/mountains/sag-hegy.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/S%C3%A1g_Mountain",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/S%C3%A1g_hegy.jpg/960px-S%C3%A1g_hegy.jpg",
+    "file_name": "Ság_hegy.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Ság Mountain"
+  },
+  "Gerlachfalvi-csúcs": {
+    "image": "images/mountains/gerlachfalvi-csucs.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Gerlachfalvi-cs%C3%BAcs",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/6/6c/Gerlachovsky_stit_from_Velicka_dolina.jpg",
+    "file_name": "Gerlachovsky_stit_from_Velicka_dolina.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Gerlachfalvi-csúcs"
+  },
+  "Tengerszem-csúcs": {
+    "image": "images/mountains/tengerszem-csucs.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Tengerszem-cs%C3%BAcs",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/87/Rysy%2C_szczyt.jpg",
+    "file_name": "Rysy,_szczyt.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Tengerszem-csúcs"
+  },
+  "Kriván": {
+    "image": "images/mountains/krivan.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Kriv%C3%A1n",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Kriv%C3%A1%C5%88.JPG/960px-Kriv%C3%A1%C5%88.JPG",
+    "file_name": "Kriváň.JPG",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Kriván"
+  },
+  "Nagyszalóki-csúcs": {
+    "image": "images/mountains/nagyszaloki-csucs.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Nagyszal%C3%B3ki-cs%C3%BAcs",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Slavkovsk%C3%BD_%C5%A1t%C3%ADt.jpg/960px-Slavkovsk%C3%BD_%C5%A1t%C3%ADt.jpg",
+    "file_name": "Slavkovský_štít.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Nagyszalóki-csúcs"
+  },
+  "Kis-Viszoka": {
+    "image": "images/mountains/kis-viszoka.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Kis-Visz%C3%B3ka-cs%C3%BAcs",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Ma%C5%82a_Wysoka_z_Rys%C3%B3w.jpg/960px-Ma%C5%82a_Wysoka_z_Rys%C3%B3w.jpg",
+    "file_name": "Mała_Wysoka_z_Rysów.jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Kis-Viszóka-csúcs"
+  },
+  "Kapor-csúcs": {
+    "image": "images/mountains/kapor-csucs.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Kapor-cs%C3%BAcs",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Koprowy.jpg/960px-Koprowy.jpg",
+    "file_name": "Koprowy.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Kapor-csúcs"
+  },
+  "Fehér-tavi-csúcs": {
+    "image": "images/mountains/feher-tavi-csucs.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Feh%C3%A9r-tavi-cs%C3%BAcs",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/b/b6/Jahnaci_stit_from_Kopske_sedlo.jpg",
+    "file_name": "Jahnaci_stit_from_Kopske_sedlo.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Fehér-tavi-csúcs"
+  },
+  "Elülső-Szoliszkó": {
+    "image": "images/mountains/elulso-szoliszko.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Szoliszk%C3%B3_mened%C3%A9kh%C3%A1z",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/f/ff/Chata_pod_Soliskom.jpg",
+    "file_name": "Chata_pod_Soliskom.jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Szoliszkó menedékház"
+  },
+  "Gyömbér": {
+    "image": "images/mountains/gyomber.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Norbert_Gy%C3%B6mb%C3%A9r",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/SVK_vs._SMR_2024_Slovakia_Nr._6_Gy%C3%B6mb%C3%A9r.jpg/960px-SVK_vs._SMR_2024_Slovakia_Nr._6_Gy%C3%B6mb%C3%A9r.jpg",
+    "file_name": "SVK_vs._SMR_2024_Slovakia_Nr._6_Gyömbér.jpg",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Norbert Gyömbér"
+  },
+  "Nagy-Morgás": {
+    "image": "images/mountains/nagy-morgas.png",
+    "source_url": "https://en.wikipedia.org/wiki/Fairfield,_Connecticut",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Fairfield_photo_montage.png/960px-Fairfield_photo_montage.png",
+    "file_name": "Fairfield_photo_montage.png",
+    "license": null,
+    "artist": null,
+    "method": "search+pageimages",
+    "title": "Fairfield, Connecticut"
+  },
+  "Chopok": {
+    "image": "images/mountains/chopok.jpg",
+    "source_url": "https://en.wikipedia.org/wiki/Chopok",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Chopok_top.jpg/960px-Chopok_top.jpg",
+    "file_name": "Chopok_top.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Chopok"
+  },
+  "Oszterva": {
+    "image": "images/mountains/oszterva.jpg",
+    "source_url": "https://hu.wikipedia.org/wiki/Oszterva",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Ostrva_a1.jpg/960px-Ostrva_a1.jpg",
+    "file_name": "Ostrva_a1.jpg",
+    "license": null,
+    "artist": null,
+    "method": "pageimages",
+    "title": "Oszterva"
+  }
+}

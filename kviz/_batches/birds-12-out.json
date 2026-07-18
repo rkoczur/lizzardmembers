@@ -1,0 +1,170 @@
+[
+    {
+        "name": "Vörösszemű gulyajáró",
+        "latin_name": "Molothrus aeneus",
+        "diet": "Magvakkal, rovarokkal és pókokkal táplálkozik, gyakran legelésző állatok közelében keresgélve a felvert ízeltlábúakat.",
+        "fun_fact": "Kotlásparazita faj, amely sosem épít saját fészket, hanem tojásait más madarak fészkébe csempészi, a hímek pedig jellegzetes vörös szemükről ismerhetők fel."
+    },
+    {
+        "name": "Vörösvállú ölyv",
+        "latin_name": "Buteo lineatus",
+        "diet": "Főként kisemlősökre, kétéltűekre, hüllőkre és nagyobb rovarokra vadászik, amelyeket lesből vagy alacsony repüléssel ejt el.",
+        "fun_fact": "Annyira ragaszkodik a territóriumához, hogy ugyanaz a pár évekig, akár egy egész életen át visszatér ugyanabba az erdőrészletbe fészkelni."
+    },
+    {
+        "name": "Wilson-viharfecske",
+        "latin_name": "Oceanites oceanicus",
+        "diet": "Apró planktonszervezetekkel, rákokkal és halikrával táplálkozik, amelyeket a víz felszínéről csippent fel repülés közben.",
+        "fun_fact": "Feltehetően ez a legnagyobb egyedszámú vadon élő madárfaj a Földön, és jellegzetesen lábával a víz felszínét kopogtatva, mintha a habok tetején járna, keresi táplálékát."
+    },
+    {
+        "name": "Zöld gém",
+        "latin_name": "Butorides virescens",
+        "diet": "Halakra, rovarokra és kisebb kétéltűekre vadászik, amelyeket mozdulatlanul lesből figyel meg a part menti növényzetből.",
+        "fun_fact": "Az egyik kevés madárfaj, amely bizonyítottan eszközt használ: kenyérdarabot, tollpihét vagy rovart dob a vízbe csaliként, hogy odacsalogassa a halakat."
+    },
+    {
+        "name": "Zöld kitta",
+        "latin_name": "Cissa chinensis",
+        "diet": "Rovarokkal, kisebb gerincesekkel és gyümölcsökkel táplálkozik, amelyeket a lombkoronában és az aljnövényzetben keres.",
+        "fun_fact": "Élénkzöld tollazata egy instabil, táplálékból felvett pigmentnek köszönhető, ezért fogságban vagy fény hatására fokozatosan kékes-türkiz árnyalatúra fakul."
+    },
+    {
+        "name": "Zöld küllő",
+        "latin_name": "Picus viridis",
+        "diet": "Elsősorban hangyákkal és azok bábjaival táplálkozik, amelyeket hosszú, ragadós nyelvével szed ki a hangyabolyokból.",
+        "fun_fact": "Nyelve olyan hosszú, hogy nyugalmi állapotban a koponya körül tekeredve egészen az orrlyukig ér, ez teszi lehetővé a mély hangyajáratok kiürítését."
+    },
+    {
+        "name": "Zöldszárnyú galamb",
+        "latin_name": "Chalcophaps indica",
+        "diet": "Magvakkal, apró gyümölcsökkel és rovarokkal táplálkozik, amelyeket jellemzően a talajon keresgél.",
+        "fun_fact": "Szárnyának fémesen csillogó zöld és rézszínű foltjai olyan erősen irizálnak, hogy a fény szögétől függően repülés közben szinte színt váltanak."
+    },
+    {
+        "name": "Zümmögő verébsármány",
+        "latin_name": "Spizella passerina",
+        "diet": "Magvakkal, fűmagvakkal és rovarokkal táplálkozik, a fiókanevelés idején különösen sok ízeltlábút fogyaszt.",
+        "fun_fact": "Magyar neve onnan ered, hogy száraz, egyhangú, zümmögő csiripelése inkább egy rovar zajára, mintsem madárénekre emlékeztet."
+    },
+    {
+        "name": "Álarcos bagoly",
+        "latin_name": "Phodilus badius",
+        "diet": "Éjszaka vadászik, nagyobb rovarokra, békákra, gyíkokra, kisemlősökre és kisebb madarakra egyaránt lecsap.",
+        "fun_fact": "Szív alakú, oldalra keskenyedő arcfátylával és tollfüleivel átmenetet képez a gyöngybaglyok és a fülesbaglyok között, ezért sokáig vitatott volt rendszertani helyzete."
+    },
+    {
+        "name": "Álarcos bíbic",
+        "latin_name": "Vanellus miles",
+        "diet": "Rovarokkal, gilisztákkal és más gerinctelenekkel táplálkozik, amelyeket nyílt gyepeken és legelőkön keresgél.",
+        "fun_fact": "Szárnyának hajlatán éles szarutüske található, amellyel fészke védelmében akár repülés közben is nekitámad a betolakodóknak, beleértve az embereket is."
+    },
+    {
+        "name": "Ázsiai koel",
+        "latin_name": "Eudynamys scolopaceus",
+        "diet": "Elsősorban gyümölcsökkel, különösen fügékkel táplálkozik, de rovarokat, hernyókat és kisebb gerinceseket is elfogyaszt.",
+        "fun_fact": "Kotlásparazita kakukkféle, amely tojásait varjak fészkébe csempészi, a hím gyakran elvonja a gazdamadarak figyelmét, míg a tojó belopja saját tojását a fészekbe."
+    },
+    {
+        "name": "Ékfarkú lile",
+        "latin_name": "Charadrius vociferus",
+        "diet": "Rovarokkal, gilisztákkal és más gerinctelenekkel táplálkozik, amelyeket futva-megállva keresgél a nyílt talajon.",
+        "fun_fact": "Ha ragadozó közeledik a fészkéhez, a szülő megjátssza a sérült szárnyú madarat, bicegve elcsalogatja a betolakodót a fészektől, majd hirtelen elrepül."
+    },
+    {
+        "name": "Ékfarkú sas",
+        "latin_name": "Aquila audax",
+        "diet": "Főként dögöt és élő zsákmányt, elsősorban nyulakat, wallabykat és más közepes méretű emlősöket ejt el.",
+        "fun_fact": "Az egyik legnagyobb ragadozó madár a világon, közel 2,3 méteres szárnyfesztávjával akár termikeken emelkedve, több kilométeres magasságban is repül."
+    },
+    {
+        "name": "Énekes gezerigó",
+        "latin_name": "Mimus polyglottos",
+        "diet": "Mindenevő: rovarokkal, bogyókkal és gyümölcsökkel táplálkozik, az évszaktól függően változtatva étrendjét.",
+        "fun_fact": "Nevéhez híven több tucat más madárfaj, sőt akár gépi zajok hangját is képes utánozni, és kutatások szerint másodperceken belül megjegyzi az őt fenyegető ember arcvonásait."
+    },
+    {
+        "name": "Énekes verébsármány",
+        "latin_name": "Melospiza melodia",
+        "diet": "Magvakkal, rovarokkal és pókokkal táplálkozik, amelyeket a talajon és az alacsony növényzetben keresgél.",
+        "fun_fact": "Éneke egyedi, aláírás-szerű dallamokból áll, és a hímek tudatosan váltogatják dalaik sorrendjét, hogy a tojók érdeklődését ébren tartsák."
+    },
+    {
+        "name": "Északi bíborfecske",
+        "latin_name": "Progne subis",
+        "diet": "Kizárólag repülő rovarokkal táplálkozik, amelyeket magasan a levegőben, repülés közben kapdos el.",
+        "fun_fact": "Észak-Amerika keleti részén állományának nagy része mesterséges fészekodú-telepeken költ, mert az emberek évszázadok óta tudatosan vonzzák magukhoz a fajt lakóhelyekkel."
+    },
+    {
+        "name": "Északi csónakfarkú",
+        "latin_name": "Quiscalus quiscula",
+        "diet": "Mindenevő: magvakkal, rovarokkal, kisebb gerincesekkel, sőt más madarak tojásaival és fiókáival is táplálkozik.",
+        "fun_fact": "Csoportosan táplálkozva gyakran lábfejével kaszáló mozdulattal kaparja szét a talajt vagy az avart, hogy az előbukkanó rovarokra vadásszon."
+    },
+    {
+        "name": "Északi-szigeti barna kivi",
+        "latin_name": "Apteryx mantelli",
+        "diet": "Testéhez képest szokatlanul hosszú, hajlékony csőrével földigilisztákat, rovarlárvákat és magvakat keres a talajban, szaglás alapján.",
+        "fun_fact": "Az egyetlen madár, amelynek orrlyukai a csőr hegyén helyezkednek el, így éjszaka teljes sötétben, kizárólag szaglás alapján találja meg zsákmányát."
+    },
+    {
+        "name": "Óriás-gyümölcsgalamb",
+        "latin_name": "Hemiphaga novaeseelandiae",
+        "diet": "Elsősorban erdei fák gyümölcseivel, bogyóival és leveleivel táplálkozik, köztük olyan nagy magvú termésekkel is, amelyeket rajta kívül alig más madár tud lenyelni.",
+        "fun_fact": "Új-Zéland számos őshonos fájának szinte egyedüli magterjesztője, torka elég tág ahhoz, hogy a nagy magvakat egészben lenyelje, és túlérett, erjedt gyümölcstől néha 'részegen' pottyan le az ágról."
+    },
+    {
+        "name": "Örvös bukó",
+        "latin_name": "Mergus serrator",
+        "diet": "Elsősorban kisebb halakra vadászik, amelyeket víz alá bukva, fűrészes szélű csőrével ragad meg.",
+        "fun_fact": "Feje és nyaka között fehér 'gallér' választja el a sötétzöld fejet a szürkésbarna testtől, innen ered magyar neve, a hím emellett kócos, kétágú búbtollat is visel."
+    },
+    {
+        "name": "Örvös fojtógébics",
+        "latin_name": "Cracticus torquatus",
+        "diet": "Ragadozó életmódú: kisebb madarakra, rovarokra, gyíkokra és apró emlősökre vadászik.",
+        "fun_fact": "Zsákmányát gyakran tövisekre vagy ágvillákba tűzve tárolja el későbbre, akár egy hentes a húst, innen ered az angol butcherbird elnevezés is."
+    },
+    {
+        "name": "Örvös halkapó",
+        "latin_name": "Megaceryle alcyon",
+        "diet": "Halakra vadászik, amelyeket lesőhelyről vagy lebegő repülésből fejest ugorva kap el a víz alól.",
+        "fun_fact": "Fészekodúját maga vájja ki egy folyóparti falba, akár 2 méter mély alagutat is ásva, amelynek végén neveli fiókáit a ragadozóktól védve."
+    },
+    {
+        "name": "Örvös lúd",
+        "latin_name": "Branta bernicla",
+        "diet": "Elsősorban tengeri füvekkel, moszatokkal és algákkal táplálkozik, amelyeket sekély vízben állva vagy alábukva szed össze.",
+        "fun_fact": "A ludak közül a legészakibb területeken fészkel, és állományának nagysága erősen függ egyetlen tengeri növény, a hínárfű adott évi termésétől."
+    },
+    {
+        "name": "Új-zélandi törpegém",
+        "latin_name": "Ixobrychus novaezelandiae",
+        "diet": "Feltehetően halakkal, kétéltűekkel és vízi rovarokkal táplálkozott, hasonlóan a ma élő törpegémfajokhoz.",
+        "fun_fact": "Az 1890-es évekre kipusztult faj, amelyet a betelepített ragadozók, például menyétfélék és patkányok tizedeltek meg Új-Zéland vizes élőhelyein."
+    },
+    {
+        "name": "Üregi bagoly",
+        "latin_name": "Athene cunicularia",
+        "diet": "Rovarokkal, kisemlősökkel, gyíkokkal és skorpiókkal táplálkozik, amelyekre gyakran szürkületkor vadászik.",
+        "fun_fact": "A legtöbb bagolytól eltérően nem fán, hanem a földben, elhagyott prérikutya- vagy ürgejáratokban fészkel, és hosszú lábaival kiválóan tud futni a talajon."
+    },
+    {
+        "name": "Üstökösgém",
+        "latin_name": "Ardeola ralloides",
+        "diet": "Halakkal, kétéltűekkel, rovarokkal és apró gerinctelenekkel táplálkozik, amelyekre mocsaras, nádas élőhelyeken vadászik lesből.",
+        "fun_fact": "Nászidőszakban a fejét hosszú, laza tollüstök díszíti, ám repülés közben szinte teljesen fehérnek látszó szárnyaival hirtelen 'eltűnő' hatást kelt."
+    },
+    {
+        "name": "Őszapó",
+        "latin_name": "Aegithalos caudatus",
+        "diet": "Apró rovarokkal, pókokkal és azok petéivel táplálkozik, amelyeket a fák vékony ágai között akrobatikusan keresgélve talál meg.",
+        "fun_fact": "Testénél is hosszabb farkát mohából, zuzmóból és pókhálóból font, rendkívül rugalmas zsákszerű fészekben rejti el, amely a fióka növekedésével együtt tágul."
+    },
+    {
+        "name": "Őszapófélék",
+        "latin_name": "Psaltriparus minimus",
+        "diet": "Apró rovarokkal, levéltetvekkel és pókokkal táplálkozik, amelyeket bokrok és fák lombjában, gyakran fejjel lefelé lógva keresgél.",
+        "fun_fact": "Rendkívül szoros csapatokban él, és hideg éjszakákon akár egy tucat egyed is szorosan egymáshoz bújva, egy ágon sorakozva alszik, hogy megőrizze testhőjét."
+    }
+]

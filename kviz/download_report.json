@@ -1,0 +1,3741 @@
+[
+  {
+    "name": "Falakó szula",
+    "status": "skipped",
+    "image": "images/falako-szula.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Gyűjtő küllő",
+    "status": "skipped",
+    "image": "images/gyujto-kullo.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Amerikai gulipán",
+    "status": "skipped",
+    "image": "images/amerikai-gulipan.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Amerikai bölömbika",
+    "status": "skipped",
+    "image": "images/amerikai-bolombika.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Gyűrűscsőrű szárcsa",
+    "status": "skipped",
+    "image": "images/gyuruscsoru-szarcsa.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Amerikai varjú",
+    "status": "skipped",
+    "image": "images/amerikai-varju.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Aranycsíz",
+    "status": "skipped",
+    "image": "images/aranycsiz.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Tarka vércse",
+    "status": "skipped",
+    "image": "images/tarka-vercse.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Amerikai csigaforgató",
+    "status": "skipped",
+    "image": "images/amerikai-csigaforgato.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Legyezőfarkú lombposzáta",
+    "status": "skipped",
+    "image": "images/legyezofarku-lombposzata.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Vándorrigó",
+    "status": "skipped",
+    "image": "images/vandorrigo.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Orrszarvú pelikán",
+    "status": "skipped",
+    "image": "images/orrszarvu-pelikan.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Amerikai szalonka",
+    "status": "skipped",
+    "image": "images/amerikai-szalonka.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Amerikai kígyónyakúmadár",
+    "status": "skipped",
+    "image": "images/amerikai-kigyonyakumadar.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Anna-kolibri",
+    "status": "skipped",
+    "image": "images/anna-kolibri.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Szürketorkú légykapó",
+    "status": "skipped",
+    "image": "images/szurketorku-legykapo.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Zöldszárnyú galamb",
+    "status": "skipped",
+    "image": "images/zoldszarnyu-galamb.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Ázsiai koel",
+    "status": "skipped",
+    "image": "images/azsiai-koel.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Lunda",
+    "status": "skipped",
+    "image": "images/lunda.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Korallsirály",
+    "status": "skipped",
+    "image": "images/korallsiraly.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Ausztrálázsiai pityer",
+    "status": "skipped",
+    "image": "images/ausztralazsiai-pityer.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Ausztráliai kanalasréce",
+    "status": "skipped",
+    "image": "images/ausztraliai-kanalasrece.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Malukui íbisz",
+    "status": "skipped",
+    "image": "images/malukui-ibisz.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Feketehátú fuvolázómadár",
+    "status": "skipped",
+    "image": "images/feketehatu-fuvolazomadar.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Ausztrál kuvikfecske",
+    "status": "skipped",
+    "image": "images/ausztral-kuvikfecske.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Ausztrál varjú",
+    "status": "skipped",
+    "image": "images/ausztral-varju.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Ausztrál nádirigó",
+    "status": "skipped",
+    "image": "images/ausztral-nadirigo.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Ausztrál ásólúd",
+    "status": "skipped",
+    "image": "images/ausztral-asolud.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Ausztrál zebrapinty",
+    "status": "skipped",
+    "image": "images/ausztral-zebrapinty.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Lazúrcinege",
+    "status": "skipped",
+    "image": "images/lazurcinege.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Baird-sármány",
+    "status": "skipped",
+    "image": "images/baird-sarmany.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Fehérfejű rétisas",
+    "status": "skipped",
+    "image": "images/feherfeju-retisas.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Narancstrupiál",
+    "status": "skipped",
+    "image": "images/narancstrupial.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Gyöngybagoly",
+    "status": "skipped",
+    "image": "images/gyongybagoly.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Füsti fecske",
+    "status": "skipped",
+    "image": "images/fusti-fecske.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Szalagos bagoly",
+    "status": "skipped",
+    "image": "images/szalagos-bagoly.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Izlandi kerceréce",
+    "status": "skipped",
+    "image": "images/izlandi-kercerece.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Bája szövő",
+    "status": "skipped",
+    "image": "images/baja-szovo.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Barkóscinege",
+    "status": "skipped",
+    "image": "images/barkoscinege.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Barnaszemű lombgébics",
+    "status": "skipped",
+    "image": "images/barnaszemu-lombgebics.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Örvös halkapó",
+    "status": "skipped",
+    "image": "images/orvos-halkapo.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Fehérhasú ökörszem",
+    "status": "skipped",
+    "image": "images/feherhasu-okorszem.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Királydrongó",
+    "status": "skipped",
+    "image": "images/kiralydrongo.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Fekete zajgó",
+    "status": "skipped",
+    "image": "images/fekete-zajgo.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Házi rozsdafarkú",
+    "status": "skipped",
+    "image": "images/hazi-rozsdafarku.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Karibi ollóscsőrű",
+    "status": "skipped",
+    "image": "images/karibi-olloscsoru.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Fekete gólya",
+    "status": "skipped",
+    "image": "images/fekete-golya.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Fekete hattyú",
+    "status": "skipped",
+    "image": "images/fekete-hattyu.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Kormos szerkő",
+    "status": "skipped",
+    "image": "images/kormos-szerko.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Hollókeselyű",
+    "status": "skipped",
+    "image": "images/hollokeselyu.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Fekete harkály",
+    "status": "skipped",
+    "image": "images/fekete-harkaly.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Piroscsőrű fütyülőlúd",
+    "status": "skipped",
+    "image": "images/piroscsoru-futyulolud.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Feketecsőrű szarka",
+    "status": "skipped",
+    "image": "images/feketecsoru-szarka.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Feketetorkú kolibri",
+    "status": "skipped",
+    "image": "images/feketetorku-kolibri.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Bakcsó",
+    "status": "skipped",
+    "image": "images/bakcso.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Dankasirály",
+    "status": "skipped",
+    "image": "images/dankasiraly.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Feketenyakú sárgarigó",
+    "status": "skipped",
+    "image": "images/feketenyaku-sargarigo.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Mexikói gólyatöcs",
+    "status": "skipped",
+    "image": "images/mexikoi-golyatocs.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Ausztrál kuhi",
+    "status": "skipped",
+    "image": "images/ausztral-kuhi.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Nagy goda",
+    "status": "skipped",
+    "image": "images/nagy-goda.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Sarki búvár",
+    "status": "skipped",
+    "image": "images/sarki-buvar.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Kék magtörő",
+    "status": "skipped",
+    "image": "images/kek-magtoro.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Kék szajkó",
+    "status": "skipped",
+    "image": "images/kek-szajko.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Kék kövirigó",
+    "status": "skipped",
+    "image": "images/kek-kovirigo.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Kék szúnyogkapó",
+    "status": "skipped",
+    "image": "images/kek-szunyogkapo.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Kékszárnyú hernyófaló",
+    "status": "skipped",
+    "image": "images/kekszarnyu-hernyofalo.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Kékbegy",
+    "status": "skipped",
+    "image": "images/kekbegy.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Pápua szarvascsőrű",
+    "status": "skipped",
+    "image": "images/papua-szarvascsoru.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Bobalink",
+    "status": "skipped",
+    "image": "images/bobalink.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Héjasas",
+    "status": "skipped",
+    "image": "images/hejasas.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Brahmin kánya",
+    "status": "skipped",
+    "image": "images/brahmin-kanya.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Fenyőpinty",
+    "status": "skipped",
+    "image": "images/fenyopinty.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Örvös lúd",
+    "status": "skipped",
+    "image": "images/orvos-lud.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Kékfejű lápicsiröge",
+    "status": "skipped",
+    "image": "images/kekfeju-lapicsiroge.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Szélesszárnyú ölyv",
+    "status": "skipped",
+    "image": "images/szelesszarnyu-olyv.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Ausztrál daru",
+    "status": "skipped",
+    "image": "images/ausztral-daru.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Vörösszemű gulyajáró",
+    "status": "skipped",
+    "image": "images/vorosszemu-gulyajaro.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Hosszúlábú sólyom",
+    "status": "skipped",
+    "image": "images/hosszulabu-solyom.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Barna gödény",
+    "status": "skipped",
+    "image": "images/barna-godeny.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Barna gébics",
+    "status": "skipped",
+    "image": "images/barna-gebics.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Barnafejű gulyajáró",
+    "status": "skipped",
+    "image": "images/barnafeju-gulyajaro.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Hullámos papagáj",
+    "status": "skipped",
+    "image": "images/hullamos-papagaj.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Süvöltő",
+    "status": "skipped",
+    "image": "images/suvolto.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Üregi bagoly",
+    "status": "skipped",
+    "image": "images/uregi-bagoly.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Őszapófélék",
+    "status": "skipped",
+    "image": "images/oszapofelek.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Kaliforniai kondor",
+    "status": "skipped",
+    "image": "images/kaliforniai-kondor.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Bóbitás fürj",
+    "status": "skipped",
+    "image": "images/bobitas-furj.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Kanadai lúd",
+    "status": "skipped",
+    "image": "images/kanadai-lud.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Rókafejű réce",
+    "status": "skipped",
+    "image": "images/rokafeju-rece.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Karolinai cinege",
+    "status": "skipped",
+    "image": "images/karolinai-cinege.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Karolinai ökörszem",
+    "status": "skipped",
+    "image": "images/karolinai-okorszem.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Kormos varjú",
+    "status": "skipped",
+    "image": "images/kormos-varju.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Cassin-pirók",
+    "status": "skipped",
+    "image": "images/cassin-pirok.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Cassin-sármány",
+    "status": "skipped",
+    "image": "images/cassin-sarmany.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Cédruscsonttollú",
+    "status": "skipped",
+    "image": "images/cedruscsonttollu.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Kék lombjáró",
+    "status": "skipped",
+    "image": "images/kek-lombjaro.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Berki poszáta",
+    "status": "skipped",
+    "image": "images/berki-poszata.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Feketebegyű sarkantyússármány",
+    "status": "skipped",
+    "image": "images/feketebegyu-sarkantyussarmany.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Fehérnyakú holló",
+    "status": "skipped",
+    "image": "images/fehernyaku-hollo.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Kéménysarlósfecske",
+    "status": "skipped",
+    "image": "images/kemenysarlosfecske.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Zümmögő verébsármány",
+    "status": "skipped",
+    "image": "images/zummogo-verebsarmany.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Fehérarcú vöcsök",
+    "status": "skipped",
+    "image": "images/feherarcu-vocsok.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Amerikai fenyőszajkó",
+    "status": "skipped",
+    "image": "images/amerikai-fenyoszajko.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Fenyvescinege",
+    "status": "skipped",
+    "image": "images/fenyvescinege.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Nimfapapagáj",
+    "status": "skipped",
+    "image": "images/nimfapapagaj.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Fekete rigó",
+    "status": "skipped",
+    "image": "images/fekete-rigo.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Egerészölyv",
+    "status": "skipped",
+    "image": "images/egereszolyv.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Erdei pinty",
+    "status": "skipped",
+    "image": "images/erdei-pinty.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Csilpcsalpfüzike",
+    "status": "skipped",
+    "image": "images/csilpcsalpfuzike.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Kakukk",
+    "status": "skipped",
+    "image": "images/kakukk.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Kerceréce",
+    "status": "skipped",
+    "image": "images/kercerece.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Északi csónakfarkú",
+    "status": "skipped",
+    "image": "images/eszaki-csonakfarku.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Zöld kitta",
+    "status": "skipped",
+    "image": "images/zold-kitta.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Feketeszárnyú poszátalevélmadár",
+    "status": "skipped",
+    "image": "images/feketeszarnyu-poszatalevelmadar.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Jégmadár",
+    "status": "skipped",
+    "image": "images/jegmadar.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Új-zélandi törpegém",
+    "status": "skipped",
+    "image": "images/uj-zelandi-torpegem.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Jeges búvár",
+    "status": "skipped",
+    "image": "images/jeges-buvar.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Nagy bukó",
+    "status": "skipped",
+    "image": "images/nagy-buko.jpg",
+    "search_terms_tried": []
+  },
+  {
+    "name": "Vízityúk",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/V%C3%ADzity%C3%BAk",
+    "image": "images/vizityuk.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Gallinula chloropus"
+    ]
+  },
+  {
+    "name": "Pásztormejnó",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/P%C3%A1sztormejn%C3%B3",
+    "image": "images/pasztormejno.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Acridotheres tristis"
+    ]
+  },
+  {
+    "name": "Estifecske",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Estifecske",
+    "image": "images/estifecske.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Chordeiles minor"
+    ]
+  },
+  {
+    "name": "Fülemüle",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/F%C3%BClem%C3%BCle",
+    "image": "images/fulemule.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Luscinia megarhynchos"
+    ]
+  },
+  {
+    "name": "Holló",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Holl%C3%B3",
+    "image": "images/hollo.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Corvus corax"
+    ]
+  },
+  {
+    "name": "Billegetőcankó",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Billeget%C5%91cank%C3%B3",
+    "image": "images/billegetocanko.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Actitis hypoleucos"
+    ]
+  },
+  {
+    "name": "Seregély",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Sereg%C3%A9ly",
+    "image": "images/seregely.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Sturnus vulgaris"
+    ]
+  },
+  {
+    "name": "Sarlósfecske",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Sarl%C3%B3sfecske",
+    "image": "images/sarlosfecske.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Apus apus"
+    ]
+  },
+  {
+    "name": "Varrómadár",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Varr%C3%B3mad%C3%A1r",
+    "image": "images/varromadar.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Orthotomus sutorius"
+    ]
+  },
+  {
+    "name": "Csörgő réce",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Cs%C3%B6rg%C5%91_r%C3%A9ce",
+    "image": "images/csorgo-rece.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Anas crecca"
+    ]
+  },
+  {
+    "name": "Sárgatorkú földiposzáta",
+    "status": "ok",
+    "source_url": "https://en.wikipedia.org/wiki/Common_yellowthroat",
+    "image": "images/sargatorku-foldiposzata.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Geothlypis trichas",
+      "hu.wikipedia pageimages:Sárgatorkú földiposzáta",
+      "hu.wikipedia search:Sárgatorkú földiposzáta",
+      "en.wikipedia pageimages:Geothlypis trichas"
+    ]
+  },
+  {
+    "name": "Cooper-héja",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/H%C3%A9jaform%C3%A1k",
+    "image": "images/cooper-heja.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Accipiter cooperii",
+      "hu.wikipedia pageimages:Cooper-héja",
+      "hu.wikipedia search:Cooper-héja"
+    ]
+  },
+  {
+    "name": "Sárgatorkú bajszika",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Alcippe_cinerea",
+    "image": "images/sargatorku-bajszika.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Schoeniparus cinereus"
+    ]
+  },
+  {
+    "name": "Sitta",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Csuszka_(mad%C3%A1r)",
+    "image": "images/sitta.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Sitta europaea"
+    ]
+  },
+  {
+    "name": "Raggi-paradicsommadár",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Raggi-paradicsommad%C3%A1r",
+    "image": "images/raggi-paradicsommadar.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Paradisaea raggiana"
+    ]
+  },
+  {
+    "name": "Nipponíbisz",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Nippon%C3%ADbisz",
+    "image": "images/nipponibisz.png",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Nipponia nippon"
+    ]
+  },
+  {
+    "name": "Búbospacsirta",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/B%C3%BAbospacsirta",
+    "image": "images/bubospacsirta.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Galerida cristata"
+    ]
+  },
+  {
+    "name": "Kontyos galamb",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Kontyos_galamb",
+    "image": "images/kontyos-galamb.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Ocyphaps lophotes"
+    ]
+  },
+  {
+    "name": "Skarlátdalnok",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Skarl%C3%A1tdalnok",
+    "image": "images/skarlatdalnok.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Epthianura tricolor"
+    ]
+  },
+  {
+    "name": "Téli sármánypinty",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/T%C3%A9li_s%C3%A1rm%C3%A1nypinty",
+    "image": "images/teli-sarmanypinty.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Junco hyemalis",
+      "hu.wikipedia pageimages:Téli sármánypinty"
+    ]
+  },
+  {
+    "name": "Feketecsőrű sivatagipinty",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Feketecs%C5%91r%C5%B1_sivatagipinty",
+    "image": "images/feketecsoru-sivatagipinty.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Rhodospiza obsoleta"
+    ]
+  },
+  {
+    "name": "Sivatagi hantmadár",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Sivatagi_hantmad%C3%A1r",
+    "image": "images/sivatagi-hantmadar.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Oenanthe deserti"
+    ]
+  },
+  {
+    "name": "Dikcisszel",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Dikcisszel",
+    "image": "images/dikcisszel.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Spiza americana"
+    ]
+  },
+  {
+    "name": "Füles kárókatona",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/F%C3%BCles_k%C3%A1r%C3%B3katona",
+    "image": "images/fules-karokatona.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Nannopterum auritum",
+      "hu.wikipedia pageimages:Füles kárókatona"
+    ]
+  },
+  {
+    "name": "Pehelyharkály",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Dryobates",
+    "image": "images/pehelyharkaly.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Dryobates pubescens",
+      "hu.wikipedia pageimages:Pehelyharkály",
+      "hu.wikipedia search:Pehelyharkály"
+    ]
+  },
+  {
+    "name": "Erdei szürkebegy",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Erdei_sz%C3%BCrkebegy",
+    "image": "images/erdei-szurkebegy.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Prunella modularis"
+    ]
+  },
+  {
+    "name": "Vörösbegyű kékmadár",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/V%C3%B6r%C3%B6sbegy%C5%B1_k%C3%A9kmad%C3%A1r",
+    "image": "images/vorosbegyu-kekmadar.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Sialia sialis"
+    ]
+  },
+  {
+    "name": "Parlagi sas",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Parlagi_sas",
+    "image": "images/parlagi-sas.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Aquila heliaca"
+    ]
+  },
+  {
+    "name": "Keleti királygébics",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Keleti_kir%C3%A1lyg%C3%A9bics",
+    "image": "images/keleti-kiralygebics.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Tyrannus tyrannus"
+    ]
+  },
+  {
+    "name": "Szürke légykapótirannusz",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Tyrannus_dominicensis",
+    "image": "images/szurke-legykapotirannusz.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Tyrannus dominicensis"
+    ]
+  },
+  {
+    "name": "Keleti rozella",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Keleti_rozella",
+    "image": "images/keleti-rozella.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Platycercus eximius"
+    ]
+  },
+  {
+    "name": "Keleti lármáskuvik",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Keleti_l%C3%A1rm%C3%A1skuvik",
+    "image": "images/keleti-larmaskuvik.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Megascops asio"
+    ]
+  },
+  {
+    "name": "Keleti ostormadár",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Keleti_ostormad%C3%A1r",
+    "image": "images/keleti-ostormadar.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Psophodes olivaceus"
+    ]
+  },
+  {
+    "name": "Eleonóra-sólyom",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Eleon%C3%B3ra-s%C3%B3lyom",
+    "image": "images/eleonora-solyom.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Falco eleonorae"
+    ]
+  },
+  {
+    "name": "Emu",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Emu",
+    "image": "images/emu.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Dromaius novaehollandiae"
+    ]
+  },
+  {
+    "name": "Balkáni gerle",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Balk%C3%A1ni_gerle",
+    "image": "images/balkani-gerle.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Streptopelia decaocto"
+    ]
+  },
+  {
+    "name": "Szárcsa",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Sz%C3%A1rcsa_(mad%C3%A1r)",
+    "image": "images/szarcsa.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Fulica atra"
+    ]
+  },
+  {
+    "name": "Uhu",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Uhu",
+    "image": "images/uhu.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Bubo bubo"
+    ]
+  },
+  {
+    "name": "Sárgarigó",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/S%C3%A1rgarig%C3%B3",
+    "image": "images/sargarigo.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Oriolus oriolus"
+    ]
+  },
+  {
+    "name": "Zöld küllő",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Z%C3%B6ld_k%C3%BCll%C5%91",
+    "image": "images/zold-kullo.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Picus viridis"
+    ]
+  },
+  {
+    "name": "Kabasólyom",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/K%C3%A9k_v%C3%A9rcse",
+    "image": "images/kabasolyom.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Falco vespertinus"
+    ]
+  },
+  {
+    "name": "Búbos banka",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/B%C3%BAbos_banka",
+    "image": "images/bubos-banka.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Upupa epops"
+    ]
+  },
+  {
+    "name": "Szajkó",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Szajk%C3%B3",
+    "image": "images/szajko.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Garrulus glandarius"
+    ]
+  },
+  {
+    "name": "Vörös vércse",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/V%C3%B6r%C3%B6s_v%C3%A9rcse",
+    "image": "images/voros-vercse.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Falco tinnunculus"
+    ]
+  },
+  {
+    "name": "Szarka",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Szarka",
+    "image": "images/szarka.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Pica pica"
+    ]
+  },
+  {
+    "name": "Barna rétihéja",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Barna_r%C3%A9tih%C3%A9ja",
+    "image": "images/barna-retiheja.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Circus aeruginosus"
+    ]
+  },
+  {
+    "name": "Fenyőszajkó",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Feny%C5%91szajk%C3%B3",
+    "image": "images/fenyoszajko.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Nucifraga caryocatactes"
+    ]
+  },
+  {
+    "name": "Csuszka",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Csuszka_(mad%C3%A1r)",
+    "image": "images/csuszka.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Sitta europaea"
+    ]
+  },
+  {
+    "name": "Karvaly",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Karvaly_(mad%C3%A1r)",
+    "image": "images/karvaly.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Accipiter nisus"
+    ]
+  },
+  {
+    "name": "Mezei veréb",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Mezei_ver%C3%A9b",
+    "image": "images/mezei-vereb.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Passer montanus"
+    ]
+  },
+  {
+    "name": "Hegyi fakusz",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Hegyi_fakusz",
+    "image": "images/hegyi-fakusz.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Certhia familiaris"
+    ]
+  },
+  {
+    "name": "Gyurgyalag",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Gyurgyalag",
+    "image": "images/gyurgyalag.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Merops apiaster"
+    ]
+  },
+  {
+    "name": "Tengelic",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Tengelic_(mad%C3%A1r)",
+    "image": "images/tengelic.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Carduelis carduelis"
+    ]
+  },
+  {
+    "name": "Darázsölyv",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Dar%C3%A1zs%C3%B6lyv",
+    "image": "images/darazsolyv.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Pernis apivorus"
+    ]
+  },
+  {
+    "name": "Vörösbegy",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/V%C3%B6r%C3%B6sbegy",
+    "image": "images/vorosbegy.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Erithacus rubecula"
+    ]
+  },
+  {
+    "name": "Európai szalakóta",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Eur%C3%B3pai_szalak%C3%B3ta",
+    "image": "images/europai-szalakota.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Coracias garrulus"
+    ]
+  },
+  {
+    "name": "Vadgerle",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Vadgerle",
+    "image": "images/vadgerle.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Streptopelia turtur"
+    ]
+  },
+  {
+    "name": "Királyölyv",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Kir%C3%A1ly%C3%B6lyv",
+    "image": "images/kiralyolyv.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Buteo regalis"
+    ]
+  },
+  {
+    "name": "Vöröshomlokú csicsörke",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/V%C3%B6r%C3%B6shomlok%C3%BA_csics%C3%B6rke",
+    "image": "images/voroshomloku-csicsorke.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Serinus pusillus"
+    ]
+  },
+  {
+    "name": "Halászvarjú",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Hal%C3%A1szvarj%C3%BA",
+    "image": "images/halaszvarju.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Corvus ossifragus"
+    ]
+  },
+  {
+    "name": "Erdei kuvik",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Erdei_kuvik",
+    "image": "images/erdei-kuvik.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Athene blewitti"
+    ]
+  },
+  {
+    "name": "Tavi csér",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Fatty%C3%BAszerk%C5%91",
+    "image": "images/tavi-cser.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Chlidonias hybrida"
+    ]
+  },
+  {
+    "name": "Prérisirály",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Pr%C3%A9risir%C3%A1ly",
+    "image": "images/prerisiraly.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Leucophaeus pipixcan"
+    ]
+  },
+  {
+    "name": "Rózsás kakadu",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/R%C3%B3zs%C3%A1s_kakadu",
+    "image": "images/rozsas-kakadu.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Eolophus roseicapilla"
+    ]
+  },
+  {
+    "name": "Sárgafejű királyka",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/S%C3%A1rgafej%C5%B1_kir%C3%A1lyka",
+    "image": "images/sargafeju-kiralyka.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Regulus regulus"
+    ]
+  },
+  {
+    "name": "Szirti sas",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Szirti_sas",
+    "image": "images/szirti-sas.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Aquila chrysaetos"
+    ]
+  },
+  {
+    "name": "Aranyfácán",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Aranyf%C3%A1c%C3%A1n",
+    "image": "images/aranyfacan.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Chrysolophus pictus"
+    ]
+  },
+  {
+    "name": "Aranyfejű cisztikola",
+    "status": "ok",
+    "source_url": "https://en.wikipedia.org/wiki/Golden-headed_cisticola",
+    "image": "images/aranyfeju-cisztikola.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Cisticola exilis",
+      "hu.wikipedia pageimages:Aranyfejű cisztikola",
+      "hu.wikipedia search:Aranyfejű cisztikola",
+      "en.wikipedia pageimages:Cisticola exilis"
+    ]
+  },
+  {
+    "name": "Gould-amandina",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Gould-amandina",
+    "image": "images/gould-amandina.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Chloebia gouldiae"
+    ]
+  },
+  {
+    "name": "Kecses prínia",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/B%C3%A1nki_%C3%89va",
+    "image": "images/kecses-prinia.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Prinia gracilis",
+      "hu.wikipedia pageimages:Kecses prínia",
+      "hu.wikipedia search:Kecses prínia"
+    ]
+  },
+  {
+    "name": "Grandala coelicolor",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Grandala_coelicolor",
+    "image": "images/grandala-coelicolor.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Grandala coelicolor"
+    ]
+  },
+  {
+    "name": "Szöcske verébsármány",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Ammodramus",
+    "image": "images/szocske-verebsarmany.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Ammodramus savannarum",
+      "hu.wikipedia pageimages:Szöcske verébsármány",
+      "hu.wikipedia search:Szöcske verébsármány"
+    ]
+  },
+  {
+    "name": "Macskamadár",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Macskamad%C3%A1r",
+    "image": "images/macskamadar.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Dumetella carolinensis"
+    ]
+  },
+  {
+    "name": "Hegyi billegető",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Hegyi_billeget%C5%91",
+    "image": "images/hegyi-billegeto.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Motacilla cinerea"
+    ]
+  },
+  {
+    "name": "Királygém",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Kir%C3%A1lyg%C3%A9m",
+    "image": "images/kiralygem.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Ardea herodias"
+    ]
+  },
+  {
+    "name": "Nagy kárókatona",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Nagy_k%C3%A1r%C3%B3katona",
+    "image": "images/nagy-karokatona.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Phalacrocorax carbo"
+    ]
+  },
+  {
+    "name": "Nagy rozsdafarktirannusz",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Nagy_rozsdafarktirannusz",
+    "image": "images/nagy-rozsdafarktirannusz.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Myiarchus crinitus"
+    ]
+  },
+  {
+    "name": "Búbos vöcsök",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/B%C3%BAbos_v%C3%B6cs%C3%B6k",
+    "image": "images/bubos-vocsok.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Podiceps cristatus"
+    ]
+  },
+  {
+    "name": "Nagy kócsag",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Nagy_k%C3%B3csag",
+    "image": "images/nagy-kocsag.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Ardea alba"
+    ]
+  },
+  {
+    "name": "Nagy szarvascsőrűmadár",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Nagy_szarvascs%C5%91r%C5%B1mad%C3%A1r",
+    "image": "images/nagy-szarvascsorumadar.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Buceros bicornis"
+    ]
+  },
+  {
+    "name": "Amerikai uhu",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Amerikai_uhu",
+    "image": "images/amerikai-uhu.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Bubo virginianus"
+    ]
+  },
+  {
+    "name": "Indiai túzok",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Indiai_t%C3%BAzok",
+    "image": "images/indiai-tuzok.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Ardeotis nigriceps"
+    ]
+  },
+  {
+    "name": "Nagy fakopáncs",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Nagy_fakop%C3%A1ncs",
+    "image": "images/nagy-fakopancs.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Dendrocopos major"
+    ]
+  },
+  {
+    "name": "Széncinege",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Sz%C3%A9ncinege",
+    "image": "images/szencinege.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Parus major"
+    ]
+  },
+  {
+    "name": "Sárgafejű marabu",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Indiai_marabu",
+    "image": "images/sargafeju-marabu.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Leptoptilos javanicus"
+    ]
+  },
+  {
+    "name": "Rózsás flamingó",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/R%C3%B3zs%C3%A1s_flaming%C3%B3",
+    "image": "images/rozsas-flamingo.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Phoenicopterus roseus"
+    ]
+  },
+  {
+    "name": "Nagy prérityúk",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Nagy_pr%C3%A9rity%C3%BAk",
+    "image": "images/nagy-prerityuk.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Tympanuchus cupido"
+    ]
+  },
+  {
+    "name": "Kaliforniai földikakukk",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Kaliforniai_f%C3%B6ldikakukk",
+    "image": "images/kaliforniai-foldikakukk.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Geococcyx californianus"
+    ]
+  },
+  {
+    "name": "Gyurgyalagfélék",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Smaragdgyurgyalag",
+    "image": "images/gyurgyalagfelek.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Merops orientalis"
+    ]
+  },
+  {
+    "name": "Zöld gém",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Z%C3%B6ld_g%C3%A9m",
+    "image": "images/zold-gem.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Butorides virescens"
+    ]
+  },
+  {
+    "name": "Schiller-fácán",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Schiller-f%C3%A1c%C3%A1n",
+    "image": "images/schiller-facan.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Phasianus versicolor"
+    ]
+  },
+  {
+    "name": "Kendermagos törpelúd",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Kendermagos_t%C3%B6rpel%C3%BAd",
+    "image": "images/kendermagos-torpelud.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Nettapus pulchellus"
+    ]
+  },
+  {
+    "name": "Örvös fojtógébics",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/%C3%96rv%C3%B6s_fojt%C3%B3g%C3%A9bics",
+    "image": "images/orvos-fojtogebics.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Cracticus torquatus",
+      "hu.wikipedia pageimages:Örvös fojtógébics"
+    ]
+  },
+  {
+    "name": "Szürke gém",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Sz%C3%BCrke_g%C3%A9m",
+    "image": "images/szurke-gem.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Ardea cinerea"
+    ]
+  },
+  {
+    "name": "Szürkebegyű gébicsrigó",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Sz%C3%BCrkebegy%C5%B1_g%C3%A9bicsrig%C3%B3",
+    "image": "images/szurkebegyu-gebicsrigo.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Colluricincla harmonica"
+    ]
+  },
+  {
+    "name": "Szürke réce",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Sz%C3%BCrke_r%C3%A9ce",
+    "image": "images/szurke-rece.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Mareca strepera",
+      "hu.wikipedia pageimages:Szürke réce"
+    ]
+  },
+  {
+    "name": "Szürke bokormadár",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Boz%C3%B3tcinege",
+    "image": "images/szurke-bokormadar.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Psaltriparus minimus"
+    ]
+  },
+  {
+    "name": "Szürkefejű amandina",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Sz%C3%BCrkefej%C5%B1_amandina",
+    "image": "images/szurkefeju-amandina.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Odontospiza griseicapilla"
+    ]
+  },
+  {
+    "name": "Nyári lúd",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Ny%C3%A1ri_l%C3%BAd",
+    "image": "images/nyari-lud.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Anser anser"
+    ]
+  },
+  {
+    "name": "Fakó keselyű",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Fak%C3%B3_kesely%C5%B1",
+    "image": "images/fako-keselyu.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Gyps fulvus"
+    ]
+  },
+  {
+    "name": "Meggyvágó",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Meggyv%C3%A1g%C3%B3",
+    "image": "images/meggyvago.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Coccothraustes coccothraustes"
+    ]
+  },
+  {
+    "name": "Pettyes fülemülerigó",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Pettyesmell%C5%B1_f%C3%BClem%C3%BClerig%C3%B3",
+    "image": "images/pettyes-fulemulerigo.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Catharus dryas"
+    ]
+  },
+  {
+    "name": "Himalájai fényfácán",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Himal%C3%A1jai_f%C3%A9nyf%C3%A1c%C3%A1n",
+    "image": "images/himalajai-fenyfacan.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Lophophorus impejanus"
+    ]
+  },
+  {
+    "name": "Dolmányos varjú",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Dolm%C3%A1nyos_varj%C3%BA",
+    "image": "images/dolmanyos-varju.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Corvus cornix"
+    ]
+  },
+  {
+    "name": "Csuklyás bukó",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Csukly%C3%A1s_buk%C3%B3",
+    "image": "images/csuklyas-buko.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Lophodytes cucullatus"
+    ]
+  },
+  {
+    "name": "Csuklyás lombjáró",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Csukly%C3%A1s_lombj%C3%A1r%C3%B3",
+    "image": "images/csuklyas-lombjaro.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Setophaga citrina",
+      "hu.wikipedia pageimages:Csuklyás lombjáró"
+    ]
+  },
+  {
+    "name": "Havasi fülespacsirta",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Havasi_f%C3%BClespacsirta",
+    "image": "images/havasi-fulespacsirta.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Eremophila alpestris"
+    ]
+  },
+  {
+    "name": "Horsfield-rézkakukk",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Horsfield-r%C3%A9zkakukk",
+    "image": "images/horsfield-rezkakukk.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Chrysococcyx basalis"
+    ]
+  },
+  {
+    "name": "Mirafra cantillans",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Mirafra_cantillans",
+    "image": "images/mirafra-cantillans.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Mirafra cantillans"
+    ]
+  },
+  {
+    "name": "Indiai varjú",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Indiai_varj%C3%BA",
+    "image": "images/indiai-varju.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Corvus splendens"
+    ]
+  },
+  {
+    "name": "Házi pirók",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/H%C3%A1zi_pir%C3%B3k",
+    "image": "images/hazi-pirok.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Haemorhous mexicanus"
+    ]
+  },
+  {
+    "name": "Házi veréb",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/H%C3%A1zi_ver%C3%A9b",
+    "image": "images/hazi-vereb.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Passer domesticus"
+    ]
+  },
+  {
+    "name": "Házi ökörszem",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Indi%C3%A1n%C3%B6k%C3%B6rszem",
+    "image": "images/hazi-okorszem.png",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Troglodytes aedon"
+    ]
+  },
+  {
+    "name": "Kardcsőrű töcs",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Kardcs%C5%91r%C5%B1_t%C3%B6cs",
+    "image": "images/kardcsoru-tocs.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Ibidorhyncha struthersii"
+    ]
+  },
+  {
+    "name": "Inkagalambocska",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Inkagalambocska",
+    "image": "images/inkagalambocska.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Columbina inca"
+    ]
+  },
+  {
+    "name": "Kék páva",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/K%C3%A9k_p%C3%A1va",
+    "image": "images/kek-pava.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Pavo cristatus"
+    ]
+  },
+  {
+    "name": "Hosszúcsőrű keselyű",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Hossz%C3%BAcs%C5%91r%C5%B1_kesely%C5%B1",
+    "image": "images/hosszucsoru-keselyu.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Gyps indicus"
+    ]
+  },
+  {
+    "name": "Indigópinty",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Indig%C3%B3pinty",
+    "image": "images/indigopinty.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Passerina cyanea"
+    ]
+  },
+  {
+    "name": "Borókacinege",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Bor%C3%B3kacinege",
+    "image": "images/borokacinege.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Baeolophus ridgwayi"
+    ]
+  },
+  {
+    "name": "Hegyi kea",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Hegyi_kea",
+    "image": "images/hegyi-kea.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Nestor notabilis"
+    ]
+  },
+  {
+    "name": "Hínársirály",
+    "status": "ok",
+    "source_url": "https://en.wikipedia.org/wiki/Kelp_gull",
+    "image": "images/hinarsiraly.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Larus dominicanus",
+      "hu.wikipedia pageimages:Hínársirály",
+      "hu.wikipedia search:Hínársirály",
+      "en.wikipedia pageimages:Larus dominicanus"
+    ]
+  },
+  {
+    "name": "Óriás-gyümölcsgalamb",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/%C3%93ri%C3%A1s-gy%C3%BCm%C3%B6lcsgalamb",
+    "image": "images/orias-gyumolcsgalamb.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Hemiphaga novaeseelandiae"
+    ]
+  },
+  {
+    "name": "Ékfarkú lile",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/%C3%89kfark%C3%BA_lile",
+    "image": "images/ekfarku-lile.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Charadrius vociferus"
+    ]
+  },
+  {
+    "name": "Királyguvat",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Kir%C3%A1lyguvat",
+    "image": "images/kiralyguvat.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Rallus elegans"
+    ]
+  },
+  {
+    "name": "Csengőmadár",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Cseng%C5%91mad%C3%A1r",
+    "image": "images/csengomadar.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Anthornis melanura"
+    ]
+  },
+  {
+    "name": "Kakapó",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Kakap%C3%B3",
+    "image": "images/kakapo.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Strigops habroptilus"
+    ]
+  },
+  {
+    "name": "Dzsungelvarjú",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Dzsungelvarj%C3%BA",
+    "image": "images/dzsungelvarju.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Corvus macrorhynchos"
+    ]
+  },
+  {
+    "name": "Kacagójancsi",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Kacag%C3%B3jancsi",
+    "image": "images/kacagojancsi.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Dacelo novaeguineae"
+    ]
+  },
+  {
+    "name": "Azúrpinty",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Az%C3%BArpinty",
+    "image": "images/azurpinty.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Passerina amoena"
+    ]
+  },
+  {
+    "name": "Kis fregattmadár",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Ascension-szigeti_fregattmad%C3%A1r",
+    "image": "images/kis-fregattmadar.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Fregata ariel",
+      "hu.wikipedia pageimages:Kis fregattmadár",
+      "hu.wikipedia search:Kis fregattmadár"
+    ]
+  },
+  {
+    "name": "Kis poszáta",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Kis_posz%C3%A1ta",
+    "image": "images/kis-poszata.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Curruca curruca"
+    ]
+  },
+  {
+    "name": "Aranyfülű mézevő",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Aranyf%C3%BCl%C5%B1_m%C3%A9zev%C5%91",
+    "image": "images/aranyfulu-mezevo.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Meliphaga lewinii"
+    ]
+  },
+  {
+    "name": "Lincoln-sármány",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Lincoln-s%C3%A1rm%C3%A1ny",
+    "image": "images/lincoln-sarmany.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Melospiza lincolnii"
+    ]
+  },
+  {
+    "name": "Reznek",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Reznek",
+    "image": "images/reznek.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Tetrax tetrax"
+    ]
+  },
+  {
+    "name": "Kis kócsag",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Kis_k%C3%B3csag",
+    "image": "images/kis-kocsag.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Egretta garzetta"
+    ]
+  },
+  {
+    "name": "Kis vöcsök",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Kis_v%C3%B6cs%C3%B6k",
+    "image": "images/kis-vocsok.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Tachybaptus ruficollis"
+    ]
+  },
+  {
+    "name": "Kuvik",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Kuvik",
+    "image": "images/kuvik.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Athene noctua"
+    ]
+  },
+  {
+    "name": "Kék pingvin",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/K%C3%A9k_pingvin",
+    "image": "images/kek-pingvin.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Eudyptula minor"
+    ]
+  },
+  {
+    "name": "Kis kormorán",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Kis_k%C3%A1r%C3%B3katona",
+    "image": "images/kis-kormoran.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Microcarbo pygmeus"
+    ]
+  },
+  {
+    "name": "Kis lile",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Kis_lile",
+    "image": "images/kis-lile.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Charadrius dubius"
+    ]
+  },
+  {
+    "name": "Indiángébics",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Indi%C3%A1ng%C3%A9bics",
+    "image": "images/indiangebics.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Lanius ludovicianus"
+    ]
+  },
+  {
+    "name": "Őszapó",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/%C5%90szap%C3%B3_(mad%C3%A1rfaj)",
+    "image": "images/oszapo.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Aegithalos caudatus"
+    ]
+  },
+  {
+    "name": "Szarkapacsirta",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Szarkapacsirta",
+    "image": "images/szarkapacsirta.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Grallina cyanoleuca"
+    ]
+  },
+  {
+    "name": "Inkakakadu",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Inkakakadu",
+    "image": "images/inkakakadu.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Lophochroa leadbeateri",
+      "hu.wikipedia pageimages:Inkakakadu"
+    ]
+  },
+  {
+    "name": "Tőkés réce",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/T%C5%91k%C3%A9s_r%C3%A9ce",
+    "image": "images/tokes-rece.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Anas platyrhynchos"
+    ]
+  },
+  {
+    "name": "Homoki ásótyúk",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Homoki_%C3%A1s%C3%B3ty%C3%BAk",
+    "image": "images/homoki-asotyuk.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Leipoa ocellata"
+    ]
+  },
+  {
+    "name": "Mandarinréce",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Mandarinr%C3%A9ce",
+    "image": "images/mandarinrece.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Aix galericulata"
+    ]
+  },
+  {
+    "name": "Sörényes lúd",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/S%C3%B6r%C3%A9nyes_l%C3%BAd",
+    "image": "images/sorenyes-lud.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Chenonetta jubata"
+    ]
+  },
+  {
+    "name": "Sárgás gyümölcsgalamb",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/S%C3%A1rgamell%C5%B1_gy%C3%BCm%C3%B6lcsgalamb",
+    "image": "images/sargas-gyumolcsgalamb.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Ptilinopus occipitalis"
+    ]
+  },
+  {
+    "name": "Álarcos bíbic",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/%C3%81larcos_b%C3%ADbic",
+    "image": "images/alarcos-bibic.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Vanellus miles"
+    ]
+  },
+  {
+    "name": "Mississippi-sólyomhéja",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Mississippi-s%C3%B3lyomh%C3%A9ja",
+    "image": "images/mississippi-solyomheja.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Ictinia mississippiensis"
+    ]
+  },
+  {
+    "name": "Fecskefejű virágjáró",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Fecskefej%C5%B1_vir%C3%A1gj%C3%A1r%C3%B3",
+    "image": "images/fecskefeju-viragjaro.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Dicaeum hirundinaceum"
+    ]
+  },
+  {
+    "name": "Moltoni-geze",
+    "status": "ok",
+    "source_url": "https://en.wikipedia.org/wiki/Moltoni%27s_warbler",
+    "image": "images/moltoni-geze.png",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Curruca subalpina",
+      "hu.wikipedia pageimages:Moltoni-geze",
+      "hu.wikipedia search:Moltoni-geze",
+      "en.wikipedia pageimages:Curruca subalpina"
+    ]
+  },
+  {
+    "name": "Hamvas rétihéja",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Hamvas_r%C3%A9tih%C3%A9ja",
+    "image": "images/hamvas-retiheja.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Circus pygargus",
+      "hu.wikipedia pageimages:Hamvas rétihéja"
+    ]
+  },
+  {
+    "name": "Hegyi kékmadár",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Hegyi_k%C3%A9kmad%C3%A1r",
+    "image": "images/hegyi-kekmadar.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Sialia currucoides"
+    ]
+  },
+  {
+    "name": "Gambel-cinege",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Gambel-cinege",
+    "image": "images/gambel-cinege.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Poecile gambeli"
+    ]
+  },
+  {
+    "name": "Sirató gerle",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Sirat%C3%B3_gerle",
+    "image": "images/sirato-gerle.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Zenaida macroura"
+    ]
+  },
+  {
+    "name": "Lebernyeges réce",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Lebernyeges_r%C3%A9ce",
+    "image": "images/lebernyeges-rece.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Biziura lobata"
+    ]
+  },
+  {
+    "name": "Bütykös hattyú",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/B%C3%BCtyk%C3%B6s_hatty%C3%BA",
+    "image": "images/butykos-hattyu.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Cygnus olor"
+    ]
+  },
+  {
+    "name": "Fehérszemű mézevő",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Feh%C3%A9rszem%C5%B1_m%C3%A9zev%C5%91",
+    "image": "images/feherszemu-mezevo.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Phylidonyris novaehollandiae"
+    ]
+  },
+  {
+    "name": "Feketehomlokú mézmadár",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/S%C3%A1rga%C3%BCst%C3%B6k%C5%B1_m%C3%A9zev%C5%91",
+    "image": "images/feketehomloku-mezmadar.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Lichenostomus melanops"
+    ]
+  },
+  {
+    "name": "Északi-szigeti barna kivi",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/%C3%89szaki-szigeti_barna_kivi",
+    "image": "images/eszaki-szigeti-barna-kivi.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Apteryx mantelli"
+    ]
+  },
+  {
+    "name": "Virginiai fogasfürj",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Virginiai_fogasf%C3%BCrj",
+    "image": "images/virginiai-fogasfurj.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Colinus virginianus"
+    ]
+  },
+  {
+    "name": "Vörös kardinálispinty",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/V%C3%B6r%C3%B6s_kardin%C3%A1lispinty",
+    "image": "images/voros-kardinalispinty.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Cardinalis cardinalis"
+    ]
+  },
+  {
+    "name": "Aranyküllő",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Aranyk%C3%BCll%C5%91",
+    "image": "images/aranykullo.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Colaptes auratus"
+    ]
+  },
+  {
+    "name": "Szula",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Szula_(mad%C3%A1r)",
+    "image": "images/szula.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Morus bassanus"
+    ]
+  },
+  {
+    "name": "Héja",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/H%C3%A9ja",
+    "image": "images/heja.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Accipiter gentilis"
+    ]
+  },
+  {
+    "name": "Amerikai rétihéja",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/R%C3%A9tih%C3%A9jaform%C3%A1k",
+    "image": "images/amerikai-retiheja.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Circus hudsonius",
+      "hu.wikipedia pageimages:Amerikai rétihéja",
+      "hu.wikipedia search:Amerikai rétihéja"
+    ]
+  },
+  {
+    "name": "Énekes gezerigó",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/%C3%89nekes_gezerig%C3%B3",
+    "image": "images/enekes-gezerigo.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Mimus polyglottos"
+    ]
+  },
+  {
+    "name": "Kanalas réce",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Kanalas_r%C3%A9ce",
+    "image": "images/kanalas-rece.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Spatula clypeata",
+      "hu.wikipedia pageimages:Kanalas réce"
+    ]
+  },
+  {
+    "name": "Olívahátú napmadár",
+    "status": "ok",
+    "source_url": "https://en.wikipedia.org/wiki/Garden_sunbird",
+    "image": "images/olivahatu-napmadar.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Cinnyris jugularis",
+      "hu.wikipedia pageimages:Olívahátú napmadár",
+      "hu.wikipedia search:Olívahátú napmadár",
+      "en.wikipedia pageimages:Cinnyris jugularis"
+    ]
+  },
+  {
+    "name": "Narancssárgalábú ásótyúk",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Narancss%C3%A1rgal%C3%A1b%C3%BA_%C3%A1s%C3%B3ty%C3%BAk",
+    "image": "images/narancssargalabu-asotyuk.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Megapodius reinwardt"
+    ]
+  },
+  {
+    "name": "Álarcos bagoly",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/%C3%81larcos_bagoly",
+    "image": "images/alarcos-bagoly.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Phodilus badius"
+    ]
+  },
+  {
+    "name": "Dayal-rigó",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Dayal-rig%C3%B3",
+    "image": "images/dayal-rigo.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Copsychus saularis"
+    ]
+  },
+  {
+    "name": "Halászsas",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Hal%C3%A1szsas",
+    "image": "images/halaszsas.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Pandion haliaetus"
+    ]
+  },
+  {
+    "name": "Szemöldökös réce",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Szem%C3%B6ld%C3%B6k%C3%B6s_r%C3%A9ce",
+    "image": "images/szemoldokos-rece.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Spatula querquedula",
+      "hu.wikipedia pageimages:Szemöldökös réce"
+    ]
+  },
+  {
+    "name": "Pápapinty",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/P%C3%A1papinty",
+    "image": "images/papapinty.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Passerina ciris"
+    ]
+  },
+  {
+    "name": "Festett fehérfarkú",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Festett_feh%C3%A9rfark%C3%BA",
+    "image": "images/festett-feherfarku.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Myioborus pictus"
+    ]
+  },
+  {
+    "name": "Nagy keresztcsőrű",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Nagy_keresztcs%C5%91r%C5%B1",
+    "image": "images/nagy-keresztcsoru.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Loxia pytyopsittacus"
+    ]
+  },
+  {
+    "name": "Békés gerle",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Gerla_(Magyarorsz%C3%A1g)",
+    "image": "images/bekes-gerle.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Geopelia placida",
+      "hu.wikipedia pageimages:Békés gerle",
+      "hu.wikipedia search:Békés gerle"
+    ]
+  },
+  {
+    "name": "Vándorsólyom",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/V%C3%A1ndors%C3%B3lyom",
+    "image": "images/vandorsolyom.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Falco peregrinus"
+    ]
+  },
+  {
+    "name": "Sörtésfejű papagáj",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/S%C3%B6rt%C3%A9sfej%C5%B1_g%C3%A9bics",
+    "image": "images/sortesfeju-papagaj.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Pityriasis gymnocephala"
+    ]
+  },
+  {
+    "name": "Fácánfarkú bozótkakukk",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/F%C3%A1c%C3%A1nfark%C3%BA_boz%C3%B3tkakukk",
+    "image": "images/facanfarku-bozotkakukk.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Centropus phasianinus"
+    ]
+  },
+  {
+    "name": "Majomevő sas",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Majomev%C5%91_sas",
+    "image": "images/majomevo-sas.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Pithecophaga jefferyi"
+    ]
+  },
+  {
+    "name": "Gyűrűscsőrű vöcsök",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Gy%C5%B1r%C5%B1scs%C5%91r%C5%B1_v%C3%B6cs%C3%B6k",
+    "image": "images/gyuruscsoru-vocsok.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Podilymbus podiceps"
+    ]
+  },
+  {
+    "name": "Kontyos feketeharkály",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Kontyos_feketehark%C3%A1ly",
+    "image": "images/kontyos-feketeharkaly.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Dryocopus pileatus"
+    ]
+  },
+  {
+    "name": "Fenyőcsíz",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Spinus",
+    "image": "images/fenyocsiz.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Spinus pinus",
+      "hu.wikipedia pageimages:Fenyőcsíz",
+      "hu.wikipedia search:Fenyőcsíz"
+    ]
+  },
+  {
+    "name": "Lapátcsőrű réce",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Kanalas_r%C3%A9ce",
+    "image": "images/lapatcsoru-rece.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Anas clypeata"
+    ]
+  },
+  {
+    "name": "Sztyeppefutó",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Fut%C3%B3mad%C3%A1r",
+    "image": "images/sztyeppefuto.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Cursorius cursor"
+    ]
+  },
+  {
+    "name": "Tonkini vízirozsdafarkú",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Tonkini_v%C3%ADzirozsdafark%C3%BA",
+    "image": "images/tonkini-vizirozsdafarku.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Phoenicurus fuliginosus"
+    ]
+  },
+  {
+    "name": "Stephánia-paradicsommadár",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Habsburg%E2%80%93Lotaringiai_Rudolf_osztr%C3%A1k%E2%80%93magyar_tr%C3%B3n%C3%B6r%C3%B6k%C3%B6s",
+    "image": "images/stephania-paradicsommadar.png",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Astrapia stephaniae",
+      "hu.wikipedia pageimages:Stephánia-paradicsommadár",
+      "hu.wikipedia search:Stephánia-paradicsommadár"
+    ]
+  },
+  {
+    "name": "Citromlombjáró",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Citromlombj%C3%A1r%C3%B3",
+    "image": "images/citromlombjaro.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Protonotaria citrea"
+    ]
+  },
+  {
+    "name": "Amerikai szultántyúk",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Amerikai_szult%C3%A1nty%C3%BAk",
+    "image": "images/amerikai-szultantyuk.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Porphyrio martinica"
+    ]
+  },
+  {
+    "name": "Vörös gém",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/V%C3%B6r%C3%B6s_g%C3%A9m",
+    "image": "images/voros-gem.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Ardea purpurea"
+    ]
+  },
+  {
+    "name": "Északi bíborfecske",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/%C3%89szaki_b%C3%ADborfecske",
+    "image": "images/eszaki-biborfecske.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Progne subis"
+    ]
+  },
+  {
+    "name": "Törpecsuszka",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/T%C3%B6rpecsuszka",
+    "image": "images/torpecsuszka.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Sitta pygmaea"
+    ]
+  },
+  {
+    "name": "Ausztrál szultántyúk",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Porphyrio_(mad%C3%A1rnem)",
+    "image": "images/ausztral-szultantyuk.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Porphyrio melanotus",
+      "hu.wikipedia pageimages:Ausztrál szultántyúk",
+      "hu.wikipedia search:Ausztrál szultántyúk"
+    ]
+  },
+  {
+    "name": "Szivárványlóri",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/B%C3%ADborhas%C3%BA_sziv%C3%A1rv%C3%A1nyl%C3%B3ri",
+    "image": "images/szivarvanylori.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Trichoglossus moluccanus",
+      "hu.wikipedia pageimages:Szivárványlóri"
+    ]
+  },
+  {
+    "name": "Tigrispinty",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Tigrispinty",
+    "image": "images/tigrispinty.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Amandava amandava"
+    ]
+  },
+  {
+    "name": "Keresztcsőrű",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Keresztcs%C5%91r%C5%B1",
+    "image": "images/keresztcsoru.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Loxia curvirostra"
+    ]
+  },
+  {
+    "name": "Bankivatyúk",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Bankivaty%C3%BAk",
+    "image": "images/bankivatyuk.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Gallus gallus"
+    ]
+  },
+  {
+    "name": "Vörös kánya",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/V%C3%B6r%C3%B6s_k%C3%A1nya",
+    "image": "images/voros-kanya.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Milvus milvus"
+    ]
+  },
+  {
+    "name": "Sarki partfutó",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Sarki_partfut%C3%B3",
+    "image": "images/sarki-partfuto.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Calidris canutus"
+    ]
+  },
+  {
+    "name": "Piroscsüngős lebenyesmadár",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Piroscs%C3%BCng%C5%91s_lebenyesmad%C3%A1r",
+    "image": "images/piroscsungos-lebenyesmadar.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Anthochaera carunculata"
+    ]
+  },
+  {
+    "name": "Piroshátú tündérmadár",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Pirosh%C3%A1t%C3%BA_t%C3%BCnd%C3%A9rmad%C3%A1r",
+    "image": "images/piroshatu-tundermadar.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Malurus melanocephalus"
+    ]
+  },
+  {
+    "name": "Tövisszúró gébics",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/T%C3%B6vissz%C3%BAr%C3%B3_g%C3%A9bics",
+    "image": "images/tovisszuro-gebics.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Lanius collurio"
+    ]
+  },
+  {
+    "name": "Karolinai küllő",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Karolinai_k%C3%BCll%C5%91",
+    "image": "images/karolinai-kullo.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Melanerpes carolinus"
+    ]
+  },
+  {
+    "name": "Örvös bukó",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/%C3%96rv%C3%B6s_buk%C3%B3",
+    "image": "images/orvos-buko.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Mergus serrator"
+    ]
+  },
+  {
+    "name": "Kanadai csuszka",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Kanadai_csuszka",
+    "image": "images/kanadai-csuszka.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Sitta canadensis"
+    ]
+  },
+  {
+    "name": "Pirossapkás cinegelégykapó",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Pirossapk%C3%A1s_cinegel%C3%A9gykap%C3%B3",
+    "image": "images/pirossapkas-cinegelegykapo.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Petroica goodenovii"
+    ]
+  },
+  {
+    "name": "Kokárdás harkály",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Leuconotopicus",
+    "image": "images/kokardas-harkaly.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Leuconotopicus borealis",
+      "hu.wikipedia pageimages:Kokárdás harkály",
+      "hu.wikipedia search:Kokárdás harkály"
+    ]
+  },
+  {
+    "name": "Mandzsu daru",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Mandzsu_daru",
+    "image": "images/mandzsu-daru.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Grus japonensis"
+    ]
+  },
+  {
+    "name": "Pirosszemű lombgébics",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Pirosszem%C5%B1_lombg%C3%A9bics",
+    "image": "images/pirosszemu-lombgebics.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Vireo olivaceus"
+    ]
+  },
+  {
+    "name": "Vörösfejű küllő",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/V%C3%B6r%C3%B6sfej%C5%B1_k%C3%BCll%C5%91",
+    "image": "images/vorosfeju-kullo.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Melanerpes erythrocephalus"
+    ]
+  },
+  {
+    "name": "Vörös fogoly",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/V%C3%B6r%C3%B6s_fogoly",
+    "image": "images/voros-fogoly.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Alectoris rufa"
+    ]
+  },
+  {
+    "name": "Vörösfejű gulipán",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/V%C3%B6r%C3%B6sfej%C5%B1_gulip%C3%A1n",
+    "image": "images/vorosfeju-gulipan.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Recurvirostra novaehollandiae"
+    ]
+  },
+  {
+    "name": "Vörösvállú ölyv",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/V%C3%B6r%C3%B6sv%C3%A1ll%C3%BA_%C3%B6lyv",
+    "image": "images/vorosvallu-olyv.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Buteo lineatus"
+    ]
+  },
+  {
+    "name": "Rőtfarkú ölyv",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/R%C5%91tfark%C3%BA_%C3%B6lyv",
+    "image": "images/rotfarku-olyv.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Buteo jamaicensis"
+    ]
+  },
+  {
+    "name": "Kormos bülbül",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Kormos_b%C3%BClb%C3%BCl",
+    "image": "images/kormos-bulbul.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Pycnonotus cafer"
+    ]
+  },
+  {
+    "name": "Bibircses bíbic",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Bibircses_b%C3%ADbic",
+    "image": "images/bibircses-bibic.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Vanellus indicus"
+    ]
+  },
+  {
+    "name": "Pirosvállú csiröge",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Pirosv%C3%A1ll%C3%BA_csir%C3%B6ge",
+    "image": "images/pirosvallu-csiroge.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Agelaius phoeniceus"
+    ]
+  },
+  {
+    "name": "Skarlátszárnyú remetepapagáj",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Skarl%C3%A1tsz%C3%A1rny%C3%BA_remetepapag%C3%A1j",
+    "image": "images/skarlatszarnyu-remetepapagaj.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Aprosmictus erythropterus"
+    ]
+  },
+  {
+    "name": "Bársonyos aranymadár",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/B%C3%A1rsonyos_aranymad%C3%A1r",
+    "image": "images/barsonyos-aranymadar.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Sericulus chrysocephalus"
+    ]
+  },
+  {
+    "name": "Orrszarvú alka",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Orrszarv%C3%BA_alka",
+    "image": "images/orrszarvu-alka.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Cerorhinca monocerata"
+    ]
+  },
+  {
+    "name": "Gyűrűscsőrű sirály",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Gy%C5%B1r%C5%B1scs%C5%91r%C5%B1_sir%C3%A1ly",
+    "image": "images/gyuruscsoru-siraly.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Larus delawarensis"
+    ]
+  },
+  {
+    "name": "Szirti galamb",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Szirti_galamb",
+    "image": "images/szirti-galamb.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Columba livia"
+    ]
+  },
+  {
+    "name": "Vetési varjú",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Vet%C3%A9si_varj%C3%BA",
+    "image": "images/vetesi-varju.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Corvus frugilegus"
+    ]
+  },
+  {
+    "name": "Rózsásmellű magvágó",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/R%C3%B3zs%C3%A1smell%C5%B1_magv%C3%A1g%C3%B3",
+    "image": "images/rozsasmellu-magvago.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Pheucticus ludovicianus"
+    ]
+  },
+  {
+    "name": "Kis sándorpapagáj",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Kis_s%C3%A1ndorpapag%C3%A1j",
+    "image": "images/kis-sandorpapagaj.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Psittacula krameri"
+    ]
+  },
+  {
+    "name": "Rózsás kanalasgém",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/R%C3%B3zs%C3%A1s_kanalasg%C3%A9m",
+    "image": "images/rozsas-kanalasgem.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Platalea ajaja"
+    ]
+  },
+  {
+    "name": "Pásztormadár",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/P%C3%A1sztormad%C3%A1r",
+    "image": "images/pasztormadar.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Pastor roseus"
+    ]
+  },
+  {
+    "name": "Királykanalasgém",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Kir%C3%A1lykanalasg%C3%A9m",
+    "image": "images/kiralykanalasgem.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Platalea regia"
+    ]
+  },
+  {
+    "name": "Alaszkai királyka",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Alaszkai_kir%C3%A1lyka",
+    "image": "images/alaszkai-kiralyka.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Regulus calendula"
+    ]
+  },
+  {
+    "name": "Tüzestorkú kolibri",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/L%C3%A1ngfoltos_kolibri",
+    "image": "images/tuzestorku-kolibri.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Panterpe insignis"
+    ]
+  },
+  {
+    "name": "Halcsontfarkú réce",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Halcsontfark%C3%BA_r%C3%A9ce",
+    "image": "images/halcsontfarku-rece.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Oxyura jamaicensis"
+    ]
+  },
+  {
+    "name": "Vörös ásólúd",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/V%C3%B6r%C3%B6s_%C3%A1s%C3%B3l%C3%BAd",
+    "image": "images/voros-asolud.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Tadorna ferruginea"
+    ]
+  },
+  {
+    "name": "Pajzsoscankó",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Pajzsos_cank%C3%B3",
+    "image": "images/pajzsoscanko.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Calidris pugnax"
+    ]
+  },
+  {
+    "name": "Kaledón bakcsó",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Kaled%C3%B3n_bakcs%C3%B3",
+    "image": "images/kaledon-bakcso.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Nycticorax caledonicus"
+    ]
+  },
+  {
+    "name": "Rozsdás héjabagoly",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Rozsd%C3%A1s_h%C3%A9jabagoly",
+    "image": "images/rozsdas-hejabagoly.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Ninox rufa"
+    ]
+  },
+  {
+    "name": "Rozsdacsíkos mézevő",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Rozsdacs%C3%ADkos_m%C3%A9zev%C5%91",
+    "image": "images/rozsdacsikos-mezevo.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Conopophila albogularis"
+    ]
+  },
+  {
+    "name": "Szent halción",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Szent_halci%C3%B3n",
+    "image": "images/szent-halcion.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Todiramphus sanctus",
+      "hu.wikipedia pageimages:Szent halción"
+    ]
+  },
+  {
+    "name": "Kanadai daru",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Kanadai_daru",
+    "image": "images/kanadai-daru.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Antigone canadensis",
+      "hu.wikipedia pageimages:Kanadai daru"
+    ]
+  },
+  {
+    "name": "Antigoné-daru",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Antigon%C3%A9-daru",
+    "image": "images/antigone-daru.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Antigone antigone",
+      "hu.wikipedia pageimages:Antigoné-daru"
+    ]
+  },
+  {
+    "name": "Szatírtragopán",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Szat%C3%ADrtragop%C3%A1n",
+    "image": "images/szatirtragopan.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Tragopan satyra"
+    ]
+  },
+  {
+    "name": "Szavanna verébsármány",
+    "status": "ok",
+    "source_url": "https://en.wikipedia.org/wiki/Savannah_sparrow",
+    "image": "images/szavanna-verebsarmany.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Passerculus sandwichensis",
+      "hu.wikipedia pageimages:Szavanna verébsármány",
+      "hu.wikipedia search:Szavanna verébsármány",
+      "en.wikipedia pageimages:Passerculus sandwichensis"
+    ]
+  },
+  {
+    "name": "Nádi tücsökmadár",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/N%C3%A1di_t%C3%BCcs%C3%B6kmad%C3%A1r",
+    "image": "images/nadi-tucsokmadar.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Locustella luscinioides"
+    ]
+  },
+  {
+    "name": "Say-légykapótirannusz",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Say-l%C3%A9gykap%C3%B3tirannusz",
+    "image": "images/say-legykapotirannusz.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Sayornis saya"
+    ]
+  },
+  {
+    "name": "Pikkelyes fogasfürj",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Pikkelyes_fogasf%C3%BCrj",
+    "image": "images/pikkelyes-fogasfurj.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Callipepla squamata"
+    ]
+  },
+  {
+    "name": "Muskátpinty",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Tigrispinty",
+    "image": "images/muskatpinty.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Amandava amandava"
+    ]
+  },
+  {
+    "name": "Ollósfarkú tirannusz",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Oll%C3%B3sfark%C3%BA_tirannusz",
+    "image": "images/ollosfarku-tirannusz.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Tyrannus forficatus"
+    ]
+  },
+  {
+    "name": "Rövidkarmú fakusz",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/R%C3%B6vidkarm%C3%BA_fakusz",
+    "image": "images/rovidkarmu-fakusz.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Certhia brachydactyla"
+    ]
+  },
+  {
+    "name": "Ezüstös pápaszemesmadár",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Ez%C3%BCst%C3%B6s_p%C3%A1paszemesmad%C3%A1r",
+    "image": "images/ezustos-papaszemesmadar.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Zosterops lateralis"
+    ]
+  },
+  {
+    "name": "Fahéjszínű sáfránymadár",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Fah%C3%A9jsz%C3%ADn%C5%B1_s%C3%A1fr%C3%A1nymad%C3%A1r",
+    "image": "images/fahejszinu-safranymadar.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Pericrocotus cinnamomeus"
+    ]
+  },
+  {
+    "name": "Kis bukó",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Kis_buk%C3%B3",
+    "image": "images/kis-buko.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Mergellus albellus"
+    ]
+  },
+  {
+    "name": "Hósármány",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/H%C3%B3s%C3%A1rm%C3%A1ny",
+    "image": "images/hosarmany.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Plectrophenax nivalis"
+    ]
+  },
+  {
+    "name": "Hókócsag",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/H%C3%B3k%C3%B3csag",
+    "image": "images/hokocsag.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Egretta thula"
+    ]
+  },
+  {
+    "name": "Hóbagoly",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/H%C3%B3bagoly",
+    "image": "images/hobagoly.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Bubo scandiacus"
+    ]
+  },
+  {
+    "name": "Énekes verébsármány",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/%C3%89nekes_ver%C3%A9bs%C3%A1rm%C3%A1ny",
+    "image": "images/enekes-verebsarmany.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Melospiza melodia"
+    ]
+  },
+  {
+    "name": "Petroica australis",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Petroica_australis",
+    "image": "images/petroica-australis.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Petroica australis"
+    ]
+  },
+  {
+    "name": "Sisakos kazuár",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Sisakos_kazu%C3%A1r",
+    "image": "images/sisakos-kazuar.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Casuarius casuarius"
+    ]
+  },
+  {
+    "name": "Flitteres drongó",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Flitteres_drong%C3%B3",
+    "image": "images/flitteres-drongo.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Dicrurus bracteatus"
+    ]
+  },
+  {
+    "name": "Tengerkék tündérmadár",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Tengerk%C3%A9k_t%C3%BCnd%C3%A9rmad%C3%A1r",
+    "image": "images/tengerkek-tundermadar.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Malurus splendens"
+    ]
+  },
+  {
+    "name": "Lapátcsőrű partfutó",
+    "status": "ok",
+    "source_url": "https://en.wikipedia.org/wiki/Spoon-billed_sandpiper",
+    "image": "images/lapatcsoru-partfuto.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Calidris pygmaea",
+      "hu.wikipedia pageimages:Lapátcsőrű partfutó",
+      "hu.wikipedia search:Lapátcsőrű partfutó",
+      "en.wikipedia pageimages:Calidris pygmaea"
+    ]
+  },
+  {
+    "name": "Pettyezetlen vízicsibe",
+    "status": "ok",
+    "source_url": "https://en.wikipedia.org/wiki/Spotless_crake",
+    "image": "images/pettyezetlen-vizicsibe.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Porzana tabuensis",
+      "hu.wikipedia pageimages:Pettyezetlen vízicsibe",
+      "hu.wikipedia search:Pettyezetlen vízicsibe",
+      "en.wikipedia pageimages:Porzana tabuensis"
+    ]
+  },
+  {
+    "name": "Gyöngyösnyakú gerle",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Gy%C3%B6ngy%C3%B6snyak%C3%BA_gerle",
+    "image": "images/gyongyosnyaku-gerle.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Spilopelia chinensis",
+      "hu.wikipedia pageimages:Gyöngyösnyakú gerle"
+    ]
+  },
+  {
+    "name": "Nyugati erdeibagoly",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Nyugati_erdeibagoly",
+    "image": "images/nyugati-erdeibagoly.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Strix occidentalis"
+    ]
+  },
+  {
+    "name": "Pettyes billegetőcankó",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Pettyes_billeget%C5%91cank%C3%B3",
+    "image": "images/pettyes-billegetocanko.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Actitis macularius"
+    ]
+  },
+  {
+    "name": "Foltos földiveréb",
+    "status": "ok",
+    "source_url": "https://en.wikipedia.org/wiki/Spotted_towhee",
+    "image": "images/foltos-foldivereb.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Pipilo maculatus",
+      "hu.wikipedia pageimages:Foltos földiveréb",
+      "hu.wikipedia search:Foltos földiveréb",
+      "en.wikipedia pageimages:Pipilo maculatus"
+    ]
+  },
+  {
+    "name": "Sprague-pityer",
+    "status": "ok",
+    "source_url": "https://en.wikipedia.org/wiki/Sprague%27s_pipit",
+    "image": "images/sprague-pityer.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Anthus spragueii",
+      "hu.wikipedia pageimages:Sprague-pityer",
+      "hu.wikipedia search:Sprague-pityer",
+      "en.wikipedia pageimages:Anthus spragueii"
+    ]
+  },
+  {
+    "name": "Üstökösgém",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/%C3%9Cst%C3%B6k%C3%B6sg%C3%A9m",
+    "image": "images/ustokosgem.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Ardeola ralloides"
+    ]
+  },
+  {
+    "name": "Díszes kitta",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/D%C3%ADszes_kitta",
+    "image": "images/diszes-kitta.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Urocissa ornata"
+    ]
+  },
+  {
+    "name": "Srí lankai békaszájú",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Bagolyfecskef%C3%A9l%C3%A9k",
+    "image": "images/sri-lankai-bekaszaju.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Batrachostomus moniliger",
+      "hu.wikipedia pageimages:Srí lankai békaszájú",
+      "hu.wikipedia search:Srí lankai békaszájú"
+    ]
+  },
+  {
+    "name": "Bóbitás szajkó",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/B%C3%B3bit%C3%A1s_szajk%C3%B3",
+    "image": "images/bobitas-szajko.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Cyanocitta stelleri"
+    ]
+  },
+  {
+    "name": "Gólyacsőrű halción",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/G%C3%B3lyacs%C5%91r%C5%B1_halci%C3%B3n",
+    "image": "images/golyacsoru-halcion.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Pelargopsis capensis"
+    ]
+  },
+  {
+    "name": "Feketemellű fürj",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Feketemell%C5%B1_f%C3%BCrj",
+    "image": "images/feketemellu-furj.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Turnix melanogaster",
+      "hu.wikipedia pageimages:Feketemellű fürj"
+    ]
+  },
+  {
+    "name": "Sárgabóbitás kakadu",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/S%C3%A1rgab%C3%B3bit%C3%A1s_kakadu",
+    "image": "images/sargabobitas-kakadu.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Cacatua galerita"
+    ]
+  },
+  {
+    "name": "Pompás lantfarkúmadár",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Pomp%C3%A1s_lantfark%C3%BAmad%C3%A1r",
+    "image": "images/pompas-lantfarkumadar.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Menura novaehollandiae"
+    ]
+  },
+  {
+    "name": "Prériölyv",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Pr%C3%A9ri%C3%B6lyv",
+    "image": "images/preriolyv.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Buteo swainsoni"
+    ]
+  },
+  {
+    "name": "Bagolyfecske",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Bagolyfecske",
+    "image": "images/bagolyfecske.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Podargus strigoides"
+    ]
+  },
+  {
+    "name": "Kövi pacsirta",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/K%C3%B6vi_pacsirta",
+    "image": "images/kovi-pacsirta.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Galerida theklae"
+    ]
+  },
+  {
+    "name": "Odúfecske",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Od%C3%BAfecske",
+    "image": "images/odufecske.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Tachycineta bicolor"
+    ]
+  },
+  {
+    "name": "Trombitás sivatagipinty",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Trombit%C3%A1s_sivatagipinty",
+    "image": "images/trombitas-sivatagipinty.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Bucanetes githagineus",
+      "hu.wikipedia pageimages:Trombitás sivatagipinty"
+    ]
+  },
+  {
+    "name": "Trombitás hattyú",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Trombit%C3%A1s_hatty%C3%BA",
+    "image": "images/trombitas-hattyu.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Cygnus buccinator"
+    ]
+  },
+  {
+    "name": "Indiáncinege",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Indi%C3%A1ncinege",
+    "image": "images/indiancinege.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Baeolophus bicolor"
+    ]
+  },
+  {
+    "name": "Pulykakeselyű",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Pulykakesely%C5%B1",
+    "image": "images/pulykakeselyu.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Cathartes aura"
+    ]
+  },
+  {
+    "name": "Sárgacsőrű kenderike",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/S%C3%A1rgacs%C5%91r%C5%B1_kenderike",
+    "image": "images/sargacsoru-kenderike.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Linaria flavirostris"
+    ]
+  },
+  {
+    "name": "Tui",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Tui",
+    "image": "images/tui.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Prosthemadera novaeseelandiae"
+    ]
+  },
+  {
+    "name": "Vaux-sarlósfecske",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Vaux-sarl%C3%B3sfecske",
+    "image": "images/vaux-sarlosfecske.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Chaetura vauxi"
+    ]
+  },
+  {
+    "name": "Eumyias thalassinus",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Eumyias_thalassinus",
+    "image": "images/eumyias-thalassinus.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Eumyias thalassinus"
+    ]
+  },
+  {
+    "name": "Ibolyaszínű rézkakukk",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Ibolyasz%C3%ADn%C5%B1_r%C3%A9zkakukk",
+    "image": "images/ibolyaszinu-rezkakukk.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Chrysococcyx xanthorhynchus"
+    ]
+  },
+  {
+    "name": "Karolinai fecske",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Karolinai_fecske",
+    "image": "images/karolinai-fecske.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Tachycineta thalassina"
+    ]
+  },
+  {
+    "name": "Ékfarkú sas",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/%C3%89kfark%C3%BA_sas",
+    "image": "images/ekfarku-sas.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Aquila audax"
+    ]
+  },
+  {
+    "name": "Ausztrál fecske",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Ausztr%C3%A1l_fecske",
+    "image": "images/ausztral-fecske.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Hirundo neoxena"
+    ]
+  },
+  {
+    "name": "Nyugati réticsiröge",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Nyugati_r%C3%A9ticsir%C3%B6ge",
+    "image": "images/nyugati-reticsiroge.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Sturnella neglecta"
+    ]
+  },
+  {
+    "name": "Sáfránytangara",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/S%C3%A1fr%C3%A1nypinty",
+    "image": "images/safranytangara.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Sicalis flaveola"
+    ]
+  },
+  {
+    "name": "Fehér gólya",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Feh%C3%A9r_g%C3%B3lya",
+    "image": "images/feher-golya.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Ciconia ciconia"
+    ]
+  },
+  {
+    "name": "Barázdabillegető",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Bar%C3%A1zdabilleget%C5%91",
+    "image": "images/barazdabillegeto.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Motacilla alba"
+    ]
+  },
+  {
+    "name": "Fehérhátú fakopáncs",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Feh%C3%A9rh%C3%A1t%C3%BA_fakop%C3%A1ncs",
+    "image": "images/feherhatu-fakopancs.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Dendrocopos leucotos"
+    ]
+  },
+  {
+    "name": "Fehérhasú rétisas",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Feh%C3%A9rhas%C3%BA_r%C3%A9tisas",
+    "image": "images/feherhasu-retisas.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Haliaeetus leucogaster"
+    ]
+  },
+  {
+    "name": "Barátcsuszka",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Bar%C3%A1tcsuszka",
+    "image": "images/baratcsuszka.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Sitta carolinensis"
+    ]
+  },
+  {
+    "name": "Fehérhasú fecskeseregély",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Feh%C3%A9rhas%C3%BA_fecskesereg%C3%A9ly",
+    "image": "images/feherhasu-fecskeseregely.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Artamus leucorynchus"
+    ]
+  },
+  {
+    "name": "Bíborkirályka",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/B%C3%ADborkir%C3%A1lyka",
+    "image": "images/biborkiralyka.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Leptopoecile sophiae"
+    ]
+  },
+  {
+    "name": "Fehérfejű álszajkó",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Feh%C3%A9rfej%C5%B1_%C3%A1lszajk%C3%B3",
+    "image": "images/feherfeju-alszajko.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Garrulax leucolophus"
+    ]
+  },
+  {
+    "name": "Koronás verébsármány",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Koron%C3%A1s_ver%C3%A9bs%C3%A1rm%C3%A1ny",
+    "image": "images/koronas-verebsarmany.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Zonotrichia leucophrys"
+    ]
+  },
+  {
+    "name": "Fehérarcú gém",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Feh%C3%A9rarc%C3%BA_g%C3%A9m",
+    "image": "images/feherarcu-gem.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Egretta novaehollandiae"
+    ]
+  },
+  {
+    "name": "Fehérarcú batla",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Feh%C3%A9rarc%C3%BA_batla",
+    "image": "images/feherarcu-batla.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Plegadis chihi"
+    ]
+  },
+  {
+    "name": "Kékcsőrű réce",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/K%C3%A9kcs%C5%91r%C5%B1_r%C3%A9ce",
+    "image": "images/kekcsoru-rece.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Oxyura leucocephala"
+    ]
+  },
+  {
+    "name": "Vízirigó",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/V%C3%ADzirig%C3%B3",
+    "image": "images/vizirigo.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Cinclus cinclus"
+    ]
+  },
+  {
+    "name": "Barna halkapó",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Barna_halkap%C3%B3",
+    "image": "images/barna-halkapo.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Halcyon smyrnensis"
+    ]
+  },
+  {
+    "name": "Fehérmellű sarlósfecske",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Feh%C3%A9rmell%C5%B1_sarl%C3%B3sfecske",
+    "image": "images/fehermellu-sarlosfecske.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Aeronautes saxatalis"
+    ]
+  },
+  {
+    "name": "Lármás daru",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/L%C3%A1rm%C3%A1s_daru",
+    "image": "images/larmas-daru.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Grus americana"
+    ]
+  },
+  {
+    "name": "Vadpulyka",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Vadpulyka",
+    "image": "images/vadpulyka.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Meleagris gallopavo"
+    ]
+  },
+  {
+    "name": "Lármás cankó",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/L%C3%A1rm%C3%A1s_cank%C3%B3",
+    "image": "images/larmas-canko.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Tringa semipalmata"
+    ]
+  },
+  {
+    "name": "Fehérhasú legyezőfarok",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Feh%C3%A9rhas%C3%BA_legyez%C5%91farok",
+    "image": "images/feherhasu-legyezofarok.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Rhipidura leucophrys"
+    ]
+  },
+  {
+    "name": "Kormosfejű cinege",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Kormosfej%C5%B1_cinege",
+    "image": "images/kormosfeju-cinege.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Poecile montanus"
+    ]
+  },
+  {
+    "name": "Amerikai sárszalonka",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/S%C3%A1rszalonka",
+    "image": "images/amerikai-sarszalonka.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Gallinago delicata",
+      "hu.wikipedia pageimages:Amerikai sárszalonka",
+      "hu.wikipedia search:Amerikai sárszalonka"
+    ]
+  },
+  {
+    "name": "Wilson-viharfecske",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Wilson-viharfecske",
+    "image": "images/wilson-viharfecske.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Oceanites oceanicus"
+    ]
+  },
+  {
+    "name": "Karolinai réce",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Karolinai_r%C3%A9ce",
+    "image": "images/karolinai-rece.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Aix sponsa"
+    ]
+  },
+  {
+    "name": "Erdei gólya",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Erdei_g%C3%B3lya",
+    "image": "images/erdei-golya.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Mycteria americana"
+    ]
+  },
+  {
+    "name": "Ferdecsőrű lile",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Ferdecs%C5%91r%C5%B1_lile",
+    "image": "images/ferdecsoru-lile.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Anarhynchus frontalis"
+    ]
+  },
+  {
+    "name": "Sárga törpegém",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Szaporcai-%C5%90s-Dr%C3%A1va",
+    "image": "images/sarga-torpegem.png",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Ixobrychus sinensis",
+      "hu.wikipedia pageimages:Sárga törpegém",
+      "hu.wikipedia search:Sárga törpegém"
+    ]
+  },
+  {
+    "name": "Sárgahasú cukorharkály",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/S%C3%A1rgahas%C3%BA_cukorhark%C3%A1ly",
+    "image": "images/sargahasu-cukorharkaly.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Sphyrapicus varius"
+    ]
+  },
+  {
+    "name": "Sárgacsőrű esőkakukk",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/S%C3%A1rgacs%C5%91r%C5%B1_es%C5%91kakukk",
+    "image": "images/sargacsoru-esokakukk.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Coccyzus americanus"
+    ]
+  },
+  {
+    "name": "Pápaszemes lombjáró",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/P%C3%A1paszemes_lombj%C3%A1r%C3%B3",
+    "image": "images/papaszemes-lombjaro.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Icteria virens"
+    ]
+  },
+  {
+    "name": "Sárgafejű csiröge",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/S%C3%A1rgafej%C5%B1_csir%C3%B6ge",
+    "image": "images/sargafeju-csiroge.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Xanthocephalus xanthocephalus"
+    ]
+  },
+  {
+    "name": "Koronás erdeiposzáta",
+    "status": "ok",
+    "source_url": "https://en.wikipedia.org/wiki/Eastern_crowned_warbler",
+    "image": "images/koronas-erdeiposzata.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Phylloscopus coronatus",
+      "hu.wikipedia pageimages:Koronás erdeiposzáta",
+      "hu.wikipedia search:Koronás erdeiposzáta",
+      "en.wikipedia pageimages:Phylloscopus coronatus"
+    ]
+  },
+  {
+    "name": "Citromsármány",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Citroms%C3%A1rm%C3%A1ny",
+    "image": "images/citromsarmany.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Emberiza citrinella"
+    ]
+  },
+  {
+    "name": "Csíkos gerle",
+    "status": "ok",
+    "source_url": "https://hu.wikipedia.org/wiki/Sivatagi_bagoly",
+    "image": "images/csikos-gerle.jpg",
+    "search_terms_tried": [
+      "hu.wikipedia pageimages:Geopelia maugeus",
+      "hu.wikipedia pageimages:Csíkos gerle",
+      "hu.wikipedia search:Csíkos gerle"
+    ]
+  }
+]
