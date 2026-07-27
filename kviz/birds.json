@@ -3,7 +3,7 @@
         "name": "Falakó szula",
         "wingspan_cm": 190,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "fehér",
@@ -328,7 +328,7 @@
         "name": "Ausztrálázsiai pityer",
         "wingspan_cm": 31,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "barna",
@@ -343,7 +343,7 @@
         "name": "Ausztráliai kanalasréce",
         "wingspan_cm": 75,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "barna",
@@ -360,7 +360,7 @@
         "wingspan_cm": 118,
         "continents": [
             "Ázsia",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "fehér",
@@ -376,7 +376,7 @@
         "name": "Feketehátú fuvolázómadár",
         "wingspan_cm": 75,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "fekete",
@@ -392,7 +392,7 @@
         "name": "Ausztrál kuvikfecske",
         "wingspan_cm": 28,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "szürke",
@@ -407,7 +407,7 @@
         "name": "Ausztrál varjú",
         "wingspan_cm": 100,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "fekete",
@@ -424,7 +424,7 @@
         "wingspan_cm": 21,
         "continents": [
             "Ázsia",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "barna",
@@ -439,7 +439,7 @@
         "name": "Ausztrál ásólúd",
         "wingspan_cm": 113,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "fekete",
@@ -455,7 +455,7 @@
         "name": "Ausztrál zebrapinty",
         "wingspan_cm": 22,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "szürke",
@@ -539,7 +539,7 @@
             "Európa",
             "Ázsia",
             "Afrika",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "barna",
@@ -560,7 +560,7 @@
             "Európa",
             "Ázsia",
             "Afrika",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "kék",
@@ -707,7 +707,7 @@
         "wingspan_cm": 69,
         "continents": [
             "Ázsia",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "fekete",
@@ -776,7 +776,7 @@
         "name": "Fekete hattyú",
         "wingspan_cm": 180,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "fekete",
@@ -900,7 +900,7 @@
             "Európa",
             "Ázsia",
             "Afrika",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "szürke",
@@ -968,7 +968,7 @@
         "name": "Ausztrál kuhi",
         "wingspan_cm": 87,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "szürke",
@@ -987,7 +987,7 @@
             "Európa",
             "Ázsia",
             "Afrika",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "barna",
@@ -1120,7 +1120,7 @@
         "wingspan_cm": 150,
         "continents": [
             "Ázsia",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "fekete",
@@ -1171,7 +1171,7 @@
         "wingspan_cm": 125,
         "continents": [
             "Ázsia",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "barna",
@@ -1255,7 +1255,7 @@
         "name": "Ausztrál daru",
         "wingspan_cm": 215,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "szürke",
@@ -1287,7 +1287,7 @@
         "name": "Hosszúlábú sólyom",
         "wingspan_cm": 102,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "barna",
@@ -1350,7 +1350,7 @@
         "name": "Hullámos papagáj",
         "wingspan_cm": 30,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "zöld",
@@ -1720,7 +1720,7 @@
         "name": "Nimfapapagáj",
         "wingspan_cm": 32,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "szürke",
@@ -1889,7 +1889,7 @@
         "continents": [
             "Európa",
             "Ázsia",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "kék",
@@ -1961,7 +1961,7 @@
             "Európa",
             "Ázsia",
             "Afrika",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "fekete",
@@ -2048,7 +2048,7 @@
             "Európa",
             "Ázsia",
             "Afrika",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "barna",
@@ -2197,7 +2197,7 @@
         "name": "Raggi-paradicsommadár",
         "wingspan_cm": 55,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "barna",
@@ -2245,7 +2245,7 @@
         "name": "Kontyos galamb",
         "wingspan_cm": 45,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "szürke",
@@ -2261,7 +2261,7 @@
         "name": "Skarlátdalnok",
         "wingspan_cm": 19,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "piros",
@@ -2458,7 +2458,7 @@
         "name": "Keleti rozella",
         "wingspan_cm": 48,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "piros",
@@ -2490,7 +2490,7 @@
         "name": "Keleti ostormadár",
         "wingspan_cm": 30,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "zöld",
@@ -2522,7 +2522,7 @@
         "name": "Emu",
         "wingspan_cm": null,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "barna",
@@ -2558,7 +2558,7 @@
             "Európa",
             "Ázsia",
             "Afrika",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "fekete",
@@ -2783,7 +2783,7 @@
         "continents": [
             "Európa",
             "Ázsia",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "barna",
@@ -3016,7 +3016,7 @@
         "name": "Rózsás kakadu",
         "wingspan_cm": 75,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "rózsaszín",
@@ -3084,7 +3084,7 @@
         "wingspan_cm": 15,
         "continents": [
             "Ázsia",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "barna"
@@ -3098,7 +3098,7 @@
         "name": "Gould-amandina",
         "wingspan_cm": 14,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "zöld",
@@ -3179,7 +3179,7 @@
             "Európa",
             "Ázsia",
             "Afrika",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "szürke",
@@ -3216,7 +3216,7 @@
             "Európa",
             "Ázsia",
             "Afrika",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "fekete",
@@ -3252,7 +3252,7 @@
             "Európa",
             "Ázsia",
             "Afrika",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "fehér",
@@ -3272,7 +3272,7 @@
             "Európa",
             "Ázsia",
             "Afrika",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "fehér",
@@ -3357,7 +3357,7 @@
         "continents": [
             "Európa",
             "Ázsia",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "sárga",
@@ -3487,7 +3487,7 @@
         "wingspan_cm": 54,
         "continents": [
             "Ázsia",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "zöld",
@@ -3503,7 +3503,7 @@
         "name": "Örvös fojtógébics",
         "wingspan_cm": 40,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "szürke",
@@ -3522,7 +3522,7 @@
             "Európa",
             "Ázsia",
             "Afrika",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "szürke",
@@ -3538,7 +3538,7 @@
         "name": "Szürkebegyű gébicsrigó",
         "wingspan_cm": 26,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "szürke",
@@ -3554,7 +3554,7 @@
         "name": "Szürke réce",
         "wingspan_cm": 64,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "barna",
@@ -3570,7 +3570,7 @@
         "name": "Szürke bokormadár",
         "wingspan_cm": 16,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "szürke",
@@ -3586,7 +3586,7 @@
         "name": "Szürkefejű amandina",
         "wingspan_cm": 15,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "szürke",
@@ -3752,7 +3752,7 @@
         "wingspan_cm": 29,
         "continents": [
             "Ázsia",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "zöld",
@@ -3768,7 +3768,7 @@
         "name": "Mirafra cantillans",
         "wingspan_cm": 22,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "barna",
@@ -3881,7 +3881,7 @@
         "wingspan_cm": 145,
         "continents": [
             "Ázsia",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "kék",
@@ -3945,7 +3945,7 @@
         "name": "Hegyi kea",
         "wingspan_cm": 90,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "zöld",
@@ -3963,7 +3963,7 @@
         "continents": [
             "Dél-Amerika",
             "Afrika",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "fehér",
@@ -3979,7 +3979,7 @@
         "name": "Óriás-gyümölcsgalamb",
         "wingspan_cm": 75,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "zöld",
@@ -4027,7 +4027,7 @@
         "name": "Csengőmadár",
         "wingspan_cm": 22,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "zöld",
@@ -4042,7 +4042,7 @@
         "name": "Kakapó",
         "wingspan_cm": null,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "zöld",
@@ -4074,7 +4074,7 @@
         "name": "Kacagójancsi",
         "wingspan_cm": 60,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "barna",
@@ -4108,7 +4108,7 @@
         "continents": [
             "Ázsia",
             "Afrika",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "fekete",
@@ -4142,7 +4142,7 @@
         "name": "Aranyfülű mézevő",
         "wingspan_cm": 29,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "zöld",
@@ -4193,7 +4193,7 @@
             "Európa",
             "Ázsia",
             "Afrika",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "fehér",
@@ -4212,7 +4212,7 @@
             "Európa",
             "Ázsia",
             "Afrika",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "barna",
@@ -4244,7 +4244,7 @@
         "name": "Kék pingvin",
         "wingspan_cm": null,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "kék",
@@ -4261,7 +4261,7 @@
         "wingspan_cm": 88,
         "continents": [
             "Ázsia",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "fekete",
@@ -4280,7 +4280,7 @@
             "Európa",
             "Ázsia",
             "Afrika",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "barna",
@@ -4329,7 +4329,7 @@
         "name": "Szarkapacsirta",
         "wingspan_cm": 57,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "fekete",
@@ -4345,7 +4345,7 @@
         "name": "Inkakakadu",
         "wingspan_cm": 81,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "fehér",
@@ -4380,7 +4380,7 @@
         "name": "Homoki ásótyúk",
         "wingspan_cm": 86,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "barna",
@@ -4413,7 +4413,7 @@
         "name": "Sörényes lúd",
         "wingspan_cm": 79,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "szürke",
@@ -4429,7 +4429,7 @@
         "name": "Sárgás gyümölcsgalamb",
         "wingspan_cm": 30,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "zöld",
@@ -4446,7 +4446,7 @@
         "wingspan_cm": 80,
         "continents": [
             "Ázsia",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "barna",
@@ -4480,7 +4480,7 @@
         "wingspan_cm": 18,
         "continents": [
             "Ázsia",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "fekete",
@@ -4578,7 +4578,7 @@
         "name": "Lebernyeges réce",
         "wingspan_cm": 87,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "szürke",
@@ -4611,7 +4611,7 @@
         "name": "Fehérszemű mézevő",
         "wingspan_cm": 20,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "fekete",
@@ -4627,7 +4627,7 @@
         "name": "Feketehomlokú mézmadár",
         "wingspan_cm": 41,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "szürke",
@@ -4643,7 +4643,7 @@
         "name": "Északi-szigeti barna kivi",
         "wingspan_cm": null,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "barna"
@@ -4795,7 +4795,7 @@
         "wingspan_cm": 16,
         "continents": [
             "Ázsia",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "sárga",
@@ -4812,7 +4812,7 @@
         "wingspan_cm": 43,
         "continents": [
             "Ázsia",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "barna",
@@ -4863,7 +4863,7 @@
             "Európa",
             "Ázsia",
             "Afrika",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "barna",
@@ -4880,7 +4880,7 @@
         "wingspan_cm": 88,
         "continents": [
             "Ázsia",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "barna",
@@ -4944,7 +4944,7 @@
         "name": "Békés gerle",
         "wingspan_cm": 25,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "szürke",
@@ -4965,7 +4965,7 @@
             "Európa",
             "Ázsia",
             "Afrika",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "szürke",
@@ -4981,7 +4981,7 @@
         "name": "Sörtésfejű papagáj",
         "wingspan_cm": 74,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "fekete",
@@ -4998,7 +4998,7 @@
         "wingspan_cm": 74,
         "continents": [
             "Ázsia",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "fekete",
@@ -5077,7 +5077,7 @@
         "name": "Lapátcsőrű réce",
         "wingspan_cm": 64,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "barna",
@@ -5093,7 +5093,7 @@
         "name": "Sztyeppefutó",
         "wingspan_cm": 32,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "barna"
@@ -5123,7 +5123,7 @@
         "name": "Stephánia-paradicsommadár",
         "wingspan_cm": 45,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "fekete",
@@ -5224,7 +5224,7 @@
         "wingspan_cm": 78,
         "continents": [
             "Ázsia",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "kék",
@@ -5240,7 +5240,7 @@
         "name": "Szivárványlóri",
         "wingspan_cm": 46,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "zöld",
@@ -5292,7 +5292,7 @@
         "wingspan_cm": 75,
         "continents": [
             "Ázsia",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "narancs",
@@ -5328,7 +5328,7 @@
             "Európa",
             "Ázsia",
             "Afrika",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "barna",
@@ -5344,7 +5344,7 @@
         "name": "Piroscsüngős lebenyesmadár",
         "wingspan_cm": 49,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "szürke",
@@ -5360,7 +5360,7 @@
         "name": "Piroshátú tündérmadár",
         "wingspan_cm": 15,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "fekete",
@@ -5444,7 +5444,7 @@
         "name": "Pirossapkás cinegelégykapó",
         "wingspan_cm": 17,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "piros",
@@ -5541,7 +5541,7 @@
         "name": "Vörösfejű gulipán",
         "wingspan_cm": 75,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "fehér",
@@ -5588,7 +5588,7 @@
         "wingspan_cm": 28,
         "continents": [
             "Ázsia",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "fekete",
@@ -5636,7 +5636,7 @@
         "name": "Skarlátszárnyú remetepapagáj",
         "wingspan_cm": 49,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "zöld",
@@ -5652,7 +5652,7 @@
         "name": "Bársonyos aranymadár",
         "wingspan_cm": 36,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "fekete",
@@ -5803,7 +5803,7 @@
         "wingspan_cm": 120,
         "continents": [
             "Ázsia",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "fehér",
@@ -5904,7 +5904,7 @@
         "wingspan_cm": 106,
         "continents": [
             "Ázsia",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "barna",
@@ -5919,7 +5919,7 @@
         "name": "Rozsdás héjabagoly",
         "wingspan_cm": 115,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "barna"
@@ -5933,7 +5933,7 @@
         "name": "Rozsdacsíkos mézevő",
         "wingspan_cm": 22,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "barna",
@@ -5949,7 +5949,7 @@
         "wingspan_cm": 30,
         "continents": [
             "Ázsia",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "kék",
@@ -6123,7 +6123,7 @@
         "name": "Ezüstös pápaszemesmadár",
         "wingspan_cm": 17,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "zöld",
@@ -6241,7 +6241,7 @@
         "name": "Petroica australis",
         "wingspan_cm": 24,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "szürke",
@@ -6257,7 +6257,7 @@
         "name": "Sisakos kazuár",
         "wingspan_cm": null,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "fekete",
@@ -6274,7 +6274,7 @@
         "wingspan_cm": 27,
         "continents": [
             "Ázsia",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "fekete",
@@ -6290,7 +6290,7 @@
         "name": "Tengerkék tündérmadár",
         "wingspan_cm": 15,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "kék",
@@ -6322,7 +6322,7 @@
         "wingspan_cm": 28,
         "continents": [
             "Ázsia",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "szürke",
@@ -6497,7 +6497,7 @@
         "name": "Feketemellű fürj",
         "wingspan_cm": 29,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "barna",
@@ -6513,7 +6513,7 @@
         "wingspan_cm": 103,
         "continents": [
             "Ázsia",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "fehér",
@@ -6529,7 +6529,7 @@
         "name": "Pompás lantfarkúmadár",
         "wingspan_cm": 73,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "barna",
@@ -6560,7 +6560,7 @@
         "name": "Bagolyfecske",
         "wingspan_cm": 82,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "szürke",
@@ -6690,7 +6690,7 @@
         "name": "Tui",
         "wingspan_cm": 42,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "fekete",
@@ -6769,7 +6769,7 @@
         "name": "Ékfarkú sas",
         "wingspan_cm": 207,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "barna",
@@ -6784,7 +6784,7 @@
         "name": "Ausztrál fecske",
         "wingspan_cm": 28,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "kék",
@@ -6886,7 +6886,7 @@
         "wingspan_cm": 200,
         "continents": [
             "Ázsia",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "fehér",
@@ -6919,7 +6919,7 @@
         "wingspan_cm": 32,
         "continents": [
             "Ázsia",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "szürke",
@@ -6984,7 +6984,7 @@
         "wingspan_cm": 106,
         "continents": [
             "Ázsia",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "szürke",
@@ -7135,7 +7135,7 @@
         "wingspan_cm": 30,
         "continents": [
             "Ázsia",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "fekete",
@@ -7189,7 +7189,7 @@
             "Európa",
             "Ázsia",
             "Afrika",
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "fekete",
@@ -7238,7 +7238,7 @@
         "name": "Ferdecsőrű lile",
         "wingspan_cm": 49,
         "continents": [
-            "Óceánia"
+            "Ausztrália-Óceánia"
         ],
         "colors": [
             "szürke",

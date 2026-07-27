@@ -140,6 +140,7 @@
           'tours'        => '/admin/tours.php',
           'future-tours' => '/admin/future-tours.php',
           'statistics'   => '/admin/statistics.php',
+          'quiz'         => '/admin/quiz.php',
         ];
         $_adminViewUrl = BASE_URL . ($_adminPageMap[$activePage ?? ''] ?? '/admin/index.php');
         if (basename($_SERVER['PHP_SELF']) === 'tour-detail.php' && !empty($_GET['id'])) {
@@ -147,6 +148,9 @@
         }
         if (basename($_SERVER['PHP_SELF']) === 'future-tour-detail.php' && !empty($_GET['id'])) {
           $_adminViewUrl = BASE_URL . '/admin/future-tour-detail.php?id=' . (int)$_GET['id'];
+        }
+        if (basename($_SERVER['PHP_SELF']) === 'quiz-toplista.php') {
+          $_adminViewUrl = BASE_URL . '/admin/quiz-toplista.php';
         }
       ?>
       <div class="topbar-actions">

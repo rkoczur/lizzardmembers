@@ -25,7 +25,7 @@
         return Number(n).toFixed(dec == null ? 0 : dec).replace('.', ',');
     }
 
-    var state = { question: null, timer: null, start: 0 };
+    var state = { question: null, timer: null, start: 0, game: null };
 
     /* ---------- Vezérlők felépítése ---------- */
 
@@ -60,110 +60,115 @@
         });
     }
 
-    /* Kereshető ország-legördülő. */
-    var combo = { open: false, active: -1, filtered: [] };
-    function initCombo() {
-        var input = $('quizCountryInput'), list = $('quizCountryList'), hidden = $('quizCountry');
-
-        function render(items) {
-            combo.filtered = items;
-            combo.active = -1;
-            if (!items.length) {
-                list.innerHTML = '<div class="quiz-combo-empty">Nincs találat</div>';
-            } else {
-                list.innerHTML = items.map(function (c, i) {
-                    return '<div class="quiz-combo-opt" data-i="' + i + '">' + esc(c) + '</div>';
-                }).join('');
-            }
-            show(list); combo.open = true; input.setAttribute('aria-expanded', 'true');
-        }
-        function filter() {
-            var q = input.value.trim().toLowerCase();
-            var all = CFG.options.countries;
-            var items = q ? all.filter(function (c) { return c.toLowerCase().indexOf(q) !== -1; }) : all.slice();
-            render(items.slice(0, 60));
-        }
-        function choose(val) {
-            input.value = val; hidden.value = val;
-            input.classList.add('chosen');
-            hide(list); combo.open = false; input.setAttribute('aria-expanded', 'false');
-            validate();
-        }
-
-        input.addEventListener('focus', filter);
-        input.addEventListener('input', function () {
-            hidden.value = ''; input.classList.remove('chosen');
-            filter(); validate();
-        });
-        input.addEventListener('keydown', function (e) {
-            if (!combo.open) return;
-            if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-                e.preventDefault();
-                var d = e.key === 'ArrowDown' ? 1 : -1;
-                combo.active = Math.max(0, Math.min(combo.filtered.length - 1, combo.active + d));
-                Array.prototype.forEach.call(list.children, function (ch, i) {
-                    ch.classList.toggle('active', i === combo.active);
-                });
-                var act = list.children[combo.active]; if (act) act.scrollIntoView({ block: 'nearest' });
-            } else if (e.key === 'Enter') {
-                if (combo.active >= 0 && combo.filtered[combo.active]) { e.preventDefault(); choose(combo.filtered[combo.active]); }
-            } else if (e.key === 'Escape') {
-                hide(list); combo.open = false;
-            }
-        });
-        list.addEventListener('mousedown', function (e) {
-            var opt = e.target.closest('.quiz-combo-opt');
-            if (opt) { e.preventDefault(); choose(combo.filtered[+opt.dataset.i]); }
-        });
-        document.addEventListener('click', function (e) {
-            if (!$('quizCountryCombo').contains(e.target)) { hide(list); combo.open = false; input.setAttribute('aria-expanded', 'false'); }
+    /* Ország-választó gombok (a helyes + 5 véletlenszerű, kérdésenként a szervertől kapva). */
+    function buildCountryChoices(container, values, hiddenInput) {
+        container.innerHTML = '';
+        hiddenInput.value = '';
+        values.forEach(function (val) {
+            var pill = document.createElement('button');
+            pill.type = 'button';
+            pill.className = 'quiz-pill';
+            pill.dataset.value = val;
+            pill.innerHTML = '<span>' + esc(val) + '</span>' +
+                '<svg class="quiz-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>';
+            pill.addEventListener('click', function () {
+                Array.prototype.forEach.call(container.querySelectorAll('.quiz-pill'), function (p) { p.classList.remove('on'); });
+                pill.classList.add('on');
+                hiddenInput.value = val;
+                validate();
+            });
+            container.appendChild(pill);
         });
     }
-    function resetCombo() {
-        $('quizCountryInput').value = '';
-        $('quizCountryInput').classList.remove('chosen');
-        $('quizCountry').value = '';
-        hide($('quizCountryList'));
-    }
 
-    /* Csak számjegyeket engedő mezők. */
-    function initNumeric(input) {
+    /* Csúszka mezők (fesztáv / magasság). */
+    function initSlider(input, labelEl, unit) {
         input.addEventListener('input', function () {
-            var v = input.value.replace(/[^0-9]/g, '');
-            if (v !== input.value) input.value = v;
+            labelEl.textContent = input.value;
             validate();
         });
     }
+    function resetSlider(input, labelEl, mid) {
+        input.value = mid;
+        labelEl.textContent = mid;
+    }
 
-    /* ---------- Kérdés betöltése ---------- */
+    /* ---------- Kérdés betöltése / kör indítása ---------- */
 
     function setError(msg) {
         clearError();
         var box = document.createElement('div');
         box.className = 'quiz-error'; box.id = 'quizError';
         box.textContent = msg;
-        $('quiz').insertBefore(box, $('quizQuestion'));
+        $('quiz').insertBefore(box, $('quizStart'));
     }
     function clearError() { var e = $('quizError'); if (e) e.remove(); }
+
+    function hideAllScreens() {
+        hide($('quizStart')); hide($('quizNoMore')); hide($('quizQuestion')); hide($('quizResult'));
+        hide($('quizRoundBar'));
+        $('quizRoundOverModal').classList.remove('open');
+    }
+
+    function startGame() {
+        stopTimer();
+        clearError();
+        hideAllScreens();
+        fetch(CFG.urls.gameStart, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            credentials: 'same-origin',
+            body: JSON.stringify({ csrf_token: CFG.csrf })
+        })
+            .then(function (r) { return r.json(); })
+            .then(function (data) {
+                if (data.error) { setError(data.error); show($('quizStart')); return; }
+                updateLifetimeProgress(data.lifetimeProgress);
+                if (data.done) { show($('quizNoMore')); return; }
+                state.game = data.game;
+                renderQuestion(data.question, data.elapsedSeconds);
+            })
+            .catch(function () { setError('Nem sikerült elindítani a kört. Próbáld újra!'); show($('quizStart')); });
+    }
 
     function loadQuestion() {
         stopTimer();
         clearError();
-        hide($('quizResult')); hide($('quizDone'));
+        hide($('quizResult'));
         fetch(CFG.urls.question, { headers: { 'Accept': 'application/json' }, credentials: 'same-origin' })
             .then(function (r) { return r.json(); })
             .then(function (data) {
                 if (data.error) { setError(data.error); return; }
-                updateProgress(data.progress);
-                if (data.done) { hide($('quizQuestion')); show($('quizDone')); return; }
-                renderQuestion(data.question);
+                updateLifetimeProgress(data.lifetimeProgress);
+                if (data.noActiveGame) { hideAllScreens(); show($('quizStart')); return; }
+                if (data.gameOver) { hide($('quizQuestion')); showRoundOverStandalone(data.gameOver); return; }
+                state.game = data.game;
+                renderQuestion(data.question, data.elapsedSeconds);
             })
             .catch(function () { setError('Nem sikerült betölteni a kérdést. Próbáld újra!'); });
     }
 
-    function renderQuestion(q) {
+    /* Ha a "Következő kérdés" gomb védekező ágon kör-véget kap, önálló képernyőn mutatjuk. */
+    function showRoundOverStandalone(gameOver) {
+        hideAllScreens();
+        show($('quizResult'));
+        $('quizResultBody').hidden = true;
+        $('quizResult').querySelector('.quiz-result-head').hidden = true;
+        $('quizResult').querySelector('.quiz-sub').hidden = true;
+        $('quizResultToplist').innerHTML = '';
+        hide($('quizNext'));
+        renderRoundOver(gameOver);
+    }
+
+    function renderQuestion(q, elapsedSeconds) {
         state.question = q;
+        hideAllScreens();
         show($('quizQuestion'));
+        $('quizResult').querySelector('.quiz-result-head').hidden = false;
+        $('quizResult').querySelector('.quiz-sub').hidden = false;
+        $('quizResultBody').hidden = false;
+
+        updateRoundProgress(state.game);
 
         $('quizName').textContent = q.name;
         var latin = $('quizLatin');
@@ -172,7 +177,7 @@
             badge.textContent = '🐦 Madár';
             badge.className = 'quiz-badge bird';
             show($('quizBirdFields')); hide($('quizMountainFields'));
-            $('quizWingspan').value = '';
+            resetSlider($('quizWingspan'), $('quizWingspanValue'), 150);
             resetPills($('quizColors')); resetPills($('quizContinents'));
             if (q.latin_name) { latin.textContent = q.latin_name; show(latin); } else { hide(latin); }
         } else {
@@ -180,19 +185,22 @@
             badge.textContent = '⛰️ Hegycsúcs';
             badge.className = 'quiz-badge mountain';
             hide($('quizBirdFields')); show($('quizMountainFields'));
-            $('quizElevation').value = '';
-            resetCombo();
+            resetSlider($('quizElevation'), $('quizElevationValue'), 4500);
+            buildCountryChoices($('quizCountryChoices'), q.countryOptions || [], $('quizCountry'));
         }
         validate();
-        startTimer();
+        startTimer(elapsedSeconds);
     }
 
     /* ---------- Időmérés + szorzó ---------- */
 
-    function multiplierFor(sec) { return Math.max(1, 3 - 0.025 * sec); }
+    function multiplierFor(sec) { return Math.max(1, 2.5 - 0.07 * sec); }
 
-    function startTimer() {
-        state.start = Date.now();
+    /* elapsedSeconds: ha a kérdés egy oldalfrissítés után ugyanaz maradt (csalás
+       elleni védelem), a szerver által már mért idővel folytatjuk a számlálást,
+       nem nullától — így a látható időzítő sosem téveszt meg a tényleges pontszámról. */
+    function startTimer(elapsedSeconds) {
+        state.start = Date.now() - (Number(elapsedSeconds) || 0) * 1000;
         tick();
         state.timer = setInterval(tick, 100);
     }
@@ -212,9 +220,9 @@
         var ok = false, q = state.question;
         if (q) {
             if (q.type === 'bird') {
-                ok = $('quizWingspan').value !== '';
+                ok = true; // a csúszkának mindig van értéke
             } else {
-                ok = $('quizElevation').value !== '' && $('quizCountry').value !== '';
+                ok = $('quizCountry').value !== '';
             }
         }
         $('quizSubmit').disabled = !ok;
@@ -254,9 +262,14 @@
     }
 
     function renderResult(data, q) {
-        updateProgress(data.progress);
+        updateLifetimeProgress(data.lifetimeProgress);
+        state.game = data.game;
+        updateRoundProgress(state.game);
         hide($('quizQuestion'));
         show($('quizResult'));
+        $('quizResult').querySelector('.quiz-result-head').hidden = false;
+        $('quizResult').querySelector('.quiz-sub').hidden = false;
+        $('quizResultBody').hidden = false;
 
         $('quizScoreVal').textContent = num(data.score);
         $('quizResultMeta').innerHTML =
@@ -308,8 +321,23 @@
         renderFactImage(data.facts, q);
         $('quizResultToplist').innerHTML = toplistTable(data.toplist);
 
-        // A frissen megválaszolt kérdés megjelenhet a "Megválaszolt kérdéseim" listában.
-        mineLoaded = false;
+        if (data.gameOver) {
+            hide($('quizNext'));
+            renderRoundOver(data.gameOver);
+        } else {
+            show($('quizNext'));
+        }
+    }
+
+    /* A kör vége felugró ablakban jelenik meg — bezárva az utolsó kérdés adatai
+       és képe (ami mögötte, az eredmény képernyőn már renderelve van) továbbra
+       is látható marad. */
+    function renderRoundOver(gameOver) {
+        $('quizRoundOverScore').textContent = num(gameOver.totalScore);
+        $('quizRoundOverText').textContent = gameOver.poolExhausted
+            ? 'Elfogytak a kérdések — ' + num(gameOver.questionCount) + ' kérdésre válaszoltál ebben a körben.'
+            : num(gameOver.questionCount) + ' kérdésre válaszoltál ebben a körben.';
+        $('quizRoundOverModal').classList.add('open');
     }
 
     /* Kép, érdekesség, táplálkozás/hegység a lebontás elé kerül — mindkét kérdéstípusnál. */
@@ -375,7 +403,7 @@
         return '<b>' + arr.map(esc).join(', ') + '</b>';
     }
 
-    /* ---------- Toplista renderelés ---------- */
+    /* ---------- Toplista renderelés (az adott kérdés saját toplistája) ---------- */
 
     function toplistTable(rows) {
         if (!rows || !rows.length) return '<div class="quiz-empty">Még nincs eredmény ehhez a kérdéshez.</div>';
@@ -389,78 +417,21 @@
         return '<table class="quiz-tl-table"><tbody>' + body + '</tbody></table>';
     }
 
-    function updateProgress(p) {
+    /* ---------- Előrehaladás ---------- */
+
+    function updateLifetimeProgress(p) {
         if (!p) return;
         var pct = p.total ? Math.round(p.answered / p.total * 100) : 0;
         $('quizProgressFill').style.width = pct + '%';
-        $('quizProgressLabel').textContent = num(p.answered) + ' / ' + num(p.total) + ' kérdés megválaszolva';
+        $('quizProgressLabel').textContent = num(p.answered) + ' / ' + num(p.total) + ' kérdés megválaszolva összesen';
     }
 
-    /* ---------- Toplista fülek ---------- */
-
-    var overallLoaded = false, mineLoaded = false;
-
-    function loadOverall() {
-        fetch(CFG.urls.leaderboard + '?view=overall', { credentials: 'same-origin' })
-            .then(function (r) { return r.json(); })
-            .then(function (data) {
-                var box = $('quizOverall');
-                if (!data.rows || !data.rows.length) { box.innerHTML = '<div class="quiz-empty">Még senki sem játszott. Légy te az első! 🐦⛰️</div>'; return; }
-                var medals = ['🥇', '🥈', '🥉'];
-                var body = data.rows.map(function (r) {
-                    return '<tr class="' + (r.isMe ? 'quiz-tl-me' : '') + '">' +
-                        '<td class="quiz-tl-rank">' + (medals[r.rank - 1] || (r.rank + '.')) + '</td>' +
-                        '<td class="quiz-tl-name">' + esc(r.name) + (r.isMe ? ' (te)' : '') +
-                        ' <small>(' + num(r.count) + ' kérdés)</small></td>' +
-                        '<td class="quiz-tl-score">' + num(r.average, 1) + ' átlag</td></tr>';
-                }).join('');
-                box.innerHTML = '<table class="quiz-tl-table"><tbody>' + body + '</tbody></table>';
-                overallLoaded = true;
-            })
-            .catch(function () { $('quizOverall').innerHTML = '<div class="quiz-empty">Nem sikerült betölteni.</div>'; });
-    }
-
-    function loadMine() {
-        hide($('quizItemToplist'));
-        fetch(CFG.urls.leaderboard + '?view=mine', { credentials: 'same-origin' })
-            .then(function (r) { return r.json(); })
-            .then(function (data) {
-                var box = $('quizMine');
-                if (!data.rows || !data.rows.length) { box.innerHTML = '<div class="quiz-empty">Még egy kérdésre sem válaszoltál.</div>'; return; }
-                box.innerHTML = '<div class="quiz-mine-grid">' + data.rows.map(function (r) {
-                    var icon = r.type === 'bird' ? '🐦' : '⛰️';
-                    return '<button type="button" class="quiz-mine-item" data-type="' + r.type + '" data-id="' + r.id + '">' +
-                        '<span class="quiz-mine-name">' + icon + ' ' + esc(r.name) + '</span>' +
-                        '<span class="quiz-mine-score">' + num(r.score) + '</span></button>';
-                }).join('') + '</div>';
-                mineLoaded = true;
-            })
-            .catch(function () { $('quizMine').innerHTML = '<div class="quiz-empty">Nem sikerült betölteni.</div>'; });
-    }
-
-    function loadItemToplist(type, id, btn) {
-        Array.prototype.forEach.call(document.querySelectorAll('.quiz-mine-item'), function (b) { b.classList.remove('active'); });
-        if (btn) btn.classList.add('active');
-        var box = $('quizItemToplist');
-        box.innerHTML = '<div class="quiz-empty">Betöltés…</div>';
-        show(box);
-        fetch(CFG.urls.leaderboard + '?view=item&type=' + encodeURIComponent(type) + '&id=' + encodeURIComponent(id), { credentials: 'same-origin' })
-            .then(function (r) { return r.json(); })
-            .then(function (data) {
-                if (data.error) { box.innerHTML = '<div class="quiz-empty">' + esc(data.error) + '</div>'; return; }
-                box.innerHTML = '<h4>' + (data.type === 'bird' ? '🐦' : '⛰️') + ' ' + esc(data.name) + ' — toplista</h4>' + toplistTable(data.toplist);
-            })
-            .catch(function () { box.innerHTML = '<div class="quiz-empty">Nem sikerült betölteni.</div>'; });
-    }
-
-    function switchTab(tab) {
-        Array.prototype.forEach.call(document.querySelectorAll('.quiz-tab'), function (t) {
-            t.classList.toggle('active', t.dataset.tab === tab);
-        });
-        $('quizTabOverall').hidden = tab !== 'overall';
-        $('quizTabMine').hidden = tab !== 'mine';
-        if (tab === 'overall' && !overallLoaded) loadOverall();
-        if (tab === 'mine' && !mineLoaded) loadMine();
+    function updateRoundProgress(game) {
+        var bar = $('quizRoundBar');
+        if (!game) { hide(bar); return; }
+        $('quizRoundProgress').textContent = 'Kérdés ' + num(game.questionNumber) + ' / ' + num(game.roundSize);
+        $('quizRoundScoreLabel').textContent = num(game.roundScore) + ' pont eddig ebben a körben';
+        show(bar);
     }
 
     /* ---------- Init ---------- */
@@ -468,25 +439,21 @@
     function init() {
         buildPills($('quizColors'), CFG.options.colors, true);
         buildPills($('quizContinents'), CFG.options.continents, false);
-        initCombo();
-        initNumeric($('quizWingspan'));
-        initNumeric($('quizElevation'));
+        initSlider($('quizWingspan'), $('quizWingspanValue'));
+        initSlider($('quizElevation'), $('quizElevationValue'));
 
         $('quizColors').addEventListener('click', validate);
         $('quizContinents').addEventListener('click', validate);
         $('quizSubmit').addEventListener('click', submit);
         $('quizNext').addEventListener('click', loadQuestion);
+        $('quizStartBtn').addEventListener('click', startGame);
+        $('quizPlayAgain').addEventListener('click', startGame);
 
-        Array.prototype.forEach.call(document.querySelectorAll('.quiz-tab'), function (t) {
-            t.addEventListener('click', function () { switchTab(t.dataset.tab); });
-        });
-        $('quizMine').addEventListener('click', function (e) {
-            var item = e.target.closest('.quiz-mine-item');
-            if (item) loadItemToplist(item.dataset.type, +item.dataset.id, item);
-        });
-
-        loadQuestion();
-        loadOverall();
+        if (CFG.activeGame) {
+            loadQuestion();
+        }
+        // Ha nincs aktív kör és van még kérdés, a szerver már megjelenítette az induló
+        // képernyőt (#quizStart); ha nincs több kérdés soha, a #quizNoMore-t.
     }
 
     if (document.readyState === 'loading') {

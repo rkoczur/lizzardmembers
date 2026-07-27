@@ -54,7 +54,8 @@ if (!in_array($type, ['bird', 'mountain'], true) || $id <= 0) {
 
 // Aktív (kiadott) kérdés ellenőrzése — csak arra lehet válaszolni.
 $pending = $_SESSION['quiz_q'] ?? null;
-if (!is_array($pending) || $pending['type'] !== $type || (int)$pending['id'] !== $id) {
+if (!is_array($pending) || $pending['type'] !== $type || (int)$pending['id'] !== $id
+    || empty($pending['game_id']) || empty($pending['question_number'])) {
     jsonExit(409, ['error' => 'Nincs aktív kérdés ehhez a válaszhoz. Kérj új kérdést!']);
 }
 
@@ -114,14 +115,18 @@ try {
         ];
     }
 
-    $score = $result['score'];
+    $score  = $result['score'];
+    $gameId = (int)$pending['game_id'];
+    $qNum   = (int)$pending['question_number'];
 
     $stmt = $pdo->prepare("
-        INSERT IGNORE INTO quiz_scores (user_id, item_type, item_id, score, seconds)
-        VALUES (:u, :t, :id, :sc, :sec)
+        INSERT IGNORE INTO quiz_scores (user_id, game_id, question_number, item_type, item_id, score, seconds)
+        VALUES (:u, :g, :qn, :t, :id, :sc, :sec)
     ");
     $stmt->execute([
         ':u'   => $userId,
+        ':g'   => $gameId,
+        ':qn'  => $qNum,
         ':t'   => $type,
         ':id'  => $id,
         ':sc'  => $score,
@@ -135,6 +140,20 @@ try {
 
     unset($_SESSION['quiz_q']);
 
+    $roundSize      = quizGameRoundSize($pdo, $userId, $gameId);
+    $answeredInGame = $qNum;
+    $poolExhausted  = quizPickNextQuestion($pdo, $userId) === null;
+
+    $gameOver = null;
+    if ($answeredInGame >= $roundSize || $poolExhausted) {
+        $final    = quizFinishGame($pdo, $gameId);
+        $gameOver = [
+            'totalScore'    => $final['totalScore'],
+            'questionCount' => $final['questionCount'],
+            'poolExhausted' => $poolExhausted,
+        ];
+    }
+
     jsonExit(200, [
         'ok'        => true,
         'score'     => $score,
@@ -144,7 +163,14 @@ try {
         'given'     => $answer,
         'facts'     => $facts,
         'toplist'   => quizItemToplist($pdo, $type, $id, $userId, 10),
-        'progress'  => quizProgress($pdo, $userId),
+        'game'      => [
+            'id'             => $gameId,
+            'questionNumber' => $answeredInGame,
+            'roundSize'      => $roundSize,
+            'roundScore'     => quizGameRunningScore($pdo, $gameId),
+        ],
+        'gameOver'  => $gameOver,
+        'lifetimeProgress' => quizProgress($pdo, $userId),
     ]);
 } catch (Throwable $e) {
     jsonExit(500, ['error' => 'Szerverhiba a mentés közben']);

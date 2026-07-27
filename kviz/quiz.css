@@ -10,6 +10,7 @@
 
 /* --- Bevezető + haladás --- */
 .quiz-intro { margin-bottom: 20px; }
+.quiz-top-actions { display: flex; justify-content: flex-end; align-items: center; gap: 10px; margin-bottom: 12px; }
 .quiz-lead {
     font-size: 15px;
     line-height: 1.55;
@@ -37,6 +38,31 @@
     color: var(--text-muted, #7a7269);
     white-space: nowrap;
     font-variant-numeric: tabular-nums;
+}
+
+/* --- Kör-előrehaladás (mindig látható a kör közben: kérdésszám + eddigi pontszám) --- */
+.quiz-round-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    background: var(--primary-light, #cce6e3);
+    border: 1px solid var(--primary, #29776F);
+    border-radius: var(--radius-sm, 6px);
+    padding: 10px 16px;
+    margin-bottom: 20px;
+    font-variant-numeric: tabular-nums;
+}
+.quiz-round-bar-progress {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--primary-dark, #1d5750);
+}
+.quiz-round-bar-score {
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--primary-dark, #1d5750);
 }
 
 /* --- Kártyák --- */
@@ -116,39 +142,59 @@
     color: var(--text, #444);
 }
 
-/* Számmező mértékegységgel */
-.quiz-num {
-    display: inline-flex;
-    align-items: stretch;
-    border: 1.5px solid var(--border, #ddd5c5);
-    border-radius: var(--radius-sm, 6px);
-    background: #fff;
-    overflow: hidden;
-    transition: border-color .18s ease, box-shadow .18s ease;
-}
-.quiz-num:focus-within {
-    border-color: var(--primary, #29776F);
-    box-shadow: 0 0 0 3px var(--primary-light, #cce6e3);
-}
-.quiz-num-input {
-    border: 0;
-    outline: 0;
-    padding: 11px 14px;
-    font-size: 17px;
-    width: 150px;
-    background: transparent;
-    color: var(--text, #444);
+/* Csúszka (fesztáv / magasság) */
+.quiz-slider-wrap { max-width: 420px; }
+.quiz-slider-value {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--primary, #29776F);
+    margin-bottom: 8px;
     font-variant-numeric: tabular-nums;
 }
-.quiz-num-unit {
+.quiz-num-unit { font-size: 16px; font-weight: 700; color: var(--text-muted, #7a7269); }
+.quiz-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--border, #ddd5c5);
+    outline: 0;
+    cursor: pointer;
+}
+.quiz-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--primary, #29776F);
+    border: 3px solid #fff;
+    box-shadow: 0 1px 4px rgba(0,0,0,.3);
+    cursor: pointer;
+    transition: transform .12s ease;
+}
+.quiz-slider::-webkit-slider-thumb:hover { transform: scale(1.1); }
+.quiz-slider::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--primary, #29776F);
+    border: 3px solid #fff;
+    box-shadow: 0 1px 4px rgba(0,0,0,.3);
+    cursor: pointer;
+}
+.quiz-slider::-moz-range-track {
+    height: 8px;
+    border-radius: 999px;
+    background: var(--border, #ddd5c5);
+}
+.quiz-slider-range {
     display: flex;
-    align-items: center;
-    padding: 0 14px;
-    background: var(--card, #f5efe4);
-    border-left: 1.5px solid var(--border, #ddd5c5);
-    font-weight: 700;
+    justify-content: space-between;
+    font-size: 12px;
     color: var(--text-muted, #7a7269);
-    font-size: 15px;
+    margin-top: 6px;
 }
 
 /* Toggle-pill többes választó */
@@ -189,64 +235,32 @@
 .quiz-pill.on .quiz-check { opacity: 1; }
 .quiz-pill.on .quiz-swatch { border-color: rgba(255,255,255,.7); }
 
-/* Kereshető ország-legördülő (combobox) */
-.quiz-combo { position: relative; max-width: 340px; }
-.quiz-combo-input {
-    width: 100%;
-    padding: 11px 14px;
-    font-size: 16px;
-    border: 1.5px solid var(--border, #ddd5c5);
-    border-radius: var(--radius-sm, 6px);
-    background: #fff;
-    color: var(--text, #444);
-    outline: 0;
-    transition: border-color .18s ease, box-shadow .18s ease;
-}
-.quiz-combo-input:focus {
-    border-color: var(--primary, #29776F);
-    box-shadow: 0 0 0 3px var(--primary-light, #cce6e3);
-}
-.quiz-combo-input.chosen { font-weight: 700; }
-.quiz-combo-list {
-    position: absolute;
-    z-index: 30;
-    top: calc(100% + 4px);
-    left: 0;
-    right: 0;
-    max-height: 260px;
-    overflow-y: auto;
-    background: #fff;
-    border: 1.5px solid var(--border, #ddd5c5);
-    border-radius: var(--radius-sm, 6px);
-    box-shadow: var(--shadow-md, 0 4px 14px rgba(0,0,0,.10));
-}
-.quiz-combo-opt {
-    padding: 9px 14px;
-    font-size: 14px;
-    cursor: pointer;
-    color: var(--text, #444);
-}
-.quiz-combo-opt:hover, .quiz-combo-opt.active {
-    background: var(--primary-light, #cce6e3);
-    color: var(--primary-dark, #1d5750);
-}
-.quiz-combo-empty { padding: 12px 14px; color: var(--text-muted, #7a7269); font-size: 14px; }
-
 /* --- Gombok --- */
 .quiz-actions { margin-top: 24px; display: flex; justify-content: flex-end; }
 .quiz-btn {
+    display: inline-block;
     border: 0;
     border-radius: var(--radius-sm, 6px);
     padding: 12px 26px;
     font-size: 15px;
     font-weight: 700;
     cursor: pointer;
+    text-align: center;
     transition: background .18s ease, transform .1s ease, opacity .18s ease;
 }
 .quiz-btn-primary { background: var(--primary, #29776F); color: #fff; }
 .quiz-btn-primary:hover:not(:disabled) { background: var(--primary-dark, #1d5750); }
 .quiz-btn:active:not(:disabled) { transform: translateY(1px); }
 .quiz-btn:disabled { opacity: .45; cursor: not-allowed; }
+.quiz-btn-outline {
+    display: inline-block;
+    background: transparent;
+    color: var(--primary, #29776F);
+    border: 2px solid var(--primary, #29776F);
+    text-decoration: none;
+    padding: 10px 24px;
+}
+.quiz-btn-outline:hover { background: var(--primary-light, #cce6e3); }
 
 /* --- Eredmény --- */
 .quiz-result-head {
@@ -380,11 +394,22 @@
 .quiz-tl-me { background: var(--primary-light, #cce6e3); }
 .quiz-tl-me .quiz-tl-name { font-weight: 800; }
 
+/* --- Induló képernyő --- */
+.quiz-start h2 { font-size: 22px; margin: 0 0 10px; }
+.quiz-start p { font-size: 15px; line-height: 1.55; color: var(--text, #444); margin-bottom: 14px; }
+.quiz-start-rules { margin: 0 0 6px; padding-left: 20px; color: var(--text-muted, #7a7269); font-size: 14px; line-height: 1.7; }
+.quiz-start .quiz-actions { justify-content: center; margin-top: 22px; }
+
 /* --- Kész állapot --- */
 .quiz-done { text-align: center; }
 .quiz-done-emoji { font-size: 52px; margin-bottom: 6px; }
 .quiz-done h2 { font-size: 22px; margin-bottom: 8px; }
-.quiz-done p { color: var(--text-muted, #7a7269); font-size: 15px; }
+.quiz-done p { color: var(--text-muted, #7a7269); font-size: 15px; margin-bottom: 18px; }
+
+/* --- Kör vége felugró ablak --- */
+.quiz-round-over-modal .modal-body { text-align: center; }
+.quiz-round-over-modal p { color: var(--text-muted, #7a7269); font-size: 14px; margin-bottom: 14px; }
+.quiz-round-over-score { justify-content: center; display: flex; align-items: baseline; gap: 8px; }
 
 /* --- Toplista szekció + fülek --- */
 .quiz-leaderboard { margin-top: 10px; }
@@ -430,7 +455,9 @@
 .quiz-mine-item:hover { border-color: var(--primary, #29776F); box-shadow: var(--shadow, 0 1px 3px rgba(0,0,0,.08)); }
 .quiz-mine-item.active { border-color: var(--primary, #29776F); box-shadow: 0 0 0 2px var(--primary-light, #cce6e3); }
 .quiz-mine-name { display: flex; align-items: center; gap: 7px; font-size: 14px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.quiz-mine-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; flex: 0 0 auto; }
 .quiz-mine-score { font-weight: 800; color: var(--primary, #29776F); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.quiz-mine-count { font-size: 11px; font-weight: 500; color: var(--text-muted, #7a7269); white-space: nowrap; }
 .quiz-item-toplist {
     margin-top: 16px;
     background: #fff;
@@ -439,6 +466,7 @@
     padding: 16px 18px;
 }
 .quiz-item-toplist h4 { font-size: 15px; margin-bottom: 10px; }
+.quiz-mine-grid .quiz-item-toplist { grid-column: 1 / -1; margin-top: 0; }
 
 .quiz-error {
     background: #fdecea;
@@ -453,5 +481,4 @@
 @media (max-width: 560px) {
     .quiz-card { padding: 18px 16px; }
     .quiz-q-name { font-size: 22px; }
-    .quiz-num-input { width: 110px; }
 }

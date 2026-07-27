@@ -70,6 +70,25 @@ function ensureQuizSchema(PDO $pdo): void
         CONSTRAINT `fk_quiz_scores_user` FOREIGN KEY (`user_id`)
             REFERENCES `users`(`id`) ON DELETE CASCADE
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+    // Migráció: a válaszokat "körökbe" (quiz_games) csoportosító oszlopok.
+    $pdo->exec("ALTER TABLE `quiz_scores`
+        ADD COLUMN IF NOT EXISTS `game_id`         INT UNSIGNED    NULL AFTER `user_id`,
+        ADD COLUMN IF NOT EXISTS `question_number` TINYINT UNSIGNED NULL AFTER `game_id`,
+        ADD INDEX  IF NOT EXISTS `idx_game` (`game_id`)");
+
+    $pdo->exec("CREATE TABLE IF NOT EXISTS `quiz_games` (
+        `id`             INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        `user_id`        INT UNSIGNED NOT NULL,
+        `status`         ENUM('in_progress','finished') NOT NULL DEFAULT 'in_progress',
+        `question_count` TINYINT UNSIGNED NOT NULL DEFAULT 0,
+        `total_score`    INT UNSIGNED NOT NULL DEFAULT 0,
+        `started_at`     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        `finished_at`    TIMESTAMP NULL,
+        KEY `idx_user_status` (`user_id`, `status`),
+        KEY `idx_leaderboard` (`status`, `total_score`),
+        CONSTRAINT `fk_quiz_games_user` FOREIGN KEY (`user_id`)
+            REFERENCES `users`(`id`) ON DELETE CASCADE
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
 
     seedQuizBirds($pdo);
     seedQuizMountains($pdo);
@@ -234,6 +253,96 @@ function seedQuizMountains(PDO $pdo): void
         ]);
     }
     fclose($fh);
+}
+
+/**
+ * A birds.json-ban/mountain_peaks.csv-ben újonnan felvett, de az adatbázisból
+ * még hiányzó madarakat/hegyeket pótolja — a `seedQuiz*()`-től eltérően nem
+ * csak üres táblánál fut, admin kérésre bármikor meghívható (lásd
+ * `actions/quiz-sync-source-data.php`). A már meglévő nevet az `INSERT IGNORE`
+ * és a `uniq_bird_name` kulcs érintetlenül hagyja. Visszaadja az újonnan
+ * beszúrt sorok számát.
+ */
+function syncQuizBirdsFromSource(PDO $pdo): int
+{
+    if (!is_readable(QUIZ_BIRDS_JSON)) {
+        return 0;
+    }
+    $data = json_decode((string)file_get_contents(QUIZ_BIRDS_JSON), true);
+    if (!is_array($data)) {
+        return 0;
+    }
+
+    $stmt = $pdo->prepare("INSERT IGNORE INTO quiz_birds (name, wingspan_cm, colors, continents, latin_name, diet, fun_fact, image)
+                           VALUES (:name, :ws, :colors, :continents, :latin, :diet, :fact, :image)");
+    $added = 0;
+    foreach ($data as $b) {
+        $name = trim((string)($b['name'] ?? ''));
+        $ws   = $b['wingspan_cm'] ?? null;
+        $cols = $b['colors'] ?? [];
+        $cont = $b['continents'] ?? [];
+        if ($name === '' || !is_numeric($ws) || (int)$ws <= 0
+            || !is_array($cols) || !$cols || !is_array($cont) || !$cont) {
+            continue;
+        }
+        $cols = array_values(array_unique(array_map('strval', $cols)));
+        $cont = array_values(array_unique(array_map('strval', $cont)));
+        $stmt->execute([
+            ':name'       => $name,
+            ':ws'         => (int)$ws,
+            ':colors'     => json_encode($cols, JSON_UNESCAPED_UNICODE),
+            ':continents' => json_encode($cont, JSON_UNESCAPED_UNICODE),
+            ':latin'      => quizNullIfEmpty($b['latin_name'] ?? null),
+            ':diet'       => quizNullIfEmpty($b['diet'] ?? null),
+            ':fact'       => quizNullIfEmpty($b['fun_fact'] ?? null),
+            ':image'      => quizNullIfEmpty($b['image'] ?? null),
+        ]);
+        $added += $stmt->rowCount();
+    }
+    return $added;
+}
+
+/** Hegy-megfelelője a syncQuizBirdsFromSource()-nek — lásd ott a leírást. */
+function syncQuizMountainsFromSource(PDO $pdo): int
+{
+    if (!is_readable(QUIZ_MOUNTAINS_CSV)) {
+        return 0;
+    }
+    $fh = fopen(QUIZ_MOUNTAINS_CSV, 'r');
+    if (!$fh) {
+        return 0;
+    }
+
+    $stmt = $pdo->prepare("INSERT IGNORE INTO quiz_mountains (name, elevation_m, country, mountain_range, fun_fact, image)
+                           VALUES (:name, :el, :country, :range, :fact, :image)");
+    $added = 0;
+    $first = true;
+    while (($row = fgetcsv($fh)) !== false) {
+        if ($first) {
+            $first = false;
+            continue;
+        }
+        if (count($row) < 3) {
+            continue;
+        }
+        $name    = trim((string)$row[0]);
+        $el      = $row[1];
+        $country = trim((string)$row[2]);
+        if ($name === '' || $country === '' || !is_numeric($el) || (int)$el <= 0) {
+            continue;
+        }
+        $stmt->execute([
+            ':name'    => $name,
+            ':el'      => (int)$el,
+            ':country' => $country,
+            ':range'   => quizNullIfEmpty($row[3] ?? null),
+            ':fact'    => quizNullIfEmpty($row[4] ?? null),
+            ':image'   => quizNullIfEmpty($row[5] ?? null),
+        ]);
+        $added += $stmt->rowCount();
+    }
+    fclose($fh);
+    return $added;
 }
 
 /**
@@ -404,6 +513,21 @@ function quizGetMountain(PDO $pdo, int $id): ?array
     return $row;
 }
 
+/**
+ * Hat választható ország egy hegy-kérdéshez (a helyes + 5 véletlenszerű másik),
+ * összekeverve — így a tag gombokra kattintva válogathat egy teljes lenyíló
+ * lista helyett.
+ */
+function quizMountainCountryChoices(PDO $pdo, string $correctCountry, int $count = 6): array
+{
+    $others = array_values(array_filter(quizAllCountries($pdo), fn($c) => $c !== $correctCountry));
+    shuffle($others);
+    $choices = array_slice($others, 0, max(0, $count - 1));
+    $choices[] = $correctCountry;
+    shuffle($choices);
+    return $choices;
+}
+
 /** Egy tag által még nem válaszolt véletlen kérdés: ['type'=>, 'id'=>] vagy null. */
 function quizPickNextQuestion(PDO $pdo, int $userId): ?array
 {
@@ -430,6 +554,103 @@ function quizProgress(PDO $pdo, int $userId): array
     $stmt = $pdo->prepare("SELECT COUNT(*) FROM quiz_scores WHERE user_id = ?");
     $stmt->execute([$userId]);
     return ['answered' => (int)$stmt->fetchColumn(), 'total' => $total];
+}
+
+/* ----------------------------------------------------------------------- */
+/*  Körök (20 kérdéses játék)                                               */
+/* ----------------------------------------------------------------------- */
+
+/** Egy kör hány kérdésből áll (kivéve, ha kevesebb kérdés van hátra). */
+const QUIZ_ROUND_SIZE = 20;
+
+/** A tag jelenleg folyamatban lévő köre, vagy null. */
+function quizActiveGame(PDO $pdo, int $userId): ?array
+{
+    $stmt = $pdo->prepare("SELECT * FROM quiz_games WHERE user_id = ? AND status = 'in_progress'
+                           ORDER BY id DESC LIMIT 1");
+    $stmt->execute([$userId]);
+    $row = $stmt->fetch();
+    return $row ?: null;
+}
+
+/**
+ * Új kör indítása (vagy a folyamatban lévő folytatása).
+ * Null, ha a tag már minden kérdésre válaszolt valaha — ekkor nincs mit kezdeni.
+ */
+function quizStartGame(PDO $pdo, int $userId): ?array
+{
+    $active = quizActiveGame($pdo, $userId);
+    if ($active) {
+        return $active;
+    }
+    if (quizPickNextQuestion($pdo, $userId) === null) {
+        return null;
+    }
+    $stmt = $pdo->prepare("INSERT INTO quiz_games (user_id) VALUES (?)");
+    $stmt->execute([$userId]);
+    $id = (int)$pdo->lastInsertId();
+    $stmt = $pdo->prepare("SELECT * FROM quiz_games WHERE id = ?");
+    $stmt->execute([$id]);
+    return $stmt->fetch() ?: null;
+}
+
+/**
+ * Az adott kör tényleges célhossza: 20, kivéve ha a tagnak összesen (a körben
+ * eddig megválaszolt + még hátralévő) kevesebb kérdése van valaha életében —
+ * ez az összeg a kör előrehaladtával nem változik (egy megválaszolt kérdés a
+ * "hátralévő"-ből a "körben megválaszolt"-ba kerül), ezért bármikor stabilan
+ * újraszámolható (indításkor és folytatáskor is ugyanazt adja).
+ */
+function quizGameRoundSize(PDO $pdo, int $userId, int $gameId): int
+{
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM quiz_scores WHERE game_id = ?");
+    $stmt->execute([$gameId]);
+    $answeredInGame = (int)$stmt->fetchColumn();
+
+    $progress  = quizProgress($pdo, $userId);
+    $remaining = max(0, $progress['total'] - $progress['answered']);
+
+    return min(QUIZ_ROUND_SIZE, $answeredInGame + $remaining);
+}
+
+/**
+ * A munkamenetben eltárolt, még meg nem válaszolt aktuális kérdés — ha az adott
+ * körhöz tartozik. Ez akadályozza meg, hogy az oldal frissítése új (könnyebb)
+ * kérdést adjon, vagy nullázza az időmérést: amíg a tag nem válaszol, mindig
+ * ugyanazt a kérdést kapja vissza, változatlan indítási idővel.
+ */
+function quizPendingSessionQuestion(int $gameId): ?array
+{
+    $pending = $_SESSION['quiz_q'] ?? null;
+    if (!is_array($pending) || (int)($pending['game_id'] ?? 0) !== $gameId) {
+        return null;
+    }
+    return $pending;
+}
+
+/** A kör eddig megszerzett pontjainak összege (élőben, a kör közben is lekérdezhető). */
+function quizGameRunningScore(PDO $pdo, int $gameId): int
+{
+    $stmt = $pdo->prepare("SELECT COALESCE(SUM(score), 0) FROM quiz_scores WHERE game_id = ?");
+    $stmt->execute([$gameId]);
+    return (int)$stmt->fetchColumn();
+}
+
+/** Egy kör lezárása: összpontszám/darabszám frissítése a mentett válaszokból. */
+function quizFinishGame(PDO $pdo, int $gameId): array
+{
+    $stmt = $pdo->prepare("SELECT COUNT(*) AS cnt, COALESCE(SUM(score),0) AS total
+                           FROM quiz_scores WHERE game_id = ?");
+    $stmt->execute([$gameId]);
+    $row = $stmt->fetch();
+    $count = (int)$row['cnt'];
+    $total = (int)$row['total'];
+
+    $upd = $pdo->prepare("UPDATE quiz_games SET question_count = ?, total_score = ?,
+                          status = 'finished', finished_at = NOW() WHERE id = ?");
+    $upd->execute([$count, $total, $gameId]);
+
+    return ['questionCount' => $count, 'totalScore' => $total];
 }
 
 /* ----------------------------------------------------------------------- */
@@ -461,27 +682,37 @@ function quizItemToplist(PDO $pdo, string $type, int $id, int $meId, int $limit 
     return $rows;
 }
 
-/** Összesített toplista: minden tag átlagpontja és megválaszolt kérdéseinek száma. */
-function quizOverallLeaderboard(PDO $pdo, int $meId, int $limit = 100): array
+/**
+ * Összesített toplista — mindenki legjobb (befejezett) körének összpontszáma alapján.
+ * Holtverseny esetén a korábban elért (finished_at) eredmény nyer.
+ */
+function quizGameLeaderboard(PDO $pdo, int $meId, int $limit = 100): array
 {
-    $stmt = $pdo->prepare("
-        SELECT s.user_id, u.firstname, u.lastname,
-               AVG(s.score) AS avg_score, COUNT(*) AS cnt
-        FROM quiz_scores s
-        JOIN users u ON u.id = s.user_id
-        GROUP BY s.user_id, u.firstname, u.lastname
-        ORDER BY avg_score DESC, cnt DESC
+    $stmt = $pdo->query("
+        SELECT best.user_id, u.firstname, u.lastname, best.best_score AS total_score,
+               (SELECT g2.question_count FROM quiz_games g2
+                WHERE g2.user_id = best.user_id AND g2.status = 'finished'
+                      AND g2.total_score = best.best_score
+                ORDER BY g2.finished_at ASC LIMIT 1) AS question_count,
+               (SELECT MIN(g3.finished_at) FROM quiz_games g3
+                WHERE g3.user_id = best.user_id AND g3.status = 'finished'
+                      AND g3.total_score = best.best_score) AS finished_at
+        FROM (
+            SELECT user_id, MAX(total_score) AS best_score
+            FROM quiz_games WHERE status = 'finished' GROUP BY user_id
+        ) best
+        JOIN users u ON u.id = best.user_id
+        ORDER BY best.best_score DESC, finished_at ASC
         LIMIT " . (int)$limit . "
     ");
-    $stmt->execute();
     $rows = [];
     foreach ($stmt->fetchAll() as $i => $r) {
         $rows[] = [
-            'rank'    => $i + 1,
-            'name'    => trim($r['lastname'] . ' ' . $r['firstname']),
-            'average' => round((float)$r['avg_score'], 1),
-            'count'   => (int)$r['cnt'],
-            'isMe'    => (int)$r['user_id'] === $meId,
+            'rank'          => $i + 1,
+            'name'          => trim($r['lastname'] . ' ' . $r['firstname']),
+            'score'         => (int)$r['total_score'],
+            'questionCount' => (int)$r['question_count'],
+            'isMe'          => (int)$r['user_id'] === $meId,
         ];
     }
     return $rows;
@@ -492,7 +723,9 @@ function quizMyItems(PDO $pdo, int $userId): array
 {
     $stmt = $pdo->prepare("
         SELECT s.item_type, s.item_id, s.score, s.seconds, s.created_at,
-               COALESCE(b.name, m.name) AS name
+               COALESCE(b.name, m.name) AS name,
+               (SELECT COUNT(*) FROM quiz_scores s2
+                WHERE s2.item_type = s.item_type AND s2.item_id = s.item_id) AS answer_count
         FROM quiz_scores s
         LEFT JOIN quiz_birds b     ON s.item_type = 'bird'     AND b.id = s.item_id
         LEFT JOIN quiz_mountains m ON s.item_type = 'mountain' AND m.id = s.item_id
@@ -503,10 +736,11 @@ function quizMyItems(PDO $pdo, int $userId): array
     $rows = [];
     foreach ($stmt->fetchAll() as $r) {
         $rows[] = [
-            'type'  => $r['item_type'],
-            'id'    => (int)$r['item_id'],
-            'name'  => (string)$r['name'],
-            'score' => (int)$r['score'],
+            'type'        => $r['item_type'],
+            'id'          => (int)$r['item_id'],
+            'name'        => (string)$r['name'],
+            'score'       => (int)$r['score'],
+            'answerCount' => (int)$r['answer_count'],
         ];
     }
     return $rows;
@@ -524,10 +758,10 @@ function quizHasAnswered(PDO $pdo, int $userId, string $type, int $id): bool
 /*  Pontozás                                                                */
 /* ----------------------------------------------------------------------- */
 
-/** Időszorzó: 3-ról indul, másodpercenként 0,025-tel csökken, 1 alá nem megy. */
+/** Időszorzó: 2,5-ről indul, másodpercenként 0,07-tel csökken, 1 alá nem megy. */
 function quizTimeMultiplier(float $seconds): float
 {
-    return max(1.0, 3.0 - 0.025 * $seconds);
+    return max(1.0, 2.5 - 0.07 * $seconds);
 }
 
 /**

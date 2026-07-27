@@ -109,7 +109,8 @@
       "Bash(/c/xampp/mysql/bin/mysql.exe *)",
       "Bash(powershell -Command \"Get-Process httpd -ErrorAction SilentlyContinue | Select-Object -First 1 | Format-List\")",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost/lizzardmembers/user/quiz.php)",
-      "Skill(claude-in-chrome)"
+      "Skill(claude-in-chrome)",
+      "Bash(C:/xampp/php/php.exe *)"
     ],
     "additionalDirectories": [
       "\\tmp"

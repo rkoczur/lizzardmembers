@@ -456,6 +456,30 @@ function initTourGalleryLightbox() {
   }, { passive: true });
 }
 
+/* ===== Kvíz kérdések keresés (admin) ===== */
+function initQuizQuestionSearch() {
+  const wire = (inputId, tbodyId, filterId, dataAttr) => {
+    const input = document.getElementById(inputId);
+    const filter = filterId ? document.getElementById(filterId) : null;
+    const tbody = document.getElementById(tbodyId);
+    if (!tbody) return;
+    const apply = () => {
+      const q = input ? input.value.toLowerCase() : '';
+      const f = filter ? filter.value : '';
+      tbody.querySelectorAll('tr').forEach(row => {
+        const matchesText = !q || row.textContent.toLowerCase().includes(q);
+        const values = dataAttr ? (row.dataset[dataAttr] || '').split('|') : [];
+        const matchesFilter = !f || values.includes(f);
+        row.style.display = (matchesText && matchesFilter) ? '' : 'none';
+      });
+    };
+    if (input) input.addEventListener('input', apply);
+    if (filter) filter.addEventListener('change', apply);
+  };
+  wire('quiz-bird-search', 'quiz-bird-table', 'quiz-bird-continent-filter', 'continents');
+  wire('quiz-mountain-search', 'quiz-mountain-table', 'quiz-mountain-country-filter', 'country');
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   initMemberSearch();
   initMtszOverride();
@@ -472,4 +496,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initDateYearLimit();
   initHeroParallax();
   initTourGalleryLightbox();
+  initQuizQuestionSearch();
 });

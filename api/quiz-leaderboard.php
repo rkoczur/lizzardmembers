@@ -37,7 +37,7 @@ try {
     $userId = getCurrentUserId();
 
     if ($view === 'overall') {
-        jsonExit(200, ['view' => 'overall', 'rows' => quizOverallLeaderboard($pdo, $userId)]);
+        jsonExit(200, ['view' => 'overall', 'rows' => quizGameLeaderboard($pdo, $userId)]);
     }
 
     if ($view === 'mine') {
