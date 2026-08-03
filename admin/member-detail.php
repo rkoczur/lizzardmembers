@@ -5,11 +5,14 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/user-schema.php';
+require_once __DIR__ . '/../includes/mtsz-schema.php';
 requireAdminOrVezeto();
 $ro = !isAdmin();
+$mtszRo = !canManageMtsz();
 
 $pdo = getDb();
 ensureUserSchema($pdo);
+ensureMtszSchema($pdo);
 recalcMembershipPayments($pdo); // utolsó tagdíj fizetés a tranzakciókból
 $id  = (int)($_GET['id'] ?? 0);
 if (!$id) {
@@ -46,6 +49,15 @@ try {
 } catch (Throwable $e) {
     $lastLogin = null;
 }
+
+// MTSZ jelvényes minősítések
+$mtszRows = getMtszQualifications($pdo, $id);
+$mtszEditId  = (int)($_GET['mtsz_edit'] ?? 0);
+$mtszEditRow = null;
+foreach ($mtszRows as $r) {
+    if ((int)$r['id'] === $mtszEditId) { $mtszEditRow = $r; break; }
+}
+$mtszTakenGrades = array_column($mtszRows, 'grade');
 
 $flash_success = getFlash('success');
 $flash_error   = getFlash('error');
@@ -125,6 +137,25 @@ include __DIR__ . '/../includes/admin-header.php';
     <small class="text-muted">Utolsó fizetés: <?= formatDate($member['last_payment']) ?></small>
     <small class="text-muted">Utolsó belépés: <?= $lastLogin ? e((new DateTime($lastLogin))->format('Y.m.d H:i')) : 'N/A' ?></small>
     <small class="text-muted">Részt vett túrákon: <strong><?= $tourCount ?></strong></small>
+    <?php if (!empty($mtszRows)): ?>
+      <div class="divider"></div>
+      <small class="text-muted" style="margin-bottom:2px;">MTSZ minősítések</small>
+      <div class="mtsz-side-list">
+        <?php foreach ($mtszRows as $q): $qImg = mtszGradeImageUrl($q['grade']); ?>
+          <div class="mtsz-side-item">
+            <?php if ($qImg): ?>
+              <img src="<?= e($qImg) ?>" alt="<?= e(mtszGradeLabel($q['grade'])) ?>">
+            <?php else: ?>
+              <span class="mtsz-badge <?= mtszGradeClass($q['grade']) ?>" style="margin-right:0;"><?= e(mtszGradeShortLabel($q['grade'])) ?></span>
+            <?php endif; ?>
+            <span>
+              <span class="mtsz-side-name"><?= e(mtszGradeLabel($q['grade'])) ?></span>
+              <span class="mtsz-side-meta" style="display:block;"><?= formatDate($q['awarded_on']) ?></span>
+            </span>
+          </div>
+        <?php endforeach; ?>
+      </div>
+    <?php endif; ?>
     <?php if (!empty($member['locked_at'])): ?>
       <div style="margin-top:10px;padding:8px 12px;background:var(--danger-bg,#fff1f0);border-radius:8px;text-align:center;">
         <div style="font-size:18px;">🔒</div>
@@ -133,6 +164,9 @@ include __DIR__ . '/../includes/admin-header.php';
       </div>
     <?php endif; ?>
   </div>
+
+  <!-- Jobb hasáb: tag adatai + MTSZ minősítések (egyező szélességgel) -->
+  <div style="display:flex;flex-direction:column;gap:24px;min-width:0;">
 
   <!-- Edit form -->
   <div class="card">
@@ -326,6 +360,149 @@ include __DIR__ . '/../includes/admin-header.php';
       <?php endif; ?>
     </div>
   </div>
-</div>
+
+<!-- MTSZ jelvényes minősítések -->
+<div class="card" id="mtsz">
+  <div class="card-header">
+    <h2>MTSZ minősítések</h2>
+    <?php if ($mtszRo): ?>
+      <span class="badge badge-vezeto" style="font-size:11px;">Csak megtekintés</span>
+    <?php endif; ?>
+  </div>
+  <div class="card-body">
+    <p style="font-size:12px;color:var(--text-muted);margin:0 0 16px;">
+      A Magyar Természetjáró Szövetség jelvényes minősítései. Rögzítésre kizárólag az egyesületvezető
+      és a szakszövetségi vezető jogosult. A tag a saját profilján megtekintheti a megszerzett fokozatokat.
+    </p>
+
+    <!-- Megszerzett fokozatok -->
+    <?php if (empty($mtszRows)): ?>
+      <p style="color:var(--text-muted);font-size:13.5px;margin:0;">Ehhez a taghoz még nincs MTSZ minősítés rögzítve.</p>
+    <?php else: ?>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Fokozat</th><th>Nyilvántartási szám</th><th>Megszerzés dátuma</th><th></th></tr>
+        </thead>
+        <tbody>
+          <?php foreach ($mtszRows as $q): $qImg = mtszGradeImageUrl($q['grade']); ?>
+          <tr>
+            <td>
+              <div style="display:flex;align-items:center;gap:12px;">
+                <?php if ($qImg): ?>
+                  <img class="mtsz-badge-img" src="<?= e($qImg) ?>" alt="<?= e(mtszGradeLabel($q['grade'])) ?>">
+                <?php else: ?>
+                  <span class="mtsz-badge <?= mtszGradeClass($q['grade']) ?>" style="margin-right:0;"><?= e(mtszGradeShortLabel($q['grade'])) ?></span>
+                <?php endif; ?>
+                <span style="font-size:13.5px;font-weight:600;"><?= e(mtszGradeLabel($q['grade'])) ?></span>
+              </div>
+            </td>
+            <td style="font-size:13px;<?= $q['reg_number'] ? '' : 'color:var(--text-muted);' ?>"><?= $q['reg_number'] ? e($q['reg_number']) : '—' ?></td>
+            <td style="font-size:13px;white-space:nowrap;"><?= formatDate($q['awarded_on']) ?></td>
+            <td class="td-actions" style="white-space:nowrap;text-align:right;">
+              <?php if (!$mtszRo): ?>
+              <a href="?id=<?= $id ?>&mtsz_edit=<?= (int)$q['id'] ?>#mtsz" class="btn btn-ghost btn-sm">Szerkesztés</a>
+              <form method="post" action="<?= BASE_URL ?>/actions/mtsz-qualification-delete.php" style="display:inline;margin:0;"
+                    onsubmit="return confirm('Törlöd a(z) &bdquo;<?= e(mtszGradeLabel($q['grade'])) ?>&rdquo; minősítést?')">
+                <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
+                <input type="hidden" name="id" value="<?= (int)$q['id'] ?>">
+                <button type="submit" class="btn btn-danger btn-sm">Törlés</button>
+              </form>
+              <?php endif; ?>
+            </td>
+          </tr>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
+    </div>
+    <?php endif; ?>
+
+    <!-- Rögzítés / szerkesztés -->
+    <?php if (!$mtszRo): ?>
+    <?php
+    $mtszAvailable = [];
+    foreach (mtszGradeLabels() as $gKey => $gLabel) {
+        if (!in_array($gKey, $mtszTakenGrades, true) || ($mtszEditRow && $mtszEditRow['grade'] === $gKey)) {
+            $mtszAvailable[$gKey] = $gLabel;
+        }
+    }
+    $mtszImgMap = [];
+    foreach (array_keys($mtszAvailable) as $gKey) {
+        $u = mtszGradeImageUrl($gKey);
+        if ($u) $mtszImgMap[$gKey] = $u;
+    }
+    $previewUrl = $mtszEditRow ? mtszGradeImageUrl($mtszEditRow['grade']) : null;
+    ?>
+    <h3 style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin:24px 0 14px;padding-top:20px;border-top:1px solid var(--border);">
+      <?= $mtszEditRow ? 'Minősítés szerkesztése' : 'Új minősítés rögzítése' ?>
+    </h3>
+    <?php if (empty($mtszAvailable)): ?>
+      <p style="color:var(--text-muted);font-size:13px;margin:0;">A tag mind az öt fokozatot megszerezte — nincs rögzíthető további minősítés.</p>
+    <?php else: ?>
+    <form method="post" action="<?= BASE_URL ?>/actions/mtsz-qualification-save.php">
+      <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
+      <input type="hidden" name="user_id" value="<?= $id ?>">
+      <?php if ($mtszEditRow): ?>
+        <input type="hidden" name="id" value="<?= (int)$mtszEditRow['id'] ?>">
+      <?php endif; ?>
+
+      <div style="display:flex;align-items:flex-start;gap:20px;">
+        <div id="mtsz-preview" style="flex-shrink:0;<?= $previewUrl ? '' : 'display:none;' ?>">
+          <img id="mtsz-preview-img" src="<?= e($previewUrl ?? '') ?>" alt="" style="width:96px;height:auto;object-fit:contain;">
+        </div>
+        <div style="flex:1;min-width:0;">
+          <div class="form-grid cols-3">
+            <div class="form-group">
+              <label>Fokozat <span style="color:var(--danger)">*</span></label>
+              <select name="grade" id="mtsz-grade-select" required
+                      data-images='<?= e(json_encode($mtszImgMap, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)) ?>'>
+                <?php if (!$mtszEditRow): ?><option value="">— Válasszon —</option><?php endif; ?>
+                <?php foreach ($mtszAvailable as $gKey => $gLabel): ?>
+                  <option value="<?= e($gKey) ?>"<?= ($mtszEditRow && $mtszEditRow['grade'] === $gKey) ? ' selected' : '' ?>><?= e($gLabel) ?></option>
+                <?php endforeach; ?>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Nyilvántartási szám</label>
+              <input type="text" name="reg_number" maxlength="60" value="<?= e($mtszEditRow['reg_number'] ?? '') ?>">
+            </div>
+            <div class="form-group">
+              <label>Megszerzés dátuma</label>
+              <input type="date" name="awarded_on" value="<?= e($mtszEditRow['awarded_on'] ?? '') ?>">
+            </div>
+          </div>
+          <div style="display:flex;gap:10px;margin-top:16px;">
+            <button type="submit" class="btn btn-primary"><?= $mtszEditRow ? 'Mentés' : 'Rögzítés' ?></button>
+            <?php if ($mtszEditRow): ?>
+              <a href="<?= BASE_URL ?>/admin/member-detail.php?id=<?= $id ?>#mtsz" class="btn btn-ghost">Mégse</a>
+            <?php endif; ?>
+          </div>
+        </div>
+      </div>
+    </form>
+    <?php endif; ?>
+    <?php endif; ?>
+  </div>
+</div><!-- /#mtsz -->
+
+  </div><!-- /jobb hasáb -->
+</div><!-- /.profile-layout -->
+
+<script>
+// Fokozat választásakor a hozzá tartozó jelvénykép előnézete
+(function () {
+  var sel = document.getElementById('mtsz-grade-select');
+  if (!sel) return;
+  var wrap = document.getElementById('mtsz-preview');
+  var img  = document.getElementById('mtsz-preview-img');
+  var map  = {};
+  try { map = JSON.parse(sel.dataset.images || '{}'); } catch (e) { map = {}; }
+  sel.addEventListener('change', function () {
+    var url = map[sel.value];
+    if (url) { img.src = url; wrap.style.display = ''; }
+    else { wrap.style.display = 'none'; }
+  });
+})();
+</script>
 
 <?php include __DIR__ . '/../includes/admin-footer.php'; ?>

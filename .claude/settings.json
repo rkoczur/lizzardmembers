@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sed -i \"s/id=1/id=4/g\" check1_full.js)",
+      "Bash(node check1_full.js)",
+      "Bash(/c/xampp/php/php.exe -r ' *)",
+      "Bash(rm -f \"C:\\\\Users\\\\User\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--xampp-htdocs-lizzardmembers\\\\209ea30c-009f-4ae3-8c6b-0c3b481dd32d\\\\scratchpad\"/*.png \"C:\\\\Users\\\\User\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--xampp-htdocs-lizzardmembers\\\\209ea30c-009f-4ae3-8c6b-0c3b481dd32d\\\\scratchpad\"/*.js 2>&1; echo done)",
+      "PowerShell(C:\\\\xampp\\\\php\\\\php.exe \"C:\\\\Users\\\\User\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--xampp-htdocs-lizzardmembers\\\\5a20d149-a6c5-4c4d-9197-fa5237acb2ac\\\\scratchpad\\\\mtsz_test.php\")",
+      "PowerShell(C:\\\\xampp\\\\php\\\\php.exe \"C:\\\\Users\\\\User\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--xampp-htdocs-lizzardmembers\\\\5a20d149-a6c5-4c4d-9197-fa5237acb2ac\\\\scratchpad\\\\mtsz_check.php\")",
+      "PowerShell(C:\\\\xampp\\\\php\\\\php.exe \"C:\\\\Users\\\\User\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--xampp-htdocs-lizzardmembers\\\\5a20d149-a6c5-4c4d-9197-fa5237acb2ac\\\\scratchpad\\\\img_info.php\")",
+      "PowerShell(C:\\\\xampp\\\\php\\\\php.exe -d extension=gd -r \"echo function_exists\\('imagecreatefrompng'\\) ? 'GD OK' : 'no GD';\")",
+      "PowerShell(C:\\\\xampp\\\\php\\\\php.exe -d extension=gd \"C:\\\\Users\\\\User\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--xampp-htdocs-lizzardmembers\\\\5a20d149-a6c5-4c4d-9197-fa5237acb2ac\\\\scratchpad\\\\img_info.php\")",
+      "PowerShell(C:\\\\xampp\\\\php\\\\php.exe -d extension=gd -d memory_limit=512M \"C:\\\\Users\\\\User\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--xampp-htdocs-lizzardmembers\\\\5a20d149-a6c5-4c4d-9197-fa5237acb2ac\\\\scratchpad\\\\make_badges.php\" 2>$null)",
+      "PowerShell(C:\\\\xampp\\\\php\\\\php.exe -d extension=gd \"C:\\\\Users\\\\User\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--xampp-htdocs-lizzardmembers\\\\5a20d149-a6c5-4c4d-9197-fa5237acb2ac\\\\scratchpad\\\\verify_badges.php\" 2>$null)",
+      "PowerShell(C:\\\\xampp\\\\php\\\\php.exe $s \"admin/member-detail.php\" 1 177)",
+      "PowerShell(C:\\\\xampp\\\\php\\\\php.exe $s \"user/profile.php\" 177 177)",
+      "PowerShell(C:\\\\xampp\\\\php\\\\php.exe $s \"user/index.php\" 177 177)",
+      "PowerShell($s = \"C:\\\\Users\\\\User\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--xampp-htdocs-lizzardmembers\\\\5a20d149-a6c5-4c4d-9197-fa5237acb2ac\\\\scratchpad\\\\render_test.php\")"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\c--xampp-htdocs-lizzardmembers\\209ea30c-009f-4ae3-8c6b-0c3b481dd32d\\scratchpad"
+    ]
+  }
+}

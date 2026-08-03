@@ -426,6 +426,70 @@ function generateMemberPassword(): string
     return ucfirst($word) . $digits . $upper;
 }
 
+// ── MTSZ jelvényes minősítések ────────────────────────────────────────────────
+
+/** Fokozat kulcs => magyar megnevezés, megszerzési sorrendben. */
+function mtszGradeLabels(): array
+{
+    return [
+        'bronz'    => 'Bronz jelvényes természetjáró',
+        'ezust'    => 'Ezüst jelvényes természetjáró',
+        'arany'    => 'Arany jelvényes természetjáró',
+        'erdemes'  => 'Érdemes természetjáró',
+        'kivalo'   => 'Kiváló természetjáró',
+    ];
+}
+
+function mtszGradeLabel(string $grade): string
+{
+    return mtszGradeLabels()[$grade] ?? $grade;
+}
+
+/** Rövid címke a jelvény badge-hez. */
+function mtszGradeShortLabel(string $grade): string
+{
+    return match ($grade) {
+        'bronz'   => 'Bronz',
+        'ezust'   => 'Ezüst',
+        'arany'   => 'Arany',
+        'erdemes' => 'Érdemes',
+        'kivalo'  => 'Kiváló',
+        default   => $grade,
+    };
+}
+
+function mtszGradeClass(string $grade): string
+{
+    return 'mtsz-' . (array_key_exists($grade, mtszGradeLabels()) ? $grade : 'other');
+}
+
+/** A fokozathoz tartozó jelvénykép URL-je, vagy null ha nincs kép. */
+function mtszGradeImageUrl(string $grade): ?string
+{
+    if (!array_key_exists($grade, mtszGradeLabels())) return null;
+    if (!is_file(__DIR__ . '/../assets/img/mtsz/' . $grade . '.png')) return null;
+    return BASE_URL . '/assets/img/mtsz/' . $grade . '.png';
+}
+
+/** Egy tag minősítései, megszerzési fokozat szerinti sorrendben. */
+function getMtszQualifications(PDO $pdo, int $userId): array
+{
+    try {
+        $stmt = $pdo->prepare("SELECT * FROM mtsz_qualifications WHERE user_id = ?");
+        $stmt->execute([$userId]);
+        $rows = $stmt->fetchAll();
+    } catch (PDOException) {
+        return [];
+    }
+    $order = array_keys(mtszGradeLabels());
+    usort($rows, function ($a, $b) use ($order) {
+        $ia = array_search($a['grade'], $order, true);
+        $ib = array_search($b['grade'], $order, true);
+        return ($ia === false ? 99 : $ia) <=> ($ib === false ? 99 : $ib);
+    });
+    return $rows;
+}
+
 function logAudit(PDO $pdo, string $action, string $entityType, int $entityId, string $entityLabel, ?array $changes = null): void
 {
     static $schemaEnsured = false;

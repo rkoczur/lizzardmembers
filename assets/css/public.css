@@ -1435,6 +1435,8 @@
 .tour-main-info      { grid-area: main; }
 .tour-sidebar        { grid-area: sidebar; }
 .tour-secondary-info { grid-area: extra; }
+/* Grid-oszlopok zsugorodhassanak — a széles tartalom (táblázat, hosszú szó) ne feszítse ki mobilon az oldalt */
+.tour-detail-grid > * { min-width: 0; }
 
 /* ── Utility ── */
 .pub-empty-state { text-align: center; padding: 60px 20px; color: var(--text-muted); }

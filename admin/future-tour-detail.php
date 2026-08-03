@@ -87,7 +87,7 @@ include __DIR__ . '/../includes/admin-header.php';
     <?php if (!$isNew): ?>
     <a href="<?= BASE_URL ?>/admin/future-tour-applicants.php?id=<?= (int)$id ?>" class="btn btn-secondary btn-sm">Jelentkezők</a>
     <button type="button" class="btn btn-secondary btn-sm" id="copy-public-link-btn"
-            data-url="<?= e(((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http') . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . BASE_URL . '/user/future-tour-apply-public.php?id=' . (int)$id) ?>">
+            data-url="<?= e(((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http') . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . BASE_URL . '/public/tour-detail.php?id=' . (int)$id) ?>">
       Publikus link másolása
     </button>
     <?php if (canManageTours()): ?>

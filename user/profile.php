@@ -5,14 +5,19 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/user-schema.php';
+require_once __DIR__ . '/../includes/mtsz-schema.php';
 requireUser();
 
 $pdo    = getDb();
 ensureUserSchema($pdo);
+ensureMtszSchema($pdo);
 $userId = getCurrentUserId();
 $stmt   = $pdo->prepare("SELECT * FROM users WHERE id = ? LIMIT 1");
 $stmt->execute([$userId]);
 $user   = $stmt->fetch();
+
+// MTSZ jelvényes minősítések (csak megtekintés — rögzítésre az egyesületvezető / szakszövetségi vezető jogosult)
+$mtszRows = getMtszQualifications($pdo, $userId);
 
 $tcStmt = $pdo->prepare("SELECT COUNT(*) FROM tour_members WHERE user_id = ?");
 $tcStmt->execute([$userId]);
@@ -66,6 +71,33 @@ include __DIR__ . '/../includes/user-header.php';
     <small class="text-muted">Tag azóta: <?= formatDate($user['member_since']) ?></small>
     <small class="text-muted">Utolsó fizetés: <?= formatDate($user['last_payment']) ?></small>
     <small class="text-muted">Részt vett túrákon: <strong><?= $tourCount ?></strong></small>
+    <div class="divider"></div>
+    <small class="text-muted" style="margin-bottom:2px;">MTSZ minősítések</small>
+    <?php if (empty($mtszRows)): ?>
+      <small class="text-muted" style="font-size:11.5px;line-height:1.4;">
+        Még nincs rögzített minősítésed. A jelvényes fokozatokat az egyesületvezető
+        vagy a szakszövetségi vezető rögzíti.
+      </small>
+    <?php else: ?>
+      <div class="mtsz-side-list">
+        <?php foreach ($mtszRows as $q): $qImg = mtszGradeImageUrl($q['grade']); ?>
+          <div class="mtsz-side-item">
+            <?php if ($qImg): ?>
+              <img src="<?= e($qImg) ?>" alt="<?= e(mtszGradeLabel($q['grade'])) ?>">
+            <?php else: ?>
+              <span class="mtsz-badge <?= mtszGradeClass($q['grade']) ?>" style="margin-right:0;"><?= e(mtszGradeShortLabel($q['grade'])) ?></span>
+            <?php endif; ?>
+            <span>
+              <span class="mtsz-side-name"><?= e(mtszGradeLabel($q['grade'])) ?></span>
+              <span class="mtsz-side-meta" style="display:block;">
+                <?php if (!empty($q['reg_number'])): ?>Ny.szám: <?= e($q['reg_number']) ?><br><?php endif; ?>
+                <?= formatDate($q['awarded_on']) ?>
+              </span>
+            </span>
+          </div>
+        <?php endforeach; ?>
+      </div>
+    <?php endif; ?>
   </div>
 
   <!-- Edit form -->

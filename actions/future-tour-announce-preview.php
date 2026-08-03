@@ -35,7 +35,7 @@ if (!$tour) {
 
 $proto       = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
 $absBaseUrl  = $proto . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . BASE_URL;
-$applyUrl    = $absBaseUrl . '/user/future-tour-apply-public.php?id=' . $tourId;
+$applyUrl    = $absBaseUrl . '/public/tour-detail.php?id=' . $tourId;
 $formattedDate = $tour['start_date'] ? formatDate($tour['start_date']) : '—';
 $fee         = (int)round((float)($tour['participation_fee'] ?? 0));
 $feeText     = $fee > 0 ? number_format($fee, 0, ',', ' ') . ' Ft' : 'Ingyenes';

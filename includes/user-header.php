@@ -25,6 +25,12 @@
     </div>
 
     <nav class="sidebar-nav">
+      <a href="<?= BASE_URL ?>/user/quiz.php" class="nav-highlight <?= ($activePage ?? '') === 'quiz' ? 'active' : '' ?>">
+        <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><line x1="12" y1="3" x2="12" y2="7"/><line x1="12" y1="17" x2="12" y2="21"/><line x1="3" y1="12" x2="7" y2="12"/><line x1="17" y1="12" x2="21" y2="12"/>
+        </svg>
+        Kvíz játék
+      </a>
       <div class="nav-section-label">Főmenü</div>
       <a href="<?= BASE_URL ?>/user/index.php" class="<?= ($activePage ?? '') === 'dashboard' ? 'active' : '' ?>">
         <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -57,12 +63,6 @@
           <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
         </svg>
         Statisztikák
-      </a>
-      <a href="<?= BASE_URL ?>/user/quiz.php" class="<?= ($activePage ?? '') === 'quiz' ? 'active' : '' ?>">
-        <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><line x1="12" y1="3" x2="12" y2="7"/><line x1="12" y1="17" x2="12" y2="21"/><line x1="3" y1="12" x2="7" y2="12"/><line x1="17" y1="12" x2="21" y2="12"/>
-        </svg>
-        Kvíz játék
       </a>
       <?php if (canCreatePosts() && !canManagePosts()): ?>
       <a href="<?= BASE_URL ?>/user/posts.php" class="<?= ($activePage ?? '') === 'posts' ? 'active' : '' ?>">

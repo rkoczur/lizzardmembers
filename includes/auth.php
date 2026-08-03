@@ -104,6 +104,12 @@ function canManageMembers(): bool
     return isAdmin();
 }
 
+/** MTSZ jelvényes minősítés rögzítése: admin/helyettes VAGY szakszövetségi vezető */
+function canManageMtsz(): bool
+{
+    return isAdmin() || isVezeto();
+}
+
 function canManageFinances(): bool
 {
     return in_array(currentRole(), ['admin', 'helyettes', 'penzugyi'], true);

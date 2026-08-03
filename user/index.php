@@ -5,10 +5,12 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/future-tours-schema.php';
+require_once __DIR__ . '/../includes/mtsz-schema.php';
 requireUser();
 
 $pdo    = getDb();
 ensureFutureToursSchema($pdo);
+ensureMtszSchema($pdo);
 $userId = getCurrentUserId();
 $stmt   = $pdo->prepare("
     SELECT u.*, COALESCE(SUM(t.points), 0) AS computed_points
@@ -21,6 +23,8 @@ $stmt   = $pdo->prepare("
 ");
 $stmt->execute([$userId]);
 $user = $stmt->fetch();
+
+$mtszRows = getMtszQualifications($pdo, $userId);
 
 $feeDiscount       = getTourFeeDiscount((int)($user['level'] ?? 1), (string)($user['role'] ?? 'user'));
 $memberStatus      = getMemberStatus($user['last_payment']);
@@ -105,6 +109,26 @@ include __DIR__ . '/../includes/user-header.php';
         </div>
       <?php endif; ?>
     </div>
+
+    <!-- MTSZ jelvényes minősítések -->
+    <?php if (!empty($mtszRows)): ?>
+    <div class="stat-card dash-card-mtsz">
+      <div class="stat-icon">🎖️</div>
+      <div class="stat-label">MTSZ minősítések</div>
+      <div class="mtsz-dash-list">
+        <?php foreach ($mtszRows as $q): $qImg = mtszGradeImageUrl($q['grade']); ?>
+          <div class="mtsz-dash-item" title="<?= e(mtszGradeLabel($q['grade'])) ?><?= $q['awarded_on'] ? ' — ' . formatDate($q['awarded_on']) : '' ?>">
+            <?php if ($qImg): ?>
+              <img src="<?= e($qImg) ?>" alt="<?= e(mtszGradeLabel($q['grade'])) ?>">
+            <?php else: ?>
+              <span class="mtsz-badge <?= mtszGradeClass($q['grade']) ?>" style="margin-right:0;"><?= e(mtszGradeShortLabel($q['grade'])) ?></span>
+            <?php endif; ?>
+            <span><?= e(mtszGradeShortLabel($q['grade'])) ?></span>
+          </div>
+        <?php endforeach; ?>
+      </div>
+    </div>
+    <?php endif; ?>
 
     <!-- Utolsó fizetés -->
     <div class="stat-card dash-card-payment">

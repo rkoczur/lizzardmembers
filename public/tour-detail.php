@@ -71,7 +71,7 @@ include __DIR__ . '/../includes/public-header.php';
     <div class="tour-main-info">
       <div class="card">
         <div class="card-body">
-          <h1 style="font-size:clamp(20px,3.5vw,28px);font-weight:800;color:var(--sidebar-bg);margin-bottom:16px;"><?= e($tour['name']) ?></h1>
+          <h1 style="font-size:clamp(20px,3.5vw,28px);font-weight:800;color:var(--sidebar-bg);margin-bottom:16px;overflow-wrap:anywhere;"><?= e($tour['name']) ?></h1>
 
           <!-- Location -->
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
@@ -149,7 +149,7 @@ include __DIR__ . '/../includes/public-header.php';
           <?php endif; ?>
 
           <?php if (!empty($tour['description'])): ?>
-            <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);color:var(--text);line-height:1.65;white-space:pre-wrap;"><?= e($tour['description']) ?></div>
+            <div class="tour-text-block" style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);"><?= e($tour['description']) ?></div>
           <?php endif; ?>
         </div>
       </div>
@@ -214,8 +214,9 @@ include __DIR__ . '/../includes/public-header.php';
       <?php if (!empty($days)): ?>
       <div class="card" style="margin-bottom:16px;">
         <div class="card-header"><h2>Napok</h2></div>
-        <div class="card-body" style="padding:0;overflow-x:auto;">
-          <table style="width:100%;border-collapse:collapse;font-size:13.5px;">
+        <div class="card-body" style="padding:0;">
+          <!-- Asztali nézet: táblázat -->
+          <table class="tour-days-table" style="width:100%;border-collapse:collapse;font-size:13.5px;">
             <thead>
               <tr style="background:var(--card);border-bottom:1px solid var(--border);">
                 <th style="padding:8px 16px;text-align:left;color:var(--text-muted);font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;">Nap</th>
@@ -237,6 +238,27 @@ include __DIR__ . '/../includes/public-header.php';
               <?php endforeach; ?>
             </tbody>
           </table>
+
+          <!-- Mobil nézet: kártyák -->
+          <div class="tour-days-cards">
+            <?php foreach ($days as $day): ?>
+            <div class="tour-day-card">
+              <div class="tdc-head">
+                <span class="tdc-day"><?= (int)$day['day_number'] ?>. nap</span>
+                <?php if (!empty($day['tour_type'])): ?>
+                  <span class="tdc-type"><?= e($day['tour_type']) ?></span>
+                <?php endif; ?>
+              </div>
+              <div class="tdc-metrics">
+                <span><span class="tdc-mlabel">Táv:</span> <?= $day['km'] !== null ? number_format((float)$day['km'], 1, ',', ' ') . ' km' : '—' ?></span>
+                <span><span class="tdc-mlabel">Szint:</span> <?= $day['elevation'] !== null ? number_format((int)$day['elevation']) . ' m' : '—' ?></span>
+              </div>
+              <?php if (!empty($day['description'])): ?>
+                <div class="tdc-desc"><?= e($day['description']) ?></div>
+              <?php endif; ?>
+            </div>
+            <?php endforeach; ?>
+          </div>
         </div>
       </div>
       <?php endif; ?>
@@ -246,7 +268,9 @@ include __DIR__ . '/../includes/public-header.php';
         <?php if (!empty($tour[$col])): ?>
         <div class="card" style="margin-bottom:16px;">
           <div class="card-header"><h2><?= $label ?></h2></div>
-          <div class="card-body" style="white-space:pre-wrap;line-height:1.65;"><?= e($tour[$col]) ?></div>
+          <div class="card-body">
+            <div class="tour-text-block"><?= e($tour[$col]) ?></div>
+          </div>
         </div>
         <?php endif; ?>
       <?php endforeach; ?>

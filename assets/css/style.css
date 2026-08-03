@@ -111,6 +111,37 @@ ul { list-style: none; }
 .sidebar-nav a.active { background: var(--sidebar-active-bg); color: var(--sidebar-active); border-right: 3px solid var(--warning); }
 .sidebar-nav a.active .nav-icon { opacity: 1; }
 
+/* Kiemelt menüpont (Kvíz játék) — a Főmenü fölött, figyelemfelkeltő narancs pirulában */
+.sidebar-nav a.nav-highlight {
+  margin: 10px 12px 6px;
+  padding: 9px 12px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--warning) 0%, #c8801f 100%);
+  color: #23150a;
+  font-weight: 700;
+  letter-spacing: .01em;
+  box-shadow: 0 2px 10px rgba(221,153,51,.35);
+  transition: background var(--transition), color var(--transition), box-shadow var(--transition), transform var(--transition);
+  animation: navHighlightPulse 2.8s ease-in-out infinite;
+}
+.sidebar-nav a.nav-highlight .nav-icon { opacity: 1; }
+.sidebar-nav a.nav-highlight:hover,
+.sidebar-nav a.nav-highlight.active {
+  background: linear-gradient(135deg, #eba644 0%, #d68e28 100%);
+  color: #1a1005;
+  border-right: 0;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(221,153,51,.5);
+  animation: none;
+}
+@keyframes navHighlightPulse {
+  0%, 100% { box-shadow: 0 2px 10px rgba(221,153,51,.35); }
+  50%      { box-shadow: 0 2px 10px rgba(221,153,51,.35), 0 0 0 4px rgba(221,153,51,.18); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sidebar-nav a.nav-highlight { animation: none; }
+}
+
 .sidebar-version {
   padding: 4px 20px 6px;
   font-size: 10px;
@@ -374,6 +405,68 @@ tbody tr:hover { background: #faf5ec; }
 .level-7 { background: rgba(26,61,57,.74); color: #fff; }
 .level-8 { background: rgba(26,61,57,.87); color: #fff; }
 .level-9 { background: rgb(26,61,57); color: #fff; }
+
+/* ===== MTSZ jelvényes minősítések ===== */
+.mtsz-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  margin-right: 6px;
+  border-radius: 99px;
+  font-size: 11.5px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.mtsz-bronz   { background: rgba(176,110,58,.18);  color: #7c4a1e; }
+.mtsz-ezust   { background: rgba(120,131,143,.20); color: #4a5561; }
+.mtsz-arany   { background: rgba(221,153,51,.24);  color: #7a5000; }
+.mtsz-erdemes { background: rgba(99,102,241,.16);  color: #3730a3; }
+.mtsz-kivalo  { background: rgba(26,61,57,.87);    color: #fff; }
+.mtsz-other   { background: #f0ebe2;               color: #6b6259; }
+
+.mtsz-list { display: flex; flex-direction: column; gap: 10px; }
+.mtsz-item {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 6px 12px;
+  padding: 10px 14px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.mtsz-item-name { font-size: 13.5px; font-weight: 600; }
+.mtsz-item-meta { font-size: 12px; color: var(--text-muted); margin-left: auto; }
+
+/* Jelvénykép — a kör alakú avatar-szabályt is felülírja */
+.mtsz-badge-img {
+  width: 44px; height: auto;
+  object-fit: contain;
+  flex-shrink: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* Oldalsáv (profilkép-kártya): megszerzett fokozatok listája */
+.mtsz-side-list { display: flex; flex-direction: column; gap: 14px; width: 100%; }
+.mtsz-side-item {
+  display: flex; flex-direction: column; align-items: center; gap: 5px;
+  text-align: center;
+}
+/* Jelvénykép: eredeti méretarány, levágás nélkül — a kör alakú avatar-szabályt is felülírja */
+.mtsz-side-item img,
+.profile-avatar-card .mtsz-side-item img {
+  width: 70px; height: auto;
+  max-width: 100%;
+  object-fit: contain;
+  border-radius: 0;
+  box-shadow: none;
+  flex-shrink: 0;
+}
+.mtsz-side-name { font-size: 12px; font-weight: 600; line-height: 1.25; }
+.mtsz-side-meta { font-size: 10.5px; color: var(--text-muted); margin-top: 2px; }
+
+/* Vezérlőpult: jelvények egy sorban */
+.mtsz-dash-list { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px; align-items: flex-start; }
+.mtsz-dash-item { display: flex; flex-direction: column; align-items: center; gap: 4px; width: 58px; }
+.mtsz-dash-item img { width: 52px; height: auto; object-fit: contain; }
+.mtsz-dash-item span { font-size: 10.5px; font-weight: 600; color: var(--text-muted); text-align: center; line-height: 1.2; }
 
 /* ===== Column filters ===== */
 .col-filter-wrap { display: inline-block; margin-left: 3px; vertical-align: middle; }
@@ -1188,9 +1281,10 @@ body.embed-mode .card-body { padding-top: 12px !important; }
   .dash-card-debts        { order: 2; }
   .dash-card-level        { order: 3; }
   .dash-card-progress     { order: 4; }
-  .dash-card-payment      { order: 5; }
-  .dash-card-status       { order: 6; }
-  .dash-card-since        { order: 7; }
+  .dash-card-mtsz         { order: 5; }
+  .dash-card-payment      { order: 6; }
+  .dash-card-status       { order: 7; }
+  .dash-card-since        { order: 8; }
 }
 
 /* Széles táblázat vízszintesen görgethető a kártyán belül (nem lóg ki) */

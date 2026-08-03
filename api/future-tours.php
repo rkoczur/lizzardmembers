@@ -46,7 +46,7 @@ try {
         $t['waitlist_count']   = (int)$t['waitlist_count'];
         $t['spots_left']       = max(0, $t['max_attendees'] - $t['confirmed_count']);
         $t['participation_fee']= $t['participation_fee'] !== null ? (float)$t['participation_fee'] : null;
-        $t['apply_path']              = '/user/future-tour-apply-public.php?id=' . $t['id'];
+        $t['apply_path']              = '/public/tour-detail.php?id=' . $t['id'];
         $t['disabled_standard_fields'] = json_decode($t['disabled_standard_fields'] ?? '[]', true) ?: [];
         $t['requires_membership']      = (bool)$t['requires_membership'];
 

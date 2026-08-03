@@ -75,6 +75,28 @@ Effective fee: `$tour['participation_fee'] * (1 - $discount / 100)`
 - Guests (no `user_id`) always pay the full fee — pass `0` as level or skip the call.
 - Query pattern: always include `COALESCE(u.level, 1) AS user_level` when joining users to applications.
 
+## MTSZ jelvényes minősítések
+Stored in the `mtsz_qualifications` table (`includes/mtsz-schema.php` → `ensureMtszSchema()`).
+One row per earned grade; `UNIQUE (user_id, grade)` — a grade can only be earned once per member.
+Fields: `grade`, `reg_number` (nyilvántartási szám), `awarded_on` (dátum).
+
+Grade keys → labels via `mtszGradeLabels()` in `includes/functions.php`:
+`bronz`, `ezust`, `arany` (…jelvényes természetjáró), `erdemes`, `kivalo` (…természetjáró).
+Helpers: `mtszGradeLabel()`, `mtszGradeShortLabel()`, `mtszGradeClass()`, `mtszGradeImageUrl()`,
+`getMtszQualifications($pdo, $userId)`.
+
+Badge images: `assets/img/mtsz/{grade}.png` — 240×212 transparent PNGs, always rendered via
+`mtszGradeImageUrl()` (returns `null` if the file is missing, so callers fall back to the text badge).
+Originals live in `mtsz-kituzo/` at the repo root (450 px, one is a JPG) — not referenced by the app.
+
+- **Only** `canManageMtsz()` (admin / helyettes / szakszövetségi vezető) may record, edit or delete a qualification —
+  never the member themselves. Enforced in `actions/mtsz-qualification-save.php` and `-delete.php`.
+- Admin UI: `admin/member-detail.php` (`#mtsz` card, same column/width as the „Tag adatai" card).
+- Member UI: `user/profile.php` — read-only list in the left sidebar card (next to the Lizzardier rank);
+  `user/index.php` — `.dash-card-mtsz` tile in the left dashboard column, only when the member has a grade.
+- CSS: `.mtsz-badge`, `.mtsz-badge-img`, `.mtsz-side-list`, `.mtsz-dash-list` in `assets/css/style.css`.
+  `.mtsz-side-item img` must override `.profile-avatar-card img` (circle crop) — keep the selector specific.
+
 ## Page boilerplate pattern
 ```php
 session_start();
