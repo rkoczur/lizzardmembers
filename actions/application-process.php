@@ -152,7 +152,7 @@ if (!empty($linkedTourApps)) {
                     $extraHtml  = (float)($la['participation_fee'] ?? 0) > 0
                       ? '<div style="background:#fffbeb;border:1px solid #f59e0b;border-radius:6px;padding:12px 16px;margin-top:16px;font-size:13.5px;color:#b45309;">
                         ⚠ Kérjük, a részvételi díjat <strong>14 napon belül</strong> utald el.
-                      </div>'
+                      </div>' . bankInfoEmailHtml()
                       : '';
                 } else {
                     $subject    = 'Tagsági kérelem jóváhagyva – Várólistán: ' . $la['tour_name'];

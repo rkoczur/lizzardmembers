@@ -40,6 +40,19 @@ $cntStmt->execute([$id]);
 $confirmedCount = (int)$cntStmt->fetchColumn();
 $spotsLeft = max(0, (int)$tour['max_attendees'] - $confirmedCount);
 
+// Belépett tag saját jelentkezése erre a túrára — a lemondott jelentkezés nem számít
+$memberApp = null;
+if (isLoggedIn()) {
+    $appStmt = $pdo->prepare("
+        SELECT status, paid_at
+        FROM future_tour_applications
+        WHERE future_tour_id = ? AND user_id = ? AND status != 'cancelled'
+        LIMIT 1
+    ");
+    $appStmt->execute([$id, getCurrentUserId()]);
+    $memberApp = $appStmt->fetch() ?: null;
+}
+
 $gpxFilesStmt = $pdo->prepare("SELECT * FROM future_tour_gpx_files WHERE future_tour_id = ? ORDER BY sort_order ASC");
 $gpxFilesStmt->execute([$id]);
 $gpxFiles = $gpxFilesStmt->fetchAll();
@@ -159,7 +172,36 @@ include __DIR__ . '/../includes/public-header.php';
     <div class="tour-sidebar">
       <div class="card">
         <div class="card-body card-body-center" style="text-align:center;padding:28px 20px;">
-          <?php if ($tour['status'] !== 'open'): ?>
+          <?php if ($memberApp): ?>
+            <?php
+              $needsPay = $memberApp['status'] === 'confirmed'
+                          && (float)$tour['participation_fee'] > 0 && !$memberApp['paid_at'];
+              if ($memberApp['status'] === 'pending') {
+                  $appIcon  = '⏳';
+                  $appBadge = '<span class="badge badge-pending">Elfogadásra vár</span>';
+                  $appNote  = 'Jelentkezésedet rögzítettük, jóváhagyásra vár.';
+              } elseif ($memberApp['status'] === 'waitlist') {
+                  $appIcon  = '📋';
+                  $appBadge = '<span class="badge-waitlist">Várólista</span>';
+                  $appNote  = 'A túra betelt. Ha felszabadul egy hely, e-mailben értesítünk.';
+              } elseif ($needsPay) {
+                  $appIcon  = '💳';
+                  $appBadge = '<span class="badge badge-overdue">Befizetésre vár</span>';
+                  $appNote  = 'A helyedet fenntartjuk, a részvételi díj befizetése még hátravan.';
+              } else {
+                  $appIcon  = '✅';
+                  $appBadge = '<span class="badge badge-active">Elfogadva</span>';
+                  $appNote  = 'A részvételed véglegesítve.';
+              }
+            ?>
+            <div class="tour-my-app-icon"><?= $appIcon ?></div>
+            <div class="tour-my-app-title">Már jelentkeztél erre a túrára</div>
+            <div class="tour-my-app-badge"><?= $appBadge ?></div>
+            <div class="tour-my-app-note"><?= e($appNote) ?></div>
+            <?php if ($needsPay): ?><?= bankInfoBox() ?><?php endif; ?>
+            <a href="<?= BASE_URL ?>/user/future-tour-detail.php?id=<?= (int)$id ?>" class="btn btn-ghost tour-my-app-link">Jelentkezésem kezelése</a>
+
+          <?php elseif ($tour['status'] !== 'open'): ?>
             <div style="font-size:40px;margin-bottom:12px;">🔒</div>
             <div style="font-weight:700;font-size:17px;margin-bottom:6px;color:var(--text-muted);">A jelentkezés lezárva</div>
 
@@ -174,7 +216,7 @@ include __DIR__ . '/../includes/public-header.php';
             <div style="color:var(--text-muted);font-size:13px;margin-bottom:20px;">Várólistás feliratkozás lehetséges</div>
           <?php endif; ?>
 
-          <?php if ($tour['status'] === 'open'): ?>
+          <?php if (!$memberApp && $tour['status'] === 'open'): ?>
             <a href="<?= BASE_URL ?>/public/tour-apply.php?id=<?= (int)$id ?>" class="btn btn-primary" style="width:100%;padding:12px;font-size:15px;">
               <?= $spotsLeft > 0 ? 'Jelentkezés' : 'Várólistára feliratkozás' ?>
             </a>

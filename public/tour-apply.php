@@ -228,6 +228,7 @@ include __DIR__ . '/../includes/public-header.php';
         <span style="color:#b45309;">Ha már tag vagy, lépj be. Ha még nem vagy tag, itt kérheted felvételedet az egyesületbe.</span>
         <div style="margin-top:10px;padding-top:10px;border-top:1px solid #f59e0b;font-size:13px;">
           ⚠ <strong>Fontos:</strong> A tagság csak az éves tagdíj befizetésével válik érvényessé. Az éves tagdíj összege: <strong>5 000 Ft</strong>.
+          <?= bankInfoBox() ?>
         </div>
       </div>
 

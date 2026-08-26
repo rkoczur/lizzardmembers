@@ -274,6 +274,7 @@ include __DIR__ . '/../includes/user-header.php';
           <?php else: ?>
             <div class="alert-warning-box" style="margin-bottom:16px;text-align:left;">
               ⚠ Részvételi díjad még nem érkezett meg. Kérjük, 14 napon belül utalj!
+              <?= bankInfoBox() ?>
             </div>
           <?php endif; ?>
         <?php endif; ?>
@@ -364,6 +365,7 @@ $modalFieldOn = fn(string $f): bool => !in_array($f, $modalDisabledFields, true)
       <div style="padding:20px 24px;">
         <div style="background:var(--card,#f5efe4);border-radius:8px;padding:14px 16px;font-size:13px;color:var(--text);margin-bottom:20px;line-height:1.55;">
           Az alábbi űrlapon jelentkezhetsz a túrára. A jelentkezéssel kijelented, hogy 14 napon belül befizeted a részvételi díjad, ellenkező esetben a rendszer automatikusan feloldja a foglalásodat, és amennyiben van várólistán jelentkező, neki adja tovább.
+          <?= bankInfoBox() ?>
         </div>
 
         <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">

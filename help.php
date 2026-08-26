@@ -515,7 +515,9 @@ require_once __DIR__ . '/includes/functions.php';
 
       <div class="help-callout warn">
         <span class="help-callout-icon">⚠️</span>
-        <div><strong>Részvételi díj határideje: 14 nap.</strong> Ha a megerősítés után 14 napon belül nem érkezik be a befizetés, az adminisztrátor törölheti a helyedet.</div>
+        <div><strong>Részvételi díj határideje: 14 nap.</strong> Ha a megerősítés után 14 napon belül nem érkezik be a befizetés, az adminisztrátor törölheti a helyedet.
+          <?= bankInfoBox() ?>
+        </div>
       </div>
 
       <h3 class="help-h3">4.4 Lemondás</h3>

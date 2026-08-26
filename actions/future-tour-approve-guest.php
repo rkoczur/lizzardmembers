@@ -64,7 +64,7 @@ if ($newStatus === 'confirmed') {
     $noteHtml   = (float)($app['participation_fee'] ?? 0) > 0
       ? '<div style="background:#fffbeb;border:1px solid #f59e0b;border-radius:6px;padding:12px 16px;margin-top:16px;font-size:13.5px;color:#b45309;">
         ⚠ Kérjük, a részvételi díjat <strong>14 napon belül</strong> utald el. Ellenkező esetben a rendszer automatikusan törli a foglalásodat.
-      </div>'
+      </div>' . bankInfoEmailHtml()
       : '';
 } else {
     $subject    = 'Várólistán vagy – ' . $app['tour_name'];

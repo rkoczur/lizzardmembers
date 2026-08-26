@@ -56,7 +56,7 @@ if ($wasConfirmed) {
             $payBlock = (float)($tourData['participation_fee'] ?? 0) > 0
               ? '<div style="background:#fffbeb;border:1px solid #f59e0b;border-radius:6px;padding:12px 16px;margin:16px 0;font-size:13.5px;color:#b45309;">
       ⚠ Kérjük, a részvételi díjat <strong>14 napon belül</strong> utald el, különben a foglalásod automatikusan feloldásra kerül.
-    </div>'
+    </div>' . bankInfoEmailHtml()
               : '';
             $fullName = $next['lastname'] . ' ' . $next['firstname'];
             $subject  = 'Hely felszabadult – ' . $tourName;

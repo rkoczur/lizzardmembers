@@ -137,7 +137,8 @@ try {
     $smtp = getSmtpConfig($pdo);
 
     if ($smtp['host'] !== '') {
-        $appName = APP_NAME;
+        $appName  = APP_NAME;
+        $bankHtml = bankInfoEmailHtml();
         $html = <<<HTML
 <!DOCTYPE html>
 <html lang="hu">
@@ -152,7 +153,9 @@ try {
     <h2 style="color:#1a1a1a;font-size:20px;margin:0 0 16px;font-weight:700;">Köszönjük a jelentkezésedet, {$firstname}!</h2>
     <p style="color:#444;font-size:15px;line-height:1.7;margin:0 0 14px;">Megkaptuk az <strong>{$appName}</strong> egyesületbe vonatkozó belépési kérelmedet.</p>
     <p style="color:#444;font-size:15px;line-height:1.7;margin:0 0 24px;">Az egyesület képviselői hamarosan átnézik a jelentkezésedet, és e-mailben értesítünk a döntésről.</p>
-    <p style="color:#888;font-size:13px;margin:0;border-top:1px solid #eee;padding-top:20px;">Ha kérdésed van, válaszolj erre az e-mailre.</p>
+    <p style="color:#444;font-size:15px;line-height:1.7;margin:0 0 4px;">A tagság az <strong>éves tagdíj (5 000 Ft)</strong> befizetésével válik érvényessé.</p>
+    {$bankHtml}
+    <p style="color:#888;font-size:13px;margin:24px 0 0;border-top:1px solid #eee;padding-top:20px;">Ha kérdésed van, válaszolj erre az e-mailre.</p>
   </div>
   <div style="background:#f9f9f9;padding:18px 40px;text-align:center;border-top:1px solid #eee;">
     <p style="color:#bbb;font-size:12px;margin:0;">&copy; {$appName}</p>

@@ -71,7 +71,7 @@ if ($fee > 0) {
         . ($discount > 0 ? ' <span style="color:#92400e;">(' . $discount . '% tagi kedvezménnyel)</span>' : '') . '.<br>
         Kérünk, ezt <strong>14 napon belül</strong> utald el — eddig a helyedet fenntartjuk neked.
         Ha a befizetés a határidőig nem érkezik meg, a helyedet sajnos a várólistán következő jelentkezőnek kell továbbadnunk.
-      </div>';
+      </div>' . bankInfoEmailHtml();
 }
 
 $html = '<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body style="margin:0;padding:0;background:#f5efe4;font-family:Arial,sans-serif;">

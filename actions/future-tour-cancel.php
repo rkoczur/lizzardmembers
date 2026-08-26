@@ -72,7 +72,7 @@ function promoteFirstWaitlist(PDO $pdo, int $tourId): void
         $payBlock  = (float)($tour['participation_fee'] ?? 0) > 0
           ? '<div style="background:#fffbeb;border:1px solid #f59e0b;border-radius:6px;padding:12px 16px;margin:16px 0;font-size:13.5px;color:#b45309;">
       ⚠ Kérjük, a részvételi díjat <strong>14 napon belül</strong> utald el, különben a foglalásod automatikusan feloldásra kerül.
-    </div>'
+    </div>' . bankInfoEmailHtml()
           : '';
         $html = '<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body style="margin:0;padding:0;background:#f5efe4;font-family:Arial,sans-serif;">
 <table width="100%" cellpadding="0" cellspacing="0"><tr><td align="center" style="padding:32px 16px;">

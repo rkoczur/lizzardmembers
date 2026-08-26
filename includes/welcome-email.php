@@ -1,16 +1,26 @@
 <?php
+require_once __DIR__ . '/functions.php';
+
+/** $showFee: az éves tagdíj + bankszámla blokk megjelenítése (jelszó-újraküldésnél nem kell). */
 function buildWelcomeEmailHtml(
     string $firstname,
     string $username,
     string $password,
     string $loginUrl,
-    string $appName = 'Lizzard Egyesület'
+    string $appName = 'Lizzard Egyesület',
+    bool $showFee = true
 ): string {
     $f = htmlspecialchars($firstname, ENT_QUOTES, 'UTF-8');
     $u = htmlspecialchars($username,  ENT_QUOTES, 'UTF-8');
     $p = htmlspecialchars($password,  ENT_QUOTES, 'UTF-8');
     $l = htmlspecialchars($loginUrl,  ENT_QUOTES, 'UTF-8');
     $a = htmlspecialchars($appName,   ENT_QUOTES, 'UTF-8');
+
+    $feeBlock = $showFee
+        ? '<p style="font-size:13px;color:#7a7269;line-height:1.75;margin:0 0 10px 0;">'
+          . 'A tagság az <strong>éves tagdíj (5 000 Ft)</strong> befizetésével válik érvényessé.'
+          . '</p>' . bankInfoEmailHtml()
+        : '';
 
     return <<<HTML
 <!DOCTYPE html>
@@ -68,7 +78,9 @@ function buildWelcomeEmailHtml(
           </tr>
         </table>
 
-        <p style="font-size:13px;color:#7a7269;line-height:1.75;margin:0 0 10px 0;">
+        {$feeBlock}
+
+        <p style="font-size:13px;color:#7a7269;line-height:1.75;margin:22px 0 10px 0;">
           A jelszavadat és egyéb adataidat belépés után, a <strong>Saját profilom</strong>
           menüpontban bármikor módosíthatod.
         </p>

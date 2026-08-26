@@ -509,3 +509,33 @@ function logAudit(PDO $pdo, string $action, string $entityType, int $entityId, s
             $changes !== null ? json_encode($changes, JSON_UNESCAPED_UNICODE) : null,
         ]);
 }
+
+// --- Bankszámla (befizetési felhívásokhoz) ---
+const BANK_ACCOUNT_NAME   = 'Leguán Osztag Természetjáró Egyesület';
+const BANK_ACCOUNT_NUMBER = '16200120-18542675';
+
+/**
+ * Bankszámla blokk oldalakhoz. A stílus a style.css `.bank-info` szabályaiból jön.
+ * $variant: 'block' (alapértelmezett) vagy 'strong' (kiemelt, sötét hátterű).
+ */
+function bankInfoBox(string $variant = 'block'): string
+{
+    $cls = $variant === 'strong' ? 'bank-info bank-info-strong' : 'bank-info';
+    return '<div class="' . $cls . '">'
+         . '<span class="bank-info-label">Befizetés banki átutalással</span>'
+         . '<span class="bank-info-name">' . e(BANK_ACCOUNT_NAME) . '</span>'
+         . '<span class="bank-info-number">' . e(BANK_ACCOUNT_NUMBER) . '</span>'
+         . '</div>';
+}
+
+/** Bankszámla blokk e-mailekhez — inline stílus, mert a levelezők nem töltenek be külső CSS-t. */
+function bankInfoEmailHtml(): string
+{
+    return '<table width="100%" cellpadding="0" cellspacing="0" style="background:#f5efe4;border:1px solid #ddd5c5;border-radius:6px;margin-top:14px;">
+      <tr><td style="padding:14px 18px;font-family:Arial,sans-serif;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#7a7269;margin-bottom:6px;">Befizetés banki átutalással</div>
+        <div style="font-size:13.5px;font-weight:700;color:#1a3d39;">' . htmlspecialchars(BANK_ACCOUNT_NAME, ENT_QUOTES, 'UTF-8') . '</div>
+        <div style="font-size:16px;font-weight:700;color:#1a3d39;font-family:\'Courier New\',Courier,monospace;letter-spacing:.02em;margin-top:3px;">' . htmlspecialchars(BANK_ACCOUNT_NUMBER, ENT_QUOTES, 'UTF-8') . '</div>
+      </td></tr>
+    </table>';
+}

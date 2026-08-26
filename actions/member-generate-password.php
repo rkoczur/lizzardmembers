@@ -58,9 +58,9 @@ if ($smtp['host'] === '') {
 $password = generateMemberPassword();
 $proto    = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
 $loginUrl = $proto . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . BASE_URL . '/login.php';
-$html     = buildWelcomeEmailHtml($user['firstname'], $user['username'], $password, $loginUrl, APP_NAME);
+$html     = buildWelcomeEmailHtml($user['firstname'], $user['username'], $password, $loginUrl, APP_NAME, false);
 // A naplóba a jelszót kimaszkolva tároljuk — sose kerüljön plaintext jelszó az email_log-ba
-$logHtml  = buildWelcomeEmailHtml($user['firstname'], $user['username'], '••••••••', $loginUrl, APP_NAME);
+$logHtml  = buildWelcomeEmailHtml($user['firstname'], $user['username'], '••••••••', $loginUrl, APP_NAME, false);
 $subject  = 'Új belépési adatok — ' . APP_NAME;
 $fullName = trim($user['lastname'] . ' ' . $user['firstname']);
 

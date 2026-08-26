@@ -160,7 +160,7 @@ if ($memberLoggedIn) {
           . ((float)($tour['participation_fee'] ?? 0) > 0
               ? '<div style="background:#fffbeb;border:1px solid #f59e0b;border-radius:6px;padding:12px 16px;margin-top:16px;font-size:13.5px;color:#b45309;">
             ⚠ A részvételi díjat kérjük, <strong>14 napon belül</strong> utald el — eddig a helyedet fenntartjuk. Ha a befizetés a határidőig nem érkezik meg, a helyedet a várólistán következő jelentkező kapja meg.
-          </div>'
+          </div>' . bankInfoEmailHtml()
               : '');
     } else {
         $subject     = 'Várólistára kerültél – ' . $tour['name'];
