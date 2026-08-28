@@ -3,6 +3,35 @@
 A verziószám forrása: `includes/version.php`.
 Major: teljesen új funkció | Minor: fő funkció módosítás vagy alfunkció hozzáadás | Patch: minden egyéb.
 
+## [6.14.0] — 2026-08-26
+
+### Hozzáadva
+- „Elfogadásra váró jelentkezések" blokk a Meghirdetett Túrák lista fölött (`admin/future-tours.php`):
+  azok a helyet kapott tagok, akiknek a jelentkezése még nem került elfogadásra (`accepted_at IS NULL`),
+  a nem lezárt és nem törölt túrákról. Soronként jelentkező, túra (link a jelentkezők oldalára),
+  jelentkezés dátuma, fizetési állapot és „Elfogadás" gomb.
+- Új CSS: `.pending-accept-card`, `.pending-accept-row`, `.pending-accept-name`, `.pending-accept-tour`,
+  `.pending-accept-meta`, `.pending-accept-when`, `.pending-accept-pay`, `.pending-accept-note`.
+
+### Módosítva
+- `actions/future-tour-accept.php`: opcionális `back=list` paraméterrel a túralistára tér vissza,
+  egyébként változatlanul a jelentkezők oldalára.
+
+## [6.13.0] — 2026-08-26
+
+### Hozzáadva
+- Fizetési emlékeztető a meghirdetett túrák jelentkezőinek (`actions/future-tour-payment-reminder.php`).
+  A jelentkezők oldalán (`admin/future-tour-applicants.php`) soronként küldhető emlékeztető a még nem
+  fizető, helyet kapott jelentkezőknek, illetve a kártya fejlécében egy gombbal az összesnek.
+  Tagoknak és vendégeknek egyaránt megy, a levélben a tagi kedvezménnyel számolt fizetendő díjjal
+  és a bankszámla blokkal.
+- Ha a túrán van várólistás jelentkező, az emlékeztető 1 hetes fizetési határidőt közöl (a túra
+  kezdeténél nem későbbi dátummal), és jelzi, hogy utána a helyet a várólistán következő jelentkező
+  kapja meg. Az admin oldalon erről figyelmeztető sáv is megjelenik.
+- Új adatbázis oszlop: `future_tour_applications.payment_reminder_at` — az utolsó emlékeztető ideje,
+  a jelentkező sorában megjelenítve.
+- Új CSS: `.btn-remind`, `.btn-remind-bulk`, `.remind-note`, `.remind-cell`, `.remind-hint`.
+
 ## [6.12.0] — 2026-08-15
 
 ### Hozzáadva

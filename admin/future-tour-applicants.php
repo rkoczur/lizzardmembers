@@ -63,6 +63,13 @@ $flash_success = getFlash('success');
 $flash_error   = getFlash('error');
 
 $confirmedCount = array_sum(array_map(fn($a) => $a['status'] === 'confirmed' ? 1 : 0, $applications));
+$waitlistCount  = array_sum(array_map(fn($a) => $a['status'] === 'waitlist' ? 1 : 0, $applications));
+
+// Fizetési emlékeztető: csak díjas túránál, a helyet kapott, még nem fizető jelentkezőknek
+$hasFee      = $tour['participation_fee'] !== null && (float)$tour['participation_fee'] > 0;
+$unpaidCount = $hasFee
+    ? array_sum(array_map(fn($a) => $a['status'] === 'confirmed' && !$a['paid_at'] ? 1 : 0, $applications))
+    : 0;
 
 $pageTitle  = 'Jelentkezők – ' . ($tour['name'] ?? '');
 $activePage = 'tours';
@@ -107,8 +114,8 @@ include __DIR__ . '/../includes/admin-header.php';
     <div>Férőhelyek</div>
     <div>
       <span style="color:var(--primary);"><?= $confirmedCount ?></span> / <?= (int)$tour['max_attendees'] ?>
-      <?php if (array_sum(array_map(fn($a) => $a['status'] === 'waitlist' ? 1 : 0, $applications)) > 0): ?>
-        <span style="color:var(--warning,#f59e0b);font-size:12px;margin-left:4px;">(+<?= array_sum(array_map(fn($a) => $a['status'] === 'waitlist' ? 1 : 0, $applications)) ?> várólistán)</span>
+      <?php if ($waitlistCount > 0): ?>
+        <span style="color:var(--warning,#f59e0b);font-size:12px;margin-left:4px;">(+<?= $waitlistCount ?> várólistán)</span>
       <?php endif; ?>
     </div>
   </div>
@@ -201,7 +208,24 @@ include __DIR__ . '/../includes/admin-header.php';
 <div class="card">
   <div class="card-header flex-between">
     <h2>Megerősített jelentkezők</h2>
+    <?php if ($unpaidCount > 0): ?>
+    <form method="post" action="<?= BASE_URL ?>/actions/future-tour-payment-reminder.php"
+          onsubmit="return confirm('Fizetési emlékeztető küldése <?= $unpaidCount ?> jelentkezőnek?')">
+      <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
+      <input type="hidden" name="tour_id" value="<?= $id ?>">
+      <button type="submit" class="btn-remind btn-remind-bulk"
+              title="Emlékeztető e-mail minden nem fizető jelentkezőnek">
+        Fizetési emlékeztető küldése (<?= $unpaidCount ?>)
+      </button>
+    </form>
+    <?php endif; ?>
   </div>
+  <?php if ($unpaidCount > 0 && $waitlistCount > 0): ?>
+  <div class="alert-warning-box remind-hint">
+    Van várólistás jelentkező, ezért az emlékeztető 1 hetes fizetési határidőt közöl, és jelzi, hogy
+    ezután a helyet a várólistán következő jelentkező kapja meg.
+  </div>
+  <?php endif; ?>
   <div class="card-body" style="padding:0;">
     <?php if (empty($applications)): ?>
       <div style="padding:40px;text-align:center;color:var(--text-muted);font-size:14px;">Még senki nem jelentkezett erre a túrára.</div>
@@ -307,6 +331,22 @@ include __DIR__ . '/../includes/admin-header.php';
                   </button>
                 <?php endif; ?>
               </form>
+              <?php if ($app['status'] === 'confirmed' && !$app['paid_at']): ?>
+              <div class="remind-cell">
+                <form method="post" action="<?= BASE_URL ?>/actions/future-tour-payment-reminder.php"
+                      onsubmit="return confirm('Fizetési emlékeztető küldése ennek a jelentkezőnek?')">
+                  <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
+                  <input type="hidden" name="application_id" value="<?= (int)$app['id'] ?>">
+                  <input type="hidden" name="tour_id" value="<?= $id ?>">
+                  <button type="submit" class="btn-remind" title="Fizetési emlékeztető e-mail küldése">
+                    Emlékeztető
+                  </button>
+                </form>
+                <?php if (!empty($app['payment_reminder_at'])): ?>
+                  <div class="remind-note">Emlékeztetve: <?= date('Y.m.d', strtotime($app['payment_reminder_at'])) ?></div>
+                <?php endif; ?>
+              </div>
+              <?php endif; ?>
               <?php endif; ?>
             </td>
             <td style="padding:12px 12px;text-align:center;">

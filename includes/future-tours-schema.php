@@ -109,6 +109,8 @@ function ensureFutureToursSchema(PDO $pdo): void {
     try { $pdo->exec("ALTER TABLE future_tour_applications ADD COLUMN member_application_id INT UNSIGNED DEFAULT NULL AFTER paid_at"); } catch (Throwable) {}
     // Admin általi „Jelentkezés elfogadása” időpontja (a megerősítő e-mail kiküldésének jelzése)
     try { $pdo->exec("ALTER TABLE future_tour_applications ADD COLUMN accepted_at TIMESTAMP NULL DEFAULT NULL"); } catch (Throwable) {}
+    // Utolsó fizetési emlékeztető kiküldésének időpontja
+    try { $pdo->exec("ALTER TABLE future_tour_applications ADD COLUMN payment_reminder_at TIMESTAMP NULL DEFAULT NULL"); } catch (Throwable) {}
 
     $pdo->exec("
         CREATE TABLE IF NOT EXISTS future_tour_applications (

@@ -22,7 +22,10 @@ ensureEmailLogSchema($pdo);
 
 $appId  = (int)($_POST['application_id'] ?? 0);
 $tourId = (int)($_POST['tour_id'] ?? 0);
-$backUrl = BASE_URL . '/admin/future-tour-applicants.php?id=' . $tourId;
+// A túralistáról indított elfogadás oda tér vissza, egyébként a jelentkezők oldalára
+$backUrl = ($_POST['back'] ?? '') === 'list'
+    ? BASE_URL . '/admin/future-tours.php'
+    : BASE_URL . '/admin/future-tour-applicants.php?id=' . $tourId;
 
 if (!$appId || !$tourId) {
     flash('error', 'Hiányos adatok.');

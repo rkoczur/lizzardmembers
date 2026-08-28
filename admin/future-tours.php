@@ -54,6 +54,20 @@ foreach ($outRows as $r) {
     if ($fee > 0) { $outstandingTotal += $fee; $outstandingCount++; }
 }
 
+// Elfogadásra váró jelentkezések: helyet kapott tagok, akiknek a jelentkezését még nem fogadták el
+$pendingAccept = $pdo->query("
+    SELECT fta.id, fta.future_tour_id, fta.applied_at, fta.paid_at,
+           u.firstname, u.lastname, u.email,
+           ft.name AS tour_name, ft.start_date, ft.participation_fee
+    FROM future_tour_applications fta
+    JOIN future_tours ft ON ft.id = fta.future_tour_id
+    JOIN users u ON u.id = fta.user_id
+    WHERE fta.status = 'confirmed'
+      AND fta.accepted_at IS NULL
+      AND ft.status NOT IN ('closed','cancelled')
+    ORDER BY ft.start_date ASC, fta.applied_at ASC
+")->fetchAll();
+
 $pageTitle  = 'Túrák';
 $activePage = 'tours';
 include __DIR__ . '/../includes/admin-header.php';
@@ -119,6 +133,50 @@ include __DIR__ . '/../includes/admin-header.php';
     </div>
   </div>
 </div>
+
+<?php if (!empty($pendingAccept)): ?>
+<!-- Elfogadásra váró jelentkezések -->
+<div class="card pending-accept-card">
+  <div class="card-header flex-between">
+    <h2>Elfogadásra váró jelentkezések <span class="badge-counter badge-counter-warning"><?= count($pendingAccept) ?></span></h2>
+    <span class="pending-accept-note">A jelentkező az elfogadáskor kapja meg a visszaigazoló e-mailt.</span>
+  </div>
+  <div class="card-body pending-accept-body">
+    <?php foreach ($pendingAccept as $pa): ?>
+    <div class="pending-accept-row">
+      <div class="pending-accept-who">
+        <div class="pending-accept-name"><?= e($pa['lastname'] . ' ' . $pa['firstname']) ?></div>
+        <div class="pending-accept-meta"><?= e($pa['email']) ?></div>
+      </div>
+      <div class="pending-accept-tour">
+        <a href="<?= BASE_URL ?>/admin/future-tour-applicants.php?id=<?= (int)$pa['future_tour_id'] ?>"><?= e($pa['tour_name']) ?></a>
+        <div class="pending-accept-meta"><?= $pa['start_date'] ? formatDate($pa['start_date']) : '—' ?></div>
+      </div>
+      <div class="pending-accept-meta pending-accept-when">
+        Jelentkezett: <?= date('Y.m.d', strtotime($pa['applied_at'])) ?>
+      </div>
+      <div class="pending-accept-pay">
+        <?php if ($pa['participation_fee'] !== null && (float)$pa['participation_fee'] > 0): ?>
+          <?php if ($pa['paid_at']): ?>
+            <span class="badge badge-active">Fizetve</span>
+          <?php else: ?>
+            <span class="badge badge-overdue">Nem fizetett</span>
+          <?php endif; ?>
+        <?php endif; ?>
+      </div>
+      <form method="post" action="<?= BASE_URL ?>/actions/future-tour-accept.php"
+            onsubmit="return confirm('Elfogadja <?= e($pa['lastname'] . ' ' . $pa['firstname']) ?> jelentkezését? A jelentkező visszaigazoló e-mailt kap.')">
+        <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
+        <input type="hidden" name="application_id" value="<?= (int)$pa['id'] ?>">
+        <input type="hidden" name="tour_id" value="<?= (int)$pa['future_tour_id'] ?>">
+        <input type="hidden" name="back" value="list">
+        <button type="submit" class="btn btn-primary btn-sm">Elfogadás</button>
+      </form>
+    </div>
+    <?php endforeach; ?>
+  </div>
+</div>
+<?php endif; ?>
 
 <div class="card">
   <div class="table-wrap">

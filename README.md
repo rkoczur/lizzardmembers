@@ -42,7 +42,8 @@ Nincs JS keretrendszer: sima PHP, PDO, natív JS és saját CSS. A felhasználó
 
 - **Tagságkezelés** — tagok, szerepkörök, avatar, éves tagdíj állapota a tranzakciós naplóból számolva.
 - **Túrák** — megtett túrák naplózása, pontszámítás, automatikus szintlépés (Újonc … Ezredes).
-- **Meghirdetett túrák** — jelentkezés, várólista, részvételi díj és tagi kedvezmény, e-mail értesítők.
+- **Meghirdetett túrák** — jelentkezés, várólista, részvételi díj és tagi kedvezmény, e-mail értesítők,
+  fizetési emlékeztető a még nem fizető jelentkezőknek.
 - **Könyvelés** — bevétel/kiadás nyilvántartás, CSV import/export, eseményhez kötés.
 - **MTSZ jelvényes minősítések** — bronz / ezüst / arany / érdemes / kiváló fokozatok nyilvántartása.
 - **Kvízjáték** — madár- és hegycsúcs-felismerő játék toplistával.
