@@ -3,6 +3,63 @@
 A verziószám forrása: `includes/version.php`.
 Major: teljesen új funkció | Minor: fő funkció módosítás vagy alfunkció hozzáadás | Patch: minden egyéb.
 
+## [6.15.2] — 2026-09-03
+
+### Módosítva
+- A vezérlőpult „Folyamatban lévő könyvelési tételek” kártyája `.queue-mod` szekcióba került,
+  „Pénzügy” címsorral és „Könyvelés” hivatkozással — ugyanaz a `.queue-head` szerkezet, mint az
+  alatta lévő két szekciónál.
+
+### Hozzáadva
+- Új CSS: `.queue-mod > .queue-stat { margin-bottom: 0 }` — a szekció adja az alsó térközt,
+  így nem duplázódik.
+
+## [6.15.1] — 2026-09-03
+
+### Javítva
+- Admin vezérlőpult „Elfogadásra váró túrajelentkezések” szekciója mindig üres maradt.
+  Ok: a lekérdezés csak a `future_tour_applications.status = 'pending'` sorokat vette figyelembe,
+  de ezt a státuszt kizárólag a vendég jelentkezések kapják
+  (`actions/future-tour-apply-guest.php`, `api/join-tour-submit.php`, `actions/join-submit.php`);
+  a bejelentkezett tag jelentkezése azonnal `confirmed`/`waitlist` lesz
+  (`actions/future-tour-apply.php`, `api/submit-application.php`), így soha nem jelent meg a listán.
+  Az új szűrés a nyitott túrák minden, admin által még el nem fogadott jelentkezését mutatja:
+  `status = 'pending'` VAGY (`status IN ('confirmed','waitlist')` ÉS `accepted_at IS NULL`).
+
+### Módosítva
+- A szekció sorai a tag nevét és e-mail címét is megjelenítik (`users` LEFT JOIN,
+  `COALESCE(guest_name, ...)`), valamint új címkék: „Vendég” és „Várólista”.
+- `admin/index.php` meghívja az `ensureFutureToursSchema()`-t, hogy a friss telepítéseken se
+  bukjon el csendben a lekérdezés hiányzó oszlop miatt.
+
+### Hozzáadva
+- Új CSS: `.queue-tag-wait` (várólista címke).
+
+## [6.15.0] — 2026-08-28
+
+### Módosítva
+- Admin vezérlőpult (`admin/index.php`) átalakítva: a személyes tagsági modulok („Saját tagságom”
+  statisztikák és a „Szint előrehaladás” kártya) törölve — ezek csak a tagnézetben (`user/index.php`,
+  `user/profile.php`) láthatók.
+- A taglétszám statisztikák és a „Tagfelvételi kérelmek” kártya változatlanul a helyén maradt;
+  a bennük lévő soron belüli stílusok CSS osztályokba kerültek (`.stat-value-warning`,
+  `.stat-value-danger`, `.td-nowrap-sm`, `.td-muted-sm`).
+
+### Hozzáadva
+- Szerepkörhöz kötött vezérlőpult-modulok:
+  - „Folyamatban lévő könyvelési tételek” számláló-kártya (kiemelt tranzakciók,
+    `transactions.highlighted = 1`), link a szűrt könyvelésre — egyesületvezető / egyesületvezető-helyettes /
+    pénzügyi vezető (`canManageFinances()`).
+  - „Jóváhagyásra váró túrajelentések” lista (beküldött túrák, `tours.status = 'pending'`) beküldővel,
+    túradátummal és „Áttekintés” gombbal — egyesületvezető / egyesületvezető-helyettes /
+    szakszövetségi vezető (`canManageTours()`).
+  - „Elfogadásra váró túrajelentkezések” lista (`future_tour_applications.status = 'pending'`) a túrával,
+    elérhetőséggel és „Kezelés” gombbal — egyesületvezető / egyesületvezető-helyettes (`isAdmin()`).
+- Új CSS: `.queue-stat`, `.queue-stat-icon`, `.queue-stat-body`, `.queue-stat-label`, `.queue-stat-hint`,
+  `.queue-stat-value`, `.queue-mod`, `.queue-head`, `.queue-section-head`, `.queue-title`, `.queue-count`,
+  `.queue-all`, `.queue-empty`, `.queue-list`, `.queue-row`, `.queue-row-main`, `.queue-row-title`,
+  `.queue-row-meta`, `.queue-tag`.
+
 ## [6.14.0] — 2026-08-26
 
 ### Hozzáadva

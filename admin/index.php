@@ -34,36 +34,56 @@ ensureJoinSchema($pdo);
 $pendingApps  = $pdo->query("SELECT * FROM member_applications WHERE status='pending' ORDER BY submitted_at DESC LIMIT 8")->fetchAll();
 $pendingCount = count($pendingApps);
 
-$adminId   = getCurrentUserId();
-$adminStmt = $pdo->prepare("
-    SELECT u.*, COALESCE(SUM(t.points), 0) AS computed_points
-    FROM users u
-    LEFT JOIN tour_members tm ON tm.user_id = u.id
-    LEFT JOIN tours t ON t.id = tm.tour_id
-    WHERE u.id = ?
-    GROUP BY u.id
-    LIMIT 1
-");
-$adminStmt->execute([$adminId]);
-$adminUser = $adminStmt->fetch();
+// ── Szerepkörhöz kötött modulok ────────────────────────────────────────────────
 
-$adminStatus      = getMemberStatus($adminUser['last_payment']);
-$adminStatusLabel = getMemberStatusLabel($adminStatus);
-$adminStatusClass = getMemberStatusClass($adminStatus);
+// Könyvelés: folyamatban lévő (kiemelt) tranzakciók — egyesületvezető / helyettes / pénzügyi vezető
+$openTxCount = null;
+if (canManageFinances()) {
+    try {
+        $openTxCount = (int)$pdo->query("SELECT COUNT(*) FROM transactions WHERE highlighted = 1")->fetchColumn();
+    } catch (PDOException) { $openTxCount = 0; }
+}
 
-$levelStart      = [1 => 0, 2 => 3, 3 => 25, 4 => 50, 5 => 100, 6 => 170, 7 => 250, 8 => 330, 9 => 500];
-$levelNext       = [1 => 3, 2 => 25, 3 => 50, 4 => 100, 5 => 170, 6 => 250, 7 => 330, 8 => 500, 9 => 500];
-$adminPoints     = (int)$adminUser['computed_points'];
-$adminLevel      = getLevelFromPoints($adminPoints);
-$adminIsMaxLevel = $adminLevel >= 9;
-if (!$adminIsMaxLevel) {
-    $adminStartPts  = $levelStart[$adminLevel] ?? 0;
-    $adminNextPts   = $levelNext[$adminLevel]  ?? 500;
-    $adminRange     = $adminNextPts - $adminStartPts;
-    $adminProgress  = $adminRange > 0 ? min(100, (int)((($adminPoints - $adminStartPts) / $adminRange) * 100)) : 100;
-} else {
-    $adminProgress = 100;
-    $adminNextPts  = 500;
+// Jóváhagyásra váró túrajelentések — egyesületvezető / helyettes / szakszövetségi vezető
+$pendingTours = [];
+if (canManageTours()) {
+    try {
+        $pendingTours = $pdo->query("
+            SELECT t.id, t.name, t.tour_date, t.total_km, t.created_at,
+                   c.name_hu AS country_name,
+                   CONCAT(u.lastname, ' ', u.firstname) AS submitter_name
+            FROM tours t
+            LEFT JOIN countries c ON c.code = t.country
+            LEFT JOIN users u ON u.id = t.submitted_by
+            WHERE t.status = 'pending'
+            ORDER BY t.created_at DESC
+        ")->fetchAll();
+    } catch (PDOException) { $pendingTours = []; }
+}
+
+// Elfogadásra váró túrajelentkezések — egyesületvezető / helyettes
+// Ide tartozik minden nyitott túra jelentkezése, amit az admin még nem fogadott el:
+// a vendég jelentkezések ('pending') és a tagok jelentkezései, ahol accepted_at üres.
+$pendingTourApps = [];
+if (isAdmin()) {
+    try {
+        require_once __DIR__ . '/../includes/future-tours-schema.php';
+        ensureFutureToursSchema($pdo);
+        $pendingTourApps = $pdo->query("
+            SELECT fta.id, fta.future_tour_id, fta.status, fta.applied_at,
+                   fta.member_application_id, fta.user_id,
+                   COALESCE(fta.guest_name, CONCAT(u.lastname, ' ', u.firstname)) AS applicant_name,
+                   COALESCE(fta.guest_email, u.email) AS applicant_email,
+                   ft.name AS tour_name, ft.start_date
+            FROM future_tour_applications fta
+            JOIN future_tours ft ON ft.id = fta.future_tour_id
+            LEFT JOIN users u ON u.id = fta.user_id
+            WHERE ft.status = 'open'
+              AND (fta.status = 'pending'
+                   OR (fta.status IN ('confirmed','waitlist') AND fta.accepted_at IS NULL))
+            ORDER BY fta.applied_at ASC
+        ")->fetchAll();
+    } catch (PDOException) { $pendingTourApps = []; }
 }
 
 $pageTitle  = 'Vezérlőpult';
@@ -85,121 +105,106 @@ include __DIR__ . '/../includes/admin-header.php';
   <div class="stat-card">
     <div class="stat-icon">⚠️</div>
     <div class="stat-label">Tagdíj elmaradás</div>
-    <div class="stat-value" style="color:var(--warning)"><?= $overdueMembers ?></div>
+    <div class="stat-value stat-value-warning"><?= $overdueMembers ?></div>
   </div>
   <div class="stat-card">
     <div class="stat-icon">🚫</div>
     <div class="stat-label">Inaktív</div>
-    <div class="stat-value" style="color:red"><?= $inactiveMembers ?></div>
+    <div class="stat-value stat-value-danger"><?= $inactiveMembers ?></div>
   </div>
 </div>
 
-<!-- Admin's own membership -->
-<div style="display:flex;align-items:center;justify-content:space-between;margin:28px 0 12px;">
-  <h2 style="font-size:16px;font-weight:700;">Saját tagságom</h2>
-  <a href="<?= BASE_URL ?>/admin/profile.php" class="btn btn-ghost btn-sm">Profil szerkesztése</a>
-</div>
+<?php if ($openTxCount !== null): ?>
+<!-- Könyvelés: folyamatban lévő tételek -->
+<section class="queue-mod">
+  <div class="queue-head">
+    <h2 class="queue-title">Pénzügy</h2>
+    <a href="<?= BASE_URL ?>/admin/bookkeeping.php" class="queue-all">Könyvelés</a>
+  </div>
+  <a class="queue-stat" href="<?= BASE_URL ?>/admin/bookkeeping.php?tab=transactions&amp;hl=1">
+    <span class="queue-stat-icon">⏳</span>
+    <span class="queue-stat-body">
+      <span class="queue-stat-label">Folyamatban lévő könyvelési tételek</span>
+      <span class="queue-stat-hint">Kiemelt, még nem lezárt tranzakciók a könyvelésben</span>
+    </span>
+    <span class="queue-stat-value <?= $openTxCount > 0 ? 'is-open' : '' ?>"><?= $openTxCount ?></span>
+  </a>
+</section>
+<?php endif; ?>
 
-<div class="stats-grid" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr));margin-bottom:16px;">
-  <div class="stat-card">
-    <div class="stat-icon">⭐</div>
-    <div class="stat-label">Pontjaim</div>
-    <div class="stat-value" style="color:var(--primary)"><?= number_format($adminPoints) ?></div>
+<?php if (canManageTours()): ?>
+<!-- Jóváhagyásra váró túrajelentések -->
+<section class="queue-mod">
+  <div class="queue-head">
+    <h2 class="queue-title">Jóváhagyásra váró túrajelentések</h2>
+    <span class="queue-count <?= count($pendingTours) > 0 ? 'is-open' : '' ?>"><?= count($pendingTours) ?></span>
+    <a href="<?= BASE_URL ?>/admin/tours.php" class="queue-all">Összes túra</a>
   </div>
-  <?php $adminLvlImg = getLevelImageFilename($adminLevel); ?>
-  <div class="stat-card" style="display:flex;align-items:stretch;padding:0;overflow:hidden;">
-    <div style="flex:1;min-width:0;padding:20px;">
-      <div class="stat-icon">🏅</div>
-      <div class="stat-label">Fokozatom</div>
-      <div class="stat-value" style="font-size:19px;margin-top:6px;"><?= getLevelLabel($adminLevel) ?></div>
-    </div>
-    <?php if ($adminLvlImg): ?>
-      <div class="stat-level-img-wrap">
-        <img src="<?= BASE_URL ?>/assets/img/<?= e($adminLvlImg) ?>"
-             alt="<?= e(getLevelLabel($adminLevel)) ?>">
-      </div>
-    <?php endif; ?>
-  </div>
-  <div class="stat-card">
-    <div class="stat-icon">📅</div>
-    <div class="stat-label">Tagság kezdete</div>
-    <div class="stat-value" style="font-size:16px;"><?= formatDate($adminUser['member_since']) ?></div>
-  </div>
-  <div class="stat-card">
-    <div class="stat-icon">💳</div>
-    <div class="stat-label">Utolsó fizetés</div>
-    <div class="stat-value" style="font-size:16px;"><?= formatDate($adminUser['last_payment']) ?></div>
-  </div>
-  <div class="stat-card">
-    <div class="stat-icon"><?= $adminStatus === 'active' ? '✅' : ($adminStatus === 'overdue' ? '⚠️' : '❌') ?></div>
-    <div class="stat-label">Tagság státusza</div>
-    <div class="stat-value" style="font-size:14px;">
-      <span class="badge <?= $adminStatusClass ?>" style="font-size:13px;padding:4px 12px;"><?= $adminStatusLabel ?></span>
-    </div>
-  </div>
-</div>
-
-<div class="card" style="margin-bottom:28px;">
-  <div class="card-header">
-    <h2>Szint előrehaladás</h2>
-    <span class="level-badge <?= getLevelClass($adminLevel) ?>"><?= getLevelLabel($adminLevel) ?> — <?= $adminLevel ?>. szint</span>
-  </div>
-  <div class="card-body">
-    <?php if (!$adminIsMaxLevel): ?>
-      <?php
-        $adminCurrentImg = getLevelImageFilename($adminLevel);
-        $adminNextImg    = getLevelImageFilename($adminLevel + 1);
-      ?>
-      <div style="display:flex;align-items:center;gap:14px;">
-        <div style="flex-shrink:0;text-align:center;width:60px;">
-          <?php if ($adminCurrentImg): ?>
-            <img src="<?= BASE_URL ?>/assets/img/<?= e($adminCurrentImg) ?>"
-                 style="width:52px;height:52px;object-fit:contain;" alt="<?= e(getLevelLabel($adminLevel)) ?>">
-          <?php else: ?>
-            <div style="width:52px;height:52px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:22px;margin:0 auto;">⭐</div>
-          <?php endif; ?>
-          <div style="font-size:11px;color:var(--text-muted);margin-top:4px;line-height:1.3;"><?= e(getLevelLabel($adminLevel)) ?></div>
-        </div>
-        <div style="flex:1;min-width:0;">
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-muted);margin-bottom:6px;">
-            <span><?= number_format($adminPoints) ?> pont</span>
-            <span><?= number_format($adminNextPts) ?> pont</span>
+  <?php if (empty($pendingTours)): ?>
+    <p class="queue-empty">Nincs jóváhagyásra váró beküldött túra.</p>
+  <?php else: ?>
+    <ul class="queue-list">
+      <?php foreach ($pendingTours as $t): ?>
+      <li class="queue-row">
+        <div class="queue-row-main">
+          <div class="queue-row-title"><?= e($t['name'] ?: ($t['country_name'] ?: 'Névtelen túra')) ?></div>
+          <div class="queue-row-meta">
+            <?php if ($t['submitter_name']): ?><span>Beküldte: <?= e($t['submitter_name']) ?></span><?php endif; ?>
+            <?php if ($t['tour_date']): ?><span><?= formatDate($t['tour_date']) ?></span><?php endif; ?>
+            <?php if ($t['total_km']): ?><span><?= e((string)(float)$t['total_km']) ?> km</span><?php endif; ?>
+            <span>Beérkezett: <?= e((new DateTime($t['created_at']))->format('Y.m.d H:i')) ?></span>
           </div>
-          <div style="background:var(--border);border-radius:99px;height:10px;overflow:hidden;">
-            <div style="background:var(--primary);width:<?= $adminProgress ?>%;height:100%;border-radius:99px;transition:width .5s;"></div>
-          </div>
-          <p style="margin-top:6px;font-size:12px;color:var(--text-muted);text-align:center;">
-            <?= number_format($adminNextPts - $adminPoints) ?> pont hiányzik a(z) <?= e(getLevelLabel($adminLevel + 1)) ?> fokozatig
-          </p>
         </div>
-        <div style="flex-shrink:0;text-align:center;width:60px;">
-          <?php if ($adminNextImg): ?>
-            <img src="<?= BASE_URL ?>/assets/img/<?= e($adminNextImg) ?>"
-                 style="width:52px;height:52px;object-fit:contain;opacity:.35;filter:grayscale(40%);" alt="<?= e(getLevelLabel($adminLevel + 1)) ?>">
-          <?php endif; ?>
-          <div style="font-size:11px;color:var(--text-muted);margin-top:4px;line-height:1.3;"><?= e(getLevelLabel($adminLevel + 1)) ?></div>
-        </div>
-      </div>
-    <?php else: ?>
-      <?php $maxImg = getLevelImageFilename(9); ?>
-      <div style="display:flex;align-items:center;gap:16px;">
-        <?php if ($maxImg): ?>
-          <img src="<?= BASE_URL ?>/assets/img/<?= e($maxImg) ?>"
-               style="width:56px;height:56px;object-fit:contain;flex-shrink:0;" alt="Ezredes">
-        <?php endif; ?>
-        <div>
-          <div style="background:var(--border);border-radius:99px;height:10px;overflow:hidden;margin-bottom:8px;">
-            <div style="background:var(--primary);width:100%;height:100%;border-radius:99px;"></div>
-          </div>
-          <p style="color:var(--success);font-weight:600;">🎉 Elérte a legmagasabb fokozatot – Ezredes!</p>
-        </div>
-      </div>
-    <?php endif; ?>
-  </div>
-</div>
+        <a href="<?= BASE_URL ?>/admin/tour-detail.php?id=<?= (int)$t['id'] ?>" class="btn btn-primary btn-sm">Áttekintés</a>
+      </li>
+      <?php endforeach; ?>
+    </ul>
+  <?php endif; ?>
+</section>
+<?php endif; ?>
 
-<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-  <h2 style="font-size:16px;font-weight:700;">Tagfelvételi kérelmek</h2>
+<?php if (isAdmin()): ?>
+<!-- Elfogadásra váró túrajelentkezések -->
+<section class="queue-mod">
+  <div class="queue-head">
+    <h2 class="queue-title">Elfogadásra váró túrajelentkezések</h2>
+    <span class="queue-count <?= count($pendingTourApps) > 0 ? 'is-open' : '' ?>"><?= count($pendingTourApps) ?></span>
+    <a href="<?= BASE_URL ?>/admin/future-tours.php" class="queue-all">Meghirdetett túrák</a>
+  </div>
+  <?php if (empty($pendingTourApps)): ?>
+    <p class="queue-empty">Nincs elfogadásra váró túrajelentkezés.</p>
+  <?php else: ?>
+    <ul class="queue-list">
+      <?php foreach ($pendingTourApps as $a): ?>
+      <li class="queue-row">
+        <div class="queue-row-main">
+          <div class="queue-row-title">
+            <?= e(trim((string)$a['applicant_name']) ?: 'Névtelen jelentkező') ?>
+            <?php if ($a['member_application_id']): ?>
+              <span class="queue-tag">Tagságra jelentkező</span>
+            <?php elseif (!$a['user_id']): ?>
+              <span class="queue-tag">Vendég</span>
+            <?php endif; ?>
+            <?php if ($a['status'] === 'waitlist'): ?>
+              <span class="queue-tag queue-tag-wait">Várólista</span>
+            <?php endif; ?>
+          </div>
+          <div class="queue-row-meta">
+            <span><?= e($a['tour_name']) ?><?= $a['start_date'] ? ' — ' . formatDate($a['start_date']) : '' ?></span>
+            <?php if ($a['applicant_email']): ?><span><?= e($a['applicant_email']) ?></span><?php endif; ?>
+            <span>Jelentkezett: <?= e((new DateTime($a['applied_at']))->format('Y.m.d H:i')) ?></span>
+          </div>
+        </div>
+        <a href="<?= BASE_URL ?>/admin/future-tour-applicants.php?id=<?= (int)$a['future_tour_id'] ?>" class="btn btn-primary btn-sm">Kezelés</a>
+      </li>
+      <?php endforeach; ?>
+    </ul>
+  <?php endif; ?>
+</section>
+<?php endif; ?>
+
+<div class="queue-section-head">
+  <h2 class="queue-title">Tagfelvételi kérelmek</h2>
   <a href="<?= BASE_URL ?>/admin/applications.php" class="btn btn-ghost btn-sm">Összes kezelése</a>
 </div>
 
@@ -220,12 +225,12 @@ include __DIR__ . '/../includes/admin-header.php';
           <tr><td colspan="4"><div class="empty-state"><div class="empty-icon">✅</div><p>Nincs függőben lévő tagfelvételi kérelem.</p></div></td></tr>
         <?php else: foreach ($pendingApps as $a): ?>
           <tr>
-            <td style="font-size:13px;white-space:nowrap;"><?= e((new DateTime($a['submitted_at']))->format('Y.m.d H:i')) ?></td>
+            <td class="td-nowrap-sm"><?= e((new DateTime($a['submitted_at']))->format('Y.m.d H:i')) ?></td>
             <td>
               <div class="td-name"><?= e($a['lastname'] . ' ' . $a['firstname']) ?></div>
               <div class="td-sub"><?= e($a['email']) ?></div>
             </td>
-            <td style="font-size:13px;color:var(--text-muted);">
+            <td class="td-muted-sm">
               <?php if ($a['phone']): ?><div><?= e($a['phone']) ?></div><?php endif; ?>
               <?php if ($a['city']): ?><div><?= e($a['city']) ?></div><?php endif; ?>
             </td>

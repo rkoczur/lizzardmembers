@@ -1653,3 +1653,83 @@ body.embed-mode .card-body { padding-top: 12px !important; }
 }
 .bank-info-strong .bank-info-label { color: var(--danger); opacity: .8; }
 .bank-info-strong .bank-info-number { font-size: 18px; letter-spacing: .03em; }
+
+/* ── Vezérlőpult jóváhagyási modulok ("queue") ─────────────────────────────── */
+.stat-value-warning { color: var(--warning); }
+.stat-value-danger  { color: var(--danger); }
+.td-nowrap-sm { font-size: 13px; white-space: nowrap; }
+.td-muted-sm  { font-size: 13px; color: var(--text-muted); }
+
+/* Egysoros számláló-kártya (könyvelés) — ferde sávos bal szegély */
+.queue-stat {
+  display: flex; align-items: center; gap: 16px; margin-bottom: 24px;
+  padding: 16px 20px 16px 17px; background: var(--card);
+  border: 1px solid var(--border); border-radius: 14px;
+  border-left: 3px solid var(--warning); text-decoration: none;
+  transition: transform .18s, box-shadow .18s;
+}
+.queue-stat:hover { transform: translateX(3px); box-shadow: 0 6px 18px rgba(0,0,0,.07); }
+/* Címsoros szekcióban a .queue-mod adja az alsó térközt */
+.queue-mod > .queue-stat { margin-bottom: 0; }
+.queue-stat-icon { font-size: 22px; flex: 0 0 auto; }
+.queue-stat-body { display: flex; flex-direction: column; gap: 2px; flex: 1 1 auto; min-width: 0; }
+.queue-stat-label {
+  font-size: 12px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .05em; color: var(--text-muted);
+}
+.queue-stat-hint { font-size: 13px; color: var(--text-muted); opacity: .8; }
+.queue-stat-value {
+  flex: 0 0 auto; font-size: 30px; font-weight: 700; line-height: 1;
+  color: var(--text-muted); opacity: .5;
+}
+.queue-stat-value.is-open { color: var(--warning); opacity: 1; }
+
+/* Lista-modul (túrajelentések, túrajelentkezések) */
+.queue-mod { margin-bottom: 28px; }
+.queue-head, .queue-section-head {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
+}
+.queue-section-head { justify-content: space-between; }
+.queue-title { font-size: 16px; font-weight: 700; }
+.queue-count {
+  min-width: 24px; padding: 1px 8px; border-radius: 99px; text-align: center;
+  font-size: 12px; font-weight: 700; background: var(--border); color: var(--text-muted);
+}
+.queue-count.is-open { background: var(--warning); color: #fff; }
+.queue-all { margin-left: auto; font-size: 12.5px; font-weight: 600; color: var(--primary); }
+
+.queue-empty {
+  padding: 18px 20px; border: 1px dashed var(--border); border-radius: 14px;
+  font-size: 13.5px; color: var(--text-muted);
+}
+.queue-list {
+  list-style: none; margin: 0; padding: 0;
+  background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+  overflow: hidden;
+}
+.queue-row {
+  display: flex; align-items: center; gap: 14px; padding: 14px 18px;
+  border-bottom: 1px solid var(--border); border-left: 3px solid transparent;
+  transition: border-left-color .18s, background .18s;
+}
+.queue-row:last-child { border-bottom: none; }
+.queue-row:hover { background: rgba(221,153,51,.05); border-left-color: var(--warning); }
+.queue-row-main { flex: 1 1 auto; min-width: 0; }
+.queue-row-title {
+  font-size: 14.5px; font-weight: 700; color: var(--text);
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+}
+.queue-row-meta {
+  margin-top: 4px; display: flex; flex-wrap: wrap; gap: 4px 14px;
+  font-size: 12.5px; color: var(--text-muted);
+}
+.queue-tag {
+  font-size: 11px; font-weight: 700; padding: 1px 8px; border-radius: 99px;
+  background: rgba(41,119,111,.1); color: var(--primary);
+}
+.queue-tag-wait { background: rgba(214,158,46,.14); color: #9c6a10; }
+
+@media (max-width: 640px) {
+  .queue-row { flex-direction: column; align-items: stretch; }
+  .queue-stat-hint { display: none; }
+}
