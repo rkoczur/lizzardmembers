@@ -3,6 +3,21 @@
 A verziószám forrása: `includes/version.php`.
 Major: teljesen új funkció | Minor: fő funkció módosítás vagy alfunkció hozzáadás | Patch: minden egyéb.
 
+## [6.15.3] — 2026-09-08
+
+### Javítva
+- A meghirdetett túrák jelentkezői között a vendég jelentkezőknél nem jelent meg a
+  „Jelentkezés elfogadása” gomb, így nem kaphattak elfogadó (visszaigazoló) e-mailt.
+  Ok: `admin/future-tour-applicants.php` az „Elfogadás” oszlopot `$app['user_id']`-hez kötötte,
+  az `actions/future-tour-accept.php` pedig `JOIN users` + `user_id IS NOT NULL` szűréssel
+  kizárta a vendégeket.
+- `actions/future-tour-accept.php`: `LEFT JOIN users`, a vendég neve/e-mail címe a `guest_*`
+  mezőkből jön, az e-mail napló `user_id`-je vendégnél `NULL`, a „Túra részletei” gomb
+  vendégnél a nyilvános `public/tour-detail.php` oldalra mutat. Vendég mindig a teljes
+  részvételi díjat fizeti (nincs tagi kedvezmény).
+- `admin/future-tours.php` „Elfogadásra váró jelentkezések” kártyája a vendégeket is listázza
+  (`LEFT JOIN users` + `COALESCE(guest_name/guest_email)`), „Vendég” jelzéssel.
+
 ## [6.15.2] — 2026-09-03
 
 ### Módosítva

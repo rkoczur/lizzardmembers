@@ -350,7 +350,7 @@ include __DIR__ . '/../includes/admin-header.php';
               <?php endif; ?>
             </td>
             <td style="padding:12px 12px;text-align:center;">
-              <?php if ($app['status'] === 'confirmed' && $app['user_id']): ?>
+              <?php if ($app['status'] === 'confirmed'): ?>
                 <?php if (!empty($app['accepted_at'])): ?>
                   <div style="color:var(--success,#16a34a);font-size:12px;font-weight:600;white-space:nowrap;">✓ Elfogadva</div>
                   <div style="font-size:11px;color:var(--text-muted);"><?= date('Y.m.d', strtotime($app['accepted_at'])) ?></div>

@@ -54,14 +54,15 @@ foreach ($outRows as $r) {
     if ($fee > 0) { $outstandingTotal += $fee; $outstandingCount++; }
 }
 
-// Elfogadásra váró jelentkezések: helyet kapott tagok, akiknek a jelentkezését még nem fogadták el
+// Elfogadásra váró jelentkezések: helyet kapott tagok és vendégek, akiknek a jelentkezését még nem fogadták el
 $pendingAccept = $pdo->query("
-    SELECT fta.id, fta.future_tour_id, fta.applied_at, fta.paid_at,
-           u.firstname, u.lastname, u.email,
+    SELECT fta.id, fta.future_tour_id, fta.applied_at, fta.paid_at, fta.user_id,
+           COALESCE(fta.guest_name, CONCAT(u.lastname, ' ', u.firstname)) AS applicant_name,
+           COALESCE(fta.guest_email, u.email) AS applicant_email,
            ft.name AS tour_name, ft.start_date, ft.participation_fee
     FROM future_tour_applications fta
     JOIN future_tours ft ON ft.id = fta.future_tour_id
-    JOIN users u ON u.id = fta.user_id
+    LEFT JOIN users u ON u.id = fta.user_id
     WHERE fta.status = 'confirmed'
       AND fta.accepted_at IS NULL
       AND ft.status NOT IN ('closed','cancelled')
@@ -145,8 +146,11 @@ include __DIR__ . '/../includes/admin-header.php';
     <?php foreach ($pendingAccept as $pa): ?>
     <div class="pending-accept-row">
       <div class="pending-accept-who">
-        <div class="pending-accept-name"><?= e($pa['lastname'] . ' ' . $pa['firstname']) ?></div>
-        <div class="pending-accept-meta"><?= e($pa['email']) ?></div>
+        <div class="pending-accept-name">
+          <?= e($pa['applicant_name']) ?>
+          <?php if (!$pa['user_id']): ?><span class="badge-guest">Vendég</span><?php endif; ?>
+        </div>
+        <div class="pending-accept-meta"><?= e($pa['applicant_email']) ?></div>
       </div>
       <div class="pending-accept-tour">
         <a href="<?= BASE_URL ?>/admin/future-tour-applicants.php?id=<?= (int)$pa['future_tour_id'] ?>"><?= e($pa['tour_name']) ?></a>
@@ -165,7 +169,7 @@ include __DIR__ . '/../includes/admin-header.php';
         <?php endif; ?>
       </div>
       <form method="post" action="<?= BASE_URL ?>/actions/future-tour-accept.php"
-            onsubmit="return confirm('Elfogadja <?= e($pa['lastname'] . ' ' . $pa['firstname']) ?> jelentkezését? A jelentkező visszaigazoló e-mailt kap.')">
+            onsubmit="return confirm('Elfogadja <?= e($pa['applicant_name']) ?> jelentkezését? A jelentkező visszaigazoló e-mailt kap.')">
         <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
         <input type="hidden" name="application_id" value="<?= (int)$pa['id'] ?>">
         <input type="hidden" name="tour_id" value="<?= (int)$pa['future_tour_id'] ?>">

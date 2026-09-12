@@ -38,15 +38,25 @@ $appStmt = $pdo->prepare("
            ft.name AS tour_name, ft.start_date, ft.num_days, ft.participation_fee
     FROM future_tour_applications fta
     JOIN future_tours ft ON ft.id = fta.future_tour_id
-    JOIN users u ON u.id = fta.user_id
-    WHERE fta.id = ? AND fta.future_tour_id = ? AND fta.status = 'confirmed' AND fta.user_id IS NOT NULL
+    LEFT JOIN users u ON u.id = fta.user_id
+    WHERE fta.id = ? AND fta.future_tour_id = ? AND fta.status = 'confirmed'
     LIMIT 1
 ");
 $appStmt->execute([$appId, $tourId]);
 $app = $appStmt->fetch();
 
 if (!$app) {
-    flash('error', 'A jelentkezés nem található vagy nem fogadható el (csak helyet kapott tag jelentkezése fogadható el).');
+    flash('error', 'A jelentkezés nem található vagy nem fogadható el (csak helyet kapott jelentkezés fogadható el).');
+    header('Location: ' . $backUrl);
+    exit;
+}
+
+// Vendég jelentkező: nincs user_id, a nevet/e-mailt a guest_* mezők adják
+$isGuest = empty($app['user_id']);
+$toEmail = $isGuest ? (string)$app['guest_email'] : (string)$app['email'];
+
+if ($toEmail === '') {
+    flash('error', 'A jelentkezőhöz nem tartozik e-mail cím, az elfogadó levél nem küldhető el.');
     header('Location: ' . $backUrl);
     exit;
 }
@@ -54,17 +64,21 @@ if (!$app) {
 // Elfogadás rögzítése
 $pdo->prepare("UPDATE future_tour_applications SET accepted_at = NOW() WHERE id = ?")->execute([$appId]);
 
-// Effektív részvételi díj (tagi kedvezménnyel)
+// Effektív részvételi díj (tagi kedvezménnyel — vendég mindig a teljes díjat fizeti)
 $fee     = (float)($app['participation_fee'] ?? 0);
-$discount = $fee > 0 ? getTourFeeDiscount((int)$app['user_level'], (string)$app['user_role']) : 0;
+$discount = ($fee > 0 && !$isGuest) ? getTourFeeDiscount((int)$app['user_level'], (string)$app['user_role']) : 0;
 $effFee  = $fee * (1 - $discount / 100);
 
 $smtp       = getSmtpConfig($pdo);
 $proto      = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
 $absBaseUrl = $proto . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . BASE_URL;
 $tourDate   = $app['start_date'] ? formatDate($app['start_date']) : '—';
-$tourUrl    = $absBaseUrl . '/user/future-tour-detail.php?id=' . $tourId;
-$fullName   = trim($app['lastname'] . ' ' . $app['firstname']);
+$tourUrl    = $isGuest
+    ? $absBaseUrl . '/public/tour-detail.php?id=' . $tourId
+    : $absBaseUrl . '/user/future-tour-detail.php?id=' . $tourId;
+$fullName   = $isGuest ? trim((string)$app['guest_name']) : trim($app['lastname'] . ' ' . $app['firstname']);
+// Megszólítás: tagnál a keresztnév, vendégnél a megadott név
+$greetName  = $isGuest ? ($fullName !== '' ? $fullName : 'Jelentkező') : (string)$app['firstname'];
 $subject    = 'Jelentkezésed elfogadva – ' . $app['tour_name'];
 
 $payHtml = '';
@@ -85,7 +99,7 @@ $html = '<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body style="ma
     <p style="color:#a8c5c2;margin:6px 0 0;font-size:14px;">' . htmlspecialchars($subject, ENT_QUOTES) . '</p>
   </td></tr>
   <tr><td style="padding:28px 32px;">
-    <p style="font-size:15px;margin:0 0 4px;">Kedves ' . htmlspecialchars($app['firstname'], ENT_QUOTES) . '!</p>
+    <p style="font-size:15px;margin:0 0 4px;">Kedves ' . htmlspecialchars($greetName, ENT_QUOTES) . '!</p>
     <p style="font-size:14px;color:#444;line-height:1.7;margin:0 0 4px;">
       Jó hírünk van: a túra szervezője <strong>elfogadta a jelentkezésed</strong>, így a helyedet fenntartjuk.
       Nagyon örülünk, hogy velünk tartasz!
@@ -106,12 +120,14 @@ $html = '<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body style="ma
   </td></tr>
 </table></td></tr></table></body></html>';
 
+$logUserId = $isGuest ? null : (int)$app['user_id'];
+
 try {
-    (new SmtpMailer($smtp))->send($app['email'], $fullName, $subject, $html);
-    logEmailEntry($pdo, (int)$app['user_id'], $app['email'], $fullName, $subject, $html, 'future_tour_accepted', 'sent');
+    (new SmtpMailer($smtp))->send($toEmail, $fullName, $subject, $html);
+    logEmailEntry($pdo, $logUserId, $toEmail, $fullName, $subject, $html, 'future_tour_accepted', 'sent');
     flash('success', e($fullName) . ' jelentkezése elfogadva, az értesítő e-mail elküldve.');
 } catch (Throwable $e) {
-    logEmailEntry($pdo, (int)$app['user_id'], $app['email'], $fullName, $subject, $html, 'future_tour_accepted', 'failed', $e->getMessage());
+    logEmailEntry($pdo, $logUserId, $toEmail, $fullName, $subject, $html, 'future_tour_accepted', 'failed', $e->getMessage());
     flash('error', 'A jelentkezés elfogadva, de az e-mail küldése nem sikerült: ' . $e->getMessage());
 }
 
