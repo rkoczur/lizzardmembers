@@ -3,6 +3,101 @@
 A verziószám forrása: `includes/version.php`.
 Major: teljesen új funkció | Minor: fő funkció módosítás vagy alfunkció hozzáadás | Patch: minden egyéb.
 
+## [7.4.0] — 2026-09-12
+
+### Módosítva
+- A folyószámla „Nem beazonosított befizetések" blokkjából **kimaradnak a már rögzített túrához
+  kötött befizetések** (`transactions.event_type = 'tour'` + `event_id`). Az ilyen túra sosem volt
+  meghirdetett túra, ezért nincs hozzá jelentkezés és előírás sem — nem hiányzó összerendelésről,
+  hanem lezárt tételről van szó. A meghirdetett túrához (`future_tour`) rendelt, de jelentkezés
+  nélküli befizetések továbbra is megjelennek.
+
+## [7.3.0] — 2026-09-12
+
+### Hozzáadva
+- **Egyedi részvételi díj jelentkezőnként** — az adminisztrátor a túra jelentkezőinél tagonként
+  felülírhatja a fizetendő díjat. Ha van egyedi díj, arra a tagi kedvezmény már nem vonatkozik.
+  - Új oszlop: `future_tour_applications.fee_override DECIMAL(10,2) NULL` (migráció:
+    `includes/future-tours-schema.php`).
+  - Új helper: `getApplicationFee(?float $tourFee, int $discount, $override): float`
+    (`includes/functions.php`) — minden felület ezen keresztül számolja a fizetendő díjat.
+  - Új kezelő: `actions/future-tour-fee-override.php` (`requireAdmin()` + `verifyCsrf()`).
+    Üres mező vagy „Alapértelmezett" gomb → törli a felülírást.
+  - UI: `admin/future-tour-applicants.php` „Fizetendő díj" cellája — összecsukható szerkesztő
+    (`<details class="fee-edit">`), egyedi díjnál „egyedi díj" jelzés az áthúzott eredeti ár mellett.
+  - Átvezetve: folyószámla (`includes/member-account.php`), nyitott tartozások
+    (`admin/future-tours.php`), tag saját túraoldala (`user/future-tour-detail.php`),
+    elfogadó e-mail (`actions/future-tour-accept.php`), fizetési emlékeztető
+    (`actions/future-tour-payment-reminder.php`).
+
+### Módosítva
+- A tag vezérlőpultján a folyószámla kártya helyett újra a **„Tartozásaim"** lista jelenik meg:
+  csak a rendezetlen tételek (hiányzó összeggel), a nullás tételek nem. Részben fizetett tételnél
+  látszik a fizetendő és a már befizetett összeg is; több tétel esetén összesítő sor.
+
+### Új CSS
+- `.fee-edit`, `.fee-edit-form`, `.fee-edit-input`, `.fee-edit-row`, `.fee-edit-btn`,
+  `.fee-edit-save`, `.fee-edit-clear`, `.fee-edit-hint`, `.badge-custom-fee`.
+
+## [7.2.0] — 2026-09-12
+
+### Módosítva
+- A folyószámla **kizárólag a túra-részvételi díjakat** tartja nyilván; a tagdíj teljesen kikerült
+  belőle (sem előírásként, sem befizetésként, sem „nem beazonosított” tételként nem jelenik meg).
+  A tagdíj állapotát továbbra is a tagsági státusz mutatja (`getMemberStatus()` / `users.last_payment`).
+  A `MEMBERSHIP_FEE_HUF` konstans megszűnt.
+- A Könyvelés „Folyószámlák" fülének listájában **csak az „Aktív" tagsági státuszú tagok** szerepelnek
+  (korábban a „Tagdíj elmaradás" státuszúak is). A tag saját adatlapján a kártya továbbra is látszik.
+- Igazított szövegek: a kártya fejlécében „Részvételi díjak" jelzés, a Könyvelés fülön
+  „Tagok folyószámlája – részvételi díjak", üres állapotban „Nincs díjas túra-jelentkezés…".
+- Törölt elárvult CSS: `.acct-kind-membership`.
+
+## [7.1.0] — 2026-09-12
+
+### Módosítva
+- A folyószámlán a **tagdíj-előírás csak akkor keletkezik, ha a tag tagsági státusza nem „Inaktív"**
+  (`getMemberStatus()` ≠ `inactive`). A több éve nem fizető tagoknál így nem jelenik meg
+  5 000 Ft tagdíj-tartozás; tartozás csak a „Tagdíj elmaradás" státuszúaknál (és a hibás összeget
+  utaló aktív tagoknál) keletkezik.
+- A Könyvelés „Folyószámlák" fülének listájából **kimaradnak az „Inaktív" státuszú tagok**, és így az
+  összesített tartozás / túlfizetés értékekbe sem számítanak bele. A tag saját adatlapján
+  (`admin/member-detail.php`) a folyószámla kártya továbbra is megjelenik.
+- `admin/bookkeeping.php` (accounts fül): a lista előtt lefut a `recalcMembershipPayments()`, hogy a
+  szűréshez használt tagsági státusz a tranzakciós naplóval szinkronban legyen.
+
+## [7.0.0] — 2026-09-12
+
+### Hozzáadva
+- **Egyéni folyószámla** — tagonként látszik, mennyit kellett volna fizetnie (idei tagdíj +
+  megerősített túra-jelentkezések részvételi díja, tagi kedvezménnyel) és mennyit fizetett be
+  valójában. Az egyenleg nullától eltérő értéke jelzi az alul- vagy túlfizetést.
+  - `includes/member-account.php` — `getMemberAccount()`, `getAllMemberAccounts()`,
+    `syncTourPaymentsFromTransactions()`, `MEMBERSHIP_FEE_HUF`.
+  - `includes/member-account-card.php` — közös kártya-megjelenítés (admin és tagi felület).
+  - `admin/member-detail.php` — új „Folyószámla” kártya (`#folyoszamla`), csak pénzügyi jogosultsággal.
+  - `admin/bookkeeping.php` — új „Folyószámlák” fül: minden aktív tag egyenlege, összesített
+    tartozás / túlfizetés / nem beazonosított befizetés.
+  - `user/index.php` — a „Tartozásaim” kártya helyére a „Folyószámlám” kártya került, amely az
+    előírás melletti tényleges befizetést és az egyenleget is mutatja.
+- **Tranzakcióból származó fizetési státusz** — ha egy bevételi tranzakció egy adott túrához van
+  rendelve (`event_type = 'future_tour'`, `event_id`) és a partnere az adott jelentkező
+  (tagnál a teljes név, vendégnél a megadott név), a jelentkező `paid_at` mezője automatikusan
+  beáll. A `admin/future-tour-applicants.php` „Fizetés” oszlopa ilyenkor a befizetett összeget és
+  a fizetendőtől való eltérést („Hiányzik” / „Túlfizetés”) mutatja, kézi átállítás nélkül.
+  A szinkron a tranzakció mentésekor, módosításakor és importálásakor is lefut.
+
+### Megjegyzés
+- A tranzakció és a tag összekapcsolása a `transactions.partner` mező alapján történik
+  (partner = „Vezetéknév Keresztnév”), a meglévő `recalcMembershipPayments()` mintájára.
+- Az olyan bevételek, amelyekhez nincs előírás (pl. túrához nem rendelt részvételi díj), külön
+  „Nem beazonosított befizetések” blokkban jelennek meg, és **nem** számítanak bele az egyenlegbe.
+  A hozzárendelés a tranzakció „Esemény” mezőjével végezhető el.
+- Az éves tagdíj előírása csak az aktuális naptári évre keletkezik, és csak aktív tagnál.
+
+### Új CSS
+- `.pay-cell`, `.pay-tx-badge`, `.pay-tx-note`, `.pay-amount`, `.pay-diff`, `.pay-diff-under`,
+  `.pay-diff-over`, `.acct-*` osztályok az `assets/css/style.css` végén.
+
 ## [6.15.3] — 2026-09-08
 
 ### Javítva

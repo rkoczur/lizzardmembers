@@ -53,6 +53,13 @@ $userStmt->execute([$userId]);
 $userRow   = $userStmt->fetch() ?: [];
 $userLevel = (int)($userRow['level'] ?? 1);
 $feeDiscount = getTourFeeDiscount($userLevel, (string)($userRow['role'] ?? 'user'));
+// Egyedi, adminisztrátor által megadott díj — ilyenkor a kedvezmény nem jelenik meg külön
+$myFeeOverride = $myApp['fee_override'] ?? null;
+$myFee = getApplicationFee(
+    $tour['participation_fee'] !== null ? (float)$tour['participation_fee'] : null,
+    $feeDiscount,
+    $myFeeOverride
+);
 
 $gpxFilesStmt = $pdo->prepare("SELECT * FROM future_tour_gpx_files WHERE future_tour_id = ? ORDER BY sort_order ASC, uploaded_at ASC");
 $gpxFilesStmt->execute([$id]);
@@ -142,9 +149,13 @@ include __DIR__ . '/../includes/user-header.php';
             <span class="tfb-label">Részvételi díj</span>
             <?php if ((float)$tour['participation_fee'] <= 0): ?>
               <span class="tfb-value">Ingyenes</span>
+            <?php elseif ($myFeeOverride !== null): ?>
+              <span class="tfb-orig"><?= number_format((float)$tour['participation_fee'], 0, ',', ' ') ?> Ft</span>
+              <span class="tfb-value"><?= number_format($myFee, 0, ',', ' ') ?> Ft
+                <span class="badge-custom-fee">egyedi díj</span></span>
             <?php elseif ($feeDiscount > 0): ?>
               <span class="tfb-orig"><?= number_format((float)$tour['participation_fee'], 0, ',', ' ') ?> Ft</span>
-              <span class="tfb-value"><?= number_format((float)$tour['participation_fee'] * (1 - $feeDiscount / 100), 0, ',', ' ') ?> Ft
+              <span class="tfb-value"><?= number_format($myFee, 0, ',', ' ') ?> Ft
                 <span class="badge-discount">-<?= $feeDiscount ?>%</span></span>
             <?php else: ?>
               <span class="tfb-value"><?= number_format((float)$tour['participation_fee'], 0, ',', ' ') ?> Ft</span>

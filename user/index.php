@@ -4,6 +4,7 @@ require_once __DIR__ . '/../includes/config.php';
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
+require_once __DIR__ . '/../includes/member-account.php';
 require_once __DIR__ . '/../includes/future-tours-schema.php';
 require_once __DIR__ . '/../includes/mtsz-schema.php';
 requireUser();
@@ -26,7 +27,6 @@ $user = $stmt->fetch();
 
 $mtszRows = getMtszQualifications($pdo, $userId);
 
-$feeDiscount       = getTourFeeDiscount((int)($user['level'] ?? 1), (string)($user['role'] ?? 'user'));
 $memberStatus      = getMemberStatus($user['last_payment']);
 $memberStatusLabel = getMemberStatusLabel($memberStatus);
 $memberStatusClass = getMemberStatusClass($memberStatus);
@@ -59,24 +59,8 @@ $myToursStmt = $pdo->prepare("
 $myToursStmt->execute([$userId]);
 $myFutureTours = $myToursStmt->fetchAll();
 
-// Tartozások: éves tagdíj (ha elmaradás/inaktív) + megerősített, ki nem fizetett túra-részvételi díjak
-$MEMBERSHIP_FEE = 5000; // Ft/év — fix összeg (lásd public/tagsag.php)
-$debts     = [];
-$debtTotal = 0.0;
-if ($memberStatus === 'overdue' || $memberStatus === 'inactive') {
-    $debts[]    = ['label' => 'Éves tagdíj (' . date('Y') . ')', 'amount' => (float)$MEMBERSHIP_FEE];
-    $debtTotal += $MEMBERSHIP_FEE;
-}
-foreach ($myFutureTours as $mt) {
-    if ($mt['status'] === 'confirmed' && $mt['participation_fee'] !== null && !$mt['paid_at']) {
-        $baseFee = (float)$mt['participation_fee'];
-        $fee     = $feeDiscount > 0 ? $baseFee * (1 - $feeDiscount / 100) : $baseFee;
-        if ($fee > 0) {
-            $debts[]    = ['label' => 'Részvételi díj – ' . $mt['name'], 'amount' => $fee, 'tour_id' => (int)$mt['tour_id']];
-            $debtTotal += $fee;
-        }
-    }
-}
+// Folyószámla: előírt tételek (idei tagdíj + túra-részvételi díjak) és a tényleges befizetések
+$account = getMemberAccount($pdo, $userId);
 
 $pageTitle  = 'Vezérlőpult';
 $activePage = 'dashboard';
@@ -88,7 +72,12 @@ include __DIR__ . '/../includes/user-header.php';
   <p class="text-muted" style="margin-top:4px;">Íme a tagság áttekintése.</p>
 </div>
 
-<!-- Tartozásaim — a vezérlőpult tetején -->
+<!-- Tartozásaim — a vezérlőpult tetején: csak a rendezetlen tételek -->
+<?php
+  // Csak a hiányzó összegek érdeklik a tagot — a rendezett (nullás) tételek nem jelennek meg
+  $debts     = array_values(array_filter($account['rows'], fn($r) => $r['diff'] <= -1));
+  $debtTotal = array_sum(array_map(fn($r) => -$r['diff'], $debts));
+?>
 <div class="card dash-card-debts">
   <div class="card-header"><h2>Tartozásaim</h2></div>
   <div class="card-body" style="padding:0;">
@@ -106,17 +95,25 @@ include __DIR__ . '/../includes/user-header.php';
               <?php if (!empty($d['tour_id'])): ?>
                 <a href="<?= BASE_URL ?>/user/future-tour-detail.php?id=<?= (int)$d['tour_id'] ?>" style="font-size:12px;margin-left:6px;">részletek</a>
               <?php endif; ?>
+              <?php if ($d['paid'] > 0): ?>
+                <div style="font-size:11.5px;color:var(--text-muted);margin-top:2px;">
+                  Fizetendő: <?= number_format($d['charged'], 0, ',', ' ') ?> Ft &middot;
+                  befizetve: <?= number_format($d['paid'], 0, ',', ' ') ?> Ft
+                </div>
+              <?php endif; ?>
             </td>
-            <td class="debt-amount"><?= number_format($d['amount'], 0, ',', ' ') ?> Ft</td>
+            <td class="debt-amount"><?= number_format(-$d['diff'], 0, ',', ' ') ?> Ft</td>
           </tr>
           <?php endforeach; ?>
         </tbody>
+        <?php if (count($debts) > 1): ?>
         <tfoot>
           <tr class="debt-total">
             <td>Összesen</td>
             <td class="debt-amount"><?= number_format($debtTotal, 0, ',', ' ') ?> Ft</td>
           </tr>
         </tfoot>
+        <?php endif; ?>
       </table>
       <div style="padding:0 16px 16px;"><?= bankInfoBox('strong') ?></div>
     <?php endif; ?>

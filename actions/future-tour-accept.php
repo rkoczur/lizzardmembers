@@ -64,10 +64,10 @@ if ($toEmail === '') {
 // Elfogadás rögzítése
 $pdo->prepare("UPDATE future_tour_applications SET accepted_at = NOW() WHERE id = ?")->execute([$appId]);
 
-// Effektív részvételi díj (tagi kedvezménnyel — vendég mindig a teljes díjat fizeti)
+// Effektív részvételi díj (egyedi díj, vagy tagi kedvezmény — vendég mindig a teljes díjat fizeti)
 $fee     = (float)($app['participation_fee'] ?? 0);
 $discount = ($fee > 0 && !$isGuest) ? getTourFeeDiscount((int)$app['user_level'], (string)$app['user_role']) : 0;
-$effFee  = $fee * (1 - $discount / 100);
+$effFee  = getApplicationFee($fee, $discount, $app['fee_override'] ?? null);
 
 $smtp       = getSmtpConfig($pdo);
 $proto      = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';

@@ -6,6 +6,7 @@ require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/user-schema.php';
 require_once __DIR__ . '/../includes/mtsz-schema.php';
+require_once __DIR__ . '/../includes/member-account.php';
 requireAdminOrVezeto();
 $ro = !isAdmin();
 $mtszRo = !canManageMtsz();
@@ -484,6 +485,23 @@ include __DIR__ . '/../includes/admin-header.php';
     <?php endif; ?>
   </div>
 </div><!-- /#mtsz -->
+
+<!-- Egyéni folyószámla -->
+<?php if (canManageFinances()): ?>
+<div class="card" id="folyoszamla">
+  <div class="card-header">
+    <h2>Folyószámla</h2>
+    <span class="badge badge-vezeto" style="font-size:11px;">Részvételi díjak</span>
+  </div>
+  <div class="card-body" style="padding:0;">
+    <?php
+      $account = getMemberAccount($pdo, (int)$member['id']);
+      $acctShowUnassigned = true;
+      include __DIR__ . '/../includes/member-account-card.php';
+    ?>
+  </div>
+</div>
+<?php endif; ?>
 
   </div><!-- /jobb hasáb -->
 </div><!-- /.profile-layout -->

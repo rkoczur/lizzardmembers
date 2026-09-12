@@ -111,6 +111,8 @@ function ensureFutureToursSchema(PDO $pdo): void {
     try { $pdo->exec("ALTER TABLE future_tour_applications ADD COLUMN accepted_at TIMESTAMP NULL DEFAULT NULL"); } catch (Throwable) {}
     // Utolsó fizetési emlékeztető kiküldésének időpontja
     try { $pdo->exec("ALTER TABLE future_tour_applications ADD COLUMN payment_reminder_at TIMESTAMP NULL DEFAULT NULL"); } catch (Throwable) {}
+    // Egyedi, kézzel megadott részvételi díj erre a jelentkezőre (NULL = a túra díja a tagi kedvezménnyel)
+    try { $pdo->exec("ALTER TABLE future_tour_applications ADD COLUMN fee_override DECIMAL(10,2) DEFAULT NULL"); } catch (Throwable) {}
 
     $pdo->exec("
         CREATE TABLE IF NOT EXISTS future_tour_applications (

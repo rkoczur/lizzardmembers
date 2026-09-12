@@ -6,6 +6,7 @@ require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/future-tours-schema.php';
 require_once __DIR__ . '/../includes/join-schema.php';
+require_once __DIR__ . '/../includes/member-account.php';
 requireAdminOrVezeto();
 
 $pdo = getDb();
@@ -25,6 +26,9 @@ if (!$tour) {
     header('Location: ' . BASE_URL . '/admin/future-tours.php');
     exit;
 }
+
+// Túrához rendelt részvételi díj tranzakciók → fizetési státusz frissítése
+$txPayments = syncTourPaymentsFromTransactions($pdo, $id);
 
 $applications = $pdo->prepare("
     SELECT fta.*, u.firstname, u.lastname, u.email, u.phone, COALESCE(u.level, 1) AS user_level, COALESCE(u.role, 'user') AS user_role
@@ -248,6 +252,13 @@ include __DIR__ . '/../includes/admin-header.php';
         </thead>
         <tbody>
           <?php foreach ($applications as $app): ?>
+          <?php
+            $discount     = $app['user_id'] ? getTourFeeDiscount((int)$app['user_level'], (string)($app['user_role'] ?? 'user')) : 0;
+            $hasOverride  = $app['fee_override'] !== null;
+            $effectiveFee = $hasFee ? getApplicationFee((float)$tour['participation_fee'], $discount, $app['fee_override']) : 0.0;
+            $txPaid       = $txPayments[(int)$app['id']]['paid'] ?? null;
+            $feeDiff      = $txPaid !== null ? round($txPaid - $effectiveFee, 2) : 0.0;
+          ?>
           <tr class="<?= $app['status'] === 'waitlist' ? 'row-dim' : '' ?>" style="border-bottom:1px solid var(--border);">
             <td style="padding:12px 16px;">
               <?php if ($app['user_id']): ?>
@@ -295,17 +306,36 @@ include __DIR__ . '/../includes/admin-header.php';
             </td>
             <td style="padding:12px 12px;text-align:center;font-weight:600;">
               <?php if ($tour['participation_fee'] !== null && (float)$tour['participation_fee'] > 0): ?>
-                <?php
-                  $discount     = $app['user_id'] ? getTourFeeDiscount((int)$app['user_level'], (string)($app['user_role'] ?? 'user')) : 0;
-                  $effectiveFee = (float)$tour['participation_fee'] * (1 - $discount / 100);
-                  $feeColor     = $app['paid_at'] ? 'var(--success,#16a34a)' : 'var(--danger,#dc2626)';
-                ?>
+                <?php $feeColor = $app['paid_at'] ? 'var(--success,#16a34a)' : 'var(--danger,#dc2626)'; ?>
                 <span style="color:<?= $feeColor ?>;font-size:12.5px;font-weight:600;">
                   <?= number_format($effectiveFee, 0, ',', '&nbsp;') ?> Ft
                 </span>
-                <?php if ($discount > 0): ?>
+                <?php if ($hasOverride): ?>
+                  <div style="font-size:10.5px;color:var(--text-muted);text-decoration:line-through;line-height:1.2;"><?= number_format((float)$tour['participation_fee'], 0, ',', '&nbsp;') ?> Ft</div>
+                  <div><span class="badge-custom-fee">egyedi díj</span></div>
+                <?php elseif ($discount > 0): ?>
                   <div style="font-size:10.5px;color:var(--text-muted);text-decoration:line-through;line-height:1.2;"><?= number_format((float)$tour['participation_fee'], 0, ',', '&nbsp;') ?> Ft</div>
                   <div><span class="badge-discount">-<?= $discount ?>%</span></div>
+                <?php endif; ?>
+                <?php if (isAdmin()): ?>
+                <details class="fee-edit">
+                  <summary><?= $hasOverride ? 'Egyedi díj módosítása' : 'Egyedi díj megadása' ?></summary>
+                  <form method="post" action="<?= BASE_URL ?>/actions/future-tour-fee-override.php" class="fee-edit-form">
+                    <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
+                    <input type="hidden" name="application_id" value="<?= (int)$app['id'] ?>">
+                    <input type="hidden" name="tour_id" value="<?= $id ?>">
+                    <input type="number" name="fee" class="fee-edit-input" step="1" min="0"
+                           value="<?= $hasOverride ? (int)round((float)$app['fee_override']) : '' ?>"
+                           placeholder="<?= (int)round($effectiveFee) ?>">
+                    <div class="fee-edit-hint">Üresen hagyva az alapértelmezett díj érvényes.</div>
+                    <div class="fee-edit-row">
+                      <button type="submit" class="fee-edit-btn fee-edit-save">Mentés</button>
+                      <?php if ($hasOverride): ?>
+                        <button type="submit" name="clear" value="1" class="fee-edit-btn fee-edit-clear">Alapértelmezett</button>
+                      <?php endif; ?>
+                    </div>
+                  </form>
+                </details>
                 <?php endif; ?>
               <?php elseif ($tour['participation_fee'] !== null): ?>
                 <span style="color:var(--text-muted);font-size:12.5px;">Ingyenes</span>
@@ -314,7 +344,19 @@ include __DIR__ . '/../includes/admin-header.php';
               <?php endif; ?>
             </td>
             <td style="padding:12px 12px;text-align:center;">
-              <?php if ($tour['participation_fee'] !== null && (float)$tour['participation_fee'] > 0): ?>
+              <?php if ($hasFee && $txPaid !== null): ?>
+              <!-- A fizetés forrása egy túrához rendelt tranzakció — itt nincs kézi átállítás -->
+              <div class="pay-cell">
+                <span class="pay-tx-badge" title="A könyvelésben rögzített, ehhez a túrához rendelt befizetés alapján">&#10003; Fizetve</span>
+                <span class="pay-tx-note">tranzakció alapján</span>
+                <span class="pay-amount">Befizetve: <strong><?= number_format($txPaid, 0, ',', '&nbsp;') ?> Ft</strong></span>
+                <?php if (abs($feeDiff) >= 1): ?>
+                  <span class="pay-diff <?= $feeDiff < 0 ? 'pay-diff-under' : 'pay-diff-over' ?>">
+                    <?= $feeDiff < 0 ? 'Hiányzik' : 'Túlfizetés' ?>: <?= number_format(abs($feeDiff), 0, ',', '&nbsp;') ?> Ft
+                  </span>
+                <?php endif; ?>
+              </div>
+              <?php elseif ($hasFee): ?>
               <form method="post" action="<?= BASE_URL ?>/actions/future-tour-mark-paid.php" style="display:inline;">
                 <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
                 <input type="hidden" name="application_id" value="<?= (int)$app['id'] ?>">

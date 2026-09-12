@@ -5,6 +5,7 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/bookkeeping-schema.php';
+require_once __DIR__ . '/../includes/member-account.php';
 requireLogin();
 if (!canManageFinances()) { flash('error', 'Nincs jogosultságod ehhez.'); header('Location: ' . BASE_URL . '/admin/index.php'); exit; }
 verifyCsrf();
@@ -81,6 +82,8 @@ if ($changes) {
 
 // Tagdíj befizetés módosulhatott → tagok utolsó fizetés dátumának frissítése
 recalcMembershipPayments($pdo);
+// Túrához rendelt részvételi díj → jelentkezők fizetési státusza
+syncTourPaymentsFromTransactions($pdo);
 
 if ($ajax) {
     header('Content-Type: application/json; charset=utf-8');

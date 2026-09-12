@@ -5,6 +5,7 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/bookkeeping-schema.php';
+require_once __DIR__ . '/../includes/member-account.php';
 requireLogin();
 if (!canManageFinances()) { flash('error', 'Nincs jogosultságod ehhez a művelethez.'); header('Location: ' . BASE_URL . '/admin/index.php'); exit; }
 verifyCsrf();
@@ -83,6 +84,8 @@ if ($step === 'confirm') {
 
     // Tagdíj befizetések importálása után a tagok utolsó fizetés dátumának frissítése
     recalcMembershipPayments($pdo);
+// Túrához rendelt részvételi díj → jelentkezők fizetési státusza
+syncTourPaymentsFromTransactions($pdo);
 
     unset($_SESSION['tx_import_preview']);
     $_SESSION['tx_import_results'] = ['imported' => $imported, 'errors' => $preview['errors']];

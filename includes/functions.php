@@ -94,6 +94,22 @@ function getTourFeeDiscount(int $level, string $role = 'user'): int
     };
 }
 
+/**
+ * Egy jelentkező tényleges részvételi díja.
+ * Ha van egyedi, kézzel megadott díj (`future_tour_applications.fee_override`), az a mérvadó —
+ * arra a tagi kedvezmény már nem vonatkozik. Egyébként a túra díja a kedvezménnyel csökkentve.
+ *
+ * @param float|null      $tourFee   a túra részvételi díja (`future_tours.participation_fee`)
+ * @param int             $discount  a tag kedvezménye százalékban (vendégnél 0)
+ * @param float|string|null $override a jelentkező egyedi díja, vagy null
+ */
+function getApplicationFee(?float $tourFee, int $discount, $override): float
+{
+    if ($override !== null && $override !== '') return round((float)$override, 2);
+    if ($tourFee === null) return 0.0;
+    return round($tourFee * (1 - $discount / 100), 2);
+}
+
 function recalcUserStats(PDO $pdo): void
 {
     $pdo->exec("UPDATE users SET points = COALESCE((

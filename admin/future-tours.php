@@ -39,7 +39,7 @@ $newAppsCount = (int)$pdo->query("SELECT COUNT(*) FROM future_tour_applications 
 $outstandingTotal = 0.0;
 $outstandingCount = 0;
 $outRows = $pdo->query("
-    SELECT fta.user_id, ft.participation_fee, u.level AS user_level, u.role AS user_role
+    SELECT fta.user_id, fta.fee_override, ft.participation_fee, u.level AS user_level, u.role AS user_role
     FROM future_tour_applications fta
     JOIN future_tours ft ON ft.id = fta.future_tour_id
     LEFT JOIN users u ON u.id = fta.user_id
@@ -50,7 +50,7 @@ $outRows = $pdo->query("
 ")->fetchAll();
 foreach ($outRows as $r) {
     $discount = $r['user_id'] ? getTourFeeDiscount((int)$r['user_level'], (string)($r['user_role'] ?? 'user')) : 0;
-    $fee = (float)$r['participation_fee'] * (1 - $discount / 100);
+    $fee = getApplicationFee((float)$r['participation_fee'], $discount, $r['fee_override']);
     if ($fee > 0) { $outstandingTotal += $fee; $outstandingCount++; }
 }
 

@@ -5,6 +5,7 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/bookkeeping-schema.php';
+require_once __DIR__ . '/../includes/member-account.php';
 requireLogin();
 if (!canManageFinances()) { header('Location: ' . BASE_URL . '/admin/index.php'); exit; }
 
@@ -14,7 +15,7 @@ ensureBookkeepingSchema($pdo);
 $flash_success = getFlash('success');
 $flash_error   = getFlash('error');
 
-$activeTab = in_array($_GET['tab'] ?? '', ['presets', 'export', 'report', 'links'], true) ? $_GET['tab'] : 'transactions';
+$activeTab = in_array($_GET['tab'] ?? '', ['presets', 'export', 'report', 'links', 'accounts'], true) ? $_GET['tab'] : 'transactions';
 
 // Előre definiált értékek
 $catPresets     = getTransactionPresets($pdo, 'category');
@@ -100,6 +101,7 @@ include __DIR__ . '/../includes/admin-header.php';
 <div class="tab-nav tab-nav-flush">
   <a href="?tab=transactions" class="tab-link<?= $activeTab === 'transactions' ? ' active' : '' ?>">Tranzakciók</a>
   <a href="?tab=report" class="tab-link<?= $activeTab === 'report' ? ' active' : '' ?>">Kimutatás</a>
+  <a href="?tab=accounts" class="tab-link<?= $activeTab === 'accounts' ? ' active' : '' ?>">Folyószámlák</a>
   <a href="?tab=links" class="tab-link<?= $activeTab === 'links' ? ' active' : '' ?>">Összerendelések<?php if ($unlinkedCount > 0): ?> <span class="badge badge-overdue" style="font-size:10px;"><?= (int)$unlinkedCount ?></span><?php endif; ?></a>
   <a href="?tab=export" class="tab-link<?= $activeTab === 'export' ? ' active' : '' ?>">Exportálás</a>
   <a href="?tab=presets" class="tab-link<?= $activeTab === 'presets' ? ' active' : '' ?>">Előre definiált értékek</a>
@@ -861,7 +863,7 @@ function renderEventOptions(array $dropTours, array $dropFuture, string $sel): s
   </div>
 </div>
 
-<?php else: ?>
+<?php elseif ($activeTab === 'presets'): ?>
 <!-- ══════════════════ ELŐRE DEFINIÁLT ÉRTÉKEK ══════════════════ -->
 
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;align-items:start;">
@@ -950,6 +952,81 @@ function renderEventOptions(array $dropTours, array $dropFuture, string $sel): s
     </div>
   </div>
   <?php endforeach; ?>
+</div>
+
+<?php endif; ?>
+
+<?php if ($activeTab === 'accounts'): ?>
+<!-- ══════════════════ FOLYÓSZÁMLÁK ══════════════════ -->
+<?php
+  syncTourPaymentsFromTransactions($pdo);
+  recalcMembershipPayments($pdo); // tagsági státusz a tranzakciós naplóból — a szűréshez friss kell
+  $accounts   = getAllMemberAccounts($pdo);
+  $onlyOpen   = !isset($_GET['all']);
+  $shown      = $onlyOpen ? array_values(array_filter($accounts, fn($a) => abs($a['balance']) >= 1)) : $accounts;
+  $debtTotal  = array_sum(array_map(fn($a) => $a['balance'] < 0 ? -$a['balance'] : 0, $accounts));
+  $overTotal  = array_sum(array_map(fn($a) => $a['balance'] > 0 ?  $a['balance'] : 0, $accounts));
+  $unassigned = array_sum(array_column($accounts, 'unassigned_total'));
+  $ft = fn(float $v): string => number_format($v, 0, ',', '&nbsp;') . '&nbsp;Ft';
+?>
+<div class="card">
+  <div class="card-header">
+    <h2>Tagok folyószámlája – részvételi díjak</h2>
+  </div>
+  <div class="acct-summary">
+    <div class="acct-summary-cell">
+      <div class="acct-summary-label">Összes tartozás</div>
+      <div class="acct-summary-value acct-bal-debt"><?= $ft((float)$debtTotal) ?></div>
+    </div>
+    <div class="acct-summary-cell">
+      <div class="acct-summary-label">Összes túlfizetés</div>
+      <div class="acct-summary-value acct-bal-over"><?= $ft((float)$overTotal) ?></div>
+    </div>
+    <div class="acct-summary-cell acct-balance">
+      <div class="acct-summary-label">Nem beazonosított befizetés</div>
+      <div class="acct-summary-value"><?= $ft((float)$unassigned) ?></div>
+      <div class="acct-balance-note">Túrához nem rendelt tétel</div>
+    </div>
+  </div>
+  <div class="acct-filter-bar">
+    <a href="?tab=accounts" class="btn btn-sm <?= $onlyOpen ? 'btn-primary' : 'btn-ghost' ?>">Csak a nem nullás egyenlegek</a>
+    <a href="?tab=accounts&amp;all=1" class="btn btn-sm <?= $onlyOpen ? 'btn-ghost' : 'btn-primary' ?>">Minden aktív tag</a>
+    <span style="font-size:12px;color:var(--text-muted);">Csak „Aktív” tagsági státusz</span>
+    <span style="font-size:12px;color:var(--text-muted);"><?= count($shown) ?> tag</span>
+  </div>
+  <?php if (empty($shown)): ?>
+    <div class="acct-empty">Nincs megjeleníthető tag.</div>
+  <?php else: ?>
+  <div style="overflow-x:auto;">
+    <table class="acct-list-table">
+      <thead>
+        <tr>
+          <th>Tag</th>
+          <th class="acct-num">Fizetendő volt</th>
+          <th class="acct-num">Befizetve</th>
+          <th class="acct-num">Egyenleg</th>
+          <th class="acct-num">Nem beazonosított</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach ($shown as $a): ?>
+        <?php $cls = abs($a['balance']) < 1 ? 'acct-bal-ok' : ($a['balance'] < 0 ? 'acct-bal-debt' : 'acct-bal-over'); ?>
+        <tr>
+          <td>
+            <a href="<?= BASE_URL ?>/admin/member-detail.php?id=<?= (int)$a['user']['id'] ?>#folyoszamla">
+              <?= e($a['user']['lastname'] . ' ' . $a['user']['firstname']) ?>
+            </a>
+          </td>
+          <td class="acct-num"><?= $ft($a['charged']) ?></td>
+          <td class="acct-num"><?= $ft($a['paid']) ?></td>
+          <td class="acct-num <?= $cls ?>"><?= ($a['balance'] > 0 ? '+' : '') . $ft($a['balance']) ?></td>
+          <td class="acct-num"><?= $a['unassigned_total'] > 0 ? $ft($a['unassigned_total']) : '—' ?></td>
+        </tr>
+        <?php endforeach; ?>
+      </tbody>
+    </table>
+  </div>
+  <?php endif; ?>
 </div>
 
 <?php endif; ?>

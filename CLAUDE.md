@@ -60,6 +60,18 @@ Level = derived from points via `getLevelFromPoints()`. Both are recalculated by
 | 8 | Alezredes | 330 |
 | 9 | Ezredes | 500 |
 
+## Egyedi részvételi díj (`fee_override`)
+`future_tour_applications.fee_override DECIMAL(10,2) NULL` — egy jelentkezőre kézzel megadott díj.
+Ha ki van töltve, az a mérvadó, és a tagi kedvezmény MÁR NEM vonatkozik rá.
+
+Mindig a `getApplicationFee(?float $tourFee, int $discount, $override): float` helperrel (functions.php)
+számold — soha ne szorozz kézzel a kedvezménnyel. Beállítás: `actions/future-tour-fee-override.php`
+(csak `requireAdmin()`), UI az `admin/future-tour-applicants.php` „Fizetendő díj" cellájában
+(`<details class="fee-edit">`, üres mező vagy „Alapértelmezett" gomb → NULL).
+
+Felhasználók: `admin/future-tour-applicants.php`, `admin/future-tours.php`, `includes/member-account.php`,
+`user/future-tour-detail.php`, `actions/future-tour-accept.php`, `actions/future-tour-payment-reminder.php`.
+
 ## Tour participation fee discount (`getTourFeeDiscount`)
 Defined in `includes/functions.php`. Returns the percentage discount based on member level:
 
@@ -96,6 +108,35 @@ Originals live in `mtsz-kituzo/` at the repo root (450 px, one is a JPG) — not
   `user/index.php` — `.dash-card-mtsz` tile in the left dashboard column, only when the member has a grade.
 - CSS: `.mtsz-badge`, `.mtsz-badge-img`, `.mtsz-side-list`, `.mtsz-dash-list` in `assets/css/style.css`.
   `.mtsz-side-item img` must override `.profile-avatar-card img` (circle crop) — keep the selector specific.
+
+## Egyéni folyószámla
+`includes/member-account.php` — a tag előírt és ténylegesen befizetett **részvételi díjai**.
+A tagdíj NEM része a folyószámlának (a tagdíj állapotát a `getMemberStatus()` / `last_payment` adja).
+A tranzakció és a tag kapcsolata a `transactions.partner` mező alapján („Vezetéknév Keresztnév”),
+ugyanaz a minta, mint a `recalcMembershipPayments()`-nél. A túra-kapcsolat forrása a tranzakció
+`event_type = 'future_tour'` + `event_id` mezője.
+
+- `getMemberAccount($pdo, $userId)` → `rows` (előírás–befizetés párok), `unassigned`
+  (előírás nélküli idei bevételek — **nem** számítanak az egyenlegbe), `charged`, `paid`, `balance`.
+  Az `unassigned`-ből kimarad a már rögzített túrához kötött befizetés (`event_type = 'tour'`):
+  az ilyen túra sosem volt meghirdetett túra, nincs hozzá jelentkezés és előírás sem.
+  `balance < 0` → tartozás, `balance > 0` → túlfizetés.
+- `getAllMemberAccounts($pdo)` — minden aktív tag összegzése (a Könyvelés „Folyószámlák” füléhez).
+- `syncTourPaymentsFromTransactions($pdo, ?$tourId)` — a túrához rendelt bevételek alapján beállítja a
+  `future_tour_applications.paid_at` mezőt (soha nem törli), és visszaadja jelentkezőnként a befizetett
+  összeget. Meghívva: `admin/future-tour-applicants.php`, `admin/bookkeeping.php` (accounts fül),
+  `actions/transaction-save.php`, `-update.php`, `-import.php`.
+- Előírás: kizárólag a `confirmed` jelentkezések részvételi díja, `getApplicationFee()`-vel számolva
+  (egyedi díj, vagy a `getTourFeeDiscount()` kedvezmény).
+  A `Tagdíj` kategóriájú tranzakciók teljesen kimaradnak (sem előírás, sem befizetés, sem `unassigned`).
+- `getAllMemberAccounts()` csak az „Aktív” tagsági státuszúakat listázza
+  (`getMemberStatus()` === `'active'` ÉS `users.active = 1`). A státusz a `users.last_payment`-ből jön,
+  ezért a lista előtt `recalcMembershipPayments()` kell. A tag saját adatlapján a kártya mindig látszik.
+- Megjelenítés: `includes/member-account-card.php` (közös kártya) — `admin/member-detail.php`
+  (`#folyoszamla`, `canManageFinances()`), `admin/bookkeeping.php?tab=accounts`.
+  A `user/index.php` NEM ezt a kártyát használja: ott csak a rendezetlen tételek
+  (`$row['diff'] <= -1`) jelennek meg a „Tartozásaim" `.debt-table` listában.
+  CSS: `.acct-*` és `.pay-*` osztályok az `assets/css/style.css`-ben.
 
 ## Page boilerplate pattern
 ```php

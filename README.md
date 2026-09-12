@@ -45,6 +45,9 @@ Nincs JS keretrendszer: sima PHP, PDO, natív JS és saját CSS. A felhasználó
 - **Meghirdetett túrák** — jelentkezés, várólista, részvételi díj és tagi kedvezmény, e-mail értesítők,
   fizetési emlékeztető a még nem fizető jelentkezőknek.
 - **Könyvelés** — bevétel/kiadás nyilvántartás, CSV import/export, eseményhez kötés.
+- **Egyéni folyószámla** — tagonként az előírt és a ténylegesen befizetett túra-részvételi díj,
+  valamint az egyenleg (a tagdíj nem része). A túrához rendelt befizetés automatikusan
+  „Fizetett”-re állítja a jelentkezőt, és megmutatja a fizetendőtől való eltérést.
 - **MTSZ jelvényes minősítések** — bronz / ezüst / arany / érdemes / kiváló fokozatok nyilvántartása.
 - **Kvízjáték** — madár- és hegycsúcs-felismerő játék toplistával.
 - **Publikus honlap** — hírek, túranaptár, tagsági információk, kapcsolat.

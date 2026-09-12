@@ -50,7 +50,7 @@ if ($fee <= 0) {
 
 // Címzettek: helyet kapott, még nem fizetett jelentkezők (tagok és vendégek egyaránt)
 $sql = "
-    SELECT fta.id, fta.user_id, fta.guest_name, fta.guest_email,
+    SELECT fta.id, fta.user_id, fta.guest_name, fta.guest_email, fta.fee_override,
            u.firstname, u.lastname, u.email,
            COALESCE(u.level, 1) AS user_level, COALESCE(u.role, 'user') AS user_role
     FROM future_tour_applications fta
@@ -105,7 +105,7 @@ foreach ($recipients as $r) {
     $fullName  = $r['user_id'] ? trim($r['lastname'] . ' ' . $r['firstname']) : (string)$r['guest_name'];
     $firstName = $r['user_id'] ? (string)$r['firstname'] : (string)$r['guest_name'];
     $discount  = $r['user_id'] ? getTourFeeDiscount((int)$r['user_level'], (string)$r['user_role']) : 0;
-    $effFee    = $fee * (1 - $discount / 100);
+    $effFee    = getApplicationFee($fee, $discount, $r['fee_override']);
 
     $waitlistHtml = '';
     if ($waitlistCount > 0) {
