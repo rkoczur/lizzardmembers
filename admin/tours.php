@@ -221,7 +221,12 @@ include __DIR__ . '/../includes/admin-header.php';
           <td><?= (int)$t['member_count'] ?> tag<?= ($t['guest_count'] ?? 0) > 0 ? ', ' . (int)$t['guest_count'] . ' vendég' : '' ?></td>
           <td><?= (int)$t['points'] > 0 ? '<strong>' . number_format((int)$t['points']) . '</strong>' : '' ?></td>
           <td><?= number_format((int)($t['mtsz_points'] ?? 0)) ?></td>
-          <td>
+          <td class="tour-row-actions">
+            <a href="<?= BASE_URL ?>/admin/tour-view.php?id=<?= $t['id'] ?>" class="btn-view" title="Megtekintés" aria-label="Megtekintés">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+              </svg>
+            </a>
             <a href="<?= BASE_URL ?>/admin/tour-detail.php?id=<?= $t['id'] ?>" class="btn btn-ghost btn-sm"><?= ($t['status'] ?? 'approved') === 'pending' ? 'Áttekintés' : (isAdmin() ? 'Módosítás' : 'Megtekintés') ?></a>
           </td>
         </tr>

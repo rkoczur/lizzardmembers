@@ -1,5 +1,7 @@
 <?php
-session_start();
+// Az admin/tour-view.php is ezt az oldalt tölti be ($adminView = true): admin keret + rangot szerzett tagok
+if (session_status() === PHP_SESSION_NONE) session_start();
+$adminView = $adminView ?? false;
 require_once __DIR__ . '/../includes/config.php';
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
@@ -51,7 +53,7 @@ $hasMap = !empty($gpxFiles);
 $title = $tour['name'] ?: ($tour['country'] . ($tour['region'] ? ' – ' . $tour['region'] : ''));
 $pageTitle  = $title;
 $activePage = 'tours';
-include __DIR__ . '/../includes/user-header.php';
+include __DIR__ . '/../includes/' . ($adminView ? 'admin' : 'user') . '-header.php';
 
 function mtszBreakdownLines(array $t): array {
     $type       = $t['tour_type'] ?? 'gyalogos';
@@ -161,7 +163,7 @@ function detailRow(string $label, $value): void {
 
 <div class="page-header">
   <div class="flex items-center gap-2">
-    <a href="<?= BASE_URL ?>/user/tours.php" class="btn btn-secondary btn-sm">← Vissza</a>
+    <a href="<?= BASE_URL ?>/<?= $adminView ? 'admin' : 'user' ?>/tours.php" class="btn btn-secondary btn-sm">← Vissza</a>
     <h1><?= e($title) ?></h1>
     <?php if ($isMine): ?>
       <span class="badge badge-active">Részt vettem</span>
@@ -323,6 +325,10 @@ function detailRow(string $label, $value): void {
       <?php endif; ?>
     </div>
 
+    <?php if ($adminView): ?>
+      <?php $achievers = getTourRankAchievers($pdo, $id); include __DIR__ . '/../includes/tour-rank-achievers-card.php'; ?>
+    <?php endif; ?>
+
   </div><!-- /bal oszlop -->
 
   <!-- Jobb oszlop: Térképek (ha van GPX) -->
@@ -403,4 +409,4 @@ foreach ($gpxFiles as $gi => $gf) {
 </script>
 <?php endif; ?>
 
-<?php include __DIR__ . '/../includes/user-footer.php'; ?>
+<?php include __DIR__ . '/../includes/' . ($adminView ? 'admin' : 'user') . '-footer.php'; ?>

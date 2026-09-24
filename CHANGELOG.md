@@ -3,6 +3,18 @@
 A verziószám forrása: `includes/version.php`.
 Major: teljesen új funkció | Minor: fő funkció módosítás vagy alfunkció hozzáadás | Patch: minden egyéb.
 
+## [7.8.0] — 2026-09-24
+
+### Hozzáadva
+- Az admin **Túrák** listájában minden túránál egy **megtekintés** (szem ikon, `.btn-view`) gomb a
+  „Módosítás” mellett. Az új `admin/tour-view.php` a túrát pontosan úgy mutatja, ahogy a tagok látják
+  (a `user/tour-detail.php`-t tölti be `$adminView = true` mellett, admin kerettel), kiegészítve a
+  **„Rangot szerzett tagok”** kártyával: ki melyik rangot érte el ezen a túrán.
+  Új helper: `getTourRankAchievers()` (`includes/rank-history.php`), kártya: `includes/tour-rank-achievers-card.php`.
+
+### Módosítva
+- Az admin tagadatlap Ranglétrájában a túrák linkje az új megtekintő oldalra mutat.
+
 ## [7.7.0] — 2026-09-24
 
 ### Hozzáadva

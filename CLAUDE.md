@@ -172,3 +172,6 @@ Az 1. szint (Újonc) mindig az első elem, túra nélkül. A legmagasabb elem eg
 Megjelenítés: `includes/rank-history-card.php` (`$ranks`, `$rankPoints`, `$rankTourUrl`) —
 `user/ranks.php` (menü: „Ranglétra”, `$activePage = 'ranks'`, `.rank-page` szélességkorlát) és
 `admin/member-detail.php` (`#rangletra`, az MTSZ kártya alatt). CSS: `.rank-*`.
+`getTourRankAchievers($pdo, $tourId)` — a túrán rangot szerzett tagok; megjelenítés: `admin/tour-view.php`
+(szem ikon az `admin/tours.php` listában). Ez az oldal a `user/tour-detail.php`-t tölti be `$adminView = true`
+ mellett — a tagi túranézetet ezért mindig úgy módosítsd, hogy admin keretben is működjön. CSS: `.achiever-*`, `.btn-view`.

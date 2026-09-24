@@ -491,7 +491,7 @@ include __DIR__ . '/../includes/admin-header.php';
 <?php
   $ranks       = getRankHistory($pdo, (int)$member['id']);
   $rankPoints  = (int)$member['points'];
-  $rankTourUrl = BASE_URL . '/admin/tour-detail.php?id=';
+  $rankTourUrl = BASE_URL . '/admin/tour-view.php?id=';
   include __DIR__ . '/../includes/rank-history-card.php';
 ?>
 

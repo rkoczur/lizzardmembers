@@ -46,3 +46,29 @@ function getTourPlace(array $tour): string
 {
     return implode(', ', array_filter([$tour['region'] ?? null, $tour['country_name'] ?? null]));
 }
+
+/**
+ * Egy túrán rangot szerzett tagok: [['user' => [...], 'levels' => [int, ...]], ...].
+ * Minden résztvevő ranglétráját kiszámolja, és kiválasztja az ehhez a túrához tartozó szinteket.
+ */
+function getTourRankAchievers(PDO $pdo, int $tourId): array
+{
+    $stmt = $pdo->prepare("
+        SELECT u.id, u.lastname, u.firstname
+        FROM tour_members tm
+        JOIN users u ON u.id = tm.user_id
+        WHERE tm.tour_id = ?
+        ORDER BY u.lastname, u.firstname
+    ");
+    $stmt->execute([$tourId]);
+
+    $achievers = [];
+    foreach ($stmt->fetchAll() as $user) {
+        $levels = [];
+        foreach (getRankHistory($pdo, (int)$user['id']) as $r) {
+            if ($r['tour'] && (int)$r['tour']['id'] === $tourId) $levels[] = $r['level'];
+        }
+        if ($levels) $achievers[] = ['user' => $user, 'levels' => $levels];
+    }
+    return $achievers;
+}
