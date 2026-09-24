@@ -530,6 +530,27 @@ function logAudit(PDO $pdo, string $action, string $entityType, int $entityId, s
 const BANK_ACCOUNT_NAME   = 'Leguán Osztag Természetjáró Egyesület';
 const BANK_ACCOUNT_NUMBER = '16200120-18542675';
 
+// --- Éves tagdíj ---
+const MEMBERSHIP_FEE = 5000;
+
+/**
+ * Tagdíj elmaradás a „Tartozásaim” listához. Aktív tagságnál null.
+ * A tagdíj NEM része a folyószámlának, ezért külön tételként jelenik meg.
+ */
+function getMembershipDebt(?string $lastPayment): ?array
+{
+    if (getMemberStatus($lastPayment) === 'active') return null;
+
+    $hasPayment = $lastPayment && $lastPayment !== '0000-00-00';
+    return [
+        'label'  => 'Éves tagdíj (' . date('Y') . ')',
+        'amount' => MEMBERSHIP_FEE,
+        'note'   => $hasPayment
+            ? 'Utolsó tagdíj befizetés: ' . formatDate($lastPayment)
+            : 'Nincs rögzített tagdíj befizetés',
+    ];
+}
+
 /**
  * Bankszámla blokk oldalakhoz. A stílus a style.css `.bank-info` szabályaiból jön.
  * $variant: 'block' (alapértelmezett) vagy 'strong' (kiemelt, sötét hátterű).

@@ -134,8 +134,10 @@ ugyanaz a minta, mint a `recalcMembershipPayments()`-nél. A túra-kapcsolat for
   ezért a lista előtt `recalcMembershipPayments()` kell. A tag saját adatlapján a kártya mindig látszik.
 - Megjelenítés: `includes/member-account-card.php` (közös kártya) — `admin/member-detail.php`
   (`#folyoszamla`, `canManageFinances()`), `admin/bookkeeping.php?tab=accounts`.
-  A `user/index.php` NEM ezt a kártyát használja: ott csak a rendezetlen tételek
-  (`$row['diff'] <= -1`) jelennek meg a „Tartozásaim" `.debt-table` listában.
+  A `user/index.php` és a `user/profile.php` NEM ezt a kártyát használja: ott a közös
+  `includes/member-debts-card.php` részleg jelenik meg, amely csak a rendezetlen tételeket
+  (`$row['diff'] <= -1`) listázza, kiegészítve a tagdíj elmaradással
+  (`getMembershipDebt()`, `MEMBERSHIP_FEE = 5000`) — a tagdíj továbbra sem része a folyószámlának.
   CSS: `.acct-*` és `.pay-*` osztályok az `assets/css/style.css`-ben.
 
 ## Page boilerplate pattern
@@ -158,3 +160,14 @@ include __DIR__ . '/../includes/admin-footer.php'; // or user-footer.php
 
 1. At the tour details, make a checkbox: need membership.
 2. In the public application form (both the API and the native) there should be a new logic: If the tour needs membership, then after clicking on the "jelentkezés" button, display the user registration form - same as the join.php - and tell the user, that this tour is only for members, and here you can register yourself as a member. If the tour is not required membership, then the logic stays the same as now!
+3. A tagfelvételi űrlapon is meg kell jelenniük a túra-specifikus mezőknek és az egyedi kérdéseknek.
+   Natív oldal: `public/tour-apply.php` — mindhárom űrlap (tag / vendég / tagfelvétel) a közös
+   `includes/tour-apply-fields.php` részleget használja. WP plugin: `j_custom_field_N` mezőnevek,
+   amelyeket a JS `custom_field_N`-re nevez át küldés előtt.
+## Ranglétra (`includes/rank-history.php`)
+A rang megszerzése nincs tárolva — `getRankHistory($pdo, $userId)` számolja: a tag túráit
+(`tour_members`) időrendben (`tour_date IS NULL, tour_date, id`) összesíti, és ahol a pontösszeg átlépi
+a `getLevelMinPoints()` küszöbét, az a túra hozta a rangot. Egy túra több szintet is hozhat.
+Az 1. szint (Újonc) mindig az első elem, túra nélkül. A legmagasabb elem egyezik a `users.level`-lel.
+Megjelenítés: `includes/rank-history-card.php` (`$ranks`, `$rankPoints`, `$rankTourUrl`) —
+`user/ranks.php` (menü: „Ranglétra”, `$activePage = 'ranks'`). CSS: `.rank-*`.

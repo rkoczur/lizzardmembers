@@ -73,52 +73,7 @@ include __DIR__ . '/../includes/user-header.php';
 </div>
 
 <!-- Tartozásaim — a vezérlőpult tetején: csak a rendezetlen tételek -->
-<?php
-  // Csak a hiányzó összegek érdeklik a tagot — a rendezett (nullás) tételek nem jelennek meg
-  $debts     = array_values(array_filter($account['rows'], fn($r) => $r['diff'] <= -1));
-  $debtTotal = array_sum(array_map(fn($r) => -$r['diff'], $debts));
-?>
-<div class="card dash-card-debts">
-  <div class="card-header"><h2>Tartozásaim</h2></div>
-  <div class="card-body" style="padding:0;">
-    <?php if (empty($debts)): ?>
-      <div style="padding:20px;color:var(--text-muted);display:flex;align-items:center;gap:8px;">
-        <span style="font-size:18px;">✅</span> Nincs rendezetlen tartozásod.
-      </div>
-    <?php else: ?>
-      <table class="debt-table">
-        <tbody>
-          <?php foreach ($debts as $d): ?>
-          <tr>
-            <td>
-              <?= e($d['label']) ?>
-              <?php if (!empty($d['tour_id'])): ?>
-                <a href="<?= BASE_URL ?>/user/future-tour-detail.php?id=<?= (int)$d['tour_id'] ?>" style="font-size:12px;margin-left:6px;">részletek</a>
-              <?php endif; ?>
-              <?php if ($d['paid'] > 0): ?>
-                <div style="font-size:11.5px;color:var(--text-muted);margin-top:2px;">
-                  Fizetendő: <?= number_format($d['charged'], 0, ',', ' ') ?> Ft &middot;
-                  befizetve: <?= number_format($d['paid'], 0, ',', ' ') ?> Ft
-                </div>
-              <?php endif; ?>
-            </td>
-            <td class="debt-amount"><?= number_format(-$d['diff'], 0, ',', ' ') ?> Ft</td>
-          </tr>
-          <?php endforeach; ?>
-        </tbody>
-        <?php if (count($debts) > 1): ?>
-        <tfoot>
-          <tr class="debt-total">
-            <td>Összesen</td>
-            <td class="debt-amount"><?= number_format($debtTotal, 0, ',', ' ') ?> Ft</td>
-          </tr>
-        </tfoot>
-        <?php endif; ?>
-      </table>
-      <div style="padding:0 16px 16px;"><?= bankInfoBox('strong') ?></div>
-    <?php endif; ?>
-  </div>
-</div>
+<?php include __DIR__ . '/../includes/member-debts-card.php'; ?>
 
 <div class="dash-grid">
   <!-- Bal hasáb: kis kártyák egymás alatt -->

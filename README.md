@@ -48,6 +48,10 @@ Nincs JS keretrendszer: sima PHP, PDO, natív JS és saját CSS. A felhasználó
 - **Egyéni folyószámla** — tagonként az előírt és a ténylegesen befizetett túra-részvételi díj,
   valamint az egyenleg (a tagdíj nem része). A túrához rendelt befizetés automatikusan
   „Fizetett”-re állítja a jelentkezőt, és megmutatja a fizetendőtől való eltérést.
+- **Tartozásaim** — a tag vezérlőpultján és profilján a rendezetlen részvételi díjak, valamint a
+  tagdíj elmaradás (ha a tagsági státusz nem „Aktív”).
+- **Ranglétra** — a tag minden elért Lizzardier rangjánál látja a felvarrót, és hogy melyik túrával
+  (név, helyszín, dátum) szerezte meg. A rangot a túrák időrendi pontösszesítéséből számoljuk.
 - **MTSZ jelvényes minősítések** — bronz / ezüst / arany / érdemes / kiváló fokozatok nyilvántartása.
 - **Kvízjáték** — madár- és hegycsúcs-felismerő játék toplistával.
 - **Publikus honlap** — hírek, túranaptár, tagsági információk, kapcsolat.

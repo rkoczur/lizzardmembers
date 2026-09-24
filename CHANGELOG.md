@@ -3,6 +3,46 @@
 A verziószám forrása: `includes/version.php`.
 Major: teljesen új funkció | Minor: fő funkció módosítás vagy alfunkció hozzáadás | Patch: minden egyéb.
 
+## [7.6.0] — 2026-09-24
+
+### Hozzáadva
+- **Ranglétra** menüpont a tagi felületen (`user/ranks.php`): az elért Lizzardier rangok
+  a felvarróval, és hogy melyik túrával (név, helyszín, dátum) és hány ponttal szerezte meg a tag.
+  Felül a következő, még el nem ért rang (hány pont hiányzik).
+- A rang nincs tárolva: `getRankHistory()` (`includes/rank-history.php`) a tag túráit időrendben
+  (`tour_date`, majd `id`) összesíti, és ahol a pontösszeg átlépi egy szint küszöbét, az a túra
+  hozta a rangot (egy túra több szintet is hozhat). Új helperek: `getLevelMinPoints()`, `getTourPlace()`.
+- Közös kártya: `includes/rank-history-card.php`. CSS: `.rank-*` osztályok.
+
+## [7.5.1] — 2026-09-14
+
+### Javítva
+- A **csak tagoknak meghirdetett túrák** publikus jelentkezési lapján (`public/tour-apply.php`)
+  a tagfelvételi űrlap nem tartalmazta a túra-specifikus mezőket és az **egyedi kérdéseket**,
+  így azok üresen mentődtek. A „Túra-specifikus adatok" blokk (indulási hely, autó, szobamegosztás,
+  megjegyzés + a túra egyedi kérdései) most a tagfelvételi űrlapon is megjelenik.
+  A feldolgozó (`actions/join-submit.php`) eddig is fogadta ezeket a mezőket — csak a form hiányzott.
+
+### Módosítva
+- A túra-specifikus mezők közös részleggé váltak: `includes/tour-apply-fields.php`
+  (a bejelentkezett tag, a vendég és a tagfelvételi űrlap is ezt használja) — megszűnt a
+  háromszoros duplikáció. Új CSS: `.apply-section-divider`.
+
+## [7.5.0] — 2026-09-14
+
+### Hozzáadva
+- A tag **„Tartozásaim”** listája a túra-részvételi díjak mellett a **tagdíj elmaradást** is mutatja.
+  Ha a tagsági státusz nem „Aktív” (`getMemberStatus()`), külön sorként megjelenik az idei éves tagdíj
+  (`MEMBERSHIP_FEE = 5000`) „Tagdíj elmaradás” jelzéssel és az utolsó befizetés dátumával.
+  Új helper: `getMembershipDebt(?string $lastPayment): ?array` (`includes/functions.php`).
+- A kártya megjelenik a tag **profil oldalán** is (`user/profile.php`), nem csak a vezérlőpulton.
+
+### Módosítva
+- A „Tartozásaim” kártya közös részleggé vált: `includes/member-debts-card.php`
+  (használja: `user/index.php`, `user/profile.php`). Az inline stílusok helyett
+  `.debt-body`, `.debt-empty`, `.debt-note`, `.debt-link`, `.debt-badge`, `.debt-bank`
+  osztályok az `assets/css/style.css`-ben.
+
 ## [7.4.0] — 2026-09-12
 
 ### Módosítva

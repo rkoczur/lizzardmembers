@@ -6,11 +6,14 @@ require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/user-schema.php';
 require_once __DIR__ . '/../includes/mtsz-schema.php';
+require_once __DIR__ . '/../includes/future-tours-schema.php';
+require_once __DIR__ . '/../includes/member-account.php';
 requireUser();
 
 $pdo    = getDb();
 ensureUserSchema($pdo);
 ensureMtszSchema($pdo);
+ensureFutureToursSchema($pdo);
 $userId = getCurrentUserId();
 $stmt   = $pdo->prepare("SELECT * FROM users WHERE id = ? LIMIT 1");
 $stmt->execute([$userId]);
@@ -18,6 +21,9 @@ $user   = $stmt->fetch();
 
 // MTSZ jelvényes minősítések (csak megtekintés — rögzítésre az egyesületvezető / szakszövetségi vezető jogosult)
 $mtszRows = getMtszQualifications($pdo, $userId);
+
+// Rendezetlen tételek a „Tartozásaim” kártyához
+$account = getMemberAccount($pdo, $userId);
 
 $tcStmt = $pdo->prepare("SELECT COUNT(*) FROM tour_members WHERE user_id = ?");
 $tcStmt->execute([$userId]);
@@ -39,6 +45,9 @@ include __DIR__ . '/../includes/user-header.php';
 <?php endif; ?>
 
 <div class="page-header"><h1>Saját profilom</h1></div>
+
+<!-- Tartozásaim — rendezetlen részvételi díjak és tagdíj elmaradás -->
+<?php include __DIR__ . '/../includes/member-debts-card.php'; ?>
 
 <div class="profile-layout">
   <!-- Avatar card -->
