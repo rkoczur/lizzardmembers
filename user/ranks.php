@@ -26,6 +26,8 @@ include __DIR__ . '/../includes/user-header.php';
   <h1>Ranglétra</h1>
 </div>
 
-<?php include __DIR__ . '/../includes/rank-history-card.php'; ?>
+<div class="rank-page">
+  <?php include __DIR__ . '/../includes/rank-history-card.php'; ?>
+</div>
 
 <?php include __DIR__ . '/../includes/user-footer.php'; ?>

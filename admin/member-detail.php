@@ -7,6 +7,7 @@ require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/user-schema.php';
 require_once __DIR__ . '/../includes/mtsz-schema.php';
 require_once __DIR__ . '/../includes/member-account.php';
+require_once __DIR__ . '/../includes/rank-history.php';
 requireAdminOrVezeto();
 $ro = !isAdmin();
 $mtszRo = !canManageMtsz();
@@ -485,6 +486,14 @@ include __DIR__ . '/../includes/admin-header.php';
     <?php endif; ?>
   </div>
 </div><!-- /#mtsz -->
+
+<!-- Ranglétra -->
+<?php
+  $ranks       = getRankHistory($pdo, (int)$member['id']);
+  $rankPoints  = (int)$member['points'];
+  $rankTourUrl = BASE_URL . '/admin/tour-detail.php?id=';
+  include __DIR__ . '/../includes/rank-history-card.php';
+?>
 
 <!-- Egyéni folyószámla -->
 <?php if (canManageFinances()): ?>

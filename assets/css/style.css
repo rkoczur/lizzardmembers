@@ -1861,7 +1861,7 @@ body.embed-mode .card-body { padding-top: 12px !important; }
 }
 
 /* ===== Ranglétra — elért rangok idővonala ===== */
-.rank-card { max-width: 760px; }
+.rank-page { max-width: 760px; }
 .rank-ladder { list-style: none; position: relative; }
 .rank-ladder::before { content: ""; position: absolute; left: 39px; top: 20px; bottom: 20px; width: 3px; background: repeating-linear-gradient(to bottom, var(--primary) 0 10px, transparent 10px 16px); opacity: .45; }
 .rank-rung { position: relative; display: flex; align-items: center; gap: 18px; padding: 12px 0; }

@@ -170,4 +170,5 @@ A rang megszerzése nincs tárolva — `getRankHistory($pdo, $userId)` számolja
 a `getLevelMinPoints()` küszöbét, az a túra hozta a rangot. Egy túra több szintet is hozhat.
 Az 1. szint (Újonc) mindig az első elem, túra nélkül. A legmagasabb elem egyezik a `users.level`-lel.
 Megjelenítés: `includes/rank-history-card.php` (`$ranks`, `$rankPoints`, `$rankTourUrl`) —
-`user/ranks.php` (menü: „Ranglétra”, `$activePage = 'ranks'`). CSS: `.rank-*`.
+`user/ranks.php` (menü: „Ranglétra”, `$activePage = 'ranks'`, `.rank-page` szélességkorlát) és
+`admin/member-detail.php` (`#rangletra`, az MTSZ kártya alatt). CSS: `.rank-*`.

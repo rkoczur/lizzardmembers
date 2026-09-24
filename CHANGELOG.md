@@ -3,6 +3,15 @@
 A verziószám forrása: `includes/version.php`.
 Major: teljesen új funkció | Minor: fő funkció módosítás vagy alfunkció hozzáadás | Patch: minden egyéb.
 
+## [7.7.0] — 2026-09-24
+
+### Hozzáadva
+- A **Ranglétra** az admin felületen is látható: a tag adatlapján (`admin/member-detail.php`,
+  `#rangletra`) az MTSZ minősítések alatt, ugyanazzal a közös kártyával (`includes/rank-history-card.php`).
+
+### Módosítva
+- A kártya szélességkorlátja a tagi oldalra került (`.rank-page`), így az admin hasábban teljes szélességű.
+
 ## [7.6.0] — 2026-09-24
 
 ### Hozzáadva

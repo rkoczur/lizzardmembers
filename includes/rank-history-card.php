@@ -10,7 +10,7 @@
 $rankTop  = end($ranks)['level'];
 $rankNext = $rankTop < 9 ? $rankTop + 1 : null;
 ?>
-<div class="card rank-card">
+<div class="card rank-card" id="rangletra">
   <div class="card-header"><h2>Elért rangok</h2></div>
   <div class="card-body">
     <ol class="rank-ladder">
