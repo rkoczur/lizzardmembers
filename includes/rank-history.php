@@ -72,3 +72,11 @@ function getTourRankAchievers(PDO $pdo, int $tourId): array
     }
     return $achievers;
 }
+
+// Az a szint, amelyet a tag a túra pontjaival elér — null, ha nem lép szintet
+function getRankUpLevel(int $points, int $level, ?int $tourPoints): ?int
+{
+    if (!$tourPoints) return null;
+    $newLevel = getLevelFromPoints($points + $tourPoints);
+    return $newLevel > $level ? $newLevel : null;
+}

@@ -52,7 +52,8 @@ Nincs JS keretrendszer: sima PHP, PDO, natív JS és saját CSS. A felhasználó
   tagdíj elmaradás (ha a tagsági státusz nem „Aktív”).
 - **Ranglétra** — a tag minden elért Lizzardier rangjánál látja a felvarrót, és hogy melyik túrával
   (név, helyszín, dátum) szerezte meg. A rangot a túrák időrendi pontösszesítéséből számoljuk.
-  Az admin a tag adatlapján látja ugyanezt, a túra megtekintésekor pedig azt, ki szerzett rangot azon a túrán.
+  Az admin a tag adatlapján látja ugyanezt, a túra megtekintésekor pedig azt, ki szerzett rangot azon a túrán. A meghirdetett túrák
+  jelentkezőinél előre jelzi, ki lép szintet a túrával, és milyen rangot ér el.
 - **MTSZ jelvényes minősítések** — bronz / ezüst / arany / érdemes / kiváló fokozatok nyilvántartása.
 - **Kvízjáték** — madár- és hegycsúcs-felismerő játék toplistával.
 - **Publikus honlap** — hírek, túranaptár, tagsági információk, kapcsolat.

@@ -277,7 +277,7 @@ include __DIR__ . '/../includes/admin-header.php';
       <div class="form-grid">
         <div class="form-group">
           <label>Lizzardier pont <span style="color:var(--danger)">*</span></label>
-          <input type="number" name="points" value="0" min="0" required>
+          <input type="number" name="points" value="<?= (int)($ft['lizzardier_points'] ?? 0) ?>" min="0" required>
           <small style="color:var(--text-muted);">A klub belső rangsorához használt pont (kézzel adható meg).</small>
         </div>
       </div>

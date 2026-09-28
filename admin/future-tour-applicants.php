@@ -7,6 +7,7 @@ require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/future-tours-schema.php';
 require_once __DIR__ . '/../includes/join-schema.php';
 require_once __DIR__ . '/../includes/member-account.php';
+require_once __DIR__ . '/../includes/rank-history.php';
 requireAdminOrVezeto();
 
 $pdo = getDb();
@@ -31,7 +32,7 @@ if (!$tour) {
 $txPayments = syncTourPaymentsFromTransactions($pdo, $id);
 
 $applications = $pdo->prepare("
-    SELECT fta.*, u.firstname, u.lastname, u.email, u.phone, COALESCE(u.level, 1) AS user_level, COALESCE(u.role, 'user') AS user_role
+    SELECT fta.*, u.firstname, u.lastname, u.email, u.phone, COALESCE(u.level, 1) AS user_level, COALESCE(u.points, 0) AS user_points, COALESCE(u.role, 'user') AS user_role
     FROM future_tour_applications fta
     LEFT JOIN users u ON u.id = fta.user_id
     WHERE fta.future_tour_id = ? AND fta.status IN ('confirmed','waitlist')
@@ -258,6 +259,7 @@ include __DIR__ . '/../includes/admin-header.php';
             $effectiveFee = $hasFee ? getApplicationFee((float)$tour['participation_fee'], $discount, $app['fee_override']) : 0.0;
             $txPaid       = $txPayments[(int)$app['id']]['paid'] ?? null;
             $feeDiff      = $txPaid !== null ? round($txPaid - $effectiveFee, 2) : 0.0;
+            $rankUp       = $app['user_id'] ? getRankUpLevel((int)$app['user_points'], (int)$app['user_level'], $tour['lizzardier_points'] !== null ? (int)$tour['lizzardier_points'] : null) : null;
           ?>
           <tr class="<?= $app['status'] === 'waitlist' ? 'row-dim' : '' ?>" style="border-bottom:1px solid var(--border);">
             <td style="padding:12px 16px;">
@@ -266,6 +268,12 @@ include __DIR__ . '/../includes/admin-header.php';
                 <div style="font-size:11.5px;color:var(--text-muted);"><?= e($app['email']) ?></div>
                 <?php if ($app['phone']): ?>
                   <div style="font-size:11.5px;color:var(--text-muted);"><?= e($app['phone']) ?></div>
+                <?php endif; ?>
+                <?php if ($rankUp): ?>
+                  <span class="rankup-badge" title="<?= (int)$app['user_points'] ?> + <?= (int)$tour['lizzardier_points'] ?> = <?= (int)$app['user_points'] + (int)$tour['lizzardier_points'] ?> pont">
+                    <?php if (getLevelImageFilename($rankUp)): ?><img src="<?= e(getLevelImageUrl($rankUp)) ?>" alt=""><?php endif; ?>
+                    Szintlépés: <strong><?= e(getLevelLabel($rankUp)) ?></strong>
+                  </span>
                 <?php endif; ?>
               <?php else: ?>
                 <div style="font-weight:600;"><?= e($app['guest_name']) ?></div>

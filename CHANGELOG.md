@@ -3,6 +3,22 @@
 A verziószám forrása: `includes/version.php`.
 Major: teljesen új funkció | Minor: fő funkció módosítás vagy alfunkció hozzáadás | Patch: minden egyéb.
 
+## [7.9.0] — 2026-09-24
+
+### Hozzáadva
+- **Várható szintlépés** a meghirdetett túra jelentkezőinél (`admin/future-tour-applicants.php`):
+  ha egy tag a túra Lizzardier pontjával (`future_tours.lizzardier_points`) új rangba lép, a neve alatt
+  „Szintlépés: <rang>” jelvény jelenik meg a leendő rang felvarrójával (a buborék a pontszámítást mutatja).
+  Vendégnél és pont nélküli túránál nem jelenik meg. Új helper: `getRankUpLevel()` (`includes/rank-history.php`),
+  CSS: `.rankup-badge`.
+
+## [7.8.1] — 2026-09-24
+
+### Javítva
+- Meghirdetett túra **kész túrává konvertálásakor** (`admin/future-tour-convert.php`) a Lizzardier pont
+  mezője fixen 0 volt, így a meghirdetett túrán beállított pontot újra be kellett írni. A mező most a
+  `future_tours.lizzardier_points` értékével töltődik ki (ha nincs megadva, 0), és továbbra is módosítható.
+
 ## [7.8.0] — 2026-09-24
 
 ### Hozzáadva

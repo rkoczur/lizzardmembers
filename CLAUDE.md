@@ -175,3 +175,5 @@ Megjelenítés: `includes/rank-history-card.php` (`$ranks`, `$rankPoints`, `$ran
 `getTourRankAchievers($pdo, $tourId)` — a túrán rangot szerzett tagok; megjelenítés: `admin/tour-view.php`
 (szem ikon az `admin/tours.php` listában). Ez az oldal a `user/tour-detail.php`-t tölti be `$adminView = true`
  mellett — a tagi túranézetet ezért mindig úgy módosítsd, hogy admin keretben is működjön. CSS: `.achiever-*`, `.btn-view`.
+`getRankUpLevel($points, $level, $tourPoints)` — a meghirdetett túrával elért új szint (vagy null);
+`admin/future-tour-applicants.php` „Szintlépés” jelvénye (`.rankup-badge`) használja.
