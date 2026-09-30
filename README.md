@@ -44,6 +44,9 @@ Nincs JS keretrendszer: sima PHP, PDO, natív JS és saját CSS. A felhasználó
 - **Túrák** — megtett túrák naplózása, pontszámítás, automatikus szintlépés (Újonc … Ezredes).
 - **Meghirdetett túrák** — jelentkezés, várólista, részvételi díj és tagi kedvezmény, e-mail értesítők,
   fizetési emlékeztető a még nem fizető jelentkezőknek.
+- **Telekocsi-szervező** — a meghirdetett túra jelentkezői oldalán egy gombbal egyedi link készül,
+  ahol a résztvevők (bejelentkezés nélkül, a jelentkezéskor megadott e-mail címükkel azonosítva)
+  sofőrként helyet kínálnak, vagy utasként helyet foglalnak egy autóban.
 - **Könyvelés** — bevétel/kiadás nyilvántartás, CSV import/export, eseményhez kötés.
 - **Egyéni folyószámla** — tagonként az előírt és a ténylegesen befizetett túra-részvételi díj,
   valamint az egyenleg (a tagdíj nem része). A túrához rendelt befizetés automatikusan

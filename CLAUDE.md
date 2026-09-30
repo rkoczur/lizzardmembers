@@ -164,6 +164,18 @@ include __DIR__ . '/../includes/admin-footer.php'; // or user-footer.php
    Natív oldal: `public/tour-apply.php` — mindhárom űrlap (tag / vendég / tagfelvétel) a közös
    `includes/tour-apply-fields.php` részleget használja. WP plugin: `j_custom_field_N` mezőnevek,
    amelyeket a JS `custom_field_N`-re nevez át küldés előtt.
+## Telekocsi-szervező (`includes/carpool.php`)
+Túránként egy `carpools` sor egyedi 32 hex karakteres `token`-nel (`createCarpool()`); link: `carpoolUrl()` →
+`public/telekocsi.php?t=<token>`. Létrehozás: `actions/carpool-create.php` (`requireAdminOrVezeto()`),
+gomb/link az `admin/future-tour-applicants.php` `#telekocsi` sávjában.
+- Azonosítás bejelentkezés nélkül: `findCarpoolApplicationByEmail()` (tag `users.email` vagy `guest_email`,
+  `status != 'cancelled'`), az eredmény a `$_SESSION['carpool'][$token]`-ben. Bejelentkezett tagot automatikusan azonosít.
+- `carpool_drivers` (jelentkezésenként max. 1, `seats` 1–`CARPOOL_MAX_SEATS`, `phone`/`contact_extra` közül legalább egy,
+  `departure` kötelező), `carpool_passengers` (jelentkezésenként max. 1 hely). Sofőr nem lehet utas.
+- Minden publikus művelet: `actions/carpool-action.php` (`op`: identify, forget, driver_save, driver_remove, book, unbook).
+- Részlegek: `includes/carpool-identify.php`, `-me.php`, `-car.php`. JS: `assets/js/carpool.js`. CSS: `.cp-*`.
+- Vezető (admin/helyettes/túravezető) azonosítás nélkül is látja az autókat („vezetői nézet”).
+
 ## Ranglétra (`includes/rank-history.php`)
 A rang megszerzése nincs tárolva — `getRankHistory($pdo, $userId)` számolja: a tag túráit
 (`tour_members`) időrendben (`tour_date IS NULL, tour_date, id`) összesíti, és ahol a pontösszeg átlépi

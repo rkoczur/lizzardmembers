@@ -26,6 +26,8 @@ $seoImg       = preg_match('#^https?://#', $seoImgRaw) ? $seoImgRaw : $seoRoot .
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><?= e($seoTitle) ?></title>
   <meta name="description" content="<?= e($seoDesc) ?>">
+  <?php if (!empty($metaRobots)): ?><meta name="robots" content="<?= e($metaRobots) ?>">
+  <?php endif; ?>
   <?php if ($seoKeywords !== ''): ?><meta name="keywords" content="<?= e($seoKeywords) ?>">
   <?php endif; ?>
   <link rel="canonical" href="<?= e($seoCanonical) ?>">

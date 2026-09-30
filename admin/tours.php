@@ -217,7 +217,11 @@ include __DIR__ . '/../includes/admin-header.php';
                 echo number_format((float)$t['tour_hours'], 1, ',', ' ') . ' óra';
             else: echo '—'; endif; ?>
           </td>
-          <td><?= $t['total_elevation'] !== null ? number_format((int)$t['total_elevation']) . ' m' : '—' ?></td>
+          <td>
+            <?php
+            $fullElev = (int)($t['total_elevation'] ?? 0) + (int)($t['alpine_elevation'] ?? 0);
+            echo ($t['total_elevation'] !== null || $t['alpine_elevation'] !== null) ? number_format($fullElev) . ' m' : '—'; ?>
+          </td>
           <td><?= (int)$t['member_count'] ?> tag<?= ($t['guest_count'] ?? 0) > 0 ? ', ' . (int)$t['guest_count'] . ' vendég' : '' ?></td>
           <td><?= (int)$t['points'] > 0 ? '<strong>' . number_format((int)$t['points']) . '</strong>' : '' ?></td>
           <td><?= number_format((int)($t['mtsz_points'] ?? 0)) ?></td>

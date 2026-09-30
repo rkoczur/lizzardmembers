@@ -8,6 +8,7 @@ require_once __DIR__ . '/../includes/future-tours-schema.php';
 require_once __DIR__ . '/../includes/join-schema.php';
 require_once __DIR__ . '/../includes/member-account.php';
 require_once __DIR__ . '/../includes/rank-history.php';
+require_once __DIR__ . '/../includes/carpool.php';
 requireAdminOrVezeto();
 
 $pdo = getDb();
@@ -63,6 +64,15 @@ $addableMembers = $pdo->prepare("
 ");
 $addableMembers->execute([$id]);
 $addableMembers = $addableMembers->fetchAll();
+
+ensureCarpoolSchema($pdo);
+$carpool      = getCarpoolByTour($pdo, $id);
+$carpoolStats = ['drivers' => 0, 'seats' => 0, 'taken' => 0];
+foreach ($carpool ? getCarpoolDrivers($pdo, (int)$carpool['id']) : [] as $d) {
+    $carpoolStats['drivers']++;
+    $carpoolStats['seats'] += (int)$d['seats'];
+    $carpoolStats['taken'] += count($d['passengers']);
+}
 
 $flash_success = getFlash('success');
 $flash_error   = getFlash('error');
@@ -145,6 +155,24 @@ include __DIR__ . '/../includes/admin-header.php';
   </div>
   <?php endif; ?>
 </div>
+
+<!-- Telekocsi-szervező -->
+<div class="cp-admin-strip" id="telekocsi">
+  <span class="cp-admin-label">Telekocsi</span>
+  <?php if ($carpool): ?>
+    <input type="text" class="cp-admin-url" value="<?= e(carpoolUrl($carpool)) ?>" readonly data-cp-url>
+    <button type="button" class="cp-admin-btn" data-cp-copy>Link másolása</button>
+    <a href="<?= e(carpoolUrl($carpool)) ?>" target="_blank" rel="noopener" class="cp-admin-btn cp-admin-btn-ghost">Megnyitás</a>
+    <span class="cp-admin-stat"><?= $carpoolStats['drivers'] ?> sofőr · <?= $carpoolStats['taken'] ?>/<?= $carpoolStats['seats'] ?> hely foglalt</span>
+  <?php else: ?>
+    <form method="post" action="<?= BASE_URL ?>/actions/carpool-create.php">
+      <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
+      <input type="hidden" name="tour_id" value="<?= $id ?>">
+      <button type="submit" class="cp-admin-btn">Telekocsi-szervező létrehozása</button>
+    </form>
+  <?php endif; ?>
+</div>
+<script src="<?= BASE_URL ?>/assets/js/carpool.js?v=<?= APP_VERSION ?>" defer></script>
 
 <?php if (!empty($pendingGuests)): ?>
 <!-- Pending guests -->

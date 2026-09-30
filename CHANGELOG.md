@@ -3,6 +3,29 @@
 A verziószám forrása: `includes/version.php`.
 Major: teljesen új funkció | Minor: fő funkció módosítás vagy alfunkció hozzáadás | Patch: minden egyéb.
 
+## [8.0.1] — 2026-09-28
+
+### Javítva
+- A túralistában (`admin/tours.php`, `user/tours.php`) a „Szintemelkedés” oszlop a magashegyi
+  szintemelkedést (`alpine_elevation`) is hozzáadja a nem magashegyihez, ahogy a km oszlop is összegez.
+
+## [8.0.0] — 2026-09-28
+
+### Hozzáadva
+- **Telekocsi-szervező** a meghirdetett túrákhoz. Az `admin/future-tour-applicants.php` „Telekocsi”
+  sávjában egy gombbal (`actions/carpool-create.php`) egyedi, titkos link készül
+  (`public/telekocsi.php?t=<token>`), amely másolható és megnyitható.
+- A linken a résztvevő a túrára jelentkezéskor megadott e-mail címével azonosítja magát (tag vagy vendég,
+  nem lemondott jelentkezés); a bejelentkezett tagot automatikusan felismeri. Ismeretlen e-mail esetén
+  link a túra oldalára, ahol jelentkezni lehet.
+- **Sofőr**: szabad helyek száma (1–8), legalább egy elérhetőség (lehetőleg telefonszám), indulási hely,
+  indulás ideje, útvonal. A sofőr látja az utasai elérhetőségét, és visszaléphet (az utasok foglalása törlődik).
+- **Utas**: az autók üléstérképén a szabad helyre kattintva foglal, átülhet másik autóba, lemondhatja a helyét.
+  A foglalás zárolással véd a túlfoglalás ellen.
+- Új táblák: `carpools`, `carpool_drivers`, `carpool_passengers` (`includes/carpool.php` → `ensureCarpoolSchema()`).
+  Publikus műveletek: `actions/carpool-action.php`. CSS: `.cp-*`. A publikus fejléc új `$metaRobots` változója
+  (`noindex`) a link indexelését tiltja.
+
 ## [7.9.0] — 2026-09-24
 
 ### Hozzáadva
