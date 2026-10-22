@@ -24,6 +24,10 @@
     if (!filled) ev.preventDefault();
   });
 
+  // Értesítő kapcsoló: azonnali mentés
+  document.querySelectorAll('[data-cp-autosubmit]').forEach(f =>
+    f.addEventListener('change', () => f.submit()));
+
   // Megerősítés kérése
   document.querySelectorAll('[data-cp-confirm]').forEach(f => f.addEventListener('submit', ev => {
     if (!confirm(f.dataset.cpConfirm)) ev.preventDefault();

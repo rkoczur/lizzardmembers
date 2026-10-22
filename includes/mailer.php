@@ -24,8 +24,9 @@ class SmtpMailer
      * Elküldi az e-mailt. Visszaadja a szerver utolsó (DATA utáni) válaszát,
      * hogy naplózható legyen. Hiba esetén RuntimeException-t dob, amelynek
      * üzenete tartalmazza az SMTP hibakódot és a szerver válaszát.
+     * A $bcc címek csak borítékcímzettek (RCPT TO), fejlécben nem jelennek meg.
      */
-    public function send(string $toEmail, string $toName, string $subject, string $htmlBody, string $textBody = '', string $replyTo = ''): string
+    public function send(string $toEmail, string $toName, string $subject, string $htmlBody, string $textBody = '', string $replyTo = '', array $bcc = []): string
     {
         if (!$this->host) {
             throw new RuntimeException('Az SMTP szerver nincs beállítva.');
@@ -72,6 +73,9 @@ class SmtpMailer
 
         $this->cmd($sock, "MAIL FROM:<{$this->fromEmail}>", 250);
         $this->cmd($sock, "RCPT TO:<{$toEmail}>", [250, 251]);
+        foreach ($bcc as $addr) {
+            $this->cmd($sock, "RCPT TO:<{$addr}>", [250, 251]);
+        }
         $this->cmd($sock, 'DATA', 354);
 
         fwrite($sock, $this->buildMessage($toEmail, $toName, $subject, $htmlBody, $textBody, $replyTo) . "\r\n.\r\n");

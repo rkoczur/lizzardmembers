@@ -109,6 +109,14 @@ Originals live in `mtsz-kituzo/` at the repo root (450 px, one is a JPG) — not
 - CSS: `.mtsz-badge`, `.mtsz-badge-img`, `.mtsz-side-list`, `.mtsz-dash-list` in `assets/css/style.css`.
   `.mtsz-side-item img` must override `.profile-avatar-card img` (circle crop) — keep the selector specific.
 
+## Adatmódosítás jóváhagyással (`includes/profile-change.php`)
+Tag (nem vezető, `!isAnyLeader()`) a `user/profile.php`-n nem írhatja közvetlenül a `zipcode`, `city`, `address`,
+`phone` mezőket: az `actions/profile-update.php` `saveProfileChangeRequest()`-tel függő `profile_change_requests` sort
+ment (tagonként max. 1 `pending`), a `users` sorban a régi érték marad. A lakcím kötelező (üres nem menthető).
+A profil űrlap a függő kért értékeket mutatja (`$contact`), különben újramentéskor törlődne a kérelem.
+Jóváhagyás / elutasítás: `admin/members.php?tab=changes` (`includes/profile-change-list.php`) →
+`actions/profile-change-process.php` (`requireAdmin()`, audit napló). Sidebar „Tagok” jelvény ezeket is számolja. CSS: `.pchg-*`.
+
 ## Egyéni folyószámla
 `includes/member-account.php` — a tag előírt és ténylegesen befizetett **részvételi díjai**.
 A tagdíj NEM része a folyószámlának (a tagdíj állapotát a `getMemberStatus()` / `last_payment` adja).
@@ -164,6 +172,12 @@ include __DIR__ . '/../includes/admin-footer.php'; // or user-footer.php
    Natív oldal: `public/tour-apply.php` — mindhárom űrlap (tag / vendég / tagfelvétel) a közös
    `includes/tour-apply-fields.php` részleget használja. WP plugin: `j_custom_field_N` mezőnevek,
    amelyeket a JS `custom_field_N`-re nevez át küldés előtt.
+## Naptár-meghívó (`includes/calendar-invite.php`)
+`getTourCalendarEvent($pdo, $tourId, $absBaseUrl)` → egész napos esemény (`start_date` … +`num_days`, kizárólagos vég),
+null ha törölt / nincs dátum. `calendarGoogleUrl()`, `calendarOutlookUrl($ev, 'outlook.live.com'|'outlook.office.com')`,
+`calendarIcs()` (RFC 5545, 75 oktetes sortörés), `calendarButtonsEmailHtml()` — e-mail blokk (inline stílus, mint a többi levél).
+.ics letöltés: `public/tour-calendar.php?id=` (publikus). Használja: `actions/future-tour-accept.php`, `future-tour-approve-guest.php`.
+
 ## Telekocsi-szervező (`includes/carpool.php`)
 Túránként egy `carpools` sor egyedi 32 hex karakteres `token`-nel (`createCarpool()`); link: `carpoolUrl()` →
 `public/telekocsi.php?t=<token>`. Létrehozás: `actions/carpool-create.php` (`requireAdminOrVezeto()`),
@@ -175,6 +189,11 @@ gomb/link az `admin/future-tour-applicants.php` `#telekocsi` sávjában.
 - Minden publikus művelet: `actions/carpool-action.php` (`op`: identify, forget, driver_save, driver_remove, book, unbook).
 - Részlegek: `includes/carpool-identify.php`, `-me.php`, `-car.php`. JS: `assets/js/carpool.js`. CSS: `.cp-*`.
 - Vezető (admin/helyettes/túravezető) azonosítás nélkül is látja az autókat („vezetői nézet”).
+- Értesítő (`includes/carpool-notify.php`): `carpool_watchers` (jelentkezésenként max. 1), `op=watch` kapcsolja.
+  `notifyCarpoolWatchers($pdo, $carpool, 'new_driver'|'seat_freed', $driverId, $actorAppId)` — BCC levél,
+  az okozó kimarad, csak ha az autóban van szabad hely. Hívják: `carpool-action.php`, `future-tour-cancel.php`.
+- Link kiküldése: `actions/carpool-mail.php` — egy e-mail, a `confirmed` jelentkezők BCC-ben
+  (`SmtpMailer::send(..., $bcc)`), Reply-To a küldő; ideje: `carpools.mailed_at`.
 
 ## Ranglétra (`includes/rank-history.php`)
 A rang megszerzése nincs tárolva — `getRankHistory($pdo, $userId)` számolja: a tag túráit
@@ -189,3 +208,15 @@ Megjelenítés: `includes/rank-history-card.php` (`$ranks`, `$rankPoints`, `$ran
  mellett — a tagi túranézetet ezért mindig úgy módosítsd, hogy admin keretben is működjön. CSS: `.achiever-*`, `.btn-view`.
 `getRankUpLevel($points, $level, $tourPoints)` — a meghirdetett túrával elért új szint (vagy null);
 `admin/future-tour-applicants.php` „Szintlépés” jelvénye (`.rankup-badge`) használja.
+
+## Önálló telekocsi-szervező (`telekocsi/`)
+Külön app, az alaprendszer kódját (includes/, assets/) NEM használja — ne is kösd hozzá. URL: `BASE_URL/telekocsi`.
+- DB: `telekocsi/config.ini` [database], ennek hiányában a gyökér `config.ini`. Táblák: `tk_boards` (8 karakteres `code`),
+  `tk_people` (táblánként egyedi e-mail, titkos `secret` a sütihez, `is_owner`), `tk_drivers`, `tk_passengers`.
+- `index.php` (nyitóoldal / `?k=KOD`, `.htaccess` rewrite: `/telekocsi/KOD`), `action.php` (minden POST, `op`:
+  create, join, forget, driver_save, driver_remove, book, unbook). Logika: `lib/core.php`, `lib/boards.php`, `lib/rides.php`.
+  Nézetek: `views/`. CSS/JS: `telekocsi/assets/style.css`, `app.js` (`.tk-*` osztályok, `data-tk-*` attribútumok).
+- E-mail: `lib/mailer.php` (`TkMailer`, `tkMailConfig()`, `tkSendMail()`), `lib/notify.php` (`tkNotify($pdo, $board, $event, $car, $actor, $toOwner)`,
+  események: driver_new, driver_removed, passenger_booked, passenger_left). Címzett: szervező (`is_owner`) + passenger_* eseménynél
+  az autó sofőrje; az okozó kimarad, duplikáció nincs. SMTP: `config.ini [smtp]` → közös `settings` smtp_*. `[mail] log_only = 1` → `data/mail.log`.
+- Azonosítás: süti `tk_<KOD>` = a résztvevő `secret`-je (180 nap). CSRF: `tkCsrf()` / `tkVerifyCsrf()`.

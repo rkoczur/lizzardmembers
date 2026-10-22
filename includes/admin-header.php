@@ -29,6 +29,9 @@
     try {
         $_pendingApps = (int)getDb()->query("SELECT COUNT(*) FROM member_applications WHERE status='pending'")->fetchColumn();
     } catch (Throwable) {}
+    try {
+        $_pendingApps += (int)getDb()->query("SELECT COUNT(*) FROM profile_change_requests WHERE status='pending'")->fetchColumn();
+    } catch (Throwable) {}
     $_pendingTours = 0;
     try {
         $_pendingTours = (int)getDb()->query("SELECT COUNT(*) FROM tours WHERE status='pending'")->fetchColumn();

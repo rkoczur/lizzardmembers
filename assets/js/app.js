@@ -359,14 +359,25 @@ function initMobileMenu() {
 /* ===== Responsive tables: auto data-label a thead szövegéből ===== */
 function initResponsiveTables() {
   document.querySelectorAll('.table-wrap table').forEach(table => {
-    const headers = Array.from(table.querySelectorAll('thead th'))
-                         .map(th => th.textContent.trim());
+    const headers = Array.from(table.querySelectorAll('thead th')).map(thLabel);
     table.querySelectorAll('tbody tr').forEach(row => {
       Array.from(row.querySelectorAll('td')).forEach((td, i) => {
-        td.setAttribute('data-label', headers[i] ?? '');
+        const label = headers[i] ?? '';
+        td.setAttribute('data-label', label);
+        // Üres fejléc + gomb/link: mobilon is látható műveleti cella
+        if (label === '' && td.querySelector('a, button, form')) td.classList.add('td-actions');
+        // Több oszlopos cella (pl. üres állapot): teljes szélesség, címke nélkül
+        if (td.colSpan > 1) td.classList.add('td-full');
       });
     });
   });
+}
+
+// Fejléc szövege az oszlopszűrő menü nélkül
+function thLabel(th) {
+  const clone = th.cloneNode(true);
+  clone.querySelectorAll('.col-filter-wrap').forEach(el => el.remove());
+  return clone.textContent.trim();
 }
 
 /* ===== Hero parallax ===== */

@@ -586,7 +586,7 @@ $jsInitAccom     = json_encode($old['accommodation'] ?? '');
     if (!tourName) tourName = countryName;
 
     var rawDate = (form.querySelector('[name="tour_date"]').value || '').trim();
-    var tourDate = rawDate ? rawDate.split('-').reverse().join('.') : '—';
+    var tourDate = rawDate ? rawDate.split('-').join('.') : '—';
 
     var tourTypeEl = form.querySelector('[name="tour_type"]');
     var tourType = tourTypeEl ? tourTypeEl.value : 'gyalogos';

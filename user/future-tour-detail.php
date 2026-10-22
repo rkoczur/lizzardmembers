@@ -289,8 +289,17 @@ include __DIR__ . '/../includes/user-header.php';
             </div>
           <?php endif; ?>
         <?php endif; ?>
+        <?php $paidFee = $myApp['paid_at'] && (float)($tour['participation_fee'] ?? 0) > 0; ?>
+        <?php if ($paidFee): ?>
+          <div class="alert-warning-box cancel-refund-warn">
+            <strong>Figyelem!</strong> A részvételi díjat már befizetted. Ha lemondod a jelentkezésedet,
+            a befizetett díjat nem kapod vissza.
+          </div>
+        <?php endif; ?>
         <form method="post" action="<?= BASE_URL ?>/actions/future-tour-cancel.php"
-              onsubmit="return confirm('Biztosan lemondod a jelentkezésedet?')">
+              onsubmit="return confirm('<?= $paidFee
+                  ? 'Biztosan lemondod a jelentkezésedet? A már befizetett részvételi díjat NEM kapod vissza.'
+                  : 'Biztosan lemondod a jelentkezésedet?' ?>')">
           <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
           <input type="hidden" name="tour_id" value="<?= (int)$id ?>">
           <button type="submit" class="btn btn-ghost btn-sm" style="color:var(--danger);border-color:var(--danger);">Lemondás</button>

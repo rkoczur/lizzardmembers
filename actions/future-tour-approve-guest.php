@@ -8,6 +8,7 @@ require_once __DIR__ . '/../includes/future-tours-schema.php';
 require_once __DIR__ . '/../includes/mailer.php';
 require_once __DIR__ . '/../includes/app-settings-schema.php';
 require_once __DIR__ . '/../includes/email-log-schema.php';
+require_once __DIR__ . '/../includes/calendar-invite.php';
 requireAdmin();
 verifyCsrf();
 
@@ -59,6 +60,7 @@ $guestName  = $app['guest_name'];
 $guestEmail = $app['guest_email'];
 
 if ($newStatus === 'confirmed') {
+    $calEvent   = getTourCalendarEvent($pdo, $tourId, $absBaseUrl);
     $subject    = 'Részvételed megerősítve – ' . $app['tour_name'];
     $statusHtml = '<strong style="color:#29776F;">Státusz: Megerősített</strong>';
     $noteHtml   = (float)($app['participation_fee'] ?? 0) > 0
@@ -66,6 +68,7 @@ if ($newStatus === 'confirmed') {
         ⚠ Kérjük, a részvételi díjat <strong>14 napon belül</strong> utald el. Ellenkező esetben a rendszer automatikusan törli a foglalásodat.
       </div>' . bankInfoEmailHtml()
       : '';
+    $noteHtml  .= $calEvent ? calendarButtonsEmailHtml($calEvent) : '';
 } else {
     $subject    = 'Várólistán vagy – ' . $app['tour_name'];
     $statusHtml = '<strong style="color:#b45309;">Státusz: Várólistán</strong>';

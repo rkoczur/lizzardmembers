@@ -8,6 +8,9 @@ require_once __DIR__ . '/../includes/future-tours-schema.php';
 require_once __DIR__ . '/../includes/mailer.php';
 require_once __DIR__ . '/../includes/app-settings-schema.php';
 require_once __DIR__ . '/../includes/email-log-schema.php';
+require_once __DIR__ . '/../includes/tour-cancel-admin-email.php';
+require_once __DIR__ . '/../includes/carpool.php';
+require_once __DIR__ . '/../includes/carpool-notify.php';
 requireUser();
 verifyCsrf();
 
@@ -36,25 +39,43 @@ if (!$app) {
 
 $wasConfirmed = $app['status'] === 'confirmed';
 
+// Telekocsi: ha utas volt, a lemondással hely szabadul fel
+ensureCarpoolSchema($pdo);
+ensureCarpoolWatchSchema($pdo);
+$carpool = getCarpoolByTour($pdo, $tourId);
+$carpool = $carpool ? getCarpoolByToken($pdo, $carpool['token']) : null;
+$cpRole  = $carpool ? getCarpoolRole(getCarpoolDrivers($pdo, (int)$carpool['id']), (int)$app['id']) : null;
+
 $pdo->prepare("UPDATE future_tour_applications SET status = 'cancelled' WHERE id = ?")->execute([$app['id']]);
 
 // Promote first waitlist entry if a confirmed spot was freed
-if ($wasConfirmed) {
-    promoteFirstWaitlist($pdo, $tourId);
+$promotedName = $wasConfirmed ? promoteFirstWaitlist($pdo, $tourId) : null;
+
+if ($cpRole && $cpRole['role'] === 'passenger') {
+    notifyCarpoolWatchers($pdo, $carpool, 'seat_freed', $cpRole['driver_id'], (int)$app['id']);
+}
+
+try {
+    notifyAdminsOfTourCancel($pdo, $tourId, $userId, $app['status'], $promotedName);
+} catch (Throwable $ex) {
+    error_log('Tour cancel admin notify: ' . $ex->getMessage());
 }
 
 flash('success', 'Jelentkezésedet sikeresen lemondtad.');
 header('Location: ' . BASE_URL . '/user/future-tour-detail.php?id=' . $tourId);
 exit;
 
-function promoteFirstWaitlist(PDO $pdo, int $tourId): void
+/** Returns the promoted member's name, or null if the waitlist was empty. */
+function promoteFirstWaitlist(PDO $pdo, int $tourId): ?string
 {
     $waitlistStmt = $pdo->prepare("SELECT fta.*, u.email, u.firstname, u.lastname FROM future_tour_applications fta JOIN users u ON u.id = fta.user_id WHERE fta.future_tour_id = ? AND fta.status = 'waitlist' ORDER BY fta.applied_at ASC LIMIT 1");
     $waitlistStmt->execute([$tourId]);
     $next = $waitlistStmt->fetch();
-    if (!$next) return;
+    if (!$next) return null;
 
     $pdo->prepare("UPDATE future_tour_applications SET status = 'confirmed' WHERE id = ?")->execute([$next['id']]);
+
+    $fullName = $next['lastname'] . ' ' . $next['firstname'];
 
     // Send email notification
     try {
@@ -63,9 +84,8 @@ function promoteFirstWaitlist(PDO $pdo, int $tourId): void
         $tourRow = $pdo->prepare("SELECT * FROM future_tours WHERE id = ? LIMIT 1");
         $tourRow->execute([$tourId]);
         $tour = $tourRow->fetch();
-        if (!$tour) return;
+        if (!$tour) return $fullName;
 
-        $fullName  = $next['lastname'] . ' ' . $next['firstname'];
         $subject   = 'Hely felszabadult – ' . $tour['name'];
         $proto     = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
         $tourUrl   = $proto . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . BASE_URL . '/user/future-tour-detail.php?id=' . $tourId;
@@ -95,4 +115,5 @@ function promoteFirstWaitlist(PDO $pdo, int $tourId): void
         $mailer->send($next['email'], $fullName, $subject, $html);
         logEmailEntry($pdo, (int)$next['user_id'], $next['email'], $fullName, $subject, $html, 'future_tour_waitlist_promoted', 'sent');
     } catch (Throwable) {}
+    return $fullName;
 }

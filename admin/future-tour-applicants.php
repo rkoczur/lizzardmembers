@@ -163,7 +163,16 @@ include __DIR__ . '/../includes/admin-header.php';
     <input type="text" class="cp-admin-url" value="<?= e(carpoolUrl($carpool)) ?>" readonly data-cp-url>
     <button type="button" class="cp-admin-btn" data-cp-copy>Link másolása</button>
     <a href="<?= e(carpoolUrl($carpool)) ?>" target="_blank" rel="noopener" class="cp-admin-btn cp-admin-btn-ghost">Megnyitás</a>
+    <form method="post" action="<?= BASE_URL ?>/actions/carpool-mail.php"
+          data-cp-confirm="Kiküldöd a telekocsi linket e-mailben az összes visszaigazolt résztvevőnek?">
+      <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
+      <input type="hidden" name="tour_id" value="<?= $id ?>">
+      <button type="submit" class="cp-admin-btn">Kiküldés e-mailben</button>
+    </form>
     <span class="cp-admin-stat"><?= $carpoolStats['drivers'] ?> sofőr · <?= $carpoolStats['taken'] ?>/<?= $carpoolStats['seats'] ?> hely foglalt</span>
+    <?php if (!empty($carpool['mailed_at'])): ?>
+      <span class="cp-admin-stat">Kiküldve: <?= e(date('Y.m.d H:i', strtotime($carpool['mailed_at']))) ?></span>
+    <?php endif; ?>
   <?php else: ?>
     <form method="post" action="<?= BASE_URL ?>/actions/carpool-create.php">
       <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">

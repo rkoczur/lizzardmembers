@@ -37,16 +37,29 @@ Nincs JS keretrendszer: sima PHP, PDO, natív JS és saját CSS. A felhasználó
 | `finance/` | Könyvelési import minták |
 | `kviz/` | Kvízjáték forrásadatok |
 | `wp-plugins/` | WordPress bővítmények |
+| `telekocsi/` | Önálló telekocsi-szervező (külön app, az alaprendszert nem használja) |
 
 ## Fő funkciók
 
 - **Tagságkezelés** — tagok, szerepkörök, avatar, éves tagdíj állapota a tranzakciós naplóból számolva.
+- **Adatmódosítás jóváhagyással** — ha egy tag a profilján módosítja a lakcímét vagy telefonszámát,
+  az csak admin jóváhagyás után lép életbe (Tagok → „Adatmódosítások” fül). A lakcím nem törölhető.
 - **Túrák** — megtett túrák naplózása, pontszámítás, automatikus szintlépés (Újonc … Ezredes).
 - **Meghirdetett túrák** — jelentkezés, várólista, részvételi díj és tagi kedvezmény, e-mail értesítők,
-  fizetési emlékeztető a még nem fizető jelentkezőknek.
+  fizetési emlékeztető a még nem fizető jelentkezőknek. Ha egy tag lemondja a jelentkezését, az adminok
+  (admin, helyettes) és a túra létrehozója e-mail értesítőt kapnak. Az elfogadó e-mailben egy kattintással
+  naptárba menthető a túra (Google Naptár, Outlook.com).
 - **Telekocsi-szervező** — a meghirdetett túra jelentkezői oldalán egy gombbal egyedi link készül,
   ahol a résztvevők (bejelentkezés nélkül, a jelentkezéskor megadott e-mail címükkel azonosítva)
-  sofőrként helyet kínálnak, vagy utasként helyet foglalnak egy autóban.
+  sofőrként helyet kínálnak, vagy utasként helyet foglalnak egy autóban. A link egy gombbal
+  e-mailben is kiküldhető az összes visszaigazolt résztvevőnek (egy levél, mindenki BCC-ben).
+  A résztvevők értesítőt kérhetnek, ha új sofőr regisztrál vagy hely szabadul fel.
+- **Önálló telekocsi-szervező** (`/telekocsi`) — bárki létrehozhat egy szervezőt név + e-mail címmel.
+  A rendszer egyedi kódot generál (pl. `ABCD-2345`), ez az oldal tetején és az URL-ben is szerepel
+  (`/telekocsi/ABCD2345`). A résztvevők név + e-mail címmel csatlakoznak, majd sofőrként helyet kínálnak
+  vagy utasként helyet foglalnak. Saját design, saját `tk_*` táblák; az alaprendszer kódját nem használja.
+  E-mail értesítő: a szervező minden sofőr/utas változásról, a sofőr az autójába érkező (és onnan távozó)
+  utasokról levelet kap. SMTP: `telekocsi/config.ini [smtp]`, vagy a közös `settings` tábla `smtp_*` értékei.
 - **Könyvelés** — bevétel/kiadás nyilvántartás, CSV import/export, eseményhez kötés.
 - **Egyéni folyószámla** — tagonként az előírt és a ténylegesen befizetett túra-részvételi díj,
   valamint az egyenleg (a tagdíj nem része). A túrához rendelt befizetés automatikusan

@@ -6,10 +6,12 @@ require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/future-tours-schema.php';
 require_once __DIR__ . '/../includes/carpool.php';
+require_once __DIR__ . '/../includes/carpool-notify.php';
 
 $pdo = getDb();
 ensureFutureToursSchema($pdo);
 ensureCarpoolSchema($pdo);
+ensureCarpoolWatchSchema($pdo);
 
 $token   = (string)($_GET['t'] ?? '');
 $carpool = getCarpoolByToken($pdo, $token);
@@ -40,6 +42,7 @@ $role      = $me ? getCarpoolRole($drivers, (int)$me['id']) : ['role' => null, '
 $myCar     = null;
 foreach ($drivers as $d) if ((int)$d['id'] === $role['driver_id']) $myCar = $d;
 $readOnly  = $carpool['tour_status'] === 'cancelled';
+$watching  = $me && isCarpoolWatching($pdo, (int)$me['id']);
 
 $freeTotal = array_sum(array_column($drivers, 'free'));
 $tourUrl   = BASE_URL . '/public/tour-detail.php?id=' . $tourId;

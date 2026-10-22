@@ -1,5 +1,5 @@
 <?php
-/** Telekocsi: az azonosított résztvevő saját szerepe. Vár: $me, $role, $myCar, $form, $openPanel, $freeTotal, $readOnly, $token, $post. */
+/** Telekocsi: az azonosított résztvevő saját szerepe. Vár: $me, $role, $myCar, $watching, $form, $openPanel, $freeTotal, $readOnly, $token, $post. */
 $hidden = '<input type="hidden" name="csrf_token" value="' . csrfToken() . '"><input type="hidden" name="t" value="' . e($token) . '">';
 $status = match ($role['role']) {
     'driver'    => 'Sofőrként jössz, ' . (int)$myCar['seats'] . ' hellyel.',
@@ -20,6 +20,19 @@ $status = match ($role['role']) {
   </div>
 
   <?php if (!$readOnly): ?>
+  <form method="post" action="<?= $post ?>" class="cp-watch<?= $watching ? ' is-on' : '' ?>" data-cp-autosubmit>
+    <?= $hidden ?><input type="hidden" name="op" value="watch">
+    <label class="cp-watch-toggle">
+      <input type="checkbox" name="watch" value="1" class="cp-watch-input"<?= $watching ? ' checked' : '' ?>>
+      <span class="cp-watch-switch" aria-hidden="true"><span class="cp-watch-bell"></span></span>
+      <span class="cp-watch-text">
+        <strong>Értesítést kérek</strong>
+        <small>E-mailt kapok, ha új sofőr regisztrál, vagy felszabadul egy hely.</small>
+      </span>
+    </label>
+    <noscript><button type="submit" class="cp-btn">Mentés</button></noscript>
+  </form>
+
   <div class="cp-roles" role="tablist">
     <button type="button" class="cp-role<?= $openPanel === 'driver' ? ' is-active' : '' ?>" data-cp-tab="driver">
       <span class="cp-role-icon cp-role-icon-wheel" aria-hidden="true"></span>
@@ -27,7 +40,7 @@ $status = match ($role['role']) {
       <span class="cp-role-sub">Helyet kínálok az autómban</span>
     </button>
     <button type="button" class="cp-role<?= $openPanel === 'passenger' ? ' is-active' : '' ?>" data-cp-tab="passenger">
-      <span class="cp-role-icon cp-role-icon-seat" aria-hidden="true"></span>
+      <span class="cp-role-icon cp-role-icon-person" aria-hidden="true"></span>
       <span class="cp-role-title">Utas vagyok</span>
       <span class="cp-role-sub">Helyet keresek egy autóban</span>
     </button>

@@ -8,6 +8,7 @@ require_once __DIR__ . '/../includes/user-schema.php';
 require_once __DIR__ . '/../includes/mtsz-schema.php';
 require_once __DIR__ . '/../includes/future-tours-schema.php';
 require_once __DIR__ . '/../includes/member-account.php';
+require_once __DIR__ . '/../includes/profile-change.php';
 requireUser();
 
 $pdo    = getDb();
@@ -18,6 +19,11 @@ $userId = getCurrentUserId();
 $stmt   = $pdo->prepare("SELECT * FROM users WHERE id = ? LIMIT 1");
 $stmt->execute([$userId]);
 $user   = $stmt->fetch();
+
+// Függő lakcím / telefonszám módosítás: az űrlap a kért értékeket mutatja
+ensureProfileChangeSchema($pdo);
+$pendingChange = getPendingProfileChange($pdo, $userId);
+$contact       = $pendingChange ?: $user;
 
 // MTSZ jelvényes minősítések (csak megtekintés — rögzítésre az egyesületvezető / szakszövetségi vezető jogosult)
 $mtszRows = getMtszQualifications($pdo, $userId);
@@ -150,19 +156,32 @@ include __DIR__ . '/../includes/user-header.php';
           </div>
           <div class="form-group">
             <label>Irányítószám</label>
-            <input type="text" name="zipcode" value="<?= e($user['zipcode'] ?? '') ?>">
+            <input type="text" name="zipcode" value="<?= e($contact['zipcode'] ?? '') ?>" required>
           </div>
           <div class="form-group">
             <label>Város</label>
-            <input type="text" name="city" value="<?= e($user['city'] ?? '') ?>">
+            <input type="text" name="city" value="<?= e($contact['city'] ?? '') ?>" required>
           </div>
           <div class="form-group full">
             <label>Cím</label>
-            <input type="text" name="address" value="<?= e($user['address'] ?? '') ?>">
+            <input type="text" name="address" value="<?= e($contact['address'] ?? '') ?>" required>
           </div>
           <div class="form-group">
             <label>Telefonszám</label>
-            <input type="tel" name="phone" value="<?= e($user['phone'] ?? '') ?>">
+            <input type="tel" name="phone" value="<?= e($contact['phone'] ?? '') ?>">
+          </div>
+          <div class="form-group full">
+            <?php if ($pendingChange): ?>
+              <div class="pchg-note pchg-note-pending">
+                <strong>Jóváhagyásra vár:</strong> a lakcím / telefonszám módosításodat
+                (<?= e((new DateTime($pendingChange['created_at']))->format('Y.m.d H:i')) ?>)
+                egy adminisztrátor még nem hagyta jóvá. Addig a korábbi adataid érvényesek:
+                <?= e(trim(($user['zipcode'] ?? '') . ' ' . ($user['city'] ?? '') . ', ' . ($user['address'] ?? ''), ' ,')) ?: '—' ?>
+                <?php if (!empty($user['phone'])): ?> · <?= e($user['phone']) ?><?php endif; ?>
+              </div>
+            <?php else: ?>
+              <div class="pchg-note">A lakcím és a telefonszám módosítása adminisztrátori jóváhagyás után lép életbe.</div>
+            <?php endif; ?>
           </div>
         </div>
 

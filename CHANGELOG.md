@@ -3,6 +3,168 @@
 A verziószám forrása: `includes/version.php`.
 Major: teljesen új funkció | Minor: fő funkció módosítás vagy alfunkció hozzáadás | Patch: minden egyéb.
 
+## [9.3.1] — 2026-10-19
+
+### Módosítva
+- Naptár-meghívó e-mail blokk: kisebb szakasz és gombok, csak Google Naptár és Outlook.com
+  (a Microsoft 365 és .ics gomb kikerült; a `public/tour-calendar.php` végpont megmaradt).
+- Telekocsi-szervező: a „Sofőr vagyok” gomb ikonja kormánykerék, az „Utas vagyok” gombé stilizált emberalak
+  (SVG maszk, `.cp-role-icon-person`); az autókban a foglalt utas-kártyák sötétebb háttért kaptak.
+
+## [9.3.0] — 2026-10-18
+
+### Hozzáadva
+- **Naptár-meghívó a jelentkezés elfogadó e-mailjében** (`includes/calendar-invite.php`).
+  - Az elfogadó levél (`actions/future-tour-accept.php`) és a vendég megerősítő levele
+    (`actions/future-tour-approve-guest.php`, csak „Megerősített” státusznál) „Mentsd el a túrát a naptáradba”
+    blokkot kap: Google Naptár, Outlook.com, Microsoft 365 és .ics (Outlook asztali, Apple Naptár) gombokkal.
+  - Egész napos esemény a túra kezdő napjától `num_days` napig; helyszín: régió + ország, leírás: rövid bemutató + túra linkje.
+  - Új publikus végpont: `public/tour-calendar.php?id=` — a túra .ics fájlja (törölt túrára 404).
+
+## [9.2.0] — 2026-10-16
+
+### Hozzáadva
+- **Lakcím / telefonszám módosítás admin jóváhagyással** (`includes/profile-change.php`,
+  új tábla: `profile_change_requests`).
+  - A tag a profilján (`user/profile.php`) módosíthatja az irányítószámot, a várost, a címet és a
+    telefonszámot, de ezek nem íródnak azonnal a `users` táblába: függő kérelem jön létre
+    (tagonként legfeljebb egy; újabb mentés felülírja, a jelenlegivel egyező adat törli).
+  - Amíg a kérelem függőben van, a profilon figyelmeztetés látszik a még érvényes adatokkal.
+  - Admin felület: Tagok → „Adatmódosítások” fül (`admin/members.php?tab=changes`), jelenlegi és kért
+    érték egymás mellett, Jóváhagyás / Elutasítás (`actions/profile-change-process.php`, `requireAdmin()`).
+    A jóváhagyás az audit naplóba kerül. A függő kérelmek száma a „Tagok” menüpont jelvényében is megjelenik.
+  - Vezetők (admin profil) adatai továbbra is azonnal módosulnak.
+
+## [9.1.1] — 2026-10-16
+
+### Javítva
+- A tag a saját profilján (`user/profile.php`) nem tudja többé kitörölni a lakcímét: az irányítószám,
+  a város és a cím kötelező mező, a szerveroldali ellenőrzés is (`actions/profile-update.php`).
+  A vezetők admin profilja (`admin/profile.php`) változatlan.
+
+## [9.1.0] — 2026-10-15
+
+### Hozzáadva
+- **Önálló telekocsi-szervező — e-mail értesítők** (`telekocsi/lib/mailer.php`, `lib/notify.php`):
+  - a szervező levelet kap, ha új sofőr jelentkezik, egy sofőr visszalép, új utas foglal helyet,
+    vagy egy utas lemondja / elhagyja a helyét;
+  - a sofőr levelet kap, ha új utas foglal helyet az autójában (vagy egy utasa lemondja a helyét),
+    a levélben az aktuális utaslistával.
+  - Aki a változást okozta, nem kap levelet; aki szervező és sofőr is, egy eseményről egy levelet kap.
+  - Saját SMTP-küldő: `telekocsi/config.ini [smtp]`, ennek hiányában a közös `settings` tábla `smtp_*` értékei.
+    `[mail] log_only = 1` → a levelek nem mennek ki, a `telekocsi/data/mail.log`-ba íródnak (fejlesztéshez).
+  - Levélküldési hiba nem akasztja meg a műveletet (csak `error_log`).
+
+### Módosítva
+- A rendszámtábla-kód fölött „A szervező azonosítója” felirat (`.tk-plate-label`).
+
+ — 2026-10-15
+
+### Hozzáadva
+- **Önálló telekocsi-szervező** a `telekocsi/` mappában (`/telekocsi`). Független az alaprendszertől:
+  saját belépési pont, saját CSS/JS és design (aszfalt + útburkolati jel téma), saját táblák
+  (`tk_boards`, `tk_people`, `tk_drivers`, `tk_passengers`).
+  - Nyitóoldal: „Új telekocsi-szervező létrehozása” (név + e-mail, opcionális megnevezés), valamint
+    meglévő szervező megnyitása kóddal.
+  - Egyedi 8 karakteres kód (összetéveszthető karakterek nélkül), rendszámtábla-stílusban az oldal tetején;
+    URL: `/telekocsi/KOD` (kötőjeles/kisbetűs alak is működik).
+  - Résztvevők név + e-mail címmel csatlakoznak; ugyanazzal az e-mail címmel visszatérhetnek.
+    A böngésző táblánként sütiben (180 nap) megjegyzi a résztvevőt.
+  - Sofőr (helyek, elérhetőség, indulás helye/ideje, útvonal) és utas (helyfoglalás, átülés, lemondás)
+    szerep, résztvevőlista szerep szerinti jelöléssel.
+
+ — 2026-10-13
+
+### Módosítva
+- Telekocsi indulási blokkok: kisebb betűméret (címke 10 px, érték 14,5 px).
+
+## [8.3.4] — 2026-10-13
+
+### Módosítva
+- **Telekocsi indulási blokkok** (Honnan indul / Mikor indul / Szabad hely): sötétebb homoksárga háttér
+  (`#f1d89c`) és okker ikonok, hogy elváljanak az utasok zöldes ülés-blokkjaitól. A három blokk betűtípusa,
+  mérete és színe egységes (címke: 11 px nagybetűs barna, érték: 17 px félkövér sötétbarna); az üres/megtelt
+  állapot külön (dőlt, szürke) stílusa megszűnt, csak a szöveg jelzi.
+
+## [8.3.3] — 2026-10-13
+
+### Módosítva
+- **Telekocsi autókártya fejléce** ismét az arculat sötétzöldje (`--sidebar-bg`), fehér sofőrnévvel
+  (saját autó: `--sidebar-hover` árnyalat). Az indulási sáv, ülések és címkék pasztellek maradnak.
+- **Mobilon** (≤ 640 px) a szabad helyek száma nem a fejlécben, hanem a sofőr neve alatt, az indulás helye és
+  ideje mellett, azonos stílusú sorban jelenik meg (`.cp-depart-free`, ülés ikonnal).
+
+## [8.3.2] — 2026-10-13
+
+### Módosítva
+- **Telekocsi autókártyák**: eltűnt a vastag szaggatott vonal a sofőr neve és az indulási sáv között.
+  Pasztellebb színvilág: világos zöldes fejléc sötét szöveggel (saját autó: halvány barack, megtelt: szürkés),
+  halványabb indulási sáv és ikonok, visszafogottabb ülés-jelölők és elérhetőség-címkék.
+
+## [8.3.1] — 2026-10-13
+
+### Hozzáadva
+- **Lemondás befizetett díjjal**: ha a tag már befizette a részvételi díjat (`paid_at`), a meghirdetett túra
+  oldalán (`user/future-tour-detail.php`) a „Lemondás” gomb fölött figyelmeztetés jelenik meg, hogy a befizetett
+  díjat nem kapja vissza; a megerősítő ablak is ezt írja. CSS: `.cancel-refund-warn`.
+
+## [8.3.0] — 2026-10-13
+
+### Hozzáadva
+- **Telekocsi értesítő**: a telekocsi-szervezőben jól látható „Értesítést kérek” kapcsoló. Aki bekapcsolja,
+  e-mailt kap, ha új sofőr regisztrál, vagy egy autóban hely szabadul fel (utas lemondja / másik autóba ül át /
+  sofőrré válik / lemondja a túrát, vagy a sofőr növeli a helyek számát). Egy levél megy ki, a feliratkozók
+  BCC-ben; az esemény okozója nem kap levelet. Új tábla: `carpool_watchers`, kód: `includes/carpool-notify.php`,
+  napló típus: `carpool_watch`.
+
+### Módosítva
+- **Telekocsi autókártyák**: az autók egymás alatt, teljes szélességben jelennek meg. A kártya tetején a sofőr
+  neve címként, sötét fejlécben; alatta külön kiemelt sávban az indulási hely és idő (ha nincs idő megadva:
+  „egyeztetés alatt”). A sofőr már nem foglal ülés-csempét, az ülések sora csak az utasokat és a szabad helyeket mutatja.
+
+## [8.2.0] — 2026-10-13
+
+### Hozzáadva
+- **Admin értesítő túra lemondásakor**: ha egy tag lemondja a jelentkezését egy meghirdetett túráról
+  (`actions/future-tour-cancel.php`), e-mailt kapnak az aktív admin és helyettes szerepkörű tagok, valamint
+  a túra létrehozója. A levélben: túra neve, indulás, tag neve és e-mail címe, korábbi állapot, és ha a
+  várólistáról valaki automatikusan bekerült, annak neve. Sablon: `includes/tour-cancel-admin-email.php`,
+  napló típus: `future_tour_cancel_admin_notify`.
+
+## [8.1.3] — 2026-10-04
+
+### Javítva
+- **Mobil kártyanézet — összetett cellák**: ha egy cellában blokk vagy több elem van (pl. túranév + ország +
+  „Jóváhagyásra vár”, tag avatar + név + e-mail), a címke felülre kerül, a tartalom alatta egymás alatt
+  jelenik meg, ahelyett hogy egy sorba préselődne. Az egyszerű mezők (Dátum, Kód) maradnak egy sorban.
+- A szavak nem törnek el betűnként (a 8.1.2-es `overflow-wrap: anywhere` helyett `break-word`).
+
+## [8.1.2] — 2026-10-04
+
+### Javítva
+- **Mobil listák (≤ 640 px kártyanézet)**: a szerkesztés/megnyitás/megtekintés gombok minden listában
+  látszanak. Ok: az üres fejlécű gomboszlop `data-label=""`-t kapott, amit a CSS elrejtett. Most az
+  `initResponsiveTables()` (`assets/js/app.js`) az ilyen, linket/gombot tartalmazó cellát automatikusan
+  `td-actions`-nek jelöli; a gombok több sorba törhetnek.
+- A kártyacímkékből kimarad az oszlopszűrő menü szövege (eddig pl. „Szerepkör▾MindAdminVezetőTag”).
+- A több oszlopos cellák (üres állapot) teljes szélességben, címke nélkül jelennek meg (`td-full`).
+
+## [8.1.1] — 2026-10-03
+
+### Javítva
+- A túrához adás értesítőjének előnézeti popupjában (`admin/tour-add.php`, `admin/tour-detail.php`)
+  a dátum magyar formátumú (ÉÉÉÉ.HH.NN) — eddig NN.HH.ÉÉÉÉ volt. (A kiküldött e-mail már eddig is ÉÉÉÉ.HH.NN volt.)
+- A felugró ablakok (`.modal-backdrop`) a beágyazott GPX térkép fölött jelennek meg (z-index 200 → 1100).
+
+## [8.1.0] — 2026-10-01
+
+### Hozzáadva
+- **Telekocsi link kiküldése e-mailben** — az `admin/future-tour-applicants.php` „Telekocsi” sávjában a
+  „Kiküldés e-mailben” gomb (`actions/carpool-mail.php`) egyetlen e-mailt küld, amelyben a túra összes
+  visszaigazolt résztvevője (tag és vendég) BCC-ben szerepel. A válaszcím a küldő szervező e-mail címe.
+  A legutóbbi kiküldés ideje a sávban látszik (`carpools.mailed_at`).
+- `SmtpMailer::send()` új, opcionális `$bcc` paramétere (csak borítékcímzettek, fejléc nélkül).
+
 ## [8.0.1] — 2026-09-28
 
 ### Javítva

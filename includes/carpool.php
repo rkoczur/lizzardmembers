@@ -18,6 +18,7 @@ function ensureCarpoolSchema(PDO $pdo): void {
         UNIQUE KEY uq_carpool_token (token),
         FOREIGN KEY (future_tour_id) REFERENCES future_tours(id) ON DELETE CASCADE
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+    try { $pdo->exec("ALTER TABLE carpools ADD COLUMN mailed_at DATETIME DEFAULT NULL"); } catch (Throwable) {}
 
     $pdo->exec("CREATE TABLE IF NOT EXISTS carpool_drivers (
         id             INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,

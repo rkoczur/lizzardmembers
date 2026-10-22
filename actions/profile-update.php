@@ -4,6 +4,7 @@ require_once __DIR__ . '/../includes/config.php';
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
+require_once __DIR__ . '/../includes/profile-change.php';
 requireLogin();
 
 verifyCsrf();
@@ -33,6 +34,12 @@ $newPassword2= $_POST['new_password2']   ?? '';
 
 if (!$firstname || !$lastname || !$username || !$email) {
     flash('error', 'A keresztnév, a vezetéknév, a felhasználónév és az e-mail-cím megadása kötelező.');
+    header('Location: ' . $redirectTo);
+    exit;
+}
+// Tagoknak a lakcím kötelező (a vezetők admin profilja kivétel)
+if (!isAnyLeader() && (!$zipcode || !$city || !$address)) {
+    flash('error', 'Az irányítószám, a város és a cím megadása kötelező.');
     header('Location: ' . $redirectTo);
     exit;
 }
@@ -121,6 +128,23 @@ foreach ($notifKeys as $key) {
 $consentEmailVis = isset($_POST['consent_email_visibility']) ? 1 : 0;
 $consentPhoto    = isset($_POST['consent_photo'])            ? 1 : 0;
 
+// Tagoknál a lakcím és a telefonszám módosítása admin jóváhagyásra vár
+$changePending = false;
+if (!isAnyLeader()) {
+    ensureProfileChangeSchema($pdo);
+    $curStmt = $pdo->prepare("SELECT id, zipcode, city, address, phone FROM users WHERE id = ?");
+    $curStmt->execute([$userId]);
+    $current = $curStmt->fetch();
+    $changePending = saveProfileChangeRequest($pdo, $current, [
+        'zipcode' => $zipcode, 'city' => $city, 'address' => $address, 'phone' => $phone,
+    ]);
+    // A jelenlegi értékek maradnak, amíg admin jóvá nem hagyja
+    $zipcode = (string)($current['zipcode'] ?? '');
+    $city    = (string)($current['city']    ?? '');
+    $address = (string)($current['address'] ?? '');
+    $phone   = (string)($current['phone']   ?? '');
+}
+
 // Build update query
 $fields = ['firstname=?','lastname=?','username=?','email=?',
            'dateofbirth=?','zipcode=?','city=?','address=?','phone=?',
@@ -152,6 +176,8 @@ if ($avatarFilename) {
     $_SESSION['user_avatar'] = $avatarFilename;
 }
 
-flash('success', 'A profil sikeresen frissítve.');
+flash('success', $changePending
+    ? 'A profil frissítve. A lakcím / telefonszám módosítása adminisztrátori jóváhagyásra vár.'
+    : 'A profil sikeresen frissítve.');
 header('Location: ' . $redirectTo);
 exit;

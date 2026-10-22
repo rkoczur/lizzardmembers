@@ -1,7 +1,7 @@
 <?php
 /**
  * Telekocsi-szervező publikus műveletei (bejelentkezés nem kell, az azonosítás e-maillel történik).
- * op: identify | forget | driver_save | driver_remove | book | unbook
+ * op: identify | forget | driver_save | driver_remove | book | unbook | watch
  */
 session_start();
 require_once __DIR__ . '/../includes/config.php';
@@ -10,11 +10,13 @@ require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/future-tours-schema.php';
 require_once __DIR__ . '/../includes/carpool.php';
+require_once __DIR__ . '/../includes/carpool-notify.php';
 verifyCsrf();
 
 $pdo = getDb();
 ensureFutureToursSchema($pdo);
 ensureCarpoolSchema($pdo);
+ensureCarpoolWatchSchema($pdo);
 
 $token   = (string)($_POST['t'] ?? '');
 $carpool = getCarpoolByToken($pdo, $token);
@@ -69,7 +71,8 @@ match ($op) {
     'driver_save'   => carpoolDriverSave($pdo, $carpool, $appId, $drivers, $role, $back),
     'driver_remove' => carpoolDriverRemove($pdo, $appId, $back),
     'book'          => carpoolBook($pdo, $carpool, $appId, $role, $back),
-    'unbook'        => carpoolUnbook($pdo, $appId, $back),
+    'unbook'        => carpoolUnbook($pdo, $carpool, $appId, $role, $back),
+    'watch'         => carpoolWatch($pdo, $carpool, $appId, $back),
     default         => carpoolDone($back, 'error', 'Ismeretlen művelet.'),
 };
 
@@ -90,9 +93,12 @@ function carpoolDriverSave(PDO $pdo, array $carpool, int $appId, array $drivers,
         $booked = 0;
         foreach ($drivers as $d) if ((int)$d['id'] === $role['driver_id']) $booked = count($d['passengers']);
         if ($seats < $booked) carpoolDone($back, 'error', "Már {$booked} utas foglalt nálad — ennél kevesebb helyet nem adhatsz meg.");
+        $oldSeats = 0;
+        foreach ($drivers as $d) if ((int)$d['id'] === $role['driver_id']) $oldSeats = (int)$d['seats'];
         $pdo->prepare("UPDATE carpool_drivers SET seats = ?, phone = ?, contact_extra = ?, departure = ?, departure_time = ?, route = ? WHERE id = ?")
             ->execute([$seats, $phone, $extra ?: null, $departure, $time ?: null, $route ?: null, $role['driver_id']]);
         unset($_SESSION['carpool_old']);
+        if ($seats > $oldSeats) notifyCarpoolWatchers($pdo, $carpool, 'seat_freed', $role['driver_id'], $appId);
         carpoolDone($back, 'success', 'Az autód adatai frissültek.');
     }
 
@@ -101,7 +107,10 @@ function carpoolDriverSave(PDO $pdo, array $carpool, int $appId, array $drivers,
     $pdo->prepare("INSERT INTO carpool_drivers (carpool_id, application_id, seats, phone, contact_extra, departure, departure_time, route)
                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
         ->execute([$carpool['id'], $appId, $seats, $phone, $extra ?: null, $departure, $time ?: null, $route ?: null]);
+    $newDriverId = (int)$pdo->lastInsertId();
     unset($_SESSION['carpool_old']);
+    if ($role['role'] === 'passenger') notifyCarpoolWatchers($pdo, $carpool, 'seat_freed', $role['driver_id'], $appId);
+    notifyCarpoolWatchers($pdo, $carpool, 'new_driver', $newDriverId, $appId);
     carpoolDone($back, 'success', 'Felkerültél a sofőrök közé — az utasok már foglalhatnak nálad.');
 }
 
@@ -128,10 +137,20 @@ function carpoolBook(PDO $pdo, array $carpool, int $appId, array $role, string $
     $pdo->prepare("DELETE FROM carpool_passengers WHERE application_id = ?")->execute([$appId]);
     $pdo->prepare("INSERT INTO carpool_passengers (driver_id, application_id) VALUES (?, ?)")->execute([$driverId, $appId]);
     $pdo->commit();
+    if ($role['role'] === 'passenger') notifyCarpoolWatchers($pdo, $carpool, 'seat_freed', $role['driver_id'], $appId);
     carpoolDone($back, 'success', 'Lefoglaltad a helyed! Egyeztess a sofőrrel az indulásról.');
 }
 
-function carpoolUnbook(PDO $pdo, int $appId, string $back): never {
+function carpoolUnbook(PDO $pdo, array $carpool, int $appId, array $role, string $back): never {
     $pdo->prepare("DELETE FROM carpool_passengers WHERE application_id = ?")->execute([$appId]);
+    if ($role['role'] === 'passenger') notifyCarpoolWatchers($pdo, $carpool, 'seat_freed', $role['driver_id'], $appId);
     carpoolDone($back, 'success', 'A foglalásodat töröltük.');
+}
+
+function carpoolWatch(PDO $pdo, array $carpool, int $appId, string $back): never {
+    $on = !empty($_POST['watch']);
+    setCarpoolWatching($pdo, (int)$carpool['id'], $appId, $on);
+    carpoolDone($back, 'success', $on
+        ? 'Értesítünk e-mailben, ha új sofőr jelentkezik vagy hely szabadul fel.'
+        : 'Az értesítőt kikapcsoltad.');
 }

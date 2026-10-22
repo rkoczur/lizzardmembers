@@ -12,6 +12,7 @@ require_once __DIR__ . '/../includes/future-tours-schema.php';
 require_once __DIR__ . '/../includes/mailer.php';
 require_once __DIR__ . '/../includes/app-settings-schema.php';
 require_once __DIR__ . '/../includes/email-log-schema.php';
+require_once __DIR__ . '/../includes/calendar-invite.php';
 requireAdminOrVezeto();
 verifyCsrf();
 
@@ -80,6 +81,8 @@ $fullName   = $isGuest ? trim((string)$app['guest_name']) : trim($app['lastname'
 // Megszólítás: tagnál a keresztnév, vendégnél a megadott név
 $greetName  = $isGuest ? ($fullName !== '' ? $fullName : 'Jelentkező') : (string)$app['firstname'];
 $subject    = 'Jelentkezésed elfogadva – ' . $app['tour_name'];
+$calEvent   = getTourCalendarEvent($pdo, $tourId, $absBaseUrl);
+$calHtml    = $calEvent ? calendarButtonsEmailHtml($calEvent) : '';
 
 $payHtml = '';
 if ($fee > 0) {
@@ -109,7 +112,7 @@ $html = '<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body style="ma
       <tr><td style="padding:4px 0;color:#666;">Kezdés:</td><td>' . htmlspecialchars($tourDate, ENT_QUOTES) . '</td></tr>
       <tr><td style="padding:4px 0;color:#666;">Időtartam:</td><td>' . (int)$app['num_days'] . ' nap</td></tr>
     </table>
-    ' . $payHtml . '
+    ' . $calHtml . $payHtml . '
     <div style="text-align:center;margin-top:24px;">
       <a href="' . $tourUrl . '" style="background:#29776F;color:#fff;text-decoration:none;padding:12px 28px;border-radius:6px;font-size:14px;font-weight:600;">Túra részletei</a>
     </div>

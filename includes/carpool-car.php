@@ -6,23 +6,34 @@ $initials  = fn(string $n): string => implode('', array_map(fn($w) => mb_substr(
 ?>
 <article class="cp-car<?= $isMine ? ' is-mine' : '' ?><?= $car['free'] === 0 ? ' is-full' : '' ?>">
   <header class="cp-car-head">
-    <div class="cp-car-from">
-      <span class="cp-car-from-label">Indul</span>
-      <span class="cp-car-from-place"><?= e($car['departure']) ?></span>
-      <?php if ($car['departure_time']): ?><span class="cp-car-time"><?= e($car['departure_time']) ?></span><?php endif; ?>
+    <span class="cp-car-avatar" aria-hidden="true"><?= e($initials($car['name'])) ?></span>
+    <div class="cp-car-driver">
+      <span class="cp-car-kicker">Sofőr</span>
+      <h3 class="cp-car-name"><?= e($car['name']) ?><?php if ($isMine): ?> <span class="cp-car-you">te</span><?php endif; ?></h3>
     </div>
-    <span class="cp-car-free"><?= $car['free'] === 0 ? 'Megtelt' : $car['free'] . ' szabad' ?></span>
+    <span class="cp-car-free"><?= $car['free'] === 0 ? 'Megtelt' : $car['free'] . ' szabad hely' ?></span>
   </header>
 
+  <div class="cp-car-depart">
+    <div class="cp-depart-item">
+      <span class="cp-depart-icon cp-icon-pin" aria-hidden="true"></span>
+      <span class="cp-depart-text"><small>Honnan indul</small><strong><?= e($car['departure']) ?></strong></span>
+    </div>
+    <div class="cp-depart-item">
+      <span class="cp-depart-icon cp-icon-clock" aria-hidden="true"></span>
+      <span class="cp-depart-text"><small>Mikor indul</small><strong><?= $car['departure_time'] ? e($car['departure_time']) : 'egyeztetés alatt' ?></strong></span>
+    </div>
+    <div class="cp-depart-item cp-depart-free">
+      <span class="cp-depart-icon cp-icon-seat" aria-hidden="true"></span>
+      <span class="cp-depart-text"><small>Szabad hely</small><strong><?= $car['free'] === 0 ? 'Megtelt' : $car['free'] . ' szabad hely' ?></strong></span>
+    </div>
+  </div>
+
   <?php if ($car['route']): ?>
-    <p class="cp-car-route"><?= nl2br(e($car['route'])) ?></p>
+    <p class="cp-car-route"><span class="cp-label">Útvonal</span><?= nl2br(e($car['route'])) ?></p>
   <?php endif; ?>
 
   <div class="cp-seats">
-    <div class="cp-seat cp-seat-driver" title="Sofőr">
-      <span class="cp-seat-mark"><?= e($initials($car['name'])) ?></span>
-      <span class="cp-seat-name"><?= e($car['name']) ?><?= $isMine ? ' (te)' : '' ?></span>
-    </div>
     <?php foreach ($car['passengers'] as $p): $isMe = $me && (int)$p['application_id'] === (int)$me['id']; ?>
       <div class="cp-seat cp-seat-taken<?= $isMe ? ' is-me' : '' ?>">
         <span class="cp-seat-mark"><?= e($initials($p['name'])) ?></span>

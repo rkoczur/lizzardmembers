@@ -26,3 +26,7 @@ gpx-maptest.php
 /docs/
 /docs/*
 .claude/PLAN.md
+
+# Önálló telekocsi-szervező saját DB-beállítása (ha van)
+/telekocsi/config.ini
+/telekocsi/data/

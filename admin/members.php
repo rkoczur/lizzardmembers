@@ -5,6 +5,7 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/join-schema.php';
+require_once __DIR__ . '/../includes/profile-change.php';
 requireAdminOrVezeto();
 
 $pdo = getDb();
@@ -16,8 +17,8 @@ ensureJoinSchema($pdo);
 recalcMembershipPayments($pdo);
 
 // Determine active tab; non-admins cannot access applications
-$tab = ($_GET['tab'] ?? '') === 'applications' ? 'applications' : 'members';
-if ($tab === 'applications' && !isAdmin()) {
+$tab = in_array($_GET['tab'] ?? '', ['applications', 'changes'], true) ? $_GET['tab'] : 'members';
+if ($tab !== 'members' && !isAdmin()) {
     header('Location: ' . BASE_URL . '/admin/members.php');
     exit;
 }
@@ -30,6 +31,11 @@ $pendingCount = 0;
 try {
     $pendingCount = (int)$pdo->query("SELECT COUNT(*) FROM member_applications WHERE status='pending'")->fetchColumn();
 } catch (Throwable) {}
+
+// Lakcím / telefonszám módosítási kérelmek
+ensureProfileChangeSchema($pdo);
+$pendingChangeCount = countPendingProfileChanges($pdo);
+$profileChanges     = $tab === 'changes' ? getPendingProfileChanges($pdo) : [];
 
 // Applications data (only when tab=applications)
 $countApproved = 0;
@@ -77,6 +83,12 @@ include __DIR__ . '/../includes/admin-header.php';
     Jelentkezések
     <?php if ($pendingCount > 0): ?>
       <span class="badge-counter badge-counter-danger"><?= $pendingCount ?></span>
+    <?php endif; ?>
+  </a>
+  <a href="<?= BASE_URL ?>/admin/members.php?tab=changes" class="tab-link<?= $tab === 'changes' ? ' active' : '' ?>">
+    Adatmódosítások
+    <?php if ($pendingChangeCount > 0): ?>
+      <span class="badge-counter badge-counter-danger"><?= $pendingChangeCount ?></span>
     <?php endif; ?>
   </a>
   <?php endif; ?>
@@ -264,6 +276,15 @@ function memberDelete(btn) {
   });
 })();
 </script>
+
+<?php elseif ($tab === 'changes'): ?>
+<!-- ═══════════════════════════════════════════════════════════════════
+     ADATMÓDOSÍTÁSOK TAB
+═══════════════════════════════════════════════════════════════════ -->
+<div class="page-header">
+  <h1>Adatmódosítási kérelmek</h1>
+</div>
+<?php include __DIR__ . '/../includes/profile-change-list.php'; ?>
 
 <?php else: ?>
 <!-- ═══════════════════════════════════════════════════════════════════
