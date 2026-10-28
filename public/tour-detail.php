@@ -4,6 +4,7 @@ require_once __DIR__ . '/../includes/config.php';
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
+require_once __DIR__ . '/../includes/future-tour-organizers.php';
 require_once __DIR__ . '/../includes/future-tours-schema.php';
 require_once __DIR__ . '/../includes/app-settings-schema.php';
 
@@ -223,6 +224,8 @@ include __DIR__ . '/../includes/public-header.php';
           <?php endif; ?>
         </div>
       </div>
+
+      <?php $organizers = getFutureTourOrganizers($pdo, (int)$tour['id']); include __DIR__ . '/../includes/tour-organizers.php'; ?>
 
       <!-- Galéria (a jelentkezés és a térképek között) -->
       <?php if (!empty($gallery)): ?>

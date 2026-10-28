@@ -748,6 +748,7 @@ tbody tr:hover { background: #faf5ec; }
   padding-top: 20px; margin-top: 20px; margin-bottom: 14px;
   border-top: 1px solid var(--border);
 }
+.form-section-title--spaced { margin-top: 24px; }
 
 /* ===== Mobile menu ===== */
 .hamburger-btn {
@@ -925,6 +926,18 @@ body.embed-mode .card-body { padding-top: 12px !important; }
 .pending-accept-meta { font-size: 11.5px; color: var(--text-muted); line-height: 1.4; }
 .pending-accept-when { white-space: nowrap; }
 .pending-accept-pay { text-align: center; }
+
+/* Elfogadás zárolva, amíg a jelentkező nem tag */
+.accept-locked,
+.accept-locked:hover {
+  background: var(--border, #e5e7eb); color: var(--text-muted);
+  cursor: not-allowed; white-space: nowrap; box-shadow: none;
+}
+.accept-locked-note {
+  margin-top: 4px; max-width: 170px; margin-inline: auto;
+  font-size: 11px; line-height: 1.35; color: var(--warning, #b45309);
+}
+.accept-locked-note a { color: inherit; text-decoration: underline; }
 
 @media (max-width: 780px) {
   .pending-accept-row { grid-template-columns: 1fr auto; row-gap: 6px; }
@@ -1474,6 +1487,7 @@ body.embed-mode .card-body { padding-top: 12px !important; }
 @media (max-width: 768px) {
   .fdg-right { display: contents; }            /* a CTA, a galéria és a térképek a grid közvetlen elemeivé válnak */
   .fdg-cta     { order: 1; position: static; top: auto; min-width: 0; }
+  .tour-org-card { order: 1; min-width: 0; }      /* közvetlenül a CTA alatt */
   .fdg-left    { order: 2; }
   .fdg-gallery { order: 3; min-width: 0; }
   .fdg-maps    { order: 4; min-width: 0; }
@@ -1570,6 +1584,27 @@ body.embed-mode .card-body { padding-top: 12px !important; }
 }
 
 /* ===== Túra borítókép + összegző sáv (meghirdetett túra részletek) ===== */
+/* ===== Meghirdetett túra szervezői (jobb oszlop kártya) ===== */
+.tour-sidebar .tour-org-card { margin-top: 16px; }
+.to-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 18px; margin: 0; padding: 0; list-style: none; }
+.to-person {
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  flex: 1 1 180px; max-width: 260px;
+  padding: 18px 14px 14px;
+  border: 1px solid var(--border); border-top: 3px solid var(--primary);
+  border-radius: 10px 10px 40px 40px;
+  background: var(--bg);
+  text-align: center;
+}
+.to-avatar {
+  width: 140px; height: 140px; border-radius: 50%; object-fit: cover; flex-shrink: 0;
+  box-shadow: 0 0 0 4px var(--bg), 0 0 0 7px var(--primary);
+}
+.to-info { display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 0; max-width: 100%; }
+.to-name { font-size: 16px; font-weight: 700; color: var(--sidebar-bg); overflow-wrap: anywhere; }
+.to-contact { font-size: 12.5px; color: var(--primary); overflow-wrap: anywhere; }
+.to-contact:hover { color: var(--primary-dark); text-decoration: underline; }
+
 .tour-hero {
   position: relative;
   border-radius: var(--radius);
@@ -2087,6 +2122,10 @@ textarea.cp-input { resize: vertical; }
 .cp-seat-free:not(.is-static):hover .cp-seat-name { color: var(--primary-dark); }
 .cp-seat-free.is-static { cursor: default; border-color: var(--border); }
 .cp-seat-free.is-static .cp-seat-mark { background: var(--card); }
+.cp-photo { display: block; object-fit: cover; padding: 0; background: var(--card); }
+.cp-seat-taken .cp-photo { box-shadow: 0 0 0 2px #3f8d85; }
+.cp-seat.is-me .cp-photo { box-shadow: 0 0 0 2px #d39a45; }
+.cp-car-avatar.cp-photo { box-shadow: 0 0 0 3px var(--sidebar-active); }
 .cp-seat-free.is-static .cp-seat-name { color: var(--text-muted); font-weight: 500; }
 
 .cp-car-contact { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding: 12px 20px 16px; border-top: 1px dashed var(--border); }

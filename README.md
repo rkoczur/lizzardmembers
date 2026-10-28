@@ -11,6 +11,8 @@ Nincs JS keretrendszer: sima PHP, PDO, natív JS és saját CSS. A felhasználó
    `dbname`, `base_url`, `app_name`).
 3. `setup.php` — első indítás varázsló: hiányzó adatbázis észlelése, séma és táblák létrehozása,
    első adminisztrátor felvétele.
+4. PHP `gd` kiterjesztés (php.ini: `extension=gd`) — a profilképek 280 px-es kicsinyített példányához.
+   Nélküle az eredeti kép jelenik meg (a böngésző kicsinyítése moirét okozhat).
 
 ## Belépési pontok
 
@@ -48,12 +50,17 @@ Nincs JS keretrendszer: sima PHP, PDO, natív JS és saját CSS. A felhasználó
 - **Meghirdetett túrák** — jelentkezés, várólista, részvételi díj és tagi kedvezmény, e-mail értesítők,
   fizetési emlékeztető a még nem fizető jelentkezőknek. Ha egy tag lemondja a jelentkezését, az adminok
   (admin, helyettes) és a túra létrehozója e-mail értesítőt kapnak. Az elfogadó e-mailben egy kattintással
-  naptárba menthető a túra (Google Naptár, Outlook.com).
+  naptárba menthető a túra (Google Naptár, Outlook.com). Az adatlap (tagi és publikus) jobb oszlopában, a jelentkezés
+  alatti kártyán látszik a szervező neve, profilképe, e-mail címe és telefonszáma; több szervező is beállítható, alapértelmezetten a túra létrehozója.
+  A szervezők az adminokkal együtt e-mailt kapnak minden új jelentkezésről.
+  A vendég jelentkező is azonnal a jelentkezők listájába kerül („Vendég” jelvénnyel), és a szervező egy gombbal
+  fogadja el. Tagsághoz kötött túránál az elfogadás a tagfelvétel jóváhagyásáig zárolva van.
 - **Telekocsi-szervező** — a meghirdetett túra jelentkezői oldalán egy gombbal egyedi link készül,
   ahol a résztvevők (bejelentkezés nélkül, a jelentkezéskor megadott e-mail címükkel azonosítva)
   sofőrként helyet kínálnak, vagy utasként helyet foglalnak egy autóban. A link egy gombbal
   e-mailben is kiküldhető az összes visszaigazolt résztvevőnek (egy levél, mindenki BCC-ben).
   A résztvevők értesítőt kérhetnek, ha új sofőr regisztrál vagy hely szabadul fel.
+  A tagok profilképe (ha van) megjelenik a sofőr- és utasüléseken, egyébként monogram.
 - **Önálló telekocsi-szervező** (`/telekocsi`) — bárki létrehozhat egy szervezőt név + e-mail címmel.
   A rendszer egyedi kódot generál (pl. `ABCD-2345`), ez az oldal tetején és az URL-ben is szerepel
   (`/telekocsi/ABCD2345`). A résztvevők név + e-mail címmel csatlakoznak, majd sofőrként helyet kínálnak
@@ -81,6 +88,8 @@ Nincs JS keretrendszer: sima PHP, PDO, natív JS és saját CSS. A felhasználó
   minden védett oldal elején `requireAdmin()` vagy `requireUser()`.
 - Kizárólag PDO prepared statement — felhasználói input soha nem kerül SQL-be interpolálva.
 - Útvonalakhoz mindig a `BASE_URL` konstans használandó.
+- Átirányítás a POST kezelők után: ha az elem megmarad, vissza ugyanarra az oldalra (fül / szűrő is);
+  törlés után a szülő listára. Az indító URL-t a `back` rejtett mező viheti, a kezelő a `postBackUrl()`-lel olvassa.
 - A stílusok az `assets/css/` alatti CSS fájlokba kerülnek. Kivétel az e-mail sablonok:
   ott az inline stílus kötelező, mert a levelezőprogramok nem töltenek be külső CSS-t.
 

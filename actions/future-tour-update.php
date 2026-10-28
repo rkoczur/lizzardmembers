@@ -5,6 +5,7 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/future-tours-schema.php';
+require_once __DIR__ . '/../includes/future-tour-organizers.php';
 requireAdminOrVezeto();
 if (!canCreateFutureTours()) { flash('error', 'Nincs jogosultságod meghirdetett túra szerkesztéséhez.'); header('Location: ' . BASE_URL . '/admin/future-tours.php'); exit; }
 verifyCsrf();
@@ -238,6 +239,8 @@ if (canManageTours()) {
         }
     }
 }
+
+saveFutureTourOrganizers($pdo, $id, (array)($_POST['organizer_ids'] ?? []));
 
 flash('success', 'Meghirdetett túra sikeresen mentve.');
 header('Location: ' . BASE_URL . '/admin/future-tour-detail.php?id=' . $id);

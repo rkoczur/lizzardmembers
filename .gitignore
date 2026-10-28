@@ -30,3 +30,4 @@ gpx-maptest.php
 # Önálló telekocsi-szervező saját DB-beállítása (ha van)
 /telekocsi/config.ini
 /telekocsi/data/
+assets/uploads/avatars/thumbs/

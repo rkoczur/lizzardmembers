@@ -437,7 +437,10 @@ include __DIR__ . '/../includes/admin-header.php';
               <?php endif; ?>
             </td>
             <td style="padding:12px 12px;text-align:center;">
-              <?php if ($app['status'] === 'confirmed'): ?>
+              <?php if ($app['status'] === 'confirmed' && isApplicantNotYetMember($app)): ?>
+                <button type="button" class="btn btn-primary btn-sm accept-locked" disabled>Jelentkezés elfogadása</button>
+                <div class="accept-locked-note">Még nem tag — előbb a <a href="<?= BASE_URL ?>/admin/members.php?tab=applications">tagfelvételt</a> kell jóváhagyni.</div>
+              <?php elseif ($app['status'] === 'confirmed'): ?>
                 <?php if (!empty($app['accepted_at'])): ?>
                   <div style="color:var(--success,#16a34a);font-size:12px;font-weight:600;white-space:nowrap;">✓ Elfogadva</div>
                   <div style="font-size:11px;color:var(--text-muted);"><?= date('Y.m.d', strtotime($app['accepted_at'])) ?></div>

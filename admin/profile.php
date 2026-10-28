@@ -36,7 +36,7 @@ include __DIR__ . '/../includes/admin-header.php';
   <div class="profile-avatar-card">
     <div class="avatar-upload-wrap">
       <img id="avatar-preview"
-           src="<?= getAvatarUrl($user['profile_picture']) ?>"
+           src="<?= getAvatarThumbUrl($user['profile_picture']) ?>"
            alt="Profilkép">
       <div class="avatar-overlay" id="avatar-upload-overlay" title="Fotó módosítása">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">

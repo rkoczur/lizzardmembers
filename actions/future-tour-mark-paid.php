@@ -26,7 +26,7 @@ $app = $appStmt->fetch();
 
 if (!$app) {
     flash('error', 'Nem található a jelentkező.');
-    header('Location: ' . BASE_URL . '/admin/future-tour-detail.php?id=' . $tourId);
+    header('Location: ' . BASE_URL . '/admin/future-tour-applicants.php?id=' . $tourId);
     exit;
 }
 

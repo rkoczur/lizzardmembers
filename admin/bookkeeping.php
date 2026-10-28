@@ -121,6 +121,7 @@ include __DIR__ . '/../includes/admin-header.php';
   <div class="card-body" style="border-top:1px solid var(--border);">
     <form method="post" action="<?= BASE_URL ?>/actions/transaction-save.php">
       <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
+      <input type="hidden" name="back" value="<?= e($_SERVER['REQUEST_URI']) ?>">
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;">
         <div class="form-group">
           <label>Dátum <span style="color:var(--danger)">*</span></label>
@@ -306,6 +307,7 @@ include __DIR__ . '/../includes/admin-header.php';
             <form method="post" action="<?= BASE_URL ?>/actions/transaction-delete.php" style="margin:0;display:inline;" onsubmit="return confirm('Törlöd ezt a tranzakciót?')">
               <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
               <input type="hidden" name="id" value="<?= (int)$tx['id'] ?>">
+              <input type="hidden" name="back" value="<?= e($_SERVER['REQUEST_URI']) ?>">
               <button type="submit" class="btn btn-danger btn-sm">Törlés</button>
             </form>
           </td>

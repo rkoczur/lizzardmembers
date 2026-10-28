@@ -17,7 +17,7 @@ $status = in_array($_POST['status'] ?? '', ['confirmed','waitlist']) ? $_POST['s
 
 if (!$tourId || !$userId) {
     flash('error', 'Hiányos adatok.');
-    header('Location: ' . BASE_URL . '/admin/future-tour-detail.php?id=' . $tourId);
+    header('Location: ' . BASE_URL . '/admin/future-tour-applicants.php?id=' . $tourId);
     exit;
 }
 
@@ -35,7 +35,7 @@ $existing = $existingStmt->fetch();
 
 if ($existing && $existing['status'] !== 'cancelled') {
     flash('error', 'Ez a tag már szerepel a túra jelentkezői között.');
-    header('Location: ' . BASE_URL . '/admin/future-tour-detail.php?id=' . $tourId);
+    header('Location: ' . BASE_URL . '/admin/future-tour-applicants.php?id=' . $tourId);
     exit;
 }
 
@@ -48,5 +48,5 @@ if ($existing && $existing['status'] === 'cancelled') {
 }
 
 flash('success', 'Tag sikeresen hozzáadva a túrához.');
-header('Location: ' . BASE_URL . '/admin/future-tour-detail.php?id=' . $tourId);
+header('Location: ' . BASE_URL . '/admin/future-tour-applicants.php?id=' . $tourId);
 exit;

@@ -5,6 +5,7 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/join-schema.php';
 require_once __DIR__ . '/../includes/future-tours-schema.php';
+require_once __DIR__ . '/../includes/future-tour-organizers.php';
 
 header('Content-Type: application/json; charset=utf-8');
 
@@ -93,8 +94,8 @@ $pdo->prepare("
     INSERT INTO future_tour_applications
         (future_tour_id, user_id, guest_name, guest_email, guest_phone, status,
          car_available, passengers, sharing_room, notes, departure_city, member_application_id)
-    VALUES (?, NULL, ?, ?, ?, 'pending', ?, ?, ?, ?, ?, ?)
-")->execute([$tourId, $guestName, $email, $phone ?: null,
+    VALUES (?, NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+")->execute([$tourId, $guestName, $email, $phone ?: null, getNewApplicationStatus($pdo, $tourId),
              $carAvailable, $passengers, $sharingRoom, $tourNotes, $departureCity, $memberAppId]);
 $tourAppId = (int)$pdo->lastInsertId();
 
@@ -142,7 +143,7 @@ try {
       <tr><td style="padding:4px 0;color:#666;">Időtartam:</td><td>' . (int)$tour['num_days'] . ' nap</td></tr>
     </table>
     <div style="background:#fffbeb;border:1px solid #f59e0b;border-radius:6px;padding:12px 16px;font-size:13.5px;color:#b45309;">
-      ⏳ Tagságra vonatkozó kérelmedet az adminisztrátor hamarosan elbírálja. Jóváhagyás után automatikusan megerősítjük a túrajelentkezésedet is, és e-mailben értesítünk.
+      ⏳ Tagságra vonatkozó kérelmedet az adminisztrátor hamarosan elbírálja. A tagfelvétel jóváhagyásáról, majd a túrajelentkezésed elfogadásáról külön e-mailben értesítünk.
     </div>
   </td></tr>
   <tr><td style="padding:16px 32px;background:#f5f5f5;text-align:center;font-size:12px;color:#999;">
@@ -155,7 +156,7 @@ try {
         logEmailEntry($pdo, null, $email, $fullName, $guestSubject, $guestHtml, 'join_tour_application', 'sent');
 
         // Admin notification
-        $admins      = $pdo->query("SELECT id, email, firstname, lastname FROM users WHERE role = 'admin' AND active = 1")->fetchAll();
+        $admins      = getTourApplicationNotifyRecipients($pdo, $tourId);
         $proto       = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
         $absBaseUrl  = $proto . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . BASE_URL;
         $adminSubject = 'Új tagságra+túrára jelentkezés – ' . $tour['name'];

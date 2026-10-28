@@ -123,7 +123,8 @@ function getCarpoolDrivers(PDO $pdo, int $carpoolId): array {
     $stmt = $pdo->prepare("
         SELECT d.*,
                COALESCE(NULLIF(TRIM(CONCAT_WS(' ', u.lastname, u.firstname)), ''), fta.guest_name, '') AS name,
-               COALESCE(u.email, fta.guest_email, '') AS email
+               COALESCE(u.email, fta.guest_email, '') AS email,
+               u.profile_picture
         FROM carpool_drivers d
         JOIN future_tour_applications fta ON fta.id = d.application_id
         LEFT JOIN users u ON u.id = fta.user_id
@@ -137,7 +138,8 @@ function getCarpoolDrivers(PDO $pdo, int $carpoolId): array {
         SELECT p.driver_id, p.application_id,
                COALESCE(NULLIF(TRIM(CONCAT_WS(' ', u.lastname, u.firstname)), ''), fta.guest_name, '') AS name,
                COALESCE(u.email, fta.guest_email, '') AS email,
-               COALESCE(NULLIF(u.phone, ''), fta.guest_phone) AS phone
+               COALESCE(NULLIF(u.phone, ''), fta.guest_phone) AS phone,
+               u.profile_picture
         FROM carpool_passengers p
         JOIN carpool_drivers d ON d.id = p.driver_id
         JOIN future_tour_applications fta ON fta.id = p.application_id
@@ -154,6 +156,11 @@ function getCarpoolDrivers(PDO $pdo, int $carpoolId): array {
         $d['free']       = max(0, (int)$d['seats'] - count($d['passengers']));
     }
     return $drivers;
+}
+
+/** A tag feltöltött profilképének URL-je, vagy null (vendég / nincs kép) — ilyenkor monogram jelenik meg. */
+function carpoolAvatarUrl(?string $filename): ?string {
+    return $filename && file_exists(AVATAR_DIR . $filename) ? getAvatarThumbUrl($filename) : null;
 }
 
 /** A jelentkező szerepe: ['role' => 'driver'|'passenger'|null, 'driver_id' => ?int]. */

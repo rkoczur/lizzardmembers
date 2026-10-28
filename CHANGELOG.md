@@ -3,6 +3,88 @@
 A verziószám forrása: `includes/version.php`.
 Major: teljesen új funkció | Minor: fő funkció módosítás vagy alfunkció hozzáadás | Patch: minden egyéb.
 
+## [9.6.0] — 2026-10-28
+
+### Módosítva
+- Meghirdetett túra, vendég jelentkező (nem tagsághoz kötött túra): a jelentkezés azonnal helyet kap (vagy várólistára
+  kerül), mint a tagé, és a „Megerősített jelentkezők” listában jelenik meg a sárga „Vendég” jelvénnyel. Egyetlen
+  „Jelentkezés elfogadása” gombbal fogadható el — ekkor kap visszaigazoló levelet. Várólistán a vendég értesítést kap.
+  Közös helper: `getNewApplicationStatus()`. Natív (`actions/future-tour-apply-guest.php`) és API
+  (`api/submit-application.php`) jelentkezésnél is.
+- Tagsághoz kötött túra: a tagfelvétellel együtt beadott jelentkezés is azonnal a listába kerül; amíg a tagfelvétel
+  nincs jóváhagyva, az elfogadás gomb inaktív, alatta „Még nem tag” felirat (`isApplicantNotYetMember()`,
+  az `actions/future-tour-accept.php` is tiltja). A tagfelvétel jóváhagyása már nem küld külön túra-levelet:
+  a jelentkező két jóváhagyó levelet kap — a tagfelvételről és a túrajelentkezés elfogadásáról.
+- Jelentkezés-visszaigazoló szövegek frissítve (natív oldal, WP plugin 2.3, tagfelvételi levél).
+
+### Javítva
+- A túra szervezője (vezető, nem admin) is jóváhagyhatja / elutasíthatja a korábbi, függő vendég-jelentkezéseket
+  (`future-tour-approve-guest.php`, `-reject-guest.php`: `requireAdminOrVezeto()`).
+
+## [9.5.0] — 2026-10-26
+
+### Hozzáadva
+- A meghirdetett túra szervezői (vagy ha nincs beállítva, a létrehozója) is megkapják az új jelentkezésről szóló
+  e-mail értesítőt az adminok mellett — tag, vendég, WP plugin (API) és tagfelvétellel egybekötött jelentkezésnél is.
+  Egy személy csak egy levelet kap (`getTourApplicationNotifyRecipients()`).
+
+## [9.4.4] — 2026-10-26
+
+### Javítva
+- Profilképek moiré-/csíkozódása (pl. a szervező kártyán): a böngésző a nagy felbontású eredetit egy lépésben,
+  kb. ötödére kicsinyítette, ami a hajon sávos mintát adott. Mostantól minden avatar egy szerveroldalon,
+  minőségi átméretezéssel készült 280×280-as példányt kap (`getAvatarThumbUrl()`, `assets/uploads/avatars/thumbs/`),
+  az első megjelenéskor létrehozva — a már feltöltött képekre is. EXIF tájolás kezelve.
+  GD kiterjesztés kell hozzá; ha nincs, az eredeti kép jelenik meg. Képcserénél a régi példány is törlődik.
+
+## [9.4.3] — 2026-10-26
+
+### Módosítva
+- Telekocsi (belső, `public/telekocsi.php`): a sofőrök és utasok kártyáján a tag profilképe jelenik meg, ha van
+  feltöltve; vendégnél vagy kép hiányában marad a monogram (`carpoolAvatarUrl()`).
+- Szervező kártya: jóval nagyobb (140 px) profilkép, alatta középre igazítva a név és az elérhetőségek.
+
+## [9.4.2] — 2026-10-22
+
+### Módosítva
+- Szervező kártya: a fejléc mindig „Szervező(k)”; a név alatt a szervező e-mail címe (`mailto:`) és telefonszáma
+  (`tel:`) is megjelenik, ha meg van adva (tagi és publikus adatlapon is).
+
+## [9.4.1] — 2026-10-22
+
+### Módosítva
+- A szervező(k) a meghirdetett túra adatlapján önálló kártyán, a jobb oszlopban, közvetlenül a jelentkezés
+  kártya alatt jelennek meg (tagi és publikus oldalon; mobilon is a jelentkezés után). Nagyobb profilkép, egymás alatti lista.
+
+## [9.4.0] — 2026-10-22
+
+### Hozzáadva
+- **Meghirdetett túra szervezői.** A tagi (`user/future-tour-detail.php`) és a publikus (`public/tour-detail.php`)
+  adatlapon a helyszín alatt megjelenik a szervező neve és profilképe (`includes/tour-organizers.php`, `.to-*` CSS).
+  - Új tábla: `future_tour_organizers` (`ensureFutureToursSchema()`); helperek: `includes/future-tour-organizers.php`
+    (`getFutureTourOrganizers()`, `saveFutureTourOrganizers()`).
+  - A szerkesztő oldalon („Szervezők” szakasz) több tag is beállítható, a sorrend megmarad. Ha nincs megadva
+    szervező, a túra létrehozója (`created_by`) jelenik meg; új túránál a létrehozó előre ki van töltve.
+
+### Módosítva
+- A tagválasztó (`initMemberPicker()`, `assets/js/app.js`) több példányban is használható (előtag + mezőnév);
+  a hozzáadott név szövegként kerül be (nem HTML-ként), az üres állapotot a `hidden` attribútum kapcsolja.
+
+## [9.3.2] — 2026-10-22
+
+### Javítva
+- Egységes átirányítás a műveletek után: ha az elem megmarad, ugyanazon az oldalon maradsz;
+  törlés után a szülő listára kerülsz.
+  - Meghirdetett túra jelentkezői: résztvevő hozzáadása / törlése, vendég jóváhagyása / elutasítása és a
+    fizetve jelölés hibaágai a jelentkezők oldalán maradnak (eddig a túra szerkesztő oldalára ugrott).
+  - Függő túra jóváhagyása a túra adatlapján marad (eddig a túranaplóra ugrott).
+  - Tagfelvételi kérelem elfogadása után a „Jelentkezések” fülön marad (eddig az új tag adatlapjára ugrott).
+  - Könyvelés: a tranzakció rögzítése és törlése megtartja a fület és a szűrőket; az Összerendelések mentése
+    az Összerendelések fülre tér vissza (eddig a Kimutatásra); a tranzakció adatlapján mentés után ott marad.
+  - Biztonság oldal: a fiók feloldása után az oldalon marad (eddig a tag adatlapjára ugrott).
+- Új helper: `postBackUrl($default)` (`includes/functions.php`) — a POST `back` mezőből csak alkalmazáson
+  belüli útvonalat fogad el.
+
 ## [9.3.1] — 2026-10-19
 
 ### Módosítva

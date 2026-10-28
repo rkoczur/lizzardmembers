@@ -28,7 +28,7 @@ $event       = resolveTransactionEvent($pdo, trim($_POST['event'] ?? ''));
 $dateValid = $txDate !== '' && (bool)strtotime($txDate);
 if (!$dateValid || $txType === '' || $category === '' || $description === '' || $partner === '' || $account === '' || $amount < 0) {
     flash('error', 'Hiányzó vagy érvénytelen kötelező mező.');
-    header('Location: ' . BASE_URL . '/admin/bookkeeping.php');
+    header('Location: ' . postBackUrl(BASE_URL . '/admin/bookkeeping.php'));
     exit;
 }
 
@@ -51,5 +51,5 @@ recalcMembershipPayments($pdo);
 syncTourPaymentsFromTransactions($pdo);
 
 flash('success', 'Tranzakció rögzítve.');
-header('Location: ' . BASE_URL . '/admin/bookkeeping.php');
+header('Location: ' . postBackUrl(BASE_URL . '/admin/bookkeeping.php'));
 exit;

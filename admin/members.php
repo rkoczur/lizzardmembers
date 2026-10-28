@@ -185,7 +185,7 @@ include __DIR__ . '/../includes/admin-header.php';
           </td>
           <td>
             <div class="td-avatar">
-              <img src="<?= getAvatarUrl($m['profile_picture']) ?>" alt="">
+              <img src="<?= getAvatarThumbUrl($m['profile_picture']) ?>" alt="">
               <div>
                 <div class="td-name"><?= e($m['lastname'] . ' ' . $m['firstname']) ?></div>
                 <div class="td-sub"><?= e($m['email']) ?></div>

@@ -117,7 +117,7 @@
 
     <div class="sidebar-user">
       <img class="user-avatar-sm"
-           src="<?= getAvatarUrl($_SESSION['user_avatar'] ?? null) ?>"
+           src="<?= getAvatarThumbUrl($_SESSION['user_avatar'] ?? null) ?>"
            alt="avatar">
       <div class="user-info">
         <div class="user-name"><?= e($_SESSION['user_name'] ?? 'Tag') ?></div>

@@ -5,6 +5,7 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/future-tours-schema.php';
+require_once __DIR__ . '/../includes/future-tour-organizers.php';
 require_once __DIR__ . '/../includes/mailer.php';
 require_once __DIR__ . '/../includes/app-settings-schema.php';
 require_once __DIR__ . '/../includes/email-log-schema.php';
@@ -151,7 +152,7 @@ if ($appStatus === 'waitlist') {
 }
 
 // Email to all active admins
-$admins = $pdo->query("SELECT id, email, firstname, lastname FROM users WHERE role = 'admin' AND active = 1")->fetchAll();
+$admins = getTourApplicationNotifyRecipients($pdo, $tourId);
 $adminSubject = 'Új túrajelentkezés – ' . $tour['name'];
 $adminDetailUrl = $absBaseUrl . '/admin/future-tour-detail.php?id=' . $tourId;
 $adminHtml = '<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body style="margin:0;padding:0;background:#f5efe4;font-family:Arial,sans-serif;">

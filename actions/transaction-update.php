@@ -91,5 +91,5 @@ if ($ajax) {
     exit;
 }
 flash('success', 'Tranzakció módosítva.');
-header('Location: ' . BASE_URL . '/admin/bookkeeping.php');
+header('Location: ' . BASE_URL . '/admin/transaction-detail.php?id=' . $id);
 exit;

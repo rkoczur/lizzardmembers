@@ -49,5 +49,5 @@ if ($linkedRows > 0) {
 } else {
     flash('error', 'Nem történt összerendelés — nem választottál ki túrát egyik eseményhez sem.');
 }
-header('Location: ' . BASE_URL . '/admin/bookkeeping.php?tab=report');
+header('Location: ' . BASE_URL . '/admin/bookkeeping.php?tab=links');
 exit;

@@ -313,7 +313,7 @@ include __DIR__ . '/../includes/admin-header.php';
           <?php endforeach; ?>
         </div>
         <p id="member-picker-empty" class="member-picker-empty"
-           <?= !empty($assignedMembers) ? 'style="display:none"' : '' ?>>Még nincs hozzárendelt tag.</p>
+           <?= !empty($assignedMembers) ? 'hidden' : '' ?>>Még nincs hozzárendelt tag.</p>
       </div>
 
       <?php if (!$ro): ?>

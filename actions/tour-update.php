@@ -342,7 +342,7 @@ logAudit($pdo, 'update', 'tour', $id, $tourLabel, $auditChanges ?: null);
 
 if ($approvePending) {
     flash('success', 'A túra jóváhagyva és a tagok értesítve.');
-    header('Location: ' . BASE_URL . '/admin/tours.php');
+    header('Location: ' . $redirectTo);
 } else {
     flash('success', 'A túra adatai sikeresen frissítve (Lizzardier: ' . $lizzardPoints . ' pt, MTSZ: ' . $mtszPoints . ' pt).');
     header('Location: ' . $redirectTo);

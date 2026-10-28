@@ -5,6 +5,7 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/future-tours-schema.php';
+require_once __DIR__ . '/../includes/future-tour-organizers.php';
 requireAdminOrVezeto();
 $ro = !canCreateFutureTours();
 
@@ -42,6 +43,16 @@ if (!$isNew) {
 }
 
 $countries = getCountries($pdo);
+
+// Szervezők: meglévő túránál a beállított (vagy a létrehozó), új túránál a bejelentkezett felhasználó
+$orgMembers = $pdo->query("SELECT id, firstname, lastname, email FROM users WHERE active = 1 ORDER BY lastname, firstname")->fetchAll();
+if ($isNew) {
+    $orgStmt = $pdo->prepare("SELECT id, firstname, lastname FROM users WHERE id = ?");
+    $orgStmt->execute([(int)($_SESSION['user_id'] ?? 0)]);
+    $organizers = $orgStmt->fetchAll();
+} else {
+    $organizers = getFutureTourOrganizers($pdo, $id);
+}
 
 $gpxFiles = [];
 $galleryImages = [];
@@ -234,6 +245,34 @@ include __DIR__ . '/../includes/admin-header.php';
             <label>Szükséges tapasztalat és erőnlét</label>
             <textarea name="experience" rows="3" <?= $ro ? 'readonly' : '' ?>><?= e($tour['experience'] ?? '') ?></textarea>
           </div>
+        </div>
+
+        <!-- Szervezők -->
+        <div class="form-section-title form-section-title--spaced">Szervezők</div>
+        <div class="member-picker">
+          <?php if (!$ro): ?>
+          <div class="member-picker-controls">
+            <select id="org-picker-select">
+              <option value="">— Válasszon tagot —</option>
+              <?php foreach ($orgMembers as $m): ?>
+                <option value="<?= (int)$m['id'] ?>"><?= e($m['lastname'] . ' ' . $m['firstname']) ?></option>
+              <?php endforeach; ?>
+            </select>
+            <button type="button" id="org-picker-add" class="btn btn-secondary btn-sm">Hozzáad</button>
+          </div>
+          <?php endif; ?>
+          <div id="org-picker-list" class="member-picker-list">
+            <?php foreach ($organizers as $m): ?>
+            <div class="member-picker-item" data-member-id="<?= (int)$m['id'] ?>">
+              <span><?= e($m['lastname'] . ' ' . $m['firstname']) ?></span>
+              <input type="hidden" name="organizer_ids[]" value="<?= (int)$m['id'] ?>">
+              <?php if (!$ro): ?>
+              <button type="button" class="btn btn-danger btn-sm">Eltávolít</button>
+              <?php endif; ?>
+            </div>
+            <?php endforeach; ?>
+          </div>
+          <p id="org-picker-empty" class="member-picker-empty"<?= $organizers ? ' hidden' : '' ?>>Nincs megadva — a túra létrehozója jelenik meg szervezőként.</p>
         </div>
 
         <!-- Cover image -->

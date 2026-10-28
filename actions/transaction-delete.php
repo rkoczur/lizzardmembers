@@ -28,5 +28,5 @@ if ($tx) {
     flash('error', 'A tranzakció nem található.');
 }
 
-header('Location: ' . BASE_URL . '/admin/bookkeeping.php');
+header('Location: ' . postBackUrl(BASE_URL . '/admin/bookkeeping.php'));
 exit;

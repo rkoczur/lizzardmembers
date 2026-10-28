@@ -153,16 +153,16 @@ function initModals() {
   });
 }
 
-/* ===== Member picker ===== */
-function initMemberPicker() {
-  const select = document.getElementById('member-picker-select');
-  const addBtn = document.getElementById('member-picker-add');
-  const list   = document.getElementById('member-picker-list');
-  const empty  = document.getElementById('member-picker-empty');
+/* ===== Member picker (prefix: elem-azonosítók előtagja, inputName: a rejtett mező neve) ===== */
+function initMemberPicker(prefix = 'member-picker', inputName = 'member_ids[]') {
+  const select = document.getElementById(prefix + '-select');
+  const addBtn = document.getElementById(prefix + '-add');
+  const list   = document.getElementById(prefix + '-list');
+  const empty  = document.getElementById(prefix + '-empty');
   if (!select || !addBtn || !list) return;
 
   function updateEmpty() {
-    if (empty) empty.style.display = list.children.length === 0 ? '' : 'none';
+    if (empty) empty.hidden = list.children.length !== 0;
   }
 
   function wireRemove(item) {
@@ -184,7 +184,8 @@ function initMemberPicker() {
     const item = document.createElement('div');
     item.className = 'member-picker-item';
     item.dataset.memberId = val;
-    item.innerHTML = `<span>${text}</span><input type="hidden" name="member_ids[]" value="${val}"><button type="button" class="btn btn-danger btn-sm">Eltávolít</button>`;
+    item.innerHTML = `<span></span><input type="hidden" name="${inputName}" value="${val}"><button type="button" class="btn btn-danger btn-sm">Eltávolít</button>`;
+    item.querySelector('span').textContent = text;
     wireRemove(item);
     list.appendChild(item);
     select.value = '';
@@ -502,6 +503,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initTourMineFilter();
   initTourAdminFilters();
   initMemberPicker();
+  initMemberPicker('org-picker', 'organizer_ids[]');
   initMobileMenu();
   initResponsiveTables();
   initDateYearLimit();

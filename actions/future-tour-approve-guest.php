@@ -9,7 +9,7 @@ require_once __DIR__ . '/../includes/mailer.php';
 require_once __DIR__ . '/../includes/app-settings-schema.php';
 require_once __DIR__ . '/../includes/email-log-schema.php';
 require_once __DIR__ . '/../includes/calendar-invite.php';
-requireAdmin();
+requireAdminOrVezeto();
 verifyCsrf();
 
 $pdo = getDb();
@@ -22,7 +22,7 @@ $tourId = (int)($_POST['tour_id']        ?? 0);
 
 if (!$appId || !$tourId) {
     flash('error', 'Hiányos adatok.');
-    header('Location: ' . BASE_URL . '/admin/future-tour-detail.php?id=' . $tourId);
+    header('Location: ' . BASE_URL . '/admin/future-tour-applicants.php?id=' . $tourId);
     exit;
 }
 
@@ -38,7 +38,7 @@ $app = $appStmt->fetch();
 
 if (!$app) {
     flash('error', 'A jelentkezés nem található vagy nem váró állapotban van.');
-    header('Location: ' . BASE_URL . '/admin/future-tour-detail.php?id=' . $tourId);
+    header('Location: ' . BASE_URL . '/admin/future-tour-applicants.php?id=' . $tourId);
     exit;
 }
 
@@ -107,5 +107,5 @@ try {
 
 $label = $newStatus === 'confirmed' ? 'megerősítve' : 'várólistára helyezve';
 flash('success', e($guestName) . ' jelentkezése ' . $label . '.');
-header('Location: ' . BASE_URL . '/admin/future-tour-detail.php?id=' . $tourId);
+header('Location: ' . BASE_URL . '/admin/future-tour-applicants.php?id=' . $tourId);
 exit;

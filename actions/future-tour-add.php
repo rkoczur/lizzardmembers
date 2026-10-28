@@ -5,6 +5,7 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/future-tours-schema.php';
+require_once __DIR__ . '/../includes/future-tour-organizers.php';
 requireAdminOrVezeto();
 if (!canCreateFutureTours()) { flash('error', 'Nincs jogosultságod meghirdetett túra létrehozásához.'); header('Location: ' . BASE_URL . '/admin/future-tours.php'); exit; }
 verifyCsrf();
@@ -51,6 +52,7 @@ if (!$startDate) {
 $stmt = $pdo->prepare("INSERT INTO future_tours (name, description, short_intro, start_date, num_days, max_attendees, participation_fee, fee_includes, fee_excludes, lizzardier_points, country, region, accommodation, travel, equipment, experience, status, disabled_standard_fields, requires_membership, created_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 $stmt->execute([$name, $description ?: null, $shortIntro, $startDate, $numDays, $maxAttendees, $fee, $feeIncludes, $feeExcludes, $lizzardierPoints, $country, $region, $accommodation, $travel, $equipment, $experience, $status, $disabledFieldsJson, $requiresMembership, getCurrentUserId()]);
 $tourId = (int)$pdo->lastInsertId();
+saveFutureTourOrganizers($pdo, $tourId, (array)($_POST['organizer_ids'] ?? []));
 
 // Save days
 $dayNumbers     = $_POST['day_number']     ?? [];

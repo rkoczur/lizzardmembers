@@ -113,7 +113,7 @@ if (!empty($_FILES['avatar']['name'])) {
     $old->execute([$userId]);
     $oldPic = $old->fetchColumn();
     if ($oldPic && file_exists(AVATAR_DIR . $oldPic)) {
-        @unlink(AVATAR_DIR . $oldPic);
+        deleteAvatarFiles($oldPic);
     }
 }
 

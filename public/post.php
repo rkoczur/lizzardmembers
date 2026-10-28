@@ -80,7 +80,7 @@ include __DIR__ . '/../includes/public-header.php';
         <div style="font-size:11px;color:var(--text-muted,#7a7269);text-transform:uppercase;letter-spacing:.06em;font-weight:600;">Szerző</div>
         <div style="font-weight:800;font-size:16px;color:var(--sidebar-bg,#1a3d39);white-space:nowrap;"><?= e(trim($post['author_name'])) ?></div>
       </div>
-      <img src="<?= e(getAvatarUrl($post['author_avatar'] ?? null)) ?>" alt="" style="width:46px;height:46px;border-radius:50%;object-fit:cover;flex-shrink:0;">
+      <img src="<?= e(getAvatarThumbUrl($post['author_avatar'] ?? null)) ?>" alt="" style="width:46px;height:46px;border-radius:50%;object-fit:cover;flex-shrink:0;">
     </div>
     <?php endif; ?>
   </div>

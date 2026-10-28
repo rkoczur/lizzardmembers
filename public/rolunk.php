@@ -48,7 +48,7 @@ include __DIR__ . '/../includes/public-header.php';
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;margin-top:24px;">
       <?php foreach ($leaders as $l): ?>
       <div class="card" style="display:flex;flex-direction:column;align-items:center;padding:28px 20px;text-align:center;gap:10px;">
-        <img src="<?= e(getAvatarUrl($l['profile_picture'])) ?>"
+        <img src="<?= e(getAvatarThumbUrl($l['profile_picture'])) ?>"
              style="width:88px;height:88px;border-radius:50%;object-fit:cover;border:3px solid var(--primary-light);"
              alt="<?= e($l['lastname'] . ' ' . $l['firstname']) ?>">
         <div style="font-size:16px;font-weight:700;color:var(--text);"><?= e($l['lastname'] . ' ' . $l['firstname']) ?></div>

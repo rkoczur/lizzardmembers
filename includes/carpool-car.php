@@ -6,7 +6,11 @@ $initials  = fn(string $n): string => implode('', array_map(fn($w) => mb_substr(
 ?>
 <article class="cp-car<?= $isMine ? ' is-mine' : '' ?><?= $car['free'] === 0 ? ' is-full' : '' ?>">
   <header class="cp-car-head">
-    <span class="cp-car-avatar" aria-hidden="true"><?= e($initials($car['name'])) ?></span>
+    <?php if ($carPhoto = carpoolAvatarUrl($car['profile_picture'] ?? null)): ?>
+      <img class="cp-car-avatar cp-photo" src="<?= e($carPhoto) ?>" alt="" loading="lazy">
+    <?php else: ?>
+      <span class="cp-car-avatar" aria-hidden="true"><?= e($initials($car['name'])) ?></span>
+    <?php endif; ?>
     <div class="cp-car-driver">
       <span class="cp-car-kicker">Sofőr</span>
       <h3 class="cp-car-name"><?= e($car['name']) ?><?php if ($isMine): ?> <span class="cp-car-you">te</span><?php endif; ?></h3>
@@ -36,7 +40,11 @@ $initials  = fn(string $n): string => implode('', array_map(fn($w) => mb_substr(
   <div class="cp-seats">
     <?php foreach ($car['passengers'] as $p): $isMe = $me && (int)$p['application_id'] === (int)$me['id']; ?>
       <div class="cp-seat cp-seat-taken<?= $isMe ? ' is-me' : '' ?>">
-        <span class="cp-seat-mark"><?= e($initials($p['name'])) ?></span>
+        <?php if ($seatPhoto = carpoolAvatarUrl($p['profile_picture'] ?? null)): ?>
+          <img class="cp-seat-mark cp-photo" src="<?= e($seatPhoto) ?>" alt="" loading="lazy">
+        <?php else: ?>
+          <span class="cp-seat-mark"><?= e($initials($p['name'])) ?></span>
+        <?php endif; ?>
         <span class="cp-seat-name"><?= e($p['name']) ?><?= $isMe ? ' (te)' : '' ?></span>
       </div>
     <?php endforeach; ?>

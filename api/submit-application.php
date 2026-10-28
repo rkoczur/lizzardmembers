@@ -5,6 +5,7 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/future-tours-schema.php';
+require_once __DIR__ . '/../includes/future-tour-organizers.php';
 require_once __DIR__ . '/../includes/mailer.php';
 require_once __DIR__ . '/../includes/app-settings-schema.php';
 require_once __DIR__ . '/../includes/email-log-schema.php';
@@ -109,13 +110,8 @@ $sharingRoom   = in_array($_POST['sharing_room'] ?? '', ['same_gender', 'yes', '
 $notes         = trim($_POST['notes'] ?? '') ?: null;
 $departureCity = trim($_POST['departure_city'] ?? '') ?: null;
 
-if ($memberLoggedIn) {
-    $cntStmt = $pdo->prepare("SELECT COUNT(*) FROM future_tour_applications WHERE future_tour_id = ? AND status = 'confirmed'");
-    $cntStmt->execute([$tourId]);
-    $appStatus = (int)$cntStmt->fetchColumn() >= (int)$tour['max_attendees'] ? 'waitlist' : 'confirmed';
-} else {
-    $appStatus = 'pending';
-}
+// Tag és vendég egyaránt azonnal helyet kap (vagy várólistára kerül) — a szervező fogadja el
+$appStatus = getNewApplicationStatus($pdo, $tourId);
 
 if ($memberLoggedIn && $existing && $existing['status'] === 'cancelled') {
     $pdo->prepare("UPDATE future_tour_applications SET status=?, car_available=?, passengers=?, sharing_room=?, notes=?, departure_city=?, paid_at=NULL, applied_at=NOW() WHERE id=?")
@@ -127,8 +123,8 @@ if ($memberLoggedIn && $existing && $existing['status'] === 'cancelled') {
         ->execute([$tourId, $userId, $appStatus, $carAvailable, $passengers, $sharingRoom, $notes, $departureCity]);
     $appId = (int)$pdo->lastInsertId();
 } else {
-    $pdo->prepare("INSERT INTO future_tour_applications (future_tour_id, user_id, guest_name, guest_email, guest_phone, status, car_available, passengers, sharing_room, notes, departure_city) VALUES (?, NULL, ?, ?, ?, 'pending', ?, ?, ?, ?, ?)")
-        ->execute([$tourId, $guestName, $guestEmail, $guestPhone, $carAvailable, $passengers, $sharingRoom, $notes, $departureCity]);
+    $pdo->prepare("INSERT INTO future_tour_applications (future_tour_id, user_id, guest_name, guest_email, guest_phone, status, car_available, passengers, sharing_room, notes, departure_city) VALUES (?, NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
+        ->execute([$tourId, $guestName, $guestEmail, $guestPhone, $appStatus, $carAvailable, $passengers, $sharingRoom, $notes, $departureCity]);
     $appId = (int)$pdo->lastInsertId();
 }
 
@@ -168,11 +164,11 @@ if ($memberLoggedIn) {
           <p style="color:#666;font-size:13.5px;">Ha felszabadul egy hely, értesítést kapsz, és akkor kell a részvételi díjat befizetni.</p>';
     }
 } else {
+    // Vendég: csak várólistán kap levelet (lásd lent)
     $tourUrl     = null;
-    $subject     = 'Jelentkezés beérkezett – ' . $tour['name'];
-    $statusBlock = '<div style="background:#fffbeb;border:1px solid #f59e0b;border-radius:6px;padding:12px 16px;font-size:13.5px;color:#b45309;">
-        ⏳ Jelentkezésed <strong>jóváhagyásra vár.</strong> Az adminisztrátor hamarosan visszajelez e-mailben, és véglegesíti a részvételed.
-      </div>';
+    $subject     = 'Várólistára kerültél – ' . $tour['name'];
+    $statusBlock = '<strong style="color:#b45309;">Státusz: Várólistán</strong>
+      <p style="color:#666;font-size:13.5px;">A túra jelenleg betelt. Ha felszabadul egy hely, értesítünk.</p>';
 }
 
 $tourUrl     = $tourUrl ?? '';
@@ -201,9 +197,9 @@ $applicantHtml = '<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body 
 
 $emailTo  = $memberLoggedIn ? $memberUser['email'] : $guestEmail;
 $logType  = $memberLoggedIn ? 'future_tour_application' : 'future_tour_guest_application';
-// A megerősített (helyet kapott) tag NEM kap automatikus e-mailt — azt az admin „Jelentkezés
-// elfogadása” gombja küldi ki. A várólistás tag és a jóváhagyásra váró vendég értesül.
-if (!($memberLoggedIn && $appStatus === 'confirmed')) {
+// A helyet kapott jelentkező (tag vagy vendég) NEM kap automatikus e-mailt — azt a „Jelentkezés
+// elfogadása” gomb küldi ki. Csak a várólistára került jelentkező értesül.
+if ($appStatus !== 'confirmed') {
     try {
         (new SmtpMailer($smtp))->send($emailTo, $displayName, $subject, $applicantHtml);
         logEmailEntry($pdo, $memberLoggedIn ? $userId : null, $emailTo, $displayName, $subject, $applicantHtml, $logType, 'sent');
@@ -213,13 +209,13 @@ if (!($memberLoggedIn && $appStatus === 'confirmed')) {
 }
 
 $adminSubject = ($memberLoggedIn ? 'Új túrajelentkezés' : 'Új vendég túrajelentkezés') . ' – ' . $tour['name'];
-$adminUrl     = $absBaseUrl . '/admin/future-tour-detail.php?id=' . $tourId;
+$adminUrl     = $absBaseUrl . '/admin/future-tour-applicants.php?id=' . $tourId;
 $adminHtml = '<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body style="margin:0;padding:0;background:#f5efe4;font-family:Arial,sans-serif;">
 <table width="100%" cellpadding="0" cellspacing="0"><tr><td align="center" style="padding:32px 16px;">
 <table width="560" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.08);">
   <tr><td style="background:#1a3d39;padding:24px 32px;">
     <h1 style="color:#c8a84b;margin:0;font-size:22px;">' . APP_NAME . '</h1>
-    <p style="color:#a8c5c2;margin:6px 0 0;font-size:14px;">' . ($memberLoggedIn ? 'Új tag jelentkezés' : 'Új vendég jelentkezés – jóváhagyás szükséges') . '</p>
+    <p style="color:#a8c5c2;margin:6px 0 0;font-size:14px;">' . ($memberLoggedIn ? 'Új tag jelentkezés' : 'Új vendég jelentkezés – elfogadás szükséges') . '</p>
   </td></tr>
   <tr><td style="padding:28px 32px;">
     <p style="font-size:15px;">Új jelentkezés érkezett a <strong>' . htmlspecialchars($tour['name'], ENT_QUOTES) . '</strong> túrára:</p>
@@ -239,7 +235,7 @@ $adminHtml = '<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body styl
 </table></td></tr></table></body></html>';
 
 $adminLogType = $memberLoggedIn ? 'future_tour_new_application_admin' : 'future_tour_guest_application_admin';
-foreach ($pdo->query("SELECT id, email, firstname, lastname FROM users WHERE role = 'admin' AND active = 1")->fetchAll() as $admin) {
+foreach (getTourApplicationNotifyRecipients($pdo, $tourId) as $admin) {
     $adminName = $admin['lastname'] . ' ' . $admin['firstname'];
     try {
         (new SmtpMailer($smtp))->send($admin['email'], $adminName, $adminSubject, $adminHtml);

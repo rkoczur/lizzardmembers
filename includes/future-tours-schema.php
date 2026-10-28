@@ -146,4 +146,16 @@ function ensureFutureToursSchema(PDO $pdo): void {
             FOREIGN KEY (field_id) REFERENCES future_tour_custom_fields(id) ON DELETE CASCADE
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
     ");
+
+    // Kézzel beállított szervezők — ha nincs sor, a létrehozó (created_by) a szervező
+    $pdo->exec("
+        CREATE TABLE IF NOT EXISTS future_tour_organizers (
+            future_tour_id  INT UNSIGNED NOT NULL,
+            user_id         INT UNSIGNED NOT NULL,
+            sort_order      SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+            PRIMARY KEY (future_tour_id, user_id),
+            FOREIGN KEY (future_tour_id) REFERENCES future_tours(id) ON DELETE CASCADE,
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+    ");
 }

@@ -4,6 +4,7 @@ require_once __DIR__ . '/../includes/config.php';
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/future-tours-schema.php';
+require_once __DIR__ . '/../includes/future-tour-organizers.php';
 require_once __DIR__ . '/../includes/mailer.php';
 require_once __DIR__ . '/../includes/app-settings-schema.php';
 require_once __DIR__ . '/../includes/email-log-schema.php';
@@ -81,12 +82,14 @@ $passengers    = $carAvailable ? max(0, (int)($_POST['passengers'] ?? 0)) : 0;
 $sharingRoom   = in_array($_POST['sharing_room'] ?? '', ['same_gender','yes','no']) ? $_POST['sharing_room'] : 'same_gender';
 $notes         = trim($_POST['notes'] ?? '') ?: null;
 $departureCity = trim($_POST['departure_city'] ?? '') ?: null;
+// A vendég is azonnal helyet kap (vagy várólistára kerül), mint a tag — a szervező fogadja el
+$appStatus     = getNewApplicationStatus($pdo, $tourId);
 
 $pdo->prepare("
     INSERT INTO future_tour_applications
         (future_tour_id, user_id, guest_name, guest_email, guest_phone, status, car_available, passengers, sharing_room, notes, departure_city)
-    VALUES (?, NULL, ?, ?, ?, 'pending', ?, ?, ?, ?, ?)
-")->execute([$tourId, $guestName, $guestEmail, $guestPhone, $carAvailable, $passengers, $sharingRoom, $notes, $departureCity]);
+    VALUES (?, NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+")->execute([$tourId, $guestName, $guestEmail, $guestPhone, $appStatus, $carAvailable, $passengers, $sharingRoom, $notes, $departureCity]);
 $appId = (int)$pdo->lastInsertId();
 
 // Save custom field answers
@@ -106,8 +109,8 @@ $proto       = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'htt
 $absBaseUrl  = $proto . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . BASE_URL;
 $tourDate    = $tour['start_date'] ? formatDate($tour['start_date']) : '—';
 
-// Email to guest
-$guestSubject = 'Jelentkezés beérkezett – ' . $tour['name'];
+// Email to guest — csak várólistán; a helyet kapott vendég az elfogadáskor kap levelet (mint a tag)
+$guestSubject = 'Várólistára kerültél – ' . $tour['name'];
 $guestHtml = '<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body style="margin:0;padding:0;background:#f5efe4;font-family:Arial,sans-serif;">
 <table width="100%" cellpadding="0" cellspacing="0"><tr><td align="center" style="padding:32px 16px;">
 <table width="560" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.08);">
@@ -124,7 +127,7 @@ $guestHtml = '<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body styl
       <tr><td style="padding:4px 0;color:#666;">Időtartam:</td><td>' . (int)$tour['num_days'] . ' nap</td></tr>
     </table>
     <div style="background:#fffbeb;border:1px solid #f59e0b;border-radius:6px;padding:12px 16px;font-size:13.5px;color:#b45309;">
-      ⏳ Jelentkezésed <strong>jóváhagyásra vár.</strong> Az adminisztrátor hamarosan visszajelez e-mailben, és véglegesíti a részvételed.
+      A túra jelenleg betelt, ezért <strong>várólistára</strong> kerültél. Ha felszabadul egy hely, értesítünk.
     </div>
   </td></tr>
   <tr><td style="padding:16px 32px;background:#f5f5f5;text-align:center;font-size:12px;color:#999;">
@@ -132,24 +135,26 @@ $guestHtml = '<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body styl
   </td></tr>
 </table></td></tr></table></body></html>';
 
-try {
-    $mailer = new SmtpMailer($smtp);
-    $mailer->send($guestEmail, $guestName, $guestSubject, $guestHtml);
-    logEmailEntry($pdo, null, $guestEmail, $guestName, $guestSubject, $guestHtml, 'future_tour_guest_application', 'sent');
-} catch (Throwable $e) {
-    logEmailEntry($pdo, null, $guestEmail, $guestName, $guestSubject, $guestHtml, 'future_tour_guest_application', 'failed', $e->getMessage());
+if ($appStatus === 'waitlist') {
+    try {
+        $mailer = new SmtpMailer($smtp);
+        $mailer->send($guestEmail, $guestName, $guestSubject, $guestHtml);
+        logEmailEntry($pdo, null, $guestEmail, $guestName, $guestSubject, $guestHtml, 'future_tour_guest_application', 'sent');
+    } catch (Throwable $e) {
+        logEmailEntry($pdo, null, $guestEmail, $guestName, $guestSubject, $guestHtml, 'future_tour_guest_application', 'failed', $e->getMessage());
+    }
 }
 
 // Email to all active admins
-$admins       = $pdo->query("SELECT id, email, firstname, lastname FROM users WHERE role = 'admin' AND active = 1")->fetchAll();
+$admins       = getTourApplicationNotifyRecipients($pdo, $tourId);
 $adminSubject = 'Új vendég túrajelentkezés – ' . $tour['name'];
-$adminUrl     = $absBaseUrl . '/admin/future-tour-detail.php?id=' . $tourId;
+$adminUrl     = $absBaseUrl . '/admin/future-tour-applicants.php?id=' . $tourId;
 $adminHtml = '<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body style="margin:0;padding:0;background:#f5efe4;font-family:Arial,sans-serif;">
 <table width="100%" cellpadding="0" cellspacing="0"><tr><td align="center" style="padding:32px 16px;">
 <table width="560" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.08);">
   <tr><td style="background:#1a3d39;padding:24px 32px;">
     <h1 style="color:#c8a84b;margin:0;font-size:22px;">' . APP_NAME . '</h1>
-    <p style="color:#a8c5c2;margin:6px 0 0;font-size:14px;">Új vendég jelentkezés – jóváhagyás szükséges</p>
+    <p style="color:#a8c5c2;margin:6px 0 0;font-size:14px;">Új vendég jelentkezés – elfogadás szükséges</p>
   </td></tr>
   <tr><td style="padding:28px 32px;">
     <p style="font-size:15px;">Új vendég jelentkezés érkezett a <strong>' . htmlspecialchars($tour['name'], ENT_QUOTES) . '</strong> túrára:</p>
@@ -160,7 +165,7 @@ $adminHtml = '<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body styl
       <tr><td style="padding:4px 0;color:#666;">Beérkezés:</td><td>' . date('Y.m.d H:i') . '</td></tr>
     </table>
     <div style="text-align:center;margin-top:24px;">
-      <a href="' . $adminUrl . '" style="background:#29776F;color:#fff;text-decoration:none;padding:12px 28px;border-radius:6px;font-size:14px;font-weight:600;">Jóváhagyás az adminfelületen</a>
+      <a href="' . $adminUrl . '" style="background:#29776F;color:#fff;text-decoration:none;padding:12px 28px;border-radius:6px;font-size:14px;font-weight:600;">Elfogadás az adminfelületen</a>
     </div>
   </td></tr>
   <tr><td style="padding:16px 32px;background:#f5f5f5;text-align:center;font-size:12px;color:#999;">

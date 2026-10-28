@@ -110,7 +110,7 @@ include __DIR__ . '/../includes/admin-header.php';
   <div class="profile-avatar-card">
     <div class="avatar-upload-wrap">
       <img id="avatar-preview"
-           src="<?= getAvatarUrl($member['profile_picture']) ?>"
+           src="<?= getAvatarThumbUrl($member['profile_picture']) ?>"
            alt="Profilkép">
       <?php if (!$ro): ?>
       <div class="avatar-overlay" id="avatar-upload-overlay" title="Fotó módosítása">

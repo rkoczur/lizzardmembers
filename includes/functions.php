@@ -110,6 +110,26 @@ function getApplicationFee(?float $tourFee, int $discount, $override): float
     return round($tourFee * (1 - $discount / 100), 2);
 }
 
+/** Új jelentkezés státusza a férőhely alapján: 'confirmed', ha van még hely, különben 'waitlist'. */
+function getNewApplicationStatus(PDO $pdo, int $tourId): string
+{
+    $stmt = $pdo->prepare("
+        SELECT ft.max_attendees,
+               (SELECT COUNT(*) FROM future_tour_applications fta
+                WHERE fta.future_tour_id = ft.id AND fta.status = 'confirmed') AS confirmed
+        FROM future_tours ft WHERE ft.id = ?
+    ");
+    $stmt->execute([$tourId]);
+    $row = $stmt->fetch();
+    return $row && (int)$row['confirmed'] < (int)$row['max_attendees'] ? 'confirmed' : 'waitlist';
+}
+
+/** Tagfelvételhez kötött jelentkezés, amelynek a tagfelvétele még nincs jóváhagyva. */
+function isApplicantNotYetMember(array $app): bool
+{
+    return empty($app['user_id']) && !empty($app['member_application_id']);
+}
+
 function recalcUserStats(PDO $pdo): void
 {
     $pdo->exec("UPDATE users SET points = COALESCE((
@@ -214,6 +234,57 @@ function getAvatarUrl(?string $filename): string
     return BASE_URL . '/assets/img/default-avatar.svg';
 }
 
+const AVATAR_THUMB_SIZE = 280;
+
+/**
+ * Négyzetes, kicsinyített profilkép URL-je (első kéréskor készül el az avatars/thumbs/ mappába).
+ * A böngésző nagy arányú kicsinyítése a hajon/mintán moirét okoz — ezt kerüli el.
+ * GD vagy hiba esetén az eredeti képet adja.
+ */
+function getAvatarThumbUrl(?string $filename): string
+{
+    if (!$filename || !file_exists(AVATAR_DIR . $filename)) return getAvatarUrl(null);
+    $thumbName = pathinfo($filename, PATHINFO_FILENAME) . '_' . AVATAR_THUMB_SIZE . '.jpg';
+    $thumbPath = AVATAR_DIR . 'thumbs/' . $thumbName;
+    if (!file_exists($thumbPath) && !createAvatarThumb(AVATAR_DIR . $filename, $thumbPath)) {
+        return getAvatarUrl($filename);
+    }
+    return AVATAR_URL . 'thumbs/' . rawurlencode($thumbName);
+}
+
+function createAvatarThumb(string $src, string $dest): bool
+{
+    if (!function_exists('imagecreatefromstring')) return false;
+    $img = @imagecreatefromstring((string)file_get_contents($src));
+    if (!$img) return false;
+    $img  = avatarApplyExifOrientation($img, $src);
+    $w    = imagesx($img);
+    $h    = imagesy($img);
+    $side = min($w, $h);
+    $size = min(AVATAR_THUMB_SIZE, $side);
+    $out  = imagecreatetruecolor($size, $size);
+    imagefill($out, 0, 0, imagecolorallocate($out, 255, 255, 255)); // átlátszó PNG → fehér háttér
+    imagecopyresampled($out, $img, 0, 0, intdiv($w - $side, 2), intdiv($h - $side, 2), $size, $size, $side, $side);
+    if (!is_dir(dirname($dest))) @mkdir(dirname($dest), 0755, true);
+    return @imagejpeg($out, $dest, 88);
+}
+
+// Telefonos fotók: a böngésző az EXIF tájolást követi, a GD nem — ezért forgatni kell.
+function avatarApplyExifOrientation(GdImage $img, string $src): GdImage
+{
+    if (!function_exists('exif_read_data')) return $img;
+    $orientation = (int)(@exif_read_data($src)['Orientation'] ?? 1);
+    $angle = [3 => 180, 6 => -90, 8 => 90][$orientation] ?? 0;
+    return $angle ? imagerotate($img, $angle, 0) : $img;
+}
+
+// Profilkép csere/törlés után a régi fájl és kicsinyített példánya is törlődik.
+function deleteAvatarFiles(string $filename): void
+{
+    @unlink(AVATAR_DIR . $filename);
+    @unlink(AVATAR_DIR . 'thumbs/' . pathinfo($filename, PATHINFO_FILENAME) . '_' . AVATAR_THUMB_SIZE . '.jpg');
+}
+
 function flash(string $key, string $message): void
 {
     $_SESSION['flash'][$key] = $message;
@@ -224,6 +295,15 @@ function getFlash(string $key): ?string
     $msg = $_SESSION['flash'][$key] ?? null;
     unset($_SESSION['flash'][$key]);
     return $msg;
+}
+
+// Visszatérési URL a POST 'back' mezőből — csak az alkalmazáson belüli útvonal fogadható el.
+function postBackUrl(string $default): string
+{
+    $back = (string)($_POST['back'] ?? '');
+    $ok = str_starts_with($back, BASE_URL . '/') && !str_contains($back, '//')
+        && !preg_match('/[\\\\\r\n]/', $back);
+    return $ok ? $back : $default;
 }
 
 function csrfToken(): string

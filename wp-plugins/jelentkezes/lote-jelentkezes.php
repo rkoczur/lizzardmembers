@@ -2,7 +2,7 @@
 /*
 Plugin Name: LOTE Meghirdetett Túrák – Jelentkezés
 Description: Leguán Osztag Természetjáró Egyesület meghirdetett túrák natív jelentkezési űrlapja. Shortcode: [lote_jelentkezes] vagy [lote_jelentkezes id="5"]
-Version:     2.2
+Version:     2.3
 Author:      Leguán Osztag Természetjáró Egyesület
 */
 
@@ -461,7 +461,7 @@ add_shortcode('lote_jelentkezes', function (array $atts): string {
         <div class="lote-ft-success" id="<?= esc_attr($uid) ?>-success-<?= $tid ?>" hidden>
           <div class="lote-ft-success-ico">✅</div>
           <div class="lote-ft-success-title">Jelentkezés elküldve!</div>
-          <div class="lote-ft-success-text">Köszönjük a jelentkezésedet! Hamarosan visszajelzünk e-mailben.<br>Az adminisztrátor jóváhagyása után véglegesítjük a részvételed.</div>
+          <div class="lote-ft-success-text">Köszönjük a jelentkezésedet! Hamarosan visszajelzünk e-mailben.<br>A szervező elfogadása után e-mailben visszaigazoljuk a részvételed.</div>
         </div>
 
       </div>
@@ -880,7 +880,7 @@ add_shortcode('lote_jelentkezes', function (array $atts): string {
               var titleEl = successEl.querySelector('.lote-ft-success-title');
               var textEl  = successEl.querySelector('.lote-ft-success-text');
               if (titleEl) titleEl.textContent = 'Tagságra jelentkezés elküldve!';
-              if (textEl)  textEl.innerHTML    = 'Köszönjük! Kérelmedet megkaptuk, hamarosan visszajelzünk e-mailben.<br>Amint taggá váltál, automatikusan jóváhagyjuk a túrajelentkezésedet is.';
+              if (textEl)  textEl.innerHTML    = 'Köszönjük! Kérelmedet megkaptuk, hamarosan visszajelzünk e-mailben.<br>A tagfelvétel jóváhagyásáról, majd a túrajelentkezésed elfogadásáról külön e-mailben értesítünk.';
               inner.hidden     = true;
               successEl.hidden = false;
               var toggleWrap = document.getElementById(uid + '-toggle-wrap-' + tid);

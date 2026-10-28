@@ -101,6 +101,7 @@ include __DIR__ . '/../includes/admin-header.php';
               <form method="post" action="<?= BASE_URL ?>/actions/member-unlock.php">
                 <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
                 <input type="hidden" name="id" value="<?= $u['id'] ?>">
+                <input type="hidden" name="back" value="<?= e($_SERVER['REQUEST_URI']) ?>">
                 <button type="submit" class="btn btn-primary btn-sm">Feloldás</button>
               </form>
               <?php endif; ?>

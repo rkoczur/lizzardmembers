@@ -52,6 +52,12 @@ if (!$app) {
     exit;
 }
 
+if (isApplicantNotYetMember($app)) {
+    flash('error', 'A jelentkező még nem tag — előbb a tagfelvételt kell jóváhagyni.');
+    header('Location: ' . $backUrl);
+    exit;
+}
+
 // Vendég jelentkező: nincs user_id, a nevet/e-mailt a guest_* mezők adják
 $isGuest = empty($app['user_id']);
 $toEmail = $isGuest ? (string)$app['guest_email'] : (string)$app['email'];

@@ -27,5 +27,5 @@ logAudit($pdo, 'update', 'member', $id, $name, [
 ]);
 
 flash('success', $name . ' fiókjának zárolása feloldva.');
-header('Location: ' . BASE_URL . '/admin/member-detail.php?id=' . $id);
+header('Location: ' . postBackUrl(BASE_URL . '/admin/member-detail.php?id=' . $id));
 exit;

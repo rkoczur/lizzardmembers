@@ -56,7 +56,7 @@ foreach ($outRows as $r) {
 
 // Elfogadásra váró jelentkezések: helyet kapott tagok és vendégek, akiknek a jelentkezését még nem fogadták el
 $pendingAccept = $pdo->query("
-    SELECT fta.id, fta.future_tour_id, fta.applied_at, fta.paid_at, fta.user_id,
+    SELECT fta.id, fta.future_tour_id, fta.applied_at, fta.paid_at, fta.user_id, fta.member_application_id,
            COALESCE(fta.guest_name, CONCAT(u.lastname, ' ', u.firstname)) AS applicant_name,
            COALESCE(fta.guest_email, u.email) AS applicant_email,
            ft.name AS tour_name, ft.start_date, ft.participation_fee
@@ -168,6 +168,12 @@ include __DIR__ . '/../includes/admin-header.php';
           <?php endif; ?>
         <?php endif; ?>
       </div>
+      <?php if (isApplicantNotYetMember($pa)): ?>
+      <div>
+        <button type="button" class="btn btn-primary btn-sm accept-locked" disabled>Elfogadás</button>
+        <div class="accept-locked-note">Még nem tag</div>
+      </div>
+      <?php else: ?>
       <form method="post" action="<?= BASE_URL ?>/actions/future-tour-accept.php"
             onsubmit="return confirm('Elfogadja <?= e($pa['applicant_name']) ?> jelentkezését? A jelentkező visszaigazoló e-mailt kap.')">
         <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
@@ -176,6 +182,7 @@ include __DIR__ . '/../includes/admin-header.php';
         <input type="hidden" name="back" value="list">
         <button type="submit" class="btn btn-primary btn-sm">Elfogadás</button>
       </form>
+      <?php endif; ?>
     </div>
     <?php endforeach; ?>
   </div>

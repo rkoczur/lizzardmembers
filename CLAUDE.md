@@ -43,6 +43,8 @@ All UI elements must be in **Hungarian**!
 - Use `requireAdmin()` or `requireUser()` at the top of every protected page
 - Use PDO prepared statements — never interpolate user input into SQL
 - Avatar uploads: validate MIME via `finfo`, enforce 2 MB limit, generate safe filename
+- Avatar megjelenítés: mindig `getAvatarThumbUrl()` (280 px-es négyzetes példány, GD-vel, `avatars/thumbs/`),
+  ne az eredeti — a nagy arányú böngészős kicsinyítés moirét okoz. Csere/törlés: `deleteAvatarFiles()`.
 
 ## Member levels (computed — never set manually)
 Points = sum of `tours.points` for all tours the member is assigned to via `tour_members`.
@@ -172,6 +174,22 @@ include __DIR__ . '/../includes/admin-footer.php'; // or user-footer.php
    Natív oldal: `public/tour-apply.php` — mindhárom űrlap (tag / vendég / tagfelvétel) a közös
    `includes/tour-apply-fields.php` részleget használja. WP plugin: `j_custom_field_N` mezőnevek,
    amelyeket a JS `custom_field_N`-re nevez át küldés előtt.
+4. Státusz: minden új jelentkezés (tag, vendég, tagfelvételes) azonnal `confirmed`/`waitlist` a férőhely szerint
+   (`getNewApplicationStatus($pdo, $tourId)`) — `pending` csak régi sorokon maradhat. A vendég a fő listában
+   „Vendég” jelvénnyel szerepel, és a `future-tour-accept.php` (`requireAdminOrVezeto()`) fogadja el (ez küldi a levelet).
+   Tagfelvételes sor (`user_id` NULL + `member_application_id`): `isApplicantNotYetMember()` → az elfogadás tiltva
+   (inaktív gomb, „Még nem tag”). Tagfelvétel jóváhagyásakor (`actions/application-process.php`) a sor a tagé lesz,
+   státusza marad, túra-levél NEM megy. Elutasításkor a kapcsolt jelentkezés `cancelled`.
+## Meghirdetett túra szervezői (`includes/future-tour-organizers.php`)
+`future_tour_organizers` (future_tour_id, user_id, sort_order) — ha egy túrához nincs sor, a `future_tours.created_by` a szervező.
+`getFutureTourOrganizers($pdo, $tourId)` mindig ezt a visszaesést adja; `saveFutureTourOrganizers($pdo, $tourId, $ids)` felülír
+(üres lista → létrehozó). Mentés: `actions/future-tour-add.php`, `-update.php` (`organizer_ids[]`), UI: `admin/future-tour-detail.php`
+„Szervezők” (`initMemberPicker('org-picker', 'organizer_ids[]')`). Megjelenítés: `includes/tour-organizers.php` (`$organizers`, `.tour-org-card` „Szervező(k)” kártya a jobb oszlopban, a jelentkezés alatt; név, profilkép, e-mail, telefon) —
+`user/future-tour-detail.php`, `public/tour-detail.php`. CSS: `.to-*`.
+Jelentkezési értesítő: `getTourApplicationNotifyRecipients($pdo, $tourId, $roles = ['admin'])` — aktív adminok + aktív szervezők,
+duplikáció nélkül. Hívják: `actions/future-tour-apply.php`, `-apply-guest.php`, `api/submit-application.php`,
+`api/join-tour-submit.php`, `actions/join-submit.php` (túrához kötött tagfelvételnél, `['admin','vezeto']`).
+
 ## Naptár-meghívó (`includes/calendar-invite.php`)
 `getTourCalendarEvent($pdo, $tourId, $absBaseUrl)` → egész napos esemény (`start_date` … +`num_days`, kizárólagos vég),
 null ha törölt / nincs dátum. `calendarGoogleUrl()`, `calendarOutlookUrl($ev, 'outlook.live.com'|'outlook.office.com')`,
@@ -187,7 +205,7 @@ gomb/link az `admin/future-tour-applicants.php` `#telekocsi` sávjában.
 - `carpool_drivers` (jelentkezésenként max. 1, `seats` 1–`CARPOOL_MAX_SEATS`, `phone`/`contact_extra` közül legalább egy,
   `departure` kötelező), `carpool_passengers` (jelentkezésenként max. 1 hely). Sofőr nem lehet utas.
 - Minden publikus művelet: `actions/carpool-action.php` (`op`: identify, forget, driver_save, driver_remove, book, unbook).
-- Részlegek: `includes/carpool-identify.php`, `-me.php`, `-car.php`. JS: `assets/js/carpool.js`. CSS: `.cp-*`.
+- Részlegek: `includes/carpool-identify.php`, `-me.php`, `-car.php`. Profilkép: `carpoolAvatarUrl()` (null → monogram, `.cp-photo`). JS: `assets/js/carpool.js`. CSS: `.cp-*`.
 - Vezető (admin/helyettes/túravezető) azonosítás nélkül is látja az autókat („vezetői nézet”).
 - Értesítő (`includes/carpool-notify.php`): `carpool_watchers` (jelentkezésenként max. 1), `op=watch` kapcsolja.
   `notifyCarpoolWatchers($pdo, $carpool, 'new_driver'|'seat_freed', $driverId, $actorAppId)` — BCC levél,

@@ -4,6 +4,7 @@ require_once __DIR__ . '/../includes/config.php';
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/join-schema.php';
+require_once __DIR__ . '/../includes/future-tour-organizers.php';
 require_once __DIR__ . '/../includes/captcha.php';
 
 verifyCsrf();
@@ -110,8 +111,8 @@ if ($tourId > 0) {
             INSERT INTO future_tour_applications
                 (future_tour_id, user_id, guest_name, guest_email, guest_phone, status,
                  car_available, passengers, sharing_room, notes, departure_city, member_application_id)
-            VALUES (?, NULL, ?, ?, ?, 'pending', ?, ?, ?, ?, ?, ?)
-        ")->execute([$tourId, $guestName, $email, $phone ?: null,
+            VALUES (?, NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ")->execute([$tourId, $guestName, $email, $phone ?: null, getNewApplicationStatus($pdo, $tourId),
                      $carAvailable, $passengers, $sharingRoom, $tourNotes, $departureCity, $memberAppId]);
 
         $tourAppId = (int)$pdo->lastInsertId();
@@ -170,7 +171,10 @@ HTML;
         logEmailEntry($pdo, null, $email, $lastname . ' ' . $firstname, $subject, $html, 'join_confirm', 'sent');
 
         // Admin notification
-        $adminRows = $pdo->query("SELECT email, firstname, lastname FROM users WHERE role IN ('admin','vezeto') AND active = 1")->fetchAll();
+        // Túrához kötött tagfelvételnél a túra szervezői is értesülnek
+        $adminRows = !empty($tourAppId)
+            ? getTourApplicationNotifyRecipients($pdo, $tourId, ['admin', 'vezeto'])
+            : $pdo->query("SELECT email, firstname, lastname FROM users WHERE role IN ('admin','vezeto') AND active = 1")->fetchAll();
         if ($adminRows) {
             $proto      = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
             $appsUrl    = $proto . '://' . $_SERVER['HTTP_HOST'] . BASE_URL . '/admin/applications.php?status=pending';

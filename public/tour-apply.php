@@ -99,7 +99,7 @@ include __DIR__ . '/../includes/public-header.php';
       <h2 style="margin:0 0 10px;color:var(--primary);">Jelentkezés elküldve!</h2>
       <p style="color:var(--text-muted);font-size:14px;line-height:1.6;margin:0 0 20px;">
         Köszönjük a jelentkezésedet! Hamarosan visszajelzünk e-mailben.<br>
-        Az adminisztrátor jóváhagyása után véglegesítjük a részvételed.
+        A szervező elfogadása után e-mailben visszaigazoljuk a részvételed.
       </p>
       <a href="<?= BASE_URL ?>/public/turanyptar.php" class="btn btn-ghost">← Vissza a túranaptárhoz</a>
     </div>
