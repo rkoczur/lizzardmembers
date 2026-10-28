@@ -6,6 +6,8 @@ require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/future-tours-schema.php';
 require_once __DIR__ . '/../includes/future-tour-organizers.php';
+require_once __DIR__ . '/../includes/future-tour-content.php';
+require_once __DIR__ . '/../includes/app-settings-schema.php';
 requireAdminOrVezeto();
 $ro = !canCreateFutureTours();
 
@@ -44,6 +46,14 @@ if (!$isNew) {
 
 $countries = getCountries($pdo);
 
+// Publikus adatlap tartalmai: felszerelés lista, élménycímkék (+ ajánlás), díj megjegyzés alapszövege
+$equipmentItems = tourTextLines($tour['equipment'] ?? '');
+$tourTags       = tourTextLines($tour['experience_tags'] ?? '');
+$usedTags       = getUsedExperienceTags($pdo);
+$feeNoteDefault = tourFeeNoteDefault($pdo);
+$coverLogo      = $tour['cover_logo'] ?? 'light';
+$dayGpxCount    = [];
+
 // Szervezők: meglévő túránál a beállított (vagy a létrehozó), új túránál a bejelentkezett felhasználó
 $orgMembers = $pdo->query("SELECT id, firstname, lastname, email FROM users WHERE active = 1 ORDER BY lastname, firstname")->fetchAll();
 if ($isNew) {
@@ -60,6 +70,9 @@ if (!$isNew) {
     $gpxFilesStmt = $pdo->prepare("SELECT * FROM future_tour_gpx_files WHERE future_tour_id = ? ORDER BY sort_order ASC, uploaded_at ASC");
     $gpxFilesStmt->execute([$id]);
     $gpxFiles = $gpxFilesStmt->fetchAll();
+    foreach ($gpxFiles as $gf) {
+        if ($gf['day_number'] !== null) $dayGpxCount[(int)$gf['day_number']] = ($dayGpxCount[(int)$gf['day_number']] ?? 0) + 1;
+    }
 
     $galleryStmt = $pdo->prepare("SELECT * FROM future_tour_gallery_images WHERE future_tour_id = ? ORDER BY sort_order ASC, uploaded_at ASC");
     $galleryStmt->execute([$id]);
@@ -178,7 +191,7 @@ include __DIR__ . '/../includes/admin-header.php';
           </div>
           <div class="form-group">
             <label>Részvételi díj (Ft)</label>
-            <input type="number" name="participation_fee" min="0" step="1" value="<?= $tour['participation_fee'] !== null ? (int)$tour['participation_fee'] : '' ?>" placeholder="pl. 15000" <?= $ro ? 'readonly' : '' ?>>
+            <input type="number" name="participation_fee" min="0" step="1" value="<?= ($tour['participation_fee'] ?? null) !== null ? (int)$tour['participation_fee'] : '' ?>" placeholder="pl. 15000" <?= $ro ? 'readonly' : '' ?>>
           </div>
           <div class="form-group full">
             <label>A részvételi díj tartalmazza</label>
@@ -190,9 +203,14 @@ include __DIR__ . '/../includes/admin-header.php';
             <textarea name="fee_excludes" rows="4" placeholder="Egy sor = egy tétel, pl.:&#10;Utazási költség&#10;Ebéd" <?= $ro ? 'readonly' : '' ?>><?= e($tour['fee_excludes'] ?? '') ?></textarea>
             <small style="color:var(--text-muted);font-size:12px;">Minden sor egy tételnek számít a listán. Hagyd üresen, ha nem szükséges.</small>
           </div>
+          <div class="form-group full">
+            <label>Díj megjegyzés <small class="ft-hint-inline">(a jelentkezés gomb és az ár alatt)</small></label>
+            <textarea name="fee_note" rows="3" placeholder="<?= e($feeNoteDefault) ?>" <?= $ro ? 'readonly' : '' ?>><?= e($tour['fee_note'] ?? '') ?></textarea>
+            <small class="ft-hint">Üresen hagyva az egyesület alapértelmezett szövege jelenik meg (lásd a mezőben halványan).</small>
+          </div>
           <div class="form-group">
             <label>Szerezhető Lizzardier pont</label>
-            <input type="number" name="lizzardier_points" min="0" step="1" value="<?= $tour['lizzardier_points'] !== null ? (int)$tour['lizzardier_points'] : '' ?>" placeholder="pl. 5" <?= $ro ? 'readonly' : '' ?>>
+            <input type="number" name="lizzardier_points" min="0" step="1" value="<?= ($tour['lizzardier_points'] ?? null) !== null ? (int)$tour['lizzardier_points'] : '' ?>" placeholder="pl. 5" <?= $ro ? 'readonly' : '' ?>>
             <small style="display:block;margin-top:4px;color:var(--text-muted);font-size:12px;">A pont csak a túra teljesítése után kerül jóváírásra.</small>
           </div>
           <div class="form-group">
@@ -230,20 +248,44 @@ include __DIR__ . '/../includes/admin-header.php';
             <input type="text" name="region" value="<?= e($tour['region'] ?? '') ?>" <?= $ro ? 'readonly' : '' ?>>
           </div>
           <div class="form-group full">
-            <label>Szállás</label>
-            <textarea name="accommodation" rows="3" <?= $ro ? 'readonly' : '' ?>><?= e($tour['accommodation'] ?? '') ?></textarea>
-          </div>
-          <div class="form-group full">
-            <label>Utazás</label>
-            <textarea name="travel" rows="3" <?= $ro ? 'readonly' : '' ?>><?= e($tour['travel'] ?? '') ?></textarea>
-          </div>
-          <div class="form-group full">
-            <label>Felszerelés</label>
-            <textarea name="equipment" rows="3" <?= $ro ? 'readonly' : '' ?>><?= e($tour['equipment'] ?? '') ?></textarea>
+            <label>Szállás és utazás</label>
+            <textarea name="accommodation" rows="5" <?= $ro ? 'readonly' : '' ?>><?= e($tour['accommodation'] ?? '') ?></textarea>
           </div>
           <div class="form-group full">
             <label>Szükséges tapasztalat és erőnlét</label>
             <textarea name="experience" rows="3" <?= $ro ? 'readonly' : '' ?>><?= e($tour['experience'] ?? '') ?></textarea>
+          </div>
+          <div class="form-group full">
+            <label>Felszerelés</label>
+            <div class="ft-list-editor" data-ft-list="equipment_items[]">
+              <ol class="ft-list-rows">
+                <?php foreach ($equipmentItems as $item): ?>
+                <li class="ft-list-row">
+                  <input type="text" name="equipment_items[]" value="<?= e($item) ?>" maxlength="255" <?= $ro ? 'readonly' : '' ?>>
+                  <?php if (!$ro): ?><button type="button" class="ft-list-del" data-ft-list-del title="Tétel törlése">&times;</button><?php endif; ?>
+                </li>
+                <?php endforeach; ?>
+              </ol>
+              <?php if (!$ro): ?>
+              <button type="button" class="ft-list-add" data-ft-list-add>+ Tétel hozzáadása</button>
+              <?php endif; ?>
+            </div>
+            <small class="ft-hint">Egy sor = egy felszerelési tétel. A publikus oldalon felsorolásként jelenik meg.</small>
+          </div>
+          <div class="form-group full">
+            <label>Élménycímkék</label>
+            <div class="ft-chips<?= $ro ? ' is-readonly' : '' ?>" data-ft-chips="experience_tags[]">
+              <?php foreach ($tourTags as $tag): ?>
+              <span class="ft-chip"><?= e($tag) ?><input type="hidden" name="experience_tags[]" value="<?= e($tag) ?>"><?php if (!$ro): ?><button type="button" class="ft-chip-del" title="Címke törlése">&times;</button><?php endif; ?></span>
+              <?php endforeach; ?>
+              <?php if (!$ro): ?>
+              <input type="text" class="ft-chip-input" list="ft-tag-suggest" maxlength="40" placeholder="pl. Túrázás, Canyoning … (Enter)">
+              <?php endif; ?>
+            </div>
+            <datalist id="ft-tag-suggest">
+              <?php foreach ($usedTags as $tag): ?><option value="<?= e($tag) ?>"><?php endforeach; ?>
+            </datalist>
+            <small class="ft-hint">Írd be a címkét, majd Enter vagy vessző. A korábban használt címkéket gépelés közben felajánlja.</small>
           </div>
         </div>
 
@@ -295,6 +337,25 @@ include __DIR__ . '/../includes/admin-header.php';
             <small style="color:var(--text-muted);font-size:12px;">JPG, PNG vagy WebP; max. 5 MB. Megjelenítve: 300×200 px (automatikus vágás).</small>
           <?php endif; ?>
         </div>
+        <div class="form-group">
+          <label>Logo a borítóképen</label>
+          <div class="ft-logo-pick" role="radiogroup">
+            <?php foreach (TOUR_COVER_LOGOS as $logoKey => $logoLabel): ?>
+            <label class="ft-logo-tile ft-logo-tile--<?= $logoKey ?>">
+              <input type="radio" name="cover_logo" value="<?= $logoKey ?>" <?= $coverLogo === $logoKey ? 'checked' : '' ?> <?= $ro ? 'disabled' : '' ?>>
+              <span class="ft-logo-swatch">
+                <?php if ($logoKey !== 'none'): ?>
+                <img src="<?= BASE_URL ?>/assets/img/logo_collision_<?= $logoKey === 'dark' ? 'b' : 'y' ?>_small.png" alt="">
+                <?php else: ?>
+                <span class="ft-logo-none">&#8856;</span>
+                <?php endif; ?>
+              </span>
+              <span class="ft-logo-name"><?= e($logoLabel) ?></span>
+            </label>
+            <?php endforeach; ?>
+          </div>
+          <small class="ft-hint">A publikus adatlapon a borítókép bal felső sarkában jelenik meg.</small>
+        </div>
 
         <!-- DAYS -->
         <div class="form-section-title" style="margin-top:24px;">
@@ -304,80 +365,20 @@ include __DIR__ . '/../includes/admin-header.php';
           <?php endif; ?>
         </div>
         <div id="days-container">
-          <?php if (!empty($days)): ?>
-            <?php foreach ($days as $i => $day): ?>
-            <div class="day-row">
-              <?php if (!$ro): ?>
-                <button type="button" class="remove-day-btn btn-remove" style="position:absolute;top:8px;right:10px;" title="Nap törlése">✕</button>
-              <?php endif; ?>
-              <input type="hidden" name="day_id[]" value="<?= (int)$day['id'] ?>">
-              <div class="day-row-grid">
-                <div class="form-group">
-                  <label><?= (int)$day['day_number'] ?>. nap</label>
-                  <input type="hidden" name="day_number[]" value="<?= (int)$day['day_number'] ?>">
-                </div>
-                <div class="form-group">
-                  <label>Túratípus</label>
-                  <select name="day_tour_type[]" <?= $ro ? 'disabled' : '' ?>>
-                    <option value="">—</option>
-                    <?php foreach (['Gyalogtúra','Vízitúra','Kerékpártúra','Síelés','Barlangi túra','Munkavégzés'] as $tt): ?>
-                      <option value="<?= e($tt) ?>" <?= ($day['tour_type'] ?? '') === $tt ? 'selected' : '' ?>><?= e($tt) ?></option>
-                    <?php endforeach; ?>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label>Km</label>
-                  <input type="number" step="0.1" min="0" name="day_km[]" value="<?= e($day['km'] ?? '') ?>" <?= $ro ? 'readonly' : '' ?>>
-                </div>
-                <div class="form-group">
-                  <label>Szintemelkedés (m)</label>
-                  <input type="number" min="0" name="day_elevation[]" value="<?= e($day['elevation'] ?? '') ?>" <?= $ro ? 'readonly' : '' ?>>
-                </div>
-                <div class="form-group full" style="grid-column:1/-1;">
-                  <label>Leírás</label>
-                  <input type="text" name="day_description[]" value="<?= e($day['description'] ?? '') ?>" <?= $ro ? 'readonly' : '' ?>>
-                </div>
-              </div>
-            </div>
-            <?php endforeach; ?>
-          <?php elseif ($isNew): ?>
-            <!-- one empty day row for new tours -->
-            <div class="day-row">
-              <button type="button" class="remove-day-btn btn-remove" style="position:absolute;top:8px;right:10px;" title="Nap törlése">✕</button>
-              <input type="hidden" name="day_id[]" value="0">
-              <div class="day-row-grid">
-                <div class="form-group">
-                  <label>1. nap</label>
-                  <input type="hidden" name="day_number[]" value="1">
-                </div>
-                <div class="form-group">
-                  <label>Túratípus</label>
-                  <select name="day_tour_type[]">
-                    <option value="">—</option>
-                    <?php foreach (['Gyalogtúra','Vízitúra','Kerékpártúra','Síelés','Barlangi túra','Munkavégzés'] as $tt): ?>
-                      <option value="<?= e($tt) ?>"><?= e($tt) ?></option>
-                    <?php endforeach; ?>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label>Km</label>
-                  <input type="number" step="0.1" min="0" name="day_km[]">
-                </div>
-                <div class="form-group">
-                  <label>Szintemelkedés (m)</label>
-                  <input type="number" min="0" name="day_elevation[]">
-                </div>
-                <div class="form-group full" style="grid-column:1/-1;">
-                  <label>Leírás</label>
-                  <input type="text" name="day_description[]">
-                </div>
-              </div>
-            </div>
-          <?php endif; ?>
+          <?php
+          if (!empty($days)) {
+              foreach ($days as $day) { $dayNum = (int)$day['day_number']; include __DIR__ . '/../includes/future-tour-day-row.php'; }
+          } elseif ($isNew) {
+              $day = null; $dayNum = 1; include __DIR__ . '/../includes/future-tour-day-row.php';
+          }
+          ?>
           <?php if (empty($days) && !$isNew): ?>
             <p style="color:var(--text-muted);font-size:13px;">Még nincs nap hozzáadva.</p>
           <?php endif; ?>
         </div>
+        <?php if (!$ro): ?>
+        <template id="day-row-template"><?php $day = null; $dayNum = 0; include __DIR__ . '/../includes/future-tour-day-row.php'; ?></template>
+        <?php endif; ?>
 
         <?php
         $disabledFields  = json_decode((!$isNew && isset($tour['disabled_standard_fields']) ? $tour['disabled_standard_fields'] : null) ?? '[]', true) ?: [];
@@ -456,6 +457,12 @@ include __DIR__ . '/../includes/admin-header.php';
             <span style="font-family:monospace;color:var(--text-muted);font-size:11px;white-space:nowrap;"><?= e($gf['filename']) ?></span>
             <?php if (!$ro): ?>
             <input type="text" name="gpx_label[<?= (int)$gf['id'] ?>]" value="<?= e($gf['label'] ?? '') ?>" placeholder="Térkép neve (pl. 1. nap útvonala)" style="flex:1;font-size:13px;">
+            <select name="gpx_day[<?= (int)$gf['id'] ?>]" class="gpx-day-select" title="Melyik naphoz tartozik?">
+              <option value="0">Egész túra</option>
+              <?php foreach ($days as $d): ?>
+                <option value="<?= (int)$d['day_number'] ?>" <?= (int)($gf['day_number'] ?? 0) === (int)$d['day_number'] ? 'selected' : '' ?>><?= (int)$d['day_number'] ?>. nap</option>
+              <?php endforeach; ?>
+            </select>
             <label style="display:flex;align-items:center;gap:6px;cursor:pointer;color:var(--danger,#dc2626);white-space:nowrap;">
               <input type="checkbox" name="delete_gpx_ids[]" value="<?= (int)$gf['id'] ?>"> Törlés
             </label>
@@ -470,7 +477,7 @@ include __DIR__ . '/../includes/admin-header.php';
         <?php if (!$ro): ?>
           <div>
             <input type="file" name="gpx_files[]" accept=".gpx" multiple>
-            <small style="display:block;margin-top:5px;color:var(--text-muted);font-size:12px;">Több .gpx fájl is kijelölhető egyszerre. Max. 1 MB/fájl.</small>
+            <small style="display:block;margin-top:5px;color:var(--text-muted);font-size:12px;">Itt az egész túrához tartozó térképek tölthetők fel (több is kijelölhető). Naphoz kötött térképet a napoknál tölts fel. Max. 1 MB/fájl.</small>
           </div>
         <?php endif; ?>
         <?php endif; ?>
@@ -510,34 +517,12 @@ include __DIR__ . '/../includes/admin-header.php';
 
 <script>
 // Day rows management
-let dayCount = <?= $isNew ? 1 : count($days) ?>;
-
 document.getElementById('add-day-btn')?.addEventListener('click', function() {
-  dayCount++;
-  const container = document.getElementById('days-container');
-  const emptyMsg = document.querySelector('#days-container + p, #days-container ~ p');
-  const typeOptions = <?= json_encode(['Gyalogtúra','Vízitúra','Kerékpártúra','Síelés','Barlangi túra','Munkavégzés']) ?>;
-
-  const row = document.createElement('div');
-  row.className = 'day-row';
-  row.innerHTML = `
-    <button type="button" class="remove-day-btn btn-remove" style="position:absolute;top:8px;right:10px;" title="Nap törlése">✕</button>
-    <input type="hidden" name="day_id[]" value="0">
-    <div class="day-row-grid">
-      <div class="form-group"><label>${dayCount}. nap</label><input type="hidden" name="day_number[]" value="${dayCount}"></div>
-      <div class="form-group"><label>Túratípus</label>
-        <select name="day_tour_type[]">
-          <option value="">—</option>
-          ${typeOptions.map(t => `<option value="${t}">${t}</option>`).join('')}
-        </select>
-      </div>
-      <div class="form-group"><label>Km</label><input type="number" step="0.1" min="0" name="day_km[]"></div>
-      <div class="form-group"><label>Szintemelkedés (m)</label><input type="number" min="0" name="day_elevation[]"></div>
-      <div class="form-group full" style="grid-column:1/-1;"><label>Leírás</label><input type="text" name="day_description[]"></div>
-    </div>`;
-  container.appendChild(row);
+  // Új nap a szerveroldali sablonból (future-tour-day-row.php), a sorszámot a renumberDays() állítja
+  const row = document.getElementById('day-row-template').content.firstElementChild.cloneNode(true);
+  document.getElementById('days-container').appendChild(row);
   row.querySelector('.remove-day-btn').addEventListener('click', removeDay);
-  updateEmptyMsg();
+  renumberDays();
 });
 
 document.querySelectorAll('.remove-day-btn').forEach(btn => btn.addEventListener('click', removeDay));
@@ -545,7 +530,6 @@ document.querySelectorAll('.remove-day-btn').forEach(btn => btn.addEventListener
 function removeDay() {
   this.closest('.day-row').remove();
   renumberDays();
-  updateEmptyMsg();
 }
 
 function renumberDays() {
@@ -554,12 +538,7 @@ function renumberDays() {
     const hidden = row.querySelector('input[name="day_number[]"]');
     if (label) label.textContent = (i + 1) + '. nap';
     if (hidden) hidden.value = i + 1;
-    dayCount = i + 1;
   });
-}
-
-function updateEmptyMsg() {
-  // no-op; the empty message is handled server-side
 }
 
 // Custom fields management

@@ -99,6 +99,17 @@ function ensureFutureToursSchema(PDO $pdo): void {
     try { $pdo->exec("ALTER TABLE future_tours ADD COLUMN fee_excludes TEXT DEFAULT NULL AFTER fee_includes"); } catch (Throwable) {}
     try { $pdo->exec("ALTER TABLE future_tours ADD COLUMN cover_img VARCHAR(255) DEFAULT NULL AFTER name"); } catch (Throwable) {}
     try { $pdo->exec("ALTER TABLE future_tours ADD COLUMN short_intro VARCHAR(500) DEFAULT NULL AFTER description"); } catch (Throwable) {}
+    // Publikus adatlap: logo a borítóképen, díj megjegyzés (NULL = központi alapszöveg), élménycímkék (soronként)
+    try { $pdo->exec("ALTER TABLE future_tours ADD COLUMN cover_logo ENUM('light','dark','none') NOT NULL DEFAULT 'light' AFTER cover_img"); } catch (Throwable) {}
+    try { $pdo->exec("ALTER TABLE future_tours ADD COLUMN fee_note TEXT DEFAULT NULL AFTER fee_excludes"); } catch (Throwable) {}
+    try { $pdo->exec("ALTER TABLE future_tours ADD COLUMN experience_tags TEXT DEFAULT NULL AFTER experience"); } catch (Throwable) {}
+    try { $pdo->exec("ALTER TABLE future_tour_days ADD COLUMN title VARCHAR(255) DEFAULT NULL AFTER day_number"); } catch (Throwable) {}
+    // Naphoz kötött térkép (nap-szám, mert a mentés a napokat újra beszúrja); NULL = egész túra
+    try { $pdo->exec("ALTER TABLE future_tour_gpx_files ADD COLUMN day_number TINYINT UNSIGNED DEFAULT NULL AFTER label"); } catch (Throwable) {}
+    // Szállás és utazás egy mezőben: a régi utazás szöveg a szálláshoz fűzve (idempotens)
+    $pdo->exec("UPDATE future_tours
+                SET accommodation = CONCAT_WS('\n\n', NULLIF(TRIM(accommodation), ''), TRIM(travel)), travel = NULL
+                WHERE travel IS NOT NULL AND TRIM(travel) <> ''");
     // Guest application support
     try { $pdo->exec("ALTER TABLE future_tour_applications MODIFY user_id INT UNSIGNED NULL"); } catch (Throwable) {}
     try { $pdo->exec("ALTER TABLE future_tour_applications MODIFY status ENUM('confirmed','waitlist','cancelled','pending') NOT NULL DEFAULT 'confirmed'"); } catch (Throwable) {}

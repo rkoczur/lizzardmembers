@@ -974,6 +974,73 @@ body.embed-mode .card-body { padding-top: 12px !important; }
 .day-row { border: 1px solid var(--border); border-radius: 8px; padding: 14px; margin-bottom: 10px; position: relative; }
 .field-row { border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; margin-bottom: 8px; }
 .day-row-grid { display: grid; grid-template-columns: auto 1fr 1fr 1fr; gap: 10px; align-items: end; }
+.day-row-wide { grid-column: 1 / -1; }
+.day-row textarea { resize: vertical; }
+.day-gpx input[type=file] { font-size: 12.5px; }
+
+/* ===== Meghirdetett túra szerkesztő: publikus adatlap tartalmai (ft-*) ===== */
+.ft-hint { display: block; margin-top: 5px; color: var(--text-muted); font-size: 12px; }
+.ft-hint-inline { font-weight: 400; color: var(--text-muted); text-transform: none; letter-spacing: 0; }
+
+/* Felszerelés lista: számozott, „vonalzós” sorok */
+.ft-list-rows { list-style: none; margin: 0; padding: 0; counter-reset: ftItem; }
+.ft-list-row {
+  counter-increment: ftItem; display: flex; align-items: center; gap: 8px;
+  border-bottom: 1px dashed var(--border); padding: 4px 0;
+}
+.ft-list-row::before {
+  content: counter(ftItem, decimal-leading-zero); flex: 0 0 26px;
+  font: 600 11px/1 ui-monospace, monospace; color: var(--primary);
+}
+.ft-list-row input { flex: 1; border: none; background: transparent; padding: 6px 2px; box-shadow: none; }
+.ft-list-row input:focus { outline: none; background: var(--card); border-radius: 4px; }
+.ft-list-del, .ft-chip-del {
+  border: none; background: none; cursor: pointer; color: var(--text-muted);
+  font-size: 18px; line-height: 1; padding: 0 4px; transition: color var(--transition);
+}
+.ft-list-del:hover, .ft-chip-del:hover { color: var(--danger); }
+.ft-list-add {
+  margin-top: 8px; border: 1px dashed var(--primary); background: transparent; color: var(--primary);
+  border-radius: 99px; padding: 5px 14px; font-size: 12.5px; font-weight: 600; cursor: pointer;
+  transition: background var(--transition), color var(--transition);
+}
+.ft-list-add:hover { background: var(--primary); color: #fff; }
+
+/* Élménycímkék: chip-beviteli doboz */
+.ft-chips {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 6px; min-height: 42px;
+  border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 6px 8px; background: #fff; cursor: text;
+}
+.ft-chips:focus-within { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-light); }
+.ft-chips.is-readonly { background: var(--card); cursor: default; }
+.ft-chip {
+  display: inline-flex; align-items: center; gap: 2px; padding: 3px 4px 3px 12px;
+  border: 1.5px solid var(--sidebar-bg); border-radius: 8px; font-size: 13px; color: var(--sidebar-bg); background: #fff;
+}
+.ft-chips.is-readonly .ft-chip { padding-right: 12px; }
+.ft-chip-input { flex: 1; min-width: 160px; border: none !important; box-shadow: none !important; padding: 4px !important; background: transparent; }
+.ft-chip-input:focus { outline: none; }
+
+/* Logo választó: kép-előnézetes csempék, rejtett rádióval */
+.ft-logo-pick { display: flex; gap: 12px; flex-wrap: wrap; }
+.ft-logo-tile { position: relative; display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer; margin: 0; }
+.ft-logo-tile input { position: absolute; opacity: 0; pointer-events: none; }
+.ft-logo-swatch {
+  width: 84px; height: 64px; border-radius: 10px; display: grid; place-items: center;
+  border: 2px solid var(--border); transition: border-color var(--transition), transform var(--transition);
+  background: linear-gradient(135deg, #5f7f8c, #2c4a52);
+}
+.ft-logo-tile--dark .ft-logo-swatch { background: linear-gradient(135deg, #f3ece0, #c9d6d4); }
+.ft-logo-tile--none .ft-logo-swatch { background: repeating-linear-gradient(45deg, #f5efe4 0 8px, #fff 8px 16px); }
+.ft-logo-swatch img { max-width: 52px; max-height: 46px; }
+.ft-logo-none { font-size: 26px; color: var(--text-muted); }
+.ft-logo-name { font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: none; letter-spacing: 0; }
+.ft-logo-tile:hover .ft-logo-swatch { transform: translateY(-2px); }
+.ft-logo-tile input:checked + .ft-logo-swatch { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-light); }
+.ft-logo-tile input:checked ~ .ft-logo-name { color: var(--primary); }
+.ft-logo-tile input:focus-visible + .ft-logo-swatch { outline: 2px solid var(--primary); outline-offset: 2px; }
+.ft-logo-tile input:disabled ~ * { cursor: default; }
+.gpx-day-select { width: 130px; font-size: 13px; }
 
 /* ===== Tour page layouts ===== */
 .future-detail-grid { display: grid; grid-template-columns: 3fr 2fr; gap: 20px; align-items: start; }

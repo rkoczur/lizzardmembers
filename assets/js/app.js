@@ -492,6 +492,62 @@ function initQuizQuestionSearch() {
   wire('quiz-mountain-search', 'quiz-mountain-table', 'quiz-mountain-country-filter', 'country');
 }
 
+/* ===== Szerkeszthető lista (pl. felszerelés): sor hozzáadása / törlése ===== */
+function initListEditors() {
+  document.querySelectorAll('[data-ft-list]').forEach(editor => {
+    const rows = editor.querySelector('.ft-list-rows');
+    const name = editor.dataset.ftList;
+    editor.addEventListener('click', e => {
+      if (e.target.closest('[data-ft-list-del]')) e.target.closest('.ft-list-row').remove();
+      if (!e.target.closest('[data-ft-list-add]')) return;
+      const li = document.createElement('li');
+      li.className = 'ft-list-row';
+      li.innerHTML = '<input type="text" maxlength="255"><button type="button" class="ft-list-del" data-ft-list-del title="Tétel törlése">&times;</button>';
+      li.querySelector('input').name = name;
+      rows.appendChild(li);
+      li.querySelector('input').focus();
+    });
+    // Enter egy tételben: új sor a következő tételnek (nem küldi el az űrlapot)
+    rows.addEventListener('keydown', e => {
+      if (e.key !== 'Enter' || e.target.tagName !== 'INPUT') return;
+      e.preventDefault();
+      editor.querySelector('[data-ft-list-add]')?.click();
+    });
+  });
+}
+
+/* ===== Címke-chipek (élménycímkék): Enter / vessző → chip, × → törlés ===== */
+function initChipInputs() {
+  document.querySelectorAll('[data-ft-chips]').forEach(box => {
+    const input = box.querySelector('.ft-chip-input');
+    const name  = box.dataset.ftChips;
+    if (!input) return;
+    const values = () => Array.from(box.querySelectorAll('input[type=hidden]')).map(h => h.value.toLowerCase());
+    const add = text => {
+      text = text.trim().replace(/,+$/, '').trim();
+      if (!text || values().includes(text.toLowerCase())) return;
+      const chip = document.createElement('span');
+      chip.className = 'ft-chip';
+      chip.append(text);
+      const hidden = Object.assign(document.createElement('input'), { type: 'hidden', name, value: text });
+      const del = Object.assign(document.createElement('button'), { type: 'button', className: 'ft-chip-del', title: 'Címke törlése', innerHTML: '&times;' });
+      chip.append(hidden, del);
+      box.insertBefore(chip, input);
+    };
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ',') { e.preventDefault(); add(input.value); input.value = ''; }
+      if (e.key === 'Backspace' && input.value === '') box.querySelector('.ft-chip:last-of-type')?.remove();
+    });
+    // Ajánlásból választva (datalist) azonnal chip lesz
+    input.addEventListener('change', () => { add(input.value); input.value = ''; });
+    input.form?.addEventListener('submit', () => { add(input.value); input.value = ''; });
+    box.addEventListener('click', e => {
+      if (e.target.closest('.ft-chip-del')) e.target.closest('.ft-chip').remove();
+      else if (e.target === box) input.focus();
+    });
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   initMemberSearch();
   initMtszOverride();
@@ -510,4 +566,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeroParallax();
   initTourGalleryLightbox();
   initQuizQuestionSearch();
+  initListEditors();
+  initChipInputs();
 });

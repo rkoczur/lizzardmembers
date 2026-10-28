@@ -6,6 +6,7 @@ require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/future-tours-schema.php';
 require_once __DIR__ . '/../includes/future-tour-organizers.php';
+require_once __DIR__ . '/../includes/future-tour-content.php';
 requireAdminOrVezeto();
 if (!canCreateFutureTours()) { flash('error', 'Nincs jogosultságod meghirdetett túra szerkesztéséhez.'); header('Location: ' . BASE_URL . '/admin/future-tours.php'); exit; }
 verifyCsrf();
@@ -39,11 +40,10 @@ $fee              = ($_POST['participation_fee'] ?? '') !== '' ? max(0, (int)$_P
 $lizzardierPoints = ($_POST['lizzardier_points'] ?? '') !== '' ? max(0, (int)$_POST['lizzardier_points']) : null;
 $status        = in_array($_POST['status'] ?? '', ['open','closed','cancelled']) ? $_POST['status'] : 'open';
 $accommodation = trim($_POST['accommodation'] ?? '') ?: null;
-$travel        = trim($_POST['travel']        ?? '') ?: null;
-$equipment     = trim($_POST['equipment']     ?? '') ?: null;
 $experience    = trim($_POST['experience']    ?? '') ?: null;
 $feeIncludes   = trim($_POST['fee_includes']  ?? '') ?: null;
 $feeExcludes   = trim($_POST['fee_excludes']  ?? '') ?: null;
+$content       = tourContentFromPost($_POST);
 
 $requiresMembership = !empty($_POST['requires_membership']) ? 1 : 0;
 
@@ -91,29 +91,21 @@ if (!empty($_FILES['cover_img']['tmp_name']) && $_FILES['cover_img']['error'] ==
     }
 }
 
-$pdo->prepare("UPDATE future_tours SET name=?, description=?, short_intro=?, start_date=?, num_days=?, max_attendees=?, participation_fee=?, fee_includes=?, fee_excludes=?, lizzardier_points=?, country=?, region=?, accommodation=?, travel=?, equipment=?, experience=?, status=?, disabled_standard_fields=?, requires_membership=?, cover_img=? WHERE id=?")
-    ->execute([$name, $description ?: null, $shortIntro, $startDate, $numDays, $maxAttendees, $fee, $feeIncludes, $feeExcludes, $lizzardierPoints, $country, $region, $accommodation, $travel, $equipment, $experience, $status, $disabledFieldsJson, $requiresMembership, $newCoverImg, $id]);
+$pdo->prepare("UPDATE future_tours SET name=?, description=?, short_intro=?, start_date=?, num_days=?, max_attendees=?, participation_fee=?, fee_includes=?, fee_excludes=?, lizzardier_points=?, country=?, region=?, accommodation=?, travel=NULL, equipment=?, experience=?, experience_tags=?, fee_note=?, status=?, disabled_standard_fields=?, requires_membership=?, cover_img=?, cover_logo=? WHERE id=?")
+    ->execute([$name, $description ?: null, $shortIntro, $startDate, $numDays, $maxAttendees, $fee, $feeIncludes, $feeExcludes, $lizzardierPoints, $country, $region, $accommodation, $content['equipment'], $experience, $content['experience_tags'], $content['fee_note'], $status, $disabledFieldsJson, $requiresMembership, $newCoverImg, $content['cover_logo'], $id]);
 
-// Sync days: delete existing, re-insert from POST
-$pdo->prepare("DELETE FROM future_tour_days WHERE future_tour_id = ?")->execute([$id]);
-
-$dayNumbers    = $_POST['day_number']      ?? [];
-$dayTypes      = $_POST['day_tour_type']   ?? [];
-$dayKms        = $_POST['day_km']          ?? [];
-$dayElevations = $_POST['day_elevation']   ?? [];
-$dayDescs      = $_POST['day_description'] ?? [];
-
-$dayStmt = $pdo->prepare("INSERT INTO future_tour_days (future_tour_id, day_number, tour_type, km, elevation, description) VALUES (?, ?, ?, ?, ?, ?)");
-foreach ($dayNumbers as $i => $dayNum) {
-    $dayStmt->execute([
-        $id,
-        max(1, (int)$dayNum),
-        trim($dayTypes[$i] ?? '') ?: null,
-        ($dayKms[$i] ?? '') !== '' ? (float)$dayKms[$i] : null,
-        ($dayElevations[$i] ?? '') !== '' ? (int)$dayElevations[$i] : null,
-        trim($dayDescs[$i] ?? '') ?: null,
-    ]);
+// GPX: meglévő fájlok felirata és napja (üres = egész túra) — a napok mentése előtt,
+// mert a választó a régi számozást küldi, amit a saveFutureTourDays() számoz át
+foreach ($_POST['gpx_label'] ?? [] as $gfId => $label) {
+    $gfId   = (int)$gfId;
+    $gpxDay = (int)($_POST['gpx_day'][$gfId] ?? 0);
+    if (!$gfId) continue;
+    $pdo->prepare("UPDATE future_tour_gpx_files SET label = ?, day_number = ? WHERE id = ? AND future_tour_id = ?")
+        ->execute([trim($label) ?: null, $gpxDay > 0 ? min($gpxDay, 255) : null, $gfId, $id]);
 }
+
+// Napok (cím, leírás) + a naphoz kötött térképek követik a napjukat
+saveFutureTourDays($pdo, $id, $_POST);
 
 // Sync custom fields: update existing, insert new, delete removed
 $fieldIds     = $_POST['field_id']      ?? [];
@@ -149,14 +141,6 @@ if ($keepIds) {
     $pdo->prepare("DELETE FROM future_tour_custom_fields WHERE future_tour_id = ?")->execute([$id]);
 }
 
-// GPX: meglévő fájlok feliratának mentése
-foreach ($_POST['gpx_label'] ?? [] as $gfId => $label) {
-    $gfId = (int)$gfId;
-    if (!$gfId) continue;
-    $pdo->prepare("UPDATE future_tour_gpx_files SET label = ? WHERE id = ? AND future_tour_id = ?")
-        ->execute([trim($label) ?: null, $gfId, $id]);
-}
-
 // GPX fájlok kezelése — törlés
 $deleteGpxIds = array_values(array_filter(array_map('intval', $_POST['delete_gpx_ids'] ?? [])));
 if ($deleteGpxIds) {
@@ -170,24 +154,12 @@ if ($deleteGpxIds) {
         ->execute(array_merge($deleteGpxIds, [$id]));
 }
 
-// GPX fájlok kezelése — feltöltés
-if (!empty($_FILES['gpx_files']['tmp_name'])) {
-    if (!is_dir(GPX_DIR)) mkdir(GPX_DIR, 0755, true);
-    $allowedMimes = ['text/xml','application/xml','application/gpx+xml','text/plain','application/octet-stream'];
-    $insGpx = $pdo->prepare("INSERT IGNORE INTO future_tour_gpx_files (future_tour_id, filename, sort_order) VALUES (?, ?, ?)");
-    $sortBase = (int)$pdo->query("SELECT COALESCE(MAX(sort_order),0) FROM future_tour_gpx_files WHERE future_tour_id = $id")->fetchColumn();
-    foreach ($_FILES['gpx_files']['tmp_name'] as $i => $tmp) {
-        if (($_FILES['gpx_files']['error'][$i] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK) continue;
-        $ext  = strtolower(pathinfo($_FILES['gpx_files']['name'][$i] ?? '', PATHINFO_EXTENSION));
-        $size = (int)($_FILES['gpx_files']['size'][$i] ?? 0);
-        $mime = (new finfo(FILEINFO_MIME_TYPE))->file($tmp);
-        if ($ext !== 'gpx' || $size > 1 * 1024 * 1024 || !in_array($mime, $allowedMimes, true)) continue;
-        $newFile = 'gpx_ft_' . $id . '_' . time() . '_' . $i . '.gpx';
-        if (move_uploaded_file($tmp, GPX_DIR . $newFile)) {
-            $insGpx->execute([$id, $newFile, $sortBase + $i + 1]);
-        }
-    }
+// GPX fájlok kezelése — feltöltés: egész túrához, illetve a napok soraiban naphoz kötve
+foreach ($_FILES['gpx_files']['tmp_name'] ?? [] as $i => $tmp) {
+    if (($_FILES['gpx_files']['error'][$i] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK) continue;
+    storeFutureTourGpx($pdo, $id, $tmp, $_FILES['gpx_files']['name'][$i] ?? '', (int)($_FILES['gpx_files']['size'][$i] ?? 0), null, (string)$i);
 }
+saveFutureTourDayGpx($pdo, $id, $_POST, $_FILES);
 
 // Fotógaléria kezelése (csak túrakezelő jogosultsággal)
 if (canManageTours()) {

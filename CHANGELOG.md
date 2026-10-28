@@ -3,6 +3,29 @@
 A verziószám forrása: `includes/version.php`.
 Major: teljesen új funkció | Minor: fő funkció módosítás vagy alfunkció hozzáadás | Patch: minden egyéb.
 
+## [9.7.0] — 2026-10-28 (folyamatban: publikus túra adatlap átalakítása)
+
+### Hozzáadva
+- Adatbázis: `future_tours.cover_logo` (light/dark/none), `fee_note`, `experience_tags`; `future_tour_days.title`;
+  `future_tour_gpx_files.day_number` (naphoz kötött térkép, NULL = egész túra).
+
+- Túra szerkesztő (`admin/future-tour-detail.php`):
+  - logo választó a borítóképhez (Világos / Sötét / Nincs, kép-előnézetes csempék),
+  - „Díj megjegyzés” (üresen az egyesület alapszövege érvényes),
+  - Felszerelés: soronkénti lista-szerkesztő (tétel hozzáadása / törlése, Enter → új tétel),
+  - Élménycímkék: chip-bevitel, a korábban használt címkék felajánlásával,
+  - napoknál „Nap címe”, többsoros leírás és naponkénti GPX feltöltés; a meglévő térképeknél nap-választó.
+  Napok törlésekor / átszámozásakor a térképek a napjukkal együtt mozognak; törölt nap térképe az egész túrához kerül.
+- Közös segédfüggvények: `includes/future-tour-content.php` (`saveFutureTourDays()`, `storeFutureTourGpx()`,
+  `tourContentFromPost()`, `getUsedExperienceTags()` …), napsor részleg: `includes/future-tour-day-row.php`.
+
+### Módosítva
+- Szállás és utazás egy mezőben („Szállás és utazás”): a meglévő túráknál az utazás szövege egyszer a szállás szövegéhez fűződik.
+
+### Javítva
+- Új túra létrehozásakor a szerkesztő PHP figyelmeztetést írt ki a díj és a pont mezőben.
+- Logo fájlok átnevezve: `assets/img/logo_collision_b_small.png` (sötét), `logo_collision_y_small.png` (világos).
+
 ## [9.6.0] — 2026-10-28
 
 ### Módosítva

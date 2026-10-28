@@ -6,6 +6,7 @@ require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/future-tours-schema.php';
 require_once __DIR__ . '/../includes/future-tour-organizers.php';
+require_once __DIR__ . '/../includes/future-tour-content.php';
 requireAdminOrVezeto();
 if (!canCreateFutureTours()) { flash('error', 'Nincs jogosultságod meghirdetett túra létrehozásához.'); header('Location: ' . BASE_URL . '/admin/future-tours.php'); exit; }
 verifyCsrf();
@@ -25,11 +26,10 @@ $fee              = ($_POST['participation_fee'] ?? '') !== '' ? max(0, (int)$_P
 $lizzardierPoints = ($_POST['lizzardier_points'] ?? '') !== '' ? max(0, (int)$_POST['lizzardier_points']) : null;
 $status        = in_array($_POST['status'] ?? '', ['open','closed','cancelled']) ? $_POST['status'] : 'open';
 $accommodation = trim($_POST['accommodation'] ?? '') ?: null;
-$travel        = trim($_POST['travel']        ?? '') ?: null;
-$equipment     = trim($_POST['equipment']     ?? '') ?: null;
 $experience    = trim($_POST['experience']    ?? '') ?: null;
 $feeIncludes   = trim($_POST['fee_includes']  ?? '') ?: null;
 $feeExcludes   = trim($_POST['fee_excludes']  ?? '') ?: null;
+$content       = tourContentFromPost($_POST);
 
 $requiresMembership = !empty($_POST['requires_membership']) ? 1 : 0;
 
@@ -49,29 +49,14 @@ if (!$startDate) {
     exit;
 }
 
-$stmt = $pdo->prepare("INSERT INTO future_tours (name, description, short_intro, start_date, num_days, max_attendees, participation_fee, fee_includes, fee_excludes, lizzardier_points, country, region, accommodation, travel, equipment, experience, status, disabled_standard_fields, requires_membership, created_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-$stmt->execute([$name, $description ?: null, $shortIntro, $startDate, $numDays, $maxAttendees, $fee, $feeIncludes, $feeExcludes, $lizzardierPoints, $country, $region, $accommodation, $travel, $equipment, $experience, $status, $disabledFieldsJson, $requiresMembership, getCurrentUserId()]);
+$stmt = $pdo->prepare("INSERT INTO future_tours (name, description, short_intro, start_date, num_days, max_attendees, participation_fee, fee_includes, fee_excludes, lizzardier_points, country, region, accommodation, equipment, experience, experience_tags, fee_note, cover_logo, status, disabled_standard_fields, requires_membership, created_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+$stmt->execute([$name, $description ?: null, $shortIntro, $startDate, $numDays, $maxAttendees, $fee, $feeIncludes, $feeExcludes, $lizzardierPoints, $country, $region, $accommodation, $content['equipment'], $experience, $content['experience_tags'], $content['fee_note'], $content['cover_logo'], $status, $disabledFieldsJson, $requiresMembership, getCurrentUserId()]);
 $tourId = (int)$pdo->lastInsertId();
 saveFutureTourOrganizers($pdo, $tourId, (array)($_POST['organizer_ids'] ?? []));
 
-// Save days
-$dayNumbers     = $_POST['day_number']     ?? [];
-$dayTypes       = $_POST['day_tour_type']  ?? [];
-$dayKms         = $_POST['day_km']         ?? [];
-$dayElevations  = $_POST['day_elevation']  ?? [];
-$dayDescs       = $_POST['day_description'] ?? [];
-
-$dayStmt = $pdo->prepare("INSERT INTO future_tour_days (future_tour_id, day_number, tour_type, km, elevation, description) VALUES (?, ?, ?, ?, ?, ?)");
-foreach ($dayNumbers as $i => $dayNum) {
-    $dayStmt->execute([
-        $tourId,
-        max(1, (int)$dayNum),
-        trim($dayTypes[$i] ?? '') ?: null,
-        ($dayKms[$i] ?? '') !== '' ? (float)$dayKms[$i] : null,
-        ($dayElevations[$i] ?? '') !== '' ? (int)$dayElevations[$i] : null,
-        trim($dayDescs[$i] ?? '') ?: null,
-    ]);
-}
+// Napok + a napok soraiban feltöltött térképek
+saveFutureTourDays($pdo, $tourId, $_POST);
+saveFutureTourDayGpx($pdo, $tourId, $_POST, $_FILES);
 
 // Save custom fields
 $fieldNames   = $_POST['field_name']    ?? [];
