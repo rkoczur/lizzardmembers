@@ -86,7 +86,7 @@ $upcomingTours = $pdo->query("
            (SELECT COUNT(*) FROM future_tour_applications fta WHERE fta.future_tour_id = ft.id AND fta.status = 'confirmed') AS confirmed_count
     FROM future_tours ft
     LEFT JOIN countries c ON c.code = ft.country
-    WHERE ft.status != 'cancelled' AND ft.start_date >= CURDATE()
+    WHERE ft.status NOT IN ('cancelled','draft') AND ft.start_date >= CURDATE()
     ORDER BY ft.start_date ASC
     LIMIT 3
 ")->fetchAll();

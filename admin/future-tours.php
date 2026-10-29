@@ -243,8 +243,8 @@ include __DIR__ . '/../includes/admin-header.php';
           </td>
           <td>
             <?php
-            $statusLabels = ['open' => 'Nyitott', 'closed' => 'Lezárt', 'cancelled' => 'Törölve'];
-            $statusColors = ['open' => 'badge-active', 'closed' => 'badge-inactive', 'cancelled' => 'badge-overdue'];
+            $statusLabels = ['draft' => 'Piszkozat', 'open' => 'Nyitott', 'closed' => 'Lezárt', 'cancelled' => 'Törölve'];
+            $statusColors = ['draft' => 'badge-pending', 'open' => 'badge-active', 'closed' => 'badge-inactive', 'cancelled' => 'badge-overdue'];
             $st = $t['status'] ?? 'open';
             ?>
             <span class="badge <?= $statusColors[$st] ?? 'badge-inactive' ?>"><?= $statusLabels[$st] ?? e($st) ?></span>

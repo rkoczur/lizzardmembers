@@ -7,7 +7,12 @@
 const TOUR_FEE_NOTE_DEFAULT = 'A részvételi díj a jelentkezéstől számított 14 napon belül fizetendő. '
     . 'Elkerülendő a későbbi kellemetlenségeket, amennyiben ez nem történik meg, a helyet automatikusan felszabadítjuk.';
 
+const TOUR_IMPORTANT_DEFAULT = "A túrán mindenki saját felelősségre vesz részt. A jelentkezéseddel elfogadod, hogy a túra szervezője "
+    . "nem feltétlenül képzett túravezető, a résztvevők egyenrangúan vesznek részt a programokon.\n\n"
+    . "Részvételeddel elfogadod az általános részvételi feltételeinket és a magatartási iránytűt!";
+
 const TOUR_COVER_LOGOS = ['light' => 'Világos', 'dark' => 'Sötét', 'none' => 'Nincs'];
+const TOUR_COVER_LOGO_POS = ['left' => 'Bal felül', 'right' => 'Jobb felül'];
 
 /** Szöveg → nem üres sorok listája; a sor eleji felsorolásjel (-, *, •) lekerül. */
 function tourTextLines(?string $text): array
@@ -27,19 +32,48 @@ function tourLinesToText(array $items, int $maxLen = 255): ?string
     return $clean ? implode("\n", $clean) : null;
 }
 
-/** A túra díj megjegyzése: egyedi, vagy a központi alapszöveg. */
+/** Díj megjegyzés központi alapszövege (Beállítások), üresen a beépített szöveg. */
 function tourFeeNoteDefault(PDO $pdo): string
 {
-    return function_exists('getSetting') ? getSetting($pdo, 'tour_fee_note_default', TOUR_FEE_NOTE_DEFAULT) : TOUR_FEE_NOTE_DEFAULT;
+    return trim(getSetting($pdo, 'tour_fee_note_default', '')) ?: TOUR_FEE_NOTE_DEFAULT;
+}
+
+/** A „FONTOS!” blokk központi szövege (Beállítások), üresen a beépített szöveg. */
+function tourImportantText(PDO $pdo): string
+{
+    return trim(getSetting($pdo, 'tour_important_text', '')) ?: TOUR_IMPORTANT_DEFAULT;
+}
+
+/** Szöveg → HTML bekezdések; a részvételi feltételek és a magatartási iránytű kifejezésre link kerül. */
+function tourImportantHtml(string $text): string
+{
+    $links = [
+        '/általános részvételi feltétel\p{L}*/iu' => BASE_URL . '/public/reszveteli-feltetelek.php',
+        '/magatartási iránytű\p{L}*/iu'          => BASE_URL . '/public/magatartasi-iranytu.php',
+    ];
+    $html = '';
+    foreach (preg_split('/\n\s*\n/', trim($text)) as $para) {
+        $p = nl2br(e(trim($para)));
+        foreach ($links as $re => $url) {
+            $p = preg_replace($re, '<a href="' . e($url) . '">$0</a>', $p, 1);
+        }
+        $html .= '<p>' . $p . '</p>';
+    }
+    return $html;
 }
 
 /** A szerkesztő új tartalmi mezői a POST-ból (add és update közös). */
 function tourContentFromPost(array $post): array
 {
     $logo = $post['cover_logo'] ?? 'light';
+    $pos  = $post['cover_logo_pos'] ?? 'left';
+    $time = trim($post['meeting_time'] ?? '');
     return [
         'cover_logo'      => array_key_exists($logo, TOUR_COVER_LOGOS) ? $logo : 'light',
+        'cover_logo_pos'  => array_key_exists($pos, TOUR_COVER_LOGO_POS) ? $pos : 'left',
         'fee_note'        => trim($post['fee_note'] ?? '') ?: null,
+        'meeting_place'   => mb_substr(trim($post['meeting_place'] ?? ''), 0, 255) ?: null,
+        'meeting_time'    => preg_match('/^\d{2}:\d{2}$/', $time) ? $time : null,
         'equipment'       => tourLinesToText((array)($post['equipment_items'] ?? [])),
         'experience_tags' => tourLinesToText((array)($post['experience_tags'] ?? []), 40),
     ];

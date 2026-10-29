@@ -38,7 +38,7 @@ $country       = trim($_POST['country']       ?? '') ?: null;
 $region        = trim($_POST['region']        ?? '') ?: null;
 $fee              = ($_POST['participation_fee'] ?? '') !== '' ? max(0, (int)$_POST['participation_fee']) : null;
 $lizzardierPoints = ($_POST['lizzardier_points'] ?? '') !== '' ? max(0, (int)$_POST['lizzardier_points']) : null;
-$status        = in_array($_POST['status'] ?? '', ['open','closed','cancelled']) ? $_POST['status'] : 'open';
+$status        = in_array($_POST['status'] ?? '', ['draft','open','closed','cancelled']) ? $_POST['status'] : 'open';
 $accommodation = trim($_POST['accommodation'] ?? '') ?: null;
 $experience    = trim($_POST['experience']    ?? '') ?: null;
 $feeIncludes   = trim($_POST['fee_includes']  ?? '') ?: null;
@@ -91,8 +91,8 @@ if (!empty($_FILES['cover_img']['tmp_name']) && $_FILES['cover_img']['error'] ==
     }
 }
 
-$pdo->prepare("UPDATE future_tours SET name=?, description=?, short_intro=?, start_date=?, num_days=?, max_attendees=?, participation_fee=?, fee_includes=?, fee_excludes=?, lizzardier_points=?, country=?, region=?, accommodation=?, travel=NULL, equipment=?, experience=?, experience_tags=?, fee_note=?, status=?, disabled_standard_fields=?, requires_membership=?, cover_img=?, cover_logo=? WHERE id=?")
-    ->execute([$name, $description ?: null, $shortIntro, $startDate, $numDays, $maxAttendees, $fee, $feeIncludes, $feeExcludes, $lizzardierPoints, $country, $region, $accommodation, $content['equipment'], $experience, $content['experience_tags'], $content['fee_note'], $status, $disabledFieldsJson, $requiresMembership, $newCoverImg, $content['cover_logo'], $id]);
+$pdo->prepare("UPDATE future_tours SET name=?, description=?, short_intro=?, start_date=?, num_days=?, max_attendees=?, participation_fee=?, fee_includes=?, fee_excludes=?, lizzardier_points=?, country=?, region=?, accommodation=?, travel=NULL, equipment=?, experience=?, experience_tags=?, fee_note=?, meeting_place=?, meeting_time=?, status=?, disabled_standard_fields=?, requires_membership=?, cover_img=?, cover_logo=?, cover_logo_pos=? WHERE id=?")
+    ->execute([$name, $description ?: null, $shortIntro, $startDate, $numDays, $maxAttendees, $fee, $feeIncludes, $feeExcludes, $lizzardierPoints, $country, $region, $accommodation, $content['equipment'], $experience, $content['experience_tags'], $content['fee_note'], $content['meeting_place'], $content['meeting_time'], $status, $disabledFieldsJson, $requiresMembership, $newCoverImg, $content['cover_logo'], $content['cover_logo_pos'], $id]);
 
 // GPX: meglévő fájlok felirata és napja (üres = egész túra) — a napok mentése előtt,
 // mert a választó a régi számozást küldi, amit a saveFutureTourDays() számoz át

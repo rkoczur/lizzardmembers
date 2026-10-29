@@ -52,6 +52,7 @@ $tourTags       = tourTextLines($tour['experience_tags'] ?? '');
 $usedTags       = getUsedExperienceTags($pdo);
 $feeNoteDefault = tourFeeNoteDefault($pdo);
 $coverLogo      = $tour['cover_logo'] ?? 'light';
+$coverLogoPos   = $tour['cover_logo_pos'] ?? 'left';
 $dayGpxCount    = [];
 
 // Szervezők: meglévő túránál a beállított (vagy a létrehozó), új túránál a bejelentkezett felhasználó
@@ -114,7 +115,7 @@ include __DIR__ . '/../includes/admin-header.php';
             data-url="<?= e(((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http') . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . BASE_URL . '/public/tour-detail.php?id=' . (int)$id) ?>">
       Publikus link másolása
     </button>
-    <?php if (canManageTours()): ?>
+    <?php if (canManageTours() && $tour['status'] !== 'draft'): ?>
     <button type="button" class="btn btn-primary btn-sm" id="announce-btn" data-tour-id="<?= (int)$id ?>">
       📣 Értesítő kiküldése
     </button>
@@ -216,6 +217,7 @@ include __DIR__ . '/../includes/admin-header.php';
           <div class="form-group">
             <label>Státusz</label>
             <select name="status" <?= $ro ? 'disabled' : '' ?>>
+              <option value="draft"     <?= ($tour['status'] ?? 'open') === 'draft'     ? 'selected' : '' ?>>Piszkozat – nem jelenik meg publikusan</option>
               <option value="open"      <?= ($tour['status'] ?? 'open') === 'open'      ? 'selected' : '' ?>>Nyitott – lehet jelentkezni</option>
               <option value="closed"    <?= ($tour['status'] ?? 'open') === 'closed'    ? 'selected' : '' ?>>Lezárt</option>
               <option value="cancelled" <?= ($tour['status'] ?? 'open') === 'cancelled' ? 'selected' : '' ?>>Törölve</option>
@@ -250,6 +252,14 @@ include __DIR__ . '/../includes/admin-header.php';
           <div class="form-group full">
             <label>Szállás és utazás</label>
             <textarea name="accommodation" rows="5" <?= $ro ? 'readonly' : '' ?>><?= e($tour['accommodation'] ?? '') ?></textarea>
+          </div>
+          <div class="form-group full ft-meeting" id="meeting-group">
+            <label>Találkozó <small class="ft-hint-inline">(csak egynapos túránál, a jelentkezés kártya mellett)</small></label>
+            <div class="ft-meeting-row">
+              <input type="text" name="meeting_place" maxlength="255" value="<?= e($tour['meeting_place'] ?? '') ?>" placeholder="pl. Budapest, Széll Kálmán tér, metrókijárat" <?= $ro ? 'readonly' : '' ?>>
+              <input type="time" name="meeting_time" value="<?= e(substr((string)($tour['meeting_time'] ?? ''), 0, 5)) ?>" <?= $ro ? 'readonly' : '' ?>>
+            </div>
+            <small class="ft-hint">A helyet a Google Térkép keresőjébe adjuk át, ezért pontos címet vagy közismert helynevet adj meg.</small>
           </div>
           <div class="form-group full">
             <label>Szükséges tapasztalat és erőnlét</label>
@@ -354,7 +364,19 @@ include __DIR__ . '/../includes/admin-header.php';
             </label>
             <?php endforeach; ?>
           </div>
-          <small class="ft-hint">A publikus adatlapon a borítókép bal felső sarkában jelenik meg.</small>
+        </div>
+        <div class="form-group">
+          <label>A logo helye</label>
+          <div class="ft-logo-pick" role="radiogroup">
+            <?php foreach (TOUR_COVER_LOGO_POS as $posKey => $posLabel): ?>
+            <label class="ft-logo-tile">
+              <input type="radio" name="cover_logo_pos" value="<?= $posKey ?>" <?= $coverLogoPos === $posKey ? 'checked' : '' ?> <?= $ro ? 'disabled' : '' ?>>
+              <span class="ft-logo-swatch ft-pos-swatch ft-pos-swatch--<?= $posKey ?>"><span class="ft-pos-dot"></span></span>
+              <span class="ft-logo-name"><?= e($posLabel) ?></span>
+            </label>
+            <?php endforeach; ?>
+          </div>
+          <small class="ft-hint">A borítókép melyik felső sarkában jelenjen meg a logo a publikus adatlapon.</small>
         </div>
 
         <!-- DAYS -->
@@ -539,7 +561,15 @@ function renumberDays() {
     if (label) label.textContent = (i + 1) + '. nap';
     if (hidden) hidden.value = i + 1;
   });
+  toggleMeeting();
 }
+
+// Találkozó mező csak egynapos túránál
+function toggleMeeting() {
+  const group = document.getElementById('meeting-group');
+  if (group) group.hidden = document.querySelectorAll('#days-container .day-row').length > 1;
+}
+toggleMeeting();
 
 // Custom fields management
 document.getElementById('add-field-btn')?.addEventListener('click', function() {

@@ -24,7 +24,7 @@ $country       = trim($_POST['country']       ?? '') ?: null;
 $region        = trim($_POST['region']        ?? '') ?: null;
 $fee              = ($_POST['participation_fee'] ?? '') !== '' ? max(0, (int)$_POST['participation_fee']) : null;
 $lizzardierPoints = ($_POST['lizzardier_points'] ?? '') !== '' ? max(0, (int)$_POST['lizzardier_points']) : null;
-$status        = in_array($_POST['status'] ?? '', ['open','closed','cancelled']) ? $_POST['status'] : 'open';
+$status        = in_array($_POST['status'] ?? '', ['draft','open','closed','cancelled']) ? $_POST['status'] : 'open';
 $accommodation = trim($_POST['accommodation'] ?? '') ?: null;
 $experience    = trim($_POST['experience']    ?? '') ?: null;
 $feeIncludes   = trim($_POST['fee_includes']  ?? '') ?: null;
@@ -49,8 +49,8 @@ if (!$startDate) {
     exit;
 }
 
-$stmt = $pdo->prepare("INSERT INTO future_tours (name, description, short_intro, start_date, num_days, max_attendees, participation_fee, fee_includes, fee_excludes, lizzardier_points, country, region, accommodation, equipment, experience, experience_tags, fee_note, cover_logo, status, disabled_standard_fields, requires_membership, created_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-$stmt->execute([$name, $description ?: null, $shortIntro, $startDate, $numDays, $maxAttendees, $fee, $feeIncludes, $feeExcludes, $lizzardierPoints, $country, $region, $accommodation, $content['equipment'], $experience, $content['experience_tags'], $content['fee_note'], $content['cover_logo'], $status, $disabledFieldsJson, $requiresMembership, getCurrentUserId()]);
+$stmt = $pdo->prepare("INSERT INTO future_tours (name, description, short_intro, start_date, num_days, max_attendees, participation_fee, fee_includes, fee_excludes, lizzardier_points, country, region, accommodation, equipment, experience, experience_tags, fee_note, meeting_place, meeting_time, cover_logo, cover_logo_pos, status, disabled_standard_fields, requires_membership, created_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+$stmt->execute([$name, $description ?: null, $shortIntro, $startDate, $numDays, $maxAttendees, $fee, $feeIncludes, $feeExcludes, $lizzardierPoints, $country, $region, $accommodation, $content['equipment'], $experience, $content['experience_tags'], $content['fee_note'], $content['meeting_place'], $content['meeting_time'], $content['cover_logo'], $content['cover_logo_pos'], $status, $disabledFieldsJson, $requiresMembership, getCurrentUserId()]);
 $tourId = (int)$pdo->lastInsertId();
 saveFutureTourOrganizers($pdo, $tourId, (array)($_POST['organizer_ids'] ?? []));
 

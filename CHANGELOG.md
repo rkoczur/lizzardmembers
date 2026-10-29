@@ -3,24 +3,72 @@
 A verziószám forrása: `includes/version.php`.
 Major: teljesen új funkció | Minor: fő funkció módosítás vagy alfunkció hozzáadás | Patch: minden egyéb.
 
-## [9.7.0] — 2026-10-28 (folyamatban: publikus túra adatlap átalakítása)
+## [9.9.2] — 2026-10-29
 
 ### Hozzáadva
-- Adatbázis: `future_tours.cover_logo` (light/dark/none), `fee_note`, `experience_tags`; `future_tour_days.title`;
-  `future_tour_gpx_files.day_number` (naphoz kötött térkép, NULL = egész túra).
+- Meghirdetett túra napjainál új túratípus: „Közösségi program”. Teljesített túrává alakításkor nem számít
+  a túramód felismerésébe (a többi nap típusa, ennek hiányában a gyalogos az alapértelmezés).
 
+## [9.9.1] — 2026-10-29
+
+### Módosítva
+- Publikus túra adatlap: a szerezhető Lizzardier pont a borítókép jobb alsó sarkában, nagy méretben,
+  az eredeti címerképen (`assets/img/ures_small.png`, `.ftd-crest`) türkiz számmal jelenik meg, az adatsávból kikerült.
+
+## [9.9.0] — 2026-10-29
+
+### Hozzáadva
+- Meghirdetett túra „Piszkozat” státusza (`future_tours.status = 'draft'`): a túra menthető anélkül,
+  hogy publikusan megjelenne. Nem látszik a túranaptárban, a nyitóoldalon, a tagi túralistában, a WP API-ban,
+  és nem lehet rá jelentkezni; értesítő sem küldhető róla. A publikus adatlapot vezetők előnézetként
+  megnyithatják (szaggatott keretes „Piszkozat” jelzéssel). Admin listában „Piszkozat” jelvény.
+
+## [9.8.0] — 2026-10-29
+
+### Hozzáadva
+- Egynapos túra „Találkozó” mezője (hely + idő): `future_tours.meeting_place`, `meeting_time`.
+  A szerkesztőben a „Szállás és utazás” alatt (több napnál rejtve); a publikus adatlapon fehér doboz a
+  jelentkezés kártya mellett, „Térkép megnyitása” gombbal (Google Térkép keresés a megadott helyre).
+
+### Módosítva
+- Publikus túra adatlap: a „Jelentkezésem kezelése” gomb szövege középre igazítva.
+
+## [9.7.1] — 2026-10-28
+
+### Módosítva
+- Publikus túra adatlap: 1 napos túránál a „Szállás és utazás” szekció címe „Utazás”.
+
+## [9.7.0] — 2026-10-28
+
+### Hozzáadva
+- Új publikus túra adatlap (`public/tour-detail.php`): kártyamentes, egyoszlopos, magazinszerű elrendezés.
+  Cím alatt zászló + ország + tájegység; teljes szélességű borító logóval és adatsávval; leírás;
+  homokszínű jelentkezés-kártya (gomb, díj vagy „A részvétel ingyenes”, díj megjegyzés | Tartalmazza / Nem tartalmazza);
+  Szervező | Szükséges tapasztalat + Élménycímkék; „Wow faktor” galéria (3 oszlop, lightbox); Szállás és utazás;
+  Felszerelés | Fontos!; Részletes program naponkénti fejléccel és a naphoz kötött térképekkel
+  (a naphoz nem kötött térképek „Útvonal” néven a végén). CSS: `.ftd-*`. A tagi nézet még a régi elrendezésű.
+- Adatbázis: `future_tours.cover_logo` (light/dark/none), `cover_logo_pos` (left/right), `fee_note`, `experience_tags`; `future_tour_days.title`;
+  `future_tour_gpx_files.day_number` (naphoz kötött térkép, NULL = egész túra).
 - Túra szerkesztő (`admin/future-tour-detail.php`):
-  - logo választó a borítóképhez (Világos / Sötét / Nincs, kép-előnézetes csempék),
+  - logo választó a borítóképhez (Világos / Sötét / Nincs, kép-előnézetes csempék) és a logo helye (bal / jobb felül),
   - „Díj megjegyzés” (üresen az egyesület alapszövege érvényes),
   - Felszerelés: soronkénti lista-szerkesztő (tétel hozzáadása / törlése, Enter → új tétel),
   - Élménycímkék: chip-bevitel, a korábban használt címkék felajánlásával,
   - napoknál „Nap címe”, többsoros leírás és naponkénti GPX feltöltés; a meglévő térképeknél nap-választó.
   Napok törlésekor / átszámozásakor a térképek a napjukkal együtt mozognak; törölt nap térképe az egész túrához kerül.
+- Admin → Beállítások → „Túra adatlap szövegei” (csak admin): a „FONTOS!” blokk és a díj megjegyzés alapszövege
+  központilag szerkeszthető (`actions/settings-tour-save.php`, `settings` kulcsok: `tour_important_text`,
+  `tour_fee_note_default`; üresen a beépített szöveg). A „FONTOS!” szövegben a részvételi feltételek és a
+  magatartási iránytű kifejezés automatikusan linkké válik (`tourImportantHtml()`).
 - Közös segédfüggvények: `includes/future-tour-content.php` (`saveFutureTourDays()`, `storeFutureTourGpx()`,
   `tourContentFromPost()`, `getUsedExperienceTags()` …), napsor részleg: `includes/future-tour-day-row.php`.
 
 ### Módosítva
 - Szállás és utazás egy mezőben („Szállás és utazás”): a meglévő túráknál az utazás szövege egyszer a szállás szövegéhez fűződik.
+- Túra galéria nagyítása (publikus és tagi nézet, `initTourGalleryLightbox()`): a kép a bélyegkép helyéről nő ki
+  (és oda zsugorodik vissza), nincs elsötétített háttér, a bezárás a kép sarkán, a lapozók közvetlenül a kép mellett
+  (mobilon a kép szélén). Lapozáskor rövid csúszó átmenet; `prefers-reduced-motion` esetén nincs animáció.
+  A bezárás betöltés / animáció közben is azonnal működik.
 
 ### Javítva
 - Új túra létrehozásakor a szerkesztő PHP figyelmeztetést írt ki a díj és a pont mezőben.

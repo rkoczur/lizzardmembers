@@ -7,6 +7,7 @@ require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/future-tour-organizers.php';
 require_once __DIR__ . '/../includes/future-tours-schema.php';
 require_once __DIR__ . '/../includes/app-settings-schema.php';
+require_once __DIR__ . '/../includes/future-tour-content.php';
 
 $pdo = getDb();
 ensureFutureToursSchema($pdo);
@@ -22,10 +23,10 @@ $tourStmt = $pdo->prepare("
     SELECT ft.*, c.name_hu AS country_name, c.flag_filename AS country_flag
     FROM future_tours ft
     LEFT JOIN countries c ON c.code = ft.country
-    WHERE ft.id = ? AND ft.status != 'cancelled'
+    WHERE ft.id = ? AND ft.status != 'cancelled' AND (ft.status != 'draft' OR ?)
     LIMIT 1
 ");
-$tourStmt->execute([$id]);
+$tourStmt->execute([$id, isAnyLeader() ? 1 : 0]);
 $tour = $tourStmt->fetch();
 if (!$tour) {
     header('Location: ' . BASE_URL . '/public/turanyptar.php');
@@ -63,8 +64,28 @@ $galStmt = $pdo->prepare("SELECT * FROM future_tour_gallery_images WHERE future_
 $galStmt->execute([$id]);
 $gallery = $galStmt->fetchAll();
 
-$coverUrl = !empty($tour['cover_img']) ? BASE_URL . '/assets/uploads/tour-covers/' . $tour['cover_img'] : '';
-$hasCover = $coverUrl !== '';
+// Térképek: naphoz kötöttek a nap alatt, a többi a program végén („Útvonal”)
+$dayGpx  = [];
+$tourGpx = [];
+foreach ($gpxFiles as $gi => $gf) {
+    $gf['map_id'] = 'tour-map-' . $gi;
+    if ($gf['day_number'] !== null) $dayGpx[(int)$gf['day_number']][] = $gf;
+    else $tourGpx[] = $gf;
+}
+
+$coverUrl  = !empty($tour['cover_img']) ? BASE_URL . '/assets/uploads/tour-covers/' . $tour['cover_img'] : '';
+$hasCover  = $coverUrl !== '';
+$coverLogo = $tour['cover_logo'] ?? 'light';
+$fee       = (float)($tour['participation_fee'] ?? 0);
+$feeNote   = trim((string)($tour['fee_note'] ?? '')) ?: tourFeeNoteDefault($pdo);
+// Találkozó: csak egynapos túránál, ha a hely ki van töltve
+$meetPlace = (int)$tour['num_days'] === 1 ? trim((string)($tour['meeting_place'] ?? '')) : '';
+$meetTime  = substr((string)($tour['meeting_time'] ?? ''), 0, 5);
+$feeIncl   = tourTextLines($tour['fee_includes'] ?? '');
+$feeExcl   = tourTextLines($tour['fee_excludes'] ?? '');
+$tags      = tourTextLines($tour['experience_tags'] ?? '');
+$equipment = tourTextLines($tour['equipment'] ?? '');
+$organizers = getFutureTourOrganizers($pdo, (int)$tour['id']);
 
 $pageTitle     = $tour['name'];
 $activePubPage = 'turanyptar';
@@ -74,254 +95,234 @@ $metaDescription = trim((string)($tour['short_intro'] ?? '')) ?: mb_substr(trim(
 include __DIR__ . '/../includes/public-header.php';
 ?>
 
-<div class="pub-wrap">
-  <div style="margin-bottom:16px;">
-    <a href="<?= BASE_URL ?>/public/turanyptar.php" class="btn btn-secondary btn-sm">← Vissza a naptárhoz</a>
-  </div>
+<div class="pub-wrap ftd">
+  <a href="<?= BASE_URL ?>/public/turanyptar.php" class="ftd-back">← Vissza a naptárhoz</a>
+  <?php if ($tour['status'] === 'draft'): ?>
+    <div class="ftd-draft">Piszkozat — ezt az oldalt csak a vezetők látják, publikusan nem jelenik meg.</div>
+  <?php endif; ?>
 
-  <div class="tour-detail-grid">
+  <!-- Cím + helyszín -->
+  <header class="ftd-head">
+    <h1 class="ftd-title"><?= e($tour['name']) ?></h1>
+    <?php if (!empty($tour['country_name']) || !empty($tour['region'])): ?>
+    <div class="ftd-place">
+      <?php if (!empty($tour['country_flag'])): ?>
+        <img src="<?= e(getFlagUrl($tour['country_flag'])) ?>" class="ftd-flag" alt="">
+      <?php endif; ?>
+      <?php if (!empty($tour['country_name'])): ?><span class="ftd-country"><?= e($tour['country_name']) ?></span><?php endif; ?>
+      <?php if (!empty($tour['region'])): ?>
+        <span class="ftd-place-sep" aria-hidden="true"></span>
+        <span class="ftd-region">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+          <?= e($tour['region']) ?>
+        </span>
+      <?php endif; ?>
+    </div>
+    <?php endif; ?>
+  </header>
 
-    <!-- Fő adatok (bal oszlop, 1. sor) -->
-    <div class="tour-main-info">
-      <div class="card">
-        <div class="card-body">
-          <h1 style="font-size:clamp(20px,3.5vw,28px);font-weight:800;color:var(--sidebar-bg);margin-bottom:16px;overflow-wrap:anywhere;"><?= e($tour['name']) ?></h1>
-
-          <!-- Location -->
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
-            <?php if (!empty($tour['country_flag'])): ?>
-              <img src="<?= e(getFlagUrl($tour['country_flag'])) ?>" class="flag-img-lg" alt="">
-            <?php endif; ?>
-            <span style="font-size:15px;font-weight:700;"><?= e($tour['country_name'] ?? $tour['country'] ?? '—') ?></span>
-            <?php if (!empty($tour['region'])): ?>
-              <span style="color:var(--border);">|</span>
-              <span style="color:var(--text-muted);font-size:14px;"><?= e($tour['region']) ?></span>
-            <?php endif; ?>
-          </div>
-
-          <!-- Borítókép + összegző sáv -->
-          <div class="tour-hero<?= $hasCover ? '' : ' tour-hero--nocover' ?>"<?= $hasCover ? ' style="background-image:url(\'' . e($coverUrl) . '\');"' : '' ?>>
-            <div class="tour-hero-scrim">
-              <div class="tour-hero-band">
-                <div class="tour-hero-stat">
-                  <span class="ths-label">Kezdés</span>
-                  <span class="ths-value"><?= $tour['start_date'] ? formatDate($tour['start_date']) : '—' ?></span>
-                </div>
-                <div class="tour-hero-stat">
-                  <span class="ths-label">Időtartam</span>
-                  <span class="ths-value"><?= (int)$tour['num_days'] ?> nap</span>
-                </div>
-                <div class="tour-hero-stat">
-                  <span class="ths-label">Helyek</span>
-                  <span class="ths-value"><?= $spotsLeft > 0 ? $spotsLeft . ' / ' . (int)$tour['max_attendees'] : 'Várólista' ?></span>
-                </div>
-                <?php if ($tour['lizzardier_points'] !== null): ?>
-                <div class="tour-hero-stat">
-                  <span class="ths-label">Lizzardier</span>
-                  <span class="ths-value"><?= (int)$tour['lizzardier_points'] ?> pont</span>
-                </div>
-                <?php endif; ?>
-              </div>
-            </div>
-          </div>
-
-          <?php if ($tour['participation_fee'] !== null): ?>
-          <div class="tour-fee-block">
-            <div class="tfb-header">
-              <span class="tfb-label">Részvételi díj</span>
-              <?php if ((float)$tour['participation_fee'] <= 0): ?>
-                <span class="tfb-value">Ingyenes</span>
-              <?php else: ?>
-                <span class="tfb-value"><?= number_format((float)$tour['participation_fee'], 0, ',', ' ') ?> Ft</span>
-              <?php endif; ?>
-            </div>
-            <?php
-            $feeInclLines = !empty($tour['fee_includes']) ? array_values(array_filter(array_map('trim', explode("\n", $tour['fee_includes'])), fn($l) => $l !== '')) : [];
-            $feeExclLines = !empty($tour['fee_excludes']) ? array_values(array_filter(array_map('trim', explode("\n", $tour['fee_excludes'])), fn($l) => $l !== '')) : [];
-            if ($feeInclLines || $feeExclLines):
-            ?>
-            <div class="tfb-ie-grid">
-              <?php if ($feeInclLines): ?>
-              <div class="tfb-ie-section tfb-ie-includes<?= !$feeExclLines ? ' tfb-ie-section--only' : '' ?>">
-                <div class="tfb-ie-title">Tartalmazza</div>
-                <ul class="tfb-ie-list">
-                  <?php foreach ($feeInclLines as $line): ?><li><?= e($line) ?></li><?php endforeach; ?>
-                </ul>
-              </div>
-              <?php endif; ?>
-              <?php if ($feeExclLines): ?>
-              <div class="tfb-ie-section tfb-ie-excludes<?= !$feeInclLines ? ' tfb-ie-section--only' : '' ?>">
-                <div class="tfb-ie-title">Nem tartalmazza</div>
-                <ul class="tfb-ie-list">
-                  <?php foreach ($feeExclLines as $line): ?><li><?= e($line) ?></li><?php endforeach; ?>
-                </ul>
-              </div>
-              <?php endif; ?>
-            </div>
-            <?php endif; ?>
-          </div>
-          <?php endif; ?>
-
-          <?php if (!empty($tour['description'])): ?>
-            <div class="tour-text-block" style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);"><?= e($tour['description']) ?></div>
-          <?php endif; ?>
+  <!-- Borítókép + összegző sáv -->
+  <div class="tour-hero ftd-hero<?= $hasCover ? '' : ' tour-hero--nocover' ?>"<?= $hasCover ? ' style="background-image:url(\'' . e($coverUrl) . '\');"' : '' ?>>
+    <?php if ($coverLogo !== 'none'): ?>
+      <img class="ftd-hero-logo<?= ($tour['cover_logo_pos'] ?? 'left') === 'right' ? ' ftd-hero-logo--right' : '' ?>" src="<?= BASE_URL ?>/assets/img/logo_collision_<?= $coverLogo === 'dark' ? 'b' : 'y' ?>_small.png" alt="<?= e(APP_NAME) ?>">
+    <?php endif; ?>
+    <div class="tour-hero-scrim">
+      <div class="tour-hero-band">
+        <div class="tour-hero-stat">
+          <span class="ths-label">Kezdés</span>
+          <span class="ths-value"><?= $tour['start_date'] ? formatDate($tour['start_date']) : '—' ?></span>
+        </div>
+        <div class="tour-hero-stat">
+          <span class="ths-label">Időtartam</span>
+          <span class="ths-value"><?= (int)$tour['num_days'] ?> nap</span>
+        </div>
+        <div class="tour-hero-stat">
+          <span class="ths-label">Helyek</span>
+          <span class="ths-value"><?= $spotsLeft > 0 ? $spotsLeft . ' / ' . (int)$tour['max_attendees'] : 'Várólista' ?></span>
         </div>
       </div>
     </div>
-
-    <!-- Jobb oldal: CTA + térképek (2. oszlop, mindkét sor) -->
-    <div class="tour-sidebar">
-      <div class="card">
-        <div class="card-body card-body-center" style="text-align:center;padding:28px 20px;">
-          <?php if ($memberApp): ?>
-            <?php
-              $needsPay = $memberApp['status'] === 'confirmed'
-                          && (float)$tour['participation_fee'] > 0 && !$memberApp['paid_at'];
-              if ($memberApp['status'] === 'pending') {
-                  $appIcon  = '⏳';
-                  $appBadge = '<span class="badge badge-pending">Elfogadásra vár</span>';
-                  $appNote  = 'Jelentkezésedet rögzítettük, jóváhagyásra vár.';
-              } elseif ($memberApp['status'] === 'waitlist') {
-                  $appIcon  = '📋';
-                  $appBadge = '<span class="badge-waitlist">Várólista</span>';
-                  $appNote  = 'A túra betelt. Ha felszabadul egy hely, e-mailben értesítünk.';
-              } elseif ($needsPay) {
-                  $appIcon  = '💳';
-                  $appBadge = '<span class="badge badge-overdue">Befizetésre vár</span>';
-                  $appNote  = 'A helyedet fenntartjuk, a részvételi díj befizetése még hátravan.';
-              } else {
-                  $appIcon  = '✅';
-                  $appBadge = '<span class="badge badge-active">Elfogadva</span>';
-                  $appNote  = 'A részvételed véglegesítve.';
-              }
-            ?>
-            <div class="tour-my-app-icon"><?= $appIcon ?></div>
-            <div class="tour-my-app-title">Már jelentkeztél erre a túrára</div>
-            <div class="tour-my-app-badge"><?= $appBadge ?></div>
-            <div class="tour-my-app-note"><?= e($appNote) ?></div>
-            <?php if ($needsPay): ?><?= bankInfoBox() ?><?php endif; ?>
-            <a href="<?= BASE_URL ?>/user/future-tour-detail.php?id=<?= (int)$id ?>" class="btn btn-ghost tour-my-app-link">Jelentkezésem kezelése</a>
-
-          <?php elseif ($tour['status'] !== 'open'): ?>
-            <div style="font-size:40px;margin-bottom:12px;">🔒</div>
-            <div style="font-weight:700;font-size:17px;margin-bottom:6px;color:var(--text-muted);">A jelentkezés lezárva</div>
-
-          <?php elseif ($spotsLeft > 0): ?>
-            <div style="font-size:40px;margin-bottom:12px;">🎒</div>
-            <div style="font-weight:700;font-size:17px;margin-bottom:4px;">Még <?= $spotsLeft ?> szabad hely</div>
-            <div style="color:var(--text-muted);font-size:13px;margin-bottom:20px;"><?= (int)$tour['max_attendees'] ?> főre tervezett túra</div>
-
-          <?php else: ?>
-            <div style="font-size:40px;margin-bottom:12px;">📋</div>
-            <div style="font-weight:700;font-size:17px;margin-bottom:4px;">Várólistára jelentkezés</div>
-            <div style="color:var(--text-muted);font-size:13px;margin-bottom:20px;">Várólistás feliratkozás lehetséges</div>
-          <?php endif; ?>
-
-          <?php if (!$memberApp && $tour['status'] === 'open'): ?>
-            <a href="<?= BASE_URL ?>/public/tour-apply.php?id=<?= (int)$id ?>" class="btn btn-primary" style="width:100%;padding:12px;font-size:15px;">
-              <?= $spotsLeft > 0 ? 'Jelentkezés' : 'Várólistára feliratkozás' ?>
-            </a>
-          <?php endif; ?>
-        </div>
+    <?php if ($tour['lizzardier_points'] !== null): ?>
+      <div class="ftd-crest" title="Szerezhető Lizzardier pont">
+        <span class="ftd-crest-inner">
+          <span class="ftd-crest-num"><?= (int)$tour['lizzardier_points'] ?></span>
+          <span class="ftd-crest-label">pont</span>
+        </span>
       </div>
+    <?php endif; ?>
+  </div>
 
-      <?php $organizers = getFutureTourOrganizers($pdo, (int)$tour['id']); include __DIR__ . '/../includes/tour-organizers.php'; ?>
+  <?php if (!empty($tour['description'])): ?>
+    <div class="ftd-lead ftd-text"><?= e($tour['description']) ?></div>
+  <?php endif; ?>
 
-      <!-- Galéria (a jelentkezés és a térképek között) -->
-      <?php if (!empty($gallery)): ?>
-      <div class="card" style="margin-top:16px;">
-        <div class="card-header"><h2>Galéria</h2></div>
-        <div class="card-body">
-          <div class="tour-gallery-grid" id="tour-gallery">
-            <?php foreach ($gallery as $gi => $img): ?>
-            <button type="button" class="tour-gallery-thumb" data-full="<?= e(TOUR_GALLERY_URL . $img['filename']) ?>" data-caption="<?= e($img['label'] ?? '') ?>">
-              <img src="<?= e(TOUR_GALLERY_URL . $img['filename']) ?>" alt="<?= e($img['label'] ?? $tour['name']) ?>" loading="lazy">
-            </button>
-            <?php endforeach; ?>
-          </div>
+  <!-- Találkozó | Jelentkezés + díj -->
+  <?php if ($meetPlace !== ''): ?>
+  <div class="ftd-apply-row">
+    <section class="ftd-meet">
+      <h2 class="ftd-h">Találkozó</h2>
+      <?php if ($meetTime !== ''): ?><div class="ftd-meet-time"><?= e($meetTime) ?></div><?php endif; ?>
+      <div class="ftd-meet-place"><?= e($meetPlace) ?></div>
+      <a class="ftd-meet-btn" href="https://www.google.com/maps/search/?api=1&amp;query=<?= e(rawurlencode($meetPlace)) ?>" target="_blank" rel="noopener">Térkép megnyitása</a>
+    </section>
+  <?php endif; ?>
+  <section class="ftd-apply<?= ($feeIncl || $feeExcl) ? '' : ' ftd-apply--single' ?>">
+    <div class="ftd-apply-main">
+      <?php if ($memberApp): ?>
+        <?php
+          $needsPay = $memberApp['status'] === 'confirmed' && $fee > 0 && !$memberApp['paid_at'];
+          if ($memberApp['status'] === 'waitlist') {
+              $appBadge = '<span class="badge-waitlist">Várólista</span>';
+              $appNote  = 'A túra betelt. Ha felszabadul egy hely, e-mailben értesítünk.';
+          } elseif ($memberApp['status'] === 'pending') {
+              $appBadge = '<span class="badge badge-pending">Elfogadásra vár</span>';
+              $appNote  = 'Jelentkezésedet rögzítettük, a szervező hamarosan elfogadja.';
+          } elseif ($needsPay) {
+              $appBadge = '<span class="badge badge-overdue">Befizetésre vár</span>';
+              $appNote  = 'A helyedet fenntartjuk, a részvételi díj befizetése még hátravan.';
+          } else {
+              $appBadge = '<span class="badge badge-active">Elfogadva</span>';
+              $appNote  = 'A részvételed véglegesítve.';
+          }
+        ?>
+        <div class="ftd-myapp">
+          <div class="ftd-myapp-title">Már jelentkeztél erre a túrára <?= $appBadge ?></div>
+          <div class="ftd-myapp-note"><?= e($appNote) ?></div>
+          <?php if ($needsPay): ?><?= bankInfoBox() ?><?php endif; ?>
+          <a href="<?= BASE_URL ?>/user/future-tour-detail.php?id=<?= (int)$id ?>" class="ftd-apply-btn ftd-apply-btn--ghost">Jelentkezésem kezelése</a>
         </div>
-      </div>
+      <?php elseif ($tour['status'] !== 'open'): ?>
+        <span class="ftd-apply-btn ftd-apply-btn--closed">A jelentkezés lezárva</span>
+      <?php else: ?>
+        <a href="<?= BASE_URL ?>/public/tour-apply.php?id=<?= (int)$id ?>" class="ftd-apply-btn">
+          <?= $spotsLeft > 0 ? 'Jelentkezés' : 'Várólistára feliratkozás' ?>
+        </a>
+        <div class="ftd-spots"><?= $spotsLeft > 0 ? 'Még ' . $spotsLeft . ' szabad hely' : 'A túra betelt — várólistára feliratkozhatsz' ?></div>
       <?php endif; ?>
 
-      <?php foreach ($gpxFiles as $gi => $gf): ?>
-      <div class="card" style="margin-top:16px;">
-        <div class="card-header">
-          <h2><?= !empty($gf['label']) ? e($gf['label']) : ('Térkép' . (count($gpxFiles) > 1 ? ' ' . ($gi + 1) . '.' : '')) ?></h2>
-        </div>
-        <div id="tour-map-<?= $gi ?>" style="height:320px;border-radius:0 0 var(--radius,8px) var(--radius,8px);overflow:hidden;position:relative;z-index:0;isolation:isolate;"></div>
+      <?php if ($fee > 0): ?>
+        <div class="ftd-fee-label">Részvételi díj</div>
+        <div class="ftd-fee-value"><?= number_format($fee, 0, ',', '.') ?> Ft</div>
+        <p class="ftd-fee-note"><?= e($feeNote) ?></p>
+      <?php else: ?>
+        <div class="ftd-fee-value ftd-fee-free">A részvétel ingyenes</div>
+      <?php endif; ?>
+    </div>
+
+    <?php if ($feeIncl || $feeExcl): ?>
+    <div class="ftd-apply-side">
+      <?php if ($feeIncl): ?>
+        <div class="ftd-ie-title">Tartalmazza</div>
+        <ul class="ftd-ie ftd-ie--in"><?php foreach ($feeIncl as $line): ?><li><?= e($line) ?></li><?php endforeach; ?></ul>
+      <?php endif; ?>
+      <?php if ($feeExcl): ?>
+        <div class="ftd-ie-title">Nem tartalmazza</div>
+        <ul class="ftd-ie ftd-ie--out"><?php foreach ($feeExcl as $line): ?><li><?= e($line) ?></li><?php endforeach; ?></ul>
+      <?php endif; ?>
+    </div>
+    <?php endif; ?>
+  </section>
+  <?php if ($meetPlace !== ''): ?></div><?php endif; ?>
+
+  <!-- Szervező | Tapasztalat + élménycímkék -->
+  <section class="ftd-split ftd-split--org">
+    <?php if ($organizers): ?>
+    <div class="ftd-org">
+      <h2 class="ftd-h"><?= count($organizers) > 1 ? 'Szervezők' : 'Szervező' ?></h2>
+      <?php foreach ($organizers as $org):
+        $orgEmail = trim((string)($org['email'] ?? ''));
+        $orgPhone = trim((string)($org['phone'] ?? ''));
+      ?>
+      <div class="ftd-org-person">
+        <img class="to-avatar ftd-org-avatar" src="<?= e(getAvatarThumbUrl($org['profile_picture'] ?? null)) ?>" alt="" loading="lazy">
+        <span class="to-name"><?= e($org['lastname'] . ' ' . $org['firstname']) ?></span>
+        <?php if ($orgEmail !== ''): ?><a class="to-contact" href="mailto:<?= e($orgEmail) ?>"><?= e($orgEmail) ?></a><?php endif; ?>
+        <?php if ($orgPhone !== ''): ?><a class="to-contact" href="tel:<?= e(preg_replace('/[^0-9+]/', '', $orgPhone)) ?>"><?= e($orgPhone) ?></a><?php endif; ?>
       </div>
       <?php endforeach; ?>
     </div>
-
-    <!-- Másodlagos infók (bal oszlop, 2. sor) -->
-    <div class="tour-secondary-info">
-      <!-- Days -->
-      <?php if (!empty($days)): ?>
-      <div class="card" style="margin-bottom:16px;">
-        <div class="card-header"><h2>Napok</h2></div>
-        <div class="card-body" style="padding:0;">
-          <!-- Asztali nézet: táblázat -->
-          <table class="tour-days-table" style="width:100%;border-collapse:collapse;font-size:13.5px;">
-            <thead>
-              <tr style="background:var(--card);border-bottom:1px solid var(--border);">
-                <th style="padding:8px 16px;text-align:left;color:var(--text-muted);font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;">Nap</th>
-                <th style="padding:8px 16px;text-align:left;color:var(--text-muted);font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;">Típus</th>
-                <th style="padding:8px 16px;text-align:right;color:var(--text-muted);font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;">Km</th>
-                <th style="padding:8px 16px;text-align:right;color:var(--text-muted);font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;">Szint</th>
-                <th style="padding:8px 16px;text-align:left;color:var(--text-muted);font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;">Leírás</th>
-              </tr>
-            </thead>
-            <tbody>
-              <?php foreach ($days as $day): ?>
-              <tr style="border-bottom:1px solid var(--border);">
-                <td style="padding:10px 16px;font-weight:600;"><?= (int)$day['day_number'] ?>.</td>
-                <td style="padding:10px 16px;"><?= e($day['tour_type'] ?? '—') ?></td>
-                <td style="padding:10px 16px;text-align:right;"><?= $day['km'] !== null ? number_format((float)$day['km'], 1, ',', ' ') . ' km' : '—' ?></td>
-                <td style="padding:10px 16px;text-align:right;"><?= $day['elevation'] !== null ? number_format((int)$day['elevation']) . ' m' : '—' ?></td>
-                <td style="padding:10px 16px;color:var(--text-muted);font-size:12px;"><?= e($day['description'] ?? '') ?></td>
-              </tr>
-              <?php endforeach; ?>
-            </tbody>
-          </table>
-
-          <!-- Mobil nézet: kártyák -->
-          <div class="tour-days-cards">
-            <?php foreach ($days as $day): ?>
-            <div class="tour-day-card">
-              <div class="tdc-head">
-                <span class="tdc-day"><?= (int)$day['day_number'] ?>. nap</span>
-                <?php if (!empty($day['tour_type'])): ?>
-                  <span class="tdc-type"><?= e($day['tour_type']) ?></span>
-                <?php endif; ?>
-              </div>
-              <div class="tdc-metrics">
-                <span><span class="tdc-mlabel">Táv:</span> <?= $day['km'] !== null ? number_format((float)$day['km'], 1, ',', ' ') . ' km' : '—' ?></span>
-                <span><span class="tdc-mlabel">Szint:</span> <?= $day['elevation'] !== null ? number_format((int)$day['elevation']) . ' m' : '—' ?></span>
-              </div>
-              <?php if (!empty($day['description'])): ?>
-                <div class="tdc-desc"><?= e($day['description']) ?></div>
-              <?php endif; ?>
-            </div>
-            <?php endforeach; ?>
-          </div>
-        </div>
-      </div>
+    <?php endif; ?>
+    <div class="ftd-org-side">
+      <?php if (!empty($tour['experience'])): ?>
+        <h2 class="ftd-h">Szükséges tapasztalat és erőnlét</h2>
+        <div class="ftd-text"><?= e($tour['experience']) ?></div>
       <?php endif; ?>
+      <?php if ($tags): ?>
+        <h2 class="ftd-h">Élménycímkék</h2>
+        <ul class="ftd-tags"><?php foreach ($tags as $tag): ?><li><?= e($tag) ?></li><?php endforeach; ?></ul>
+      <?php endif; ?>
+    </div>
+  </section>
 
-      <!-- Info blocks -->
-      <?php foreach (['accommodation' => 'Szállás', 'travel' => 'Utazás', 'equipment' => 'Felszerelés', 'experience' => 'Szükséges tapasztalat és erőnlét'] as $col => $label): ?>
-        <?php if (!empty($tour[$col])): ?>
-        <div class="card" style="margin-bottom:16px;">
-          <div class="card-header"><h2><?= $label ?></h2></div>
-          <div class="card-body">
-            <div class="tour-text-block"><?= e($tour[$col]) ?></div>
-          </div>
-        </div>
-        <?php endif; ?>
+  <?php if (!empty($gallery)): ?>
+  <section class="ftd-section">
+    <h2 class="ftd-h">Wow faktor</h2>
+    <div class="ftd-gallery" id="tour-gallery">
+      <?php foreach ($gallery as $img): ?>
+      <button type="button" class="tour-gallery-thumb" data-full="<?= e(TOUR_GALLERY_URL . $img['filename']) ?>" data-caption="<?= e($img['label'] ?? '') ?>">
+        <img src="<?= e(TOUR_GALLERY_URL . $img['filename']) ?>" alt="<?= e($img['label'] ?? $tour['name']) ?>" loading="lazy">
+      </button>
       <?php endforeach; ?>
     </div>
+  </section>
+  <?php endif; ?>
 
-  </div>
+  <?php if (!empty($tour['accommodation'])): ?>
+  <section class="ftd-section">
+    <h2 class="ftd-h"><?= (int)$tour['num_days'] === 1 ? 'Utazás' : 'Szállás és utazás' ?></h2>
+    <div class="ftd-text"><?= e($tour['accommodation']) ?></div>
+  </section>
+  <?php endif; ?>
+
+  <!-- Felszerelés | Fontos -->
+  <section class="ftd-split ftd-split--even<?= $equipment ? '' : ' ftd-split--solo' ?>">
+    <?php if ($equipment): ?>
+    <div>
+      <h2 class="ftd-h">Felszerelés</h2>
+      <ul class="ftd-gear"><?php foreach ($equipment as $item): ?><li><?= e($item) ?></li><?php endforeach; ?></ul>
+    </div>
+    <?php endif; ?>
+    <div class="ftd-important">
+      <h2 class="ftd-h">Fontos!</h2>
+      <div class="ftd-text-html"><?= tourImportantHtml(tourImportantText($pdo)) ?></div>
+    </div>
+  </section>
+
+  <?php if (!empty($days) || $tourGpx): ?>
+  <section class="ftd-section">
+    <h2 class="ftd-h">Részletes program</h2>
+    <?php foreach ($days as $day): ?>
+    <article class="ftd-day">
+      <div class="ftd-day-head">
+        <span class="ftd-day-num"><?= (int)$day['day_number'] ?>. nap</span>
+        <?php if (!empty($day['title'])): ?><span class="ftd-day-title"><?= e($day['title']) ?></span><?php endif; ?>
+        <span class="ftd-day-meta">
+          <?php if (!empty($day['tour_type'])): ?><span><?= e($day['tour_type']) ?></span><?php endif; ?>
+          <?php if ($day['km'] !== null): ?><span><?= number_format((float)$day['km'], 1, ',', ' ') ?> km</span><?php endif; ?>
+          <?php if ($day['elevation'] !== null): ?><span>&uarr; <?= number_format((int)$day['elevation'], 0, ',', ' ') ?> m</span><?php endif; ?>
+        </span>
+      </div>
+      <?php if (!empty($day['description'])): ?>
+        <div class="ftd-text ftd-day-text"><?= e($day['description']) ?></div>
+      <?php endif; ?>
+      <?php foreach ($dayGpx[(int)$day['day_number']] ?? [] as $gf): ?>
+        <?php if (!empty($gf['label'])): ?><div class="ftd-map-label"><?= e($gf['label']) ?></div><?php endif; ?>
+        <div id="<?= e($gf['map_id']) ?>" class="ftd-map"></div>
+      <?php endforeach; ?>
+    </article>
+    <?php endforeach; ?>
+
+    <?php if ($tourGpx): ?>
+    <article class="ftd-day">
+      <div class="ftd-day-head"><span class="ftd-day-num">Útvonal</span></div>
+      <?php foreach ($tourGpx as $gf): ?>
+        <?php if (!empty($gf['label'])): ?><div class="ftd-map-label"><?= e($gf['label']) ?></div><?php endif; ?>
+        <div id="<?= e($gf['map_id']) ?>" class="ftd-map"></div>
+      <?php endforeach; ?>
+    </article>
+    <?php endif; ?>
+  </section>
+  <?php endif; ?>
 </div>
 
 <?php if ($hasMap): ?>

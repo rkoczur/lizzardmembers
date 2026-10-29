@@ -1,7 +1,7 @@
 <?php
 // Egy nap sora a meghirdetett túra szerkesztőjében.
 // Bemenet: $day (tömb vagy null az új / sablon sorhoz), $dayNum, $ro, $dayGpxCount (nap-szám => csatolt GPX db).
-$dayTypes = ['Gyalogtúra', 'Vízitúra', 'Kerékpártúra', 'Síelés', 'Barlangi túra', 'Munkavégzés'];
+$dayTypes = ['Gyalogtúra', 'Vízitúra', 'Kerékpártúra', 'Síelés', 'Barlangi túra', 'Munkavégzés', 'Közösségi program'];
 $dayOrig  = $day ? (int)$day['day_number'] : 0;
 $gpxCount = $dayOrig ? ($dayGpxCount[$dayOrig] ?? 0) : 0;
 ?>

@@ -409,54 +409,102 @@ function initTourGalleryLightbox() {
   const thumbs = Array.from(grid.querySelectorAll('.tour-gallery-thumb'));
   if (!thumbs.length) return;
 
+  // Átlátszó háttér (nincs elsötétítés); a gombok a kép keretén ülnek
   const lb = document.createElement('div');
   lb.className = 'lightbox-backdrop';
   lb.setAttribute('role', 'dialog');
   lb.setAttribute('aria-modal', 'true');
   lb.innerHTML =
-    '<button class="lb-close" type="button" aria-label="Bezárás">✕</button>' +
-    '<button class="lb-prev" type="button" aria-label="Előző">‹</button>' +
-    '<figure class="lb-figure"><img class="lb-img" alt=""><figcaption class="lb-cap"></figcaption></figure>' +
-    '<button class="lb-next" type="button" aria-label="Következő">›</button>';
+    '<figure class="lb-figure">' +
+      '<div class="lb-stage">' +
+        '<img class="lb-img" alt="">' +
+        '<button class="lb-close" type="button" aria-label="Bezárás">✕</button>' +
+        '<button class="lb-prev" type="button" aria-label="Előző">‹</button>' +
+        '<button class="lb-next" type="button" aria-label="Következő">›</button>' +
+      '</div>' +
+      '<figcaption class="lb-cap"></figcaption>' +
+    '</figure>';
   document.body.appendChild(lb);
 
-  const imgEl = lb.querySelector('.lb-img');
-  const capEl = lb.querySelector('.lb-cap');
+  const stage    = lb.querySelector('.lb-stage');
+  const imgEl    = lb.querySelector('.lb-img');
+  const capEl    = lb.querySelector('.lb-cap');
   const closeBtn = lb.querySelector('.lb-close');
-  let idx = 0, lastFocus = null;
+  const reduce   = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const ease     = 'cubic-bezier(.2,.8,.2,1)';
+  let idx = 0, lastFocus = null, gen = 0;
 
-  function show(i) {
+  // Transzformáció, amely a nagy képet a bélyegkép helyére és méretére teszi
+  function thumbTransform(t) {
+    const from = t.getBoundingClientRect();
+    const to   = imgEl.getBoundingClientRect();
+    const dx = (from.left + from.width / 2) - (to.left + to.width / 2);
+    const dy = (from.top + from.height / 2) - (to.top + to.height / 2);
+    return `translate(${dx}px, ${dy}px) scale(${from.width / to.width}, ${from.height / to.height})`;
+  }
+
+  function setImage(i) {
     idx = (i + thumbs.length) % thumbs.length;
     const t = thumbs[idx];
     imgEl.src = t.dataset.full;
     const cap = t.dataset.caption || '';
     capEl.textContent = cap;
-    capEl.style.display = cap ? '' : 'none';
+    capEl.hidden = !cap;
     imgEl.alt = cap;
+    return imgEl.decode ? imgEl.decode().catch(() => {}) : Promise.resolve();
   }
-  function open(i) {
+
+  // Minden művelet új „generációt” kap: a félbemaradt nyitás / lapozás a bezárás után nem írja felül az állapotot
+  const run = () => ++gen;
+  const animate = (frames, duration) => reduce ? Promise.resolve()
+    : imgEl.animate(frames, { duration, easing: ease }).finished.catch(() => {});
+
+  async function open(i) {
+    if (lb.classList.contains('open')) return;
+    const my = run();
     lastFocus = document.activeElement;
-    show(i);
+    await setImage(i);
+    if (my !== gen) return;
     lb.classList.add('open');
     document.body.style.overflow = 'hidden';
+    await animate([{ transform: thumbTransform(thumbs[idx]), borderRadius: '6px' }, { transform: 'none' }], 380);
+    if (my !== gen) return;
+    lb.classList.add('ready');
     closeBtn.focus();
   }
-  function close() {
+
+  // A bezárás mindig azonnal indul, akkor is, ha a kép még töltődik
+  async function close() {
+    if (!lb.classList.contains('open')) return;
+    const my = run();
+    imgEl.getAnimations().forEach(a => a.cancel());
+    lb.classList.remove('ready');
+    await animate([{ transform: 'none' }, { transform: thumbTransform(thumbs[idx]), opacity: .4 }], 300);
+    if (my !== gen) return;
     lb.classList.remove('open');
     document.body.style.overflow = '';
     if (lastFocus && lastFocus.focus) lastFocus.focus();
   }
 
+  async function go(step) {
+    if (!lb.classList.contains('ready')) return;
+    const my = run();
+    await setImage(idx + step);
+    if (my !== gen) return;
+    await animate([{ opacity: .3, transform: `translateX(${step * 24}px)` }, { opacity: 1, transform: 'none' }], 240);
+  }
+
   thumbs.forEach((t, i) => t.addEventListener('click', () => open(i)));
   closeBtn.addEventListener('click', close);
-  lb.querySelector('.lb-prev').addEventListener('click', () => show(idx - 1));
-  lb.querySelector('.lb-next').addEventListener('click', () => show(idx + 1));
-  lb.addEventListener('click', e => { if (e.target === lb) close(); });
+  lb.querySelector('.lb-prev').addEventListener('click', () => go(-1));
+  lb.querySelector('.lb-next').addEventListener('click', () => go(1));
+  // Kattintás a képen kívül → bezárás
+  lb.addEventListener('click', e => { if (!stage.contains(e.target)) close(); });
   document.addEventListener('keydown', e => {
     if (!lb.classList.contains('open')) return;
     if (e.key === 'Escape') close();
-    else if (e.key === 'ArrowLeft') show(idx - 1);
-    else if (e.key === 'ArrowRight') show(idx + 1);
+    else if (e.key === 'ArrowLeft') go(-1);
+    else if (e.key === 'ArrowRight') go(1);
   });
 
   // Mobil swipe
@@ -464,7 +512,7 @@ function initTourGalleryLightbox() {
   lb.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
   lb.addEventListener('touchend', e => {
     const dx = e.changedTouches[0].clientX - sx;
-    if (Math.abs(dx) > 50) show(idx + (dx < 0 ? 1 : -1));
+    if (Math.abs(dx) > 50) go(dx < 0 ? 1 : -1);
   }, { passive: true });
 }
 

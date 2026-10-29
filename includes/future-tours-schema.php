@@ -11,7 +11,7 @@ function ensureFutureToursSchema(PDO $pdo): void {
             country       VARCHAR(10),
             region        VARCHAR(255),
             participation_fee DECIMAL(10,2) DEFAULT NULL,
-            status        ENUM('open','closed','cancelled') NOT NULL DEFAULT 'open',
+            status        ENUM('draft','open','closed','cancelled') NOT NULL DEFAULT 'open',
             created_by    INT UNSIGNED,
             created_at    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
             updated_at    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -101,8 +101,14 @@ function ensureFutureToursSchema(PDO $pdo): void {
     try { $pdo->exec("ALTER TABLE future_tours ADD COLUMN short_intro VARCHAR(500) DEFAULT NULL AFTER description"); } catch (Throwable) {}
     // Publikus adatlap: logo a borítóképen, díj megjegyzés (NULL = központi alapszöveg), élménycímkék (soronként)
     try { $pdo->exec("ALTER TABLE future_tours ADD COLUMN cover_logo ENUM('light','dark','none') NOT NULL DEFAULT 'light' AFTER cover_img"); } catch (Throwable) {}
+    try { $pdo->exec("ALTER TABLE future_tours ADD COLUMN cover_logo_pos ENUM('left','right') NOT NULL DEFAULT 'left' AFTER cover_logo"); } catch (Throwable) {}
     try { $pdo->exec("ALTER TABLE future_tours ADD COLUMN fee_note TEXT DEFAULT NULL AFTER fee_excludes"); } catch (Throwable) {}
     try { $pdo->exec("ALTER TABLE future_tours ADD COLUMN experience_tags TEXT DEFAULT NULL AFTER experience"); } catch (Throwable) {}
+    // Piszkozat státusz: mentett, de nem publikus túra
+    try { $pdo->exec("ALTER TABLE future_tours MODIFY COLUMN status ENUM('draft','open','closed','cancelled') NOT NULL DEFAULT 'open'"); } catch (Throwable) {}
+    // Egynapos túra találkozója (hely + idő)
+    try { $pdo->exec("ALTER TABLE future_tours ADD COLUMN meeting_place VARCHAR(255) DEFAULT NULL AFTER accommodation"); } catch (Throwable) {}
+    try { $pdo->exec("ALTER TABLE future_tours ADD COLUMN meeting_time TIME DEFAULT NULL AFTER meeting_place"); } catch (Throwable) {}
     try { $pdo->exec("ALTER TABLE future_tour_days ADD COLUMN title VARCHAR(255) DEFAULT NULL AFTER day_number"); } catch (Throwable) {}
     // Naphoz kötött térkép (nap-szám, mert a mentés a napokat újra beszúrja); NULL = egész túra
     try { $pdo->exec("ALTER TABLE future_tour_gpx_files ADD COLUMN day_number TINYINT UNSIGNED DEFAULT NULL AFTER label"); } catch (Throwable) {}

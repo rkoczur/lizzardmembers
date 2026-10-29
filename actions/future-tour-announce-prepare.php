@@ -30,7 +30,7 @@ if (!$tourId) {
 $pdo = getDb();
 ensureFutureToursSchema($pdo);
 
-$tourStmt = $pdo->prepare("SELECT id FROM future_tours WHERE id = ? LIMIT 1");
+$tourStmt = $pdo->prepare("SELECT id FROM future_tours WHERE id = ? AND status != 'draft' LIMIT 1");
 $tourStmt->execute([$tourId]);
 if (!$tourStmt->fetch()) {
     echo json_encode(['ok' => false, 'error' => 'A túra nem található.']);

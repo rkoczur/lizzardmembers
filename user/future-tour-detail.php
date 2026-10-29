@@ -22,7 +22,7 @@ $tourStmt = $pdo->prepare("
     SELECT ft.*, c.name_hu AS country_name, c.flag_filename AS country_flag
     FROM future_tours ft
     LEFT JOIN countries c ON c.code = ft.country
-    WHERE ft.id = ? AND ft.status != 'cancelled'
+    WHERE ft.id = ? AND ft.status NOT IN ('cancelled','draft')
     LIMIT 1
 ");
 $tourStmt->execute([$id]);

@@ -6,6 +6,7 @@ require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/tours-schema.php';
 require_once __DIR__ . '/../includes/app-settings-schema.php';
+require_once __DIR__ . '/../includes/future-tour-content.php';
 requireAdminOrVezeto();
 
 $pdo = getDb();
@@ -16,6 +17,8 @@ $smtp = getSmtpConfig($pdo);
 $recaptchaSiteKey  = getSetting($pdo, 'recaptcha_site_key', '');
 $recaptchaHasSecret = getSetting($pdo, 'recaptcha_secret', '') !== '';
 $socialDefaultImg  = getSetting($pdo, 'social_default_image', '');
+$tourImportant     = getSetting($pdo, 'tour_important_text', '');
+$tourFeeNote       = getSetting($pdo, 'tour_fee_note_default', '');
 
 $countries = getCountries($pdo, false);
 
@@ -233,6 +236,33 @@ include __DIR__ . '/../includes/admin-header.php';
         </div>
         <div style="margin-top:16px;">
           <button type="submit" class="btn btn-primary">Megosztási kép mentése</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Meghirdetett túra adatlap: központi szövegek -->
+  <div class="card" id="tour-texts">
+    <div class="card-header"><h2>Túra adatlap szövegei</h2></div>
+    <div class="card-body">
+      <p class="ft-hint settings-lead">
+        Minden meghirdetett túra publikus adatlapján megjelennek. A túra szervezője ezeket nem módosíthatja.
+        Üresen hagyva a beépített alapszöveg érvényes (halványan látható a mezőben).
+      </p>
+      <form method="post" action="<?= BASE_URL ?>/actions/settings-tour-save.php">
+        <input type="hidden" name="csrf_token" value="<?= csrfToken() ?>">
+        <div class="form-group">
+          <label>„FONTOS!” blokk</label>
+          <textarea name="tour_important_text" rows="6" placeholder="<?= e(TOUR_IMPORTANT_DEFAULT) ?>"><?= e($tourImportant) ?></textarea>
+          <small class="ft-hint">Üres sor = új bekezdés. Az „általános részvételi feltételeink” és a „magatartási iránytű” kifejezés automatikusan linkké válik.</small>
+        </div>
+        <div class="form-group">
+          <label>Díj megjegyzés alapszövege</label>
+          <textarea name="tour_fee_note_default" rows="3" placeholder="<?= e(TOUR_FEE_NOTE_DEFAULT) ?>"><?= e($tourFeeNote) ?></textarea>
+          <small class="ft-hint">A jelentkezés gomb és az ár alatt jelenik meg; túránként egyedileg felülírható.</small>
+        </div>
+        <div class="settings-actions">
+          <button type="submit" class="btn btn-primary">Szövegek mentése</button>
         </div>
       </form>
     </div>

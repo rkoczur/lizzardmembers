@@ -55,6 +55,9 @@ Nincs JS keretrendszer: sima PHP, PDO, natív JS és saját CSS. A felhasználó
   A szervezők az adminokkal együtt e-mailt kapnak minden új jelentkezésről.
   A vendég jelentkező is azonnal a jelentkezők listájába kerül („Vendég” jelvénnyel), és a szervező egy gombbal
   fogadja el. Tagsághoz kötött túránál az elfogadás a tagfelvétel jóváhagyásáig zárolva van.
+  A publikus adatlap magazinszerű: borító logóval, jelentkezés-kártya (egynapos túránál mellette a találkozó helye, ideje és térkép link), szervező, élménycímkék, galéria,
+  felszerelés, központi „Fontos!” szöveg (Beállítások) és részletes program naponkénti térképpel.
+  A túra „Piszkozat” státusszal is menthető: ilyenkor publikusan nem jelenik meg, csak a vezetők látják előnézetként.
 - **Telekocsi-szervező** — a meghirdetett túra jelentkezői oldalán egy gombbal egyedi link készül,
   ahol a résztvevők (bejelentkezés nélkül, a jelentkezéskor megadott e-mail címükkel azonosítva)
   sofőrként helyet kínálnak, vagy utasként helyet foglalnak egy autóban. A link egy gombbal

@@ -981,6 +981,8 @@ body.embed-mode .card-body { padding-top: 12px !important; }
 /* ===== Meghirdetett túra szerkesztő: publikus adatlap tartalmai (ft-*) ===== */
 .ft-hint { display: block; margin-top: 5px; color: var(--text-muted); font-size: 12px; }
 .ft-hint-inline { font-weight: 400; color: var(--text-muted); text-transform: none; letter-spacing: 0; }
+.ft-meeting[hidden] { display: none; }
+.ft-meeting-row { display: grid; grid-template-columns: minmax(0, 1fr) 130px; gap: 10px; }
 
 /* Felszerelés lista: számozott, „vonalzós” sorok */
 .ft-list-rows { list-style: none; margin: 0; padding: 0; counter-reset: ftItem; }
@@ -1040,6 +1042,10 @@ body.embed-mode .card-body { padding-top: 12px !important; }
 .ft-logo-tile input:checked ~ .ft-logo-name { color: var(--primary); }
 .ft-logo-tile input:focus-visible + .ft-logo-swatch { outline: 2px solid var(--primary); outline-offset: 2px; }
 .ft-logo-tile input:disabled ~ * { cursor: default; }
+/* Logo helye: mini borító-séma, a pont jelzi a sarkot */
+.ft-pos-swatch { place-items: start; padding: 8px; }
+.ft-pos-swatch--right { place-items: start end; }
+.ft-pos-dot { width: 20px; height: 20px; border-radius: 50%; background: #f3ece0; box-shadow: 0 1px 3px rgba(0,0,0,.35); }
 .gpx-day-select { width: 130px; font-size: 13px; }
 
 /* ===== Tour page layouts ===== */
@@ -1752,32 +1758,53 @@ body.embed-mode .card-body { padding-top: 12px !important; }
 .gallery-admin-item .gallery-admin-del { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--danger); cursor: pointer; }
 .gallery-admin-item .gallery-admin-del input { width: auto; padding: 0; }
 
-/* ===== Lightbox ===== */
+/* ===== Lightbox: átlátszó háttér, a kép a bélyegképből nő ki (JS), gombok a kép keretén ===== */
 .lightbox-backdrop {
-  display: none; position: fixed; inset: 0; background: rgba(0,0,0,.9);
+  display: none; position: fixed; inset: 0; background: transparent;
   z-index: 300; align-items: center; justify-content: center;
 }
 .lightbox-backdrop.open { display: flex; }
-.lightbox-backdrop .lb-figure {
-  margin: 0; max-width: 92vw; max-height: 90vh;
-  display: flex; flex-direction: column; align-items: center;
+.lightbox-backdrop .lb-figure { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.lightbox-backdrop .lb-stage { position: relative; }
+.lightbox-backdrop .lb-img {
+  display: block; max-width: min(86vw, 1200px); max-height: 80vh; object-fit: contain;
+  border-radius: 10px; border: 4px solid #fff; background: #fff;
+  box-shadow: 0 24px 60px rgba(0,0,0,.45), 0 4px 14px rgba(0,0,0,.25);
+  transform-origin: center center; will-change: transform;
 }
-.lightbox-backdrop .lb-img { max-width: 92vw; max-height: 82vh; object-fit: contain; border-radius: 6px; }
-.lightbox-backdrop .lb-cap { color: #fff; margin-top: 10px; font-size: 14px; text-align: center; max-width: 92vw; }
+.lightbox-backdrop .lb-cap {
+  padding: 5px 14px; border-radius: 99px; background: var(--sidebar-bg); color: #fff;
+  font-size: 13.5px; text-align: center; max-width: 86vw;
+  box-shadow: 0 6px 18px rgba(0,0,0,.3);
+}
+.lightbox-backdrop .lb-cap[hidden] { display: none; }
+/* Gombok: a kép mellett / fölött, a nagyítás végén úsznak be */
 .lightbox-backdrop .lb-close,
 .lightbox-backdrop .lb-prev,
 .lightbox-backdrop .lb-next {
-  position: fixed; background: rgba(255,255,255,.15); color: #fff; border: 0;
-  cursor: pointer; border-radius: 50%; width: 46px; height: 46px; font-size: 24px; line-height: 1;
+  position: absolute; display: grid; place-items: center; padding: 0;
+  width: 42px; height: 42px; border: 2px solid #fff; border-radius: 50%;
+  background: var(--sidebar-bg); color: #fff; font-size: 22px; line-height: 1; cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,.35);
+  opacity: 0; pointer-events: none; transition: opacity .2s ease, transform .2s ease, background .15s ease;
 }
+.lightbox-backdrop.ready .lb-close,
+.lightbox-backdrop.ready .lb-prev,
+.lightbox-backdrop.ready .lb-next { opacity: 1; pointer-events: auto; }
 .lightbox-backdrop .lb-close:hover,
 .lightbox-backdrop .lb-prev:hover,
-.lightbox-backdrop .lb-next:hover { background: rgba(255,255,255,.28); }
-.lightbox-backdrop .lb-close { top: 16px; right: 16px; }
-.lightbox-backdrop .lb-prev { left: 16px; top: 50%; transform: translateY(-50%); }
-.lightbox-backdrop .lb-next { right: 16px; top: 50%; transform: translateY(-50%); }
+.lightbox-backdrop .lb-next:hover { background: var(--primary); }
+.lightbox-backdrop .lb-close { top: -16px; right: -16px; font-size: 16px; width: 36px; height: 36px; }
+.lightbox-backdrop .lb-prev { top: 50%; right: calc(100% + 12px); transform: translateY(-50%); }
+.lightbox-backdrop .lb-next { top: 50%; left: calc(100% + 12px); transform: translateY(-50%); }
+.lightbox-backdrop .lb-prev:hover { transform: translate(-3px, -50%); }
+.lightbox-backdrop .lb-next:hover { transform: translate(3px, -50%); }
 @media (max-width: 600px) {
-  .lightbox-backdrop .lb-prev, .lightbox-backdrop .lb-next { width: 40px; height: 40px; font-size: 20px; }
+  .lightbox-backdrop .lb-img { max-width: 92vw; }
+  /* Keskeny kijelzőn a lapozók a kép szélére kerülnek */
+  .lightbox-backdrop .lb-prev { right: auto; left: 8px; }
+  .lightbox-backdrop .lb-next { left: auto; right: 8px; }
+  .lightbox-backdrop .lb-close { top: -12px; right: -6px; }
 }
 
 /* ===== Bankszámla blokk (befizetési felhívásoknál) ===== */
@@ -2234,3 +2261,183 @@ textarea.cp-input { resize: vertical; }
 .pchg-new.is-changed::before { content: "\2192\00a0"; color: var(--primary); }
 .pchg-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px; }
 @media (max-width: 560px) { .pchg-grid { grid-template-columns: 1fr 1fr; } .pchg-head:first-child, .pchg-label { grid-column: 1 / -1; } .pchg-head:first-child { display: none; } }
+
+/* Beállítások: túra adatlap szövegei */
+.settings-lead { margin: 0 0 16px; font-size: 13px; }
+.settings-actions { margin-top: 16px; }
+
+/* ===== Meghirdetett túra — publikus adatlap (ftd-*): kártyamentes, egyoszlopos, magazinszerű ===== */
+.ftd { --ftd-sand: #f5efe4; --ftd-sand-line: #e6dcc8; --ftd-ink: var(--sidebar-bg); }
+.ftd-back {
+  display: inline-block; margin-bottom: 18px; padding: 4px 12px; border-radius: 99px;
+  background: var(--ftd-sand); color: var(--text-muted); font-size: 12.5px; font-weight: 600; text-decoration: none;
+  transition: background var(--transition), color var(--transition);
+}
+.ftd-back:hover { background: var(--ftd-ink); color: #fff; }
+
+/* Cím + helyszín */
+.ftd-head { margin-bottom: 16px; }
+.ftd-title {
+  margin: 0; font-size: clamp(24px, 4.2vw, 38px); line-height: 1.12; font-weight: 800;
+  color: var(--ftd-ink); letter-spacing: -.01em; overflow-wrap: anywhere;
+}
+.ftd-place {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 10px;
+  font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: var(--primary);
+}
+.ftd-flag { width: 26px; height: auto; border-radius: 3px; box-shadow: 0 0 0 1px rgba(0,0,0,.08); }
+.ftd-place-sep { width: 22px; height: 2px; background: var(--warning); border-radius: 2px; }
+.ftd-region { display: inline-flex; align-items: center; gap: 5px; color: var(--text-muted); }
+
+/* Borító: szélesebb, mint a régi, bal felül a logo */
+.ftd-hero { min-height: 0; aspect-ratio: 16 / 7; margin-bottom: 26px; }
+.ftd-hero-logo {
+  position: absolute; top: 18px; left: 20px; width: clamp(64px, 12%, 110px); height: auto;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,.25));
+}
+.ftd-hero-logo--right { left: auto; right: 20px; }
+
+/* Lizzardier pont: címer (ures_small.png) a jobb alsó sarokban, türkiz számmal */
+.ftd-hero .tour-hero-scrim { padding-right: clamp(110px, 18%, 160px); }
+.ftd-crest {
+  position: absolute; right: 20px; bottom: 16px; z-index: 1;
+  width: clamp(76px, 13%, 120px); aspect-ratio: 200 / 258;
+  background: url('../img/ures_small.png') center / contain no-repeat;
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,.4));
+}
+.ftd-crest-inner {
+  position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding-bottom: 14%; color: var(--primary);
+}
+.ftd-crest-num { font-size: clamp(30px, 5vw, 50px); font-weight: 900; line-height: 1; letter-spacing: -.02em; }
+.ftd-crest-label { margin-top: 3px; font-size: clamp(10px, 1.4vw, 13px); font-weight: 800; text-transform: uppercase; letter-spacing: .18em; opacity: .9; }
+
+/* Szövegek */
+.ftd-text { white-space: pre-line; font-size: 15px; line-height: 1.7; color: var(--text); text-align: justify; hyphens: auto; }
+.ftd-lead { margin-bottom: 30px; }
+.ftd-text-html p { margin: 0 0 10px; font-size: 14.5px; line-height: 1.65; }
+.ftd-text-html a { color: var(--primary); font-weight: 600; }
+.ftd-h {
+  margin: 0 0 12px; font-size: 17px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: var(--ftd-ink);
+}
+.ftd-section { margin-top: 38px; }
+
+/* Jelentkezés: az egyetlen kártya — homokszínű, puha árnyék */
+.ftd-apply {
+  display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 18px 28px;
+  background: var(--ftd-sand); border: 1px solid var(--ftd-sand-line); border-radius: 16px;
+  padding: 18px 24px; box-shadow: 0 4px 14px rgba(80,60,20,.07);
+}
+.ftd-apply--single { grid-template-columns: minmax(0, 1fr); max-width: 520px; margin-inline: auto; }
+.ftd-apply-main { text-align: center; }
+.ftd-apply-btn {
+  display: block; padding: 10px 18px; border-radius: 10px; background: var(--primary); color: #fff; text-align: center;
+  font-size: 15px; font-weight: 700; text-decoration: none; letter-spacing: .02em;
+  box-shadow: 0 3px 0 var(--primary-dark); transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+}
+.ftd-apply-btn:hover { background: var(--primary-dark); color: #fff; transform: translateY(-1px); }
+.ftd-apply-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--primary-dark); }
+.ftd-apply-btn--ghost { background: transparent; color: var(--primary); box-shadow: inset 0 0 0 2px var(--primary); margin-top: 12px; }
+.ftd-apply-btn--ghost:hover { background: var(--primary); color: #fff; }
+.ftd-apply-btn--closed { background: var(--border); color: var(--text-muted); box-shadow: none; cursor: default; }
+.ftd-apply-btn--closed:hover { background: var(--border); color: var(--text-muted); transform: none; }
+.ftd-spots { margin-top: 7px; font-size: 12.5px; color: var(--text-muted); }
+.ftd-fee-label { margin-top: 14px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--text-muted); }
+.ftd-fee-value { font-size: clamp(24px, 4vw, 32px); font-weight: 900; color: var(--ftd-ink); line-height: 1.15; letter-spacing: -.01em; }
+.ftd-fee-free { margin-top: 14px; font-size: 20px; color: var(--primary); }
+.ftd-fee-note { margin: 8px auto 0; max-width: 480px; font-size: 12.5px; font-style: italic; line-height: 1.5; color: var(--text-muted); text-align: center; }
+.ftd-myapp { text-align: left; }
+.ftd-myapp-title { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 16px; font-weight: 700; color: var(--ftd-ink); }
+.ftd-myapp-note { margin: 6px 0 4px; font-size: 13px; color: var(--text-muted); }
+.ftd-apply-side { border-left: 1px dashed var(--ftd-sand-line); padding-left: 24px; text-align: right; }
+.ftd-ie-title { font-size: 14px; font-style: italic; font-weight: 600; color: var(--ftd-ink); margin: 0 0 4px; }
+.ftd-ie + .ftd-ie-title { margin-top: 12px; }
+.ftd-ie { list-style: none; margin: 0; padding: 0; font-size: 13.5px; line-height: 1.5; }
+/* Jobbra zárt lista: a jel a sor végére kerül, így a pipák / X-ek egy oszlopba rendeződnek */
+.ftd-ie li { display: flex; flex-direction: row-reverse; gap: 8px; padding: 1px 0; }
+.ftd-ie li::before { flex-shrink: 0; width: 16px; font-weight: 800; text-align: center; }
+.ftd-ie--in li::before { content: '✓'; color: var(--success); }
+.ftd-ie--out li::before { content: '✕'; color: var(--danger); }
+
+/* Piszkozat előnézet jelzése (csak vezetőknek) */
+.ftd-draft {
+  margin: 0 0 18px; padding: 10px 16px; border: 2px dashed var(--warning); border-radius: 10px;
+  background: repeating-linear-gradient(-45deg, rgba(221,153,51,.08) 0 10px, transparent 10px 20px);
+  font-size: 13.5px; font-weight: 700; color: #7a4e00;
+}
+
+/* Találkozó (egynapos túra): fehér doboz a jelentkezés kártya mellett */
+.ftd-apply-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 18px; align-items: stretch; }
+.ftd-apply-row .ftd-apply--single { max-width: none; margin: 0; }
+.ftd-meet {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 6px;
+  background: #fff; border: 1px solid var(--ftd-sand-line); border-top: 4px solid var(--warning); border-radius: 16px;
+  padding: 18px 22px; box-shadow: 0 4px 14px rgba(80,60,20,.05);
+}
+.ftd-meet .ftd-h { margin-bottom: 2px; }
+.ftd-meet-time { font-size: clamp(26px, 4vw, 34px); font-weight: 900; line-height: 1; color: var(--ftd-ink); letter-spacing: -.01em; }
+.ftd-meet-place { display: flex; gap: 8px; font-size: 14.5px; font-weight: 600; line-height: 1.45; color: var(--text); overflow-wrap: anywhere; }
+.ftd-meet-place::before { content: ''; flex: 0 0 10px; height: 10px; margin-top: .35em; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); background: var(--danger); }
+.ftd-meet-btn {
+  margin-top: auto; padding: 7px 14px; border-radius: 8px; border: 2px dashed var(--primary);
+  font-size: 13px; font-weight: 700; color: var(--primary); text-decoration: none; letter-spacing: .02em;
+  transition: background var(--transition), color var(--transition), border-style var(--transition);
+}
+.ftd-meet-btn:hover { background: var(--primary); border-style: solid; color: #fff; }
+
+/* Kétoszlopos sávok */
+.ftd-split { display: grid; gap: 30px 44px; margin-top: 38px; }
+.ftd-split--org { grid-template-columns: 200px minmax(0, 1fr); }
+.ftd-split--even { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.ftd-split--solo { grid-template-columns: minmax(0, 1fr); }
+.ftd-org { text-align: center; }
+.ftd-org-person { display: flex; flex-direction: column; align-items: center; gap: 4px; margin-bottom: 18px; }
+.ftd-org-avatar { width: 130px; height: 130px; margin-bottom: 8px; }
+.ftd-org-side .ftd-h + .ftd-text { margin-bottom: 26px; }
+.ftd-tags { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin: 0; padding: 0; }
+.ftd-tags li {
+  padding: 5px 14px; border: 1.5px solid var(--ftd-ink); border-radius: 8px;
+  font-size: 13.5px; font-weight: 600; color: var(--ftd-ink); background: #fff;
+  transition: background var(--transition), color var(--transition);
+}
+.ftd-tags li:hover { background: var(--ftd-ink); color: #fff; }
+
+/* Galéria: 3 oszlop, 3:2 képek */
+.ftd-gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.ftd-gallery .tour-gallery-thumb { aspect-ratio: 3 / 2; border-radius: 4px; }
+
+/* Felszerelés: rövid vonalas felsorolás */
+.ftd-gear { list-style: none; margin: 0; padding: 0; font-size: 14.5px; line-height: 1.7; }
+.ftd-gear li { display: flex; gap: 10px; }
+.ftd-gear li::before { content: ''; flex: 0 0 12px; height: 2px; margin-top: .85em; background: var(--warning); border-radius: 2px; }
+.ftd-important .ftd-h { text-align: right; color: var(--danger); }
+.ftd-split--solo .ftd-important .ftd-h { text-align: left; }
+.ftd-important .ftd-text-html { text-align: justify; }
+
+/* Részletes program: napfejléc sáv, alatta szöveg háttér nélkül */
+.ftd-day { margin-bottom: 26px; }
+.ftd-day-head {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px;
+  background: var(--ftd-sand); border: 1px solid var(--ftd-sand-line); border-left: 4px solid var(--primary);
+  border-radius: 6px; padding: 11px 16px; margin-bottom: 12px;
+}
+.ftd-day-num, .ftd-day-title { font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; color: var(--ftd-ink); }
+.ftd-day-title::before { content: '– '; color: var(--text-muted); }
+.ftd-day-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-left: auto; }
+.ftd-day-meta span { padding: 2px 9px; border-radius: 99px; background: #fff; font-size: 12px; font-weight: 600; color: var(--text-muted); }
+.ftd-map-label { margin: 14px 0 6px; font-size: 12.5px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .05em; }
+.ftd-map { height: 340px; margin-top: 12px; border-radius: 8px; overflow: hidden; position: relative; z-index: 0; isolation: isolate; border: 1px solid var(--border); }
+
+@media (max-width: 720px) {
+  .ftd-hero { aspect-ratio: 4 / 3; }
+  .ftd-apply { grid-template-columns: minmax(0, 1fr); padding: 22px 18px; }
+  .ftd-apply-row { grid-template-columns: minmax(0, 1fr); }
+  .ftd-apply-side { border-left: none; border-top: 1px dashed var(--ftd-sand-line); padding: 16px 0 0; text-align: left; }
+  .ftd-ie li { flex-direction: row; }
+  .ftd-split--org, .ftd-split--even { grid-template-columns: minmax(0, 1fr); }
+  .ftd-important .ftd-h { text-align: left; }
+  .ftd-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .ftd-day-meta { margin-left: 0; }
+  .ftd-map { height: 260px; }
+  .ftd-text { text-align: left; }
+}

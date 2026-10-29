@@ -180,6 +180,26 @@ include __DIR__ . '/../includes/admin-footer.php'; // or user-footer.php
    Tagfelvételes sor (`user_id` NULL + `member_application_id`): `isApplicantNotYetMember()` → az elfogadás tiltva
    (inaktív gomb, „Még nem tag”). Tagfelvétel jóváhagyásakor (`actions/application-process.php`) a sor a tagé lesz,
    státusza marad, túra-levél NEM megy. Elutasításkor a kapcsolt jelentkezés `cancelled`.
+## Meghirdetett túra publikus adatlapja (`public/tour-detail.php`, `includes/future-tour-content.php`)
+Kártyamentes, egyoszlopos elrendezés (`.ftd-*` CSS), egyetlen kártya a jelentkezés (`.ftd-apply`). A tagi nézet
+(`user/future-tour-detail.php`) még a régi rácsot használja — később ugyanerre a szerkezetre kerül.
+- Lizzardier pont a borító jobb alsó sarkában: `.ftd-crest` (eredeti `ures_small.png` címer, türkiz szám), nem az adatsávban.
+- `future_tours.cover_logo` (light/dark/none) + `cover_logo_pos` (left/right, `.ftd-hero-logo--right`) → `assets/img/logo_collision_y_small.png` (világos) / `_b_small` (sötét).
+- `fee_note` (üres → `tourFeeNoteDefault()`), `experience_tags` és `equipment` soronként (`tourTextLines()` olvas,
+  `tourContentFromPost()` ment; a szerkesztő `equipment_items[]` / `experience_tags[]` tömböt küld).
+- „Fontos!” szöveg csak központilag (admin → Beállítások, `tour_important_text`), a szervező nem módosíthatja;
+  `tourImportantHtml()` a részvételi feltételek / magatartási iránytű kifejezést linkeli.
+- Státusz: `draft` (Piszkozat) / `open` / `closed` / `cancelled`. Piszkozat csak az admin listában és vezetőknek a publikus
+  adatlapon (előnézet, `.ftd-draft`) látszik; publikus/tagi lekérdezésnél mindig zárd ki (`status NOT IN ('cancelled','draft')`
+  vagy `status = 'open'`), értesítő (announce) nem küldhető róla.
+- Találkozó (csak `num_days = 1`): `meeting_place`, `meeting_time` (TIME) → `.ftd-meet` doboz a jelentkezés kártya mellett
+  (`.ftd-apply-row`), Google Térkép keresés link. Szerkesztőben `#meeting-group`, JS rejti több napnál.
+- `accommodation` = „Szállás és utazás” (a `travel` oszlop már nem használt, mentéskor NULL).
+- Napok: `future_tour_days.title`; mentés mindig `saveFutureTourDays()` (törlés + újra beszúrás).
+  Térkép a naphoz: `future_tour_gpx_files.day_number` (NULL = egész túra). A napsor `day_orig[]` mezője alapján a
+  térképek követik a napjukat; törölt nap térképe NULL lesz. Feltöltés: `storeFutureTourGpx()`, `saveFutureTourDayGpx()`.
+- Szerkesztő napsor: `includes/future-tour-day-row.php` (+ `<template id="day-row-template">` az új sorhoz).
+
 ## Meghirdetett túra szervezői (`includes/future-tour-organizers.php`)
 `future_tour_organizers` (future_tour_id, user_id, sort_order) — ha egy túrához nincs sor, a `future_tours.created_by` a szervező.
 `getFutureTourOrganizers($pdo, $tourId)` mindig ezt a visszaesést adja; `saveFutureTourOrganizers($pdo, $tourId, $ids)` felülír
