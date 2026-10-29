@@ -1,4 +1,3 @@
-CLAUDE.md
 JELENTKEZÉS.md
 NEXT.md
 ROLES.md
@@ -14,20 +13,16 @@ gpx-maptest.php
 *.gpx
 
 /wp-plugins/*
-/user/CLAUDE.md
-/includes/CLAUDE.md
-/assets/CLAUDE.md
-/assets/css/CLAUDE.md
-/assets/js/CLAUDE.md
-/assets/img/CLAUDE.md
-/admin/CLAUDE.md
-/actions/CLAUDE.md
 /.verify/*
 
 # Dokumentáció / kódellenőrzés (nem kerül verziókövetésbe)
 /docs/
 /docs/*
-.claude/PLAN.md
+
+# Claude Code fájlok és mappák (minden szinten)
+CLAUDE.md
+CLAUDE.local.md
+.claude/
 
 # Önálló telekocsi-szervező saját DB-beállítása (ha van)
 /telekocsi/config.ini
